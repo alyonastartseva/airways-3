@@ -1,8 +1,9 @@
 import { RedButton } from "@/common/RedButton";
 import { FooterProps } from "@/interfaces/footer";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Text, Image } from "@chakra-ui/react";
 import * as dayjs from "dayjs";
 import React, { FC } from "react";
+import LogoSvg from "../../images/LOGO.svg";
 
 export const Full: FC<FooterProps> = ({
   additional,
@@ -28,28 +29,62 @@ export const Full: FC<FooterProps> = ({
             <Heading>Departure</Heading>
             <Heading>{`${from} - ${to}`}</Heading>
             <Box fontSize={"12px"}>
-              <Text>{dayjs(date).format("D MMM, ") + date[0] + date[1]}</Text>
+              <Text
+                position={"relative"}
+                _before={{
+                  content: `""`,
+                  display: "inline-block",
+                  position: "absolute",
+                  left: "-17px",
+                  top: "9.5px",
+                  w: "15px",
+                  h: "2px",
+                  bg: "border",
+                  opacity: "0.6",
+                }}
+              >
+                {dayjs(date).format("D MMM, ") + date[0] + date[1]}
+              </Text>
               <Text>{time}</Text>
               <Text>{type}</Text>
-              <Text>{code}</Text>
+              <Text position={"relative"}>
+                <Image position={"absolute"} left="-20px" src={LogoSvg} />
+                {code}
+              </Text>
             </Box>
           </Box>
           <Box h={"100%"} w="1px" bg={"white"}>
             {" "}
           </Box>
           {ret ? (
-            <Box display={"flex"} columnGap="30px">
+            <Box display={"flex"} columnGap="20px">
               <Heading>Return</Heading>
               <Heading>{`${ret.from} - ${ret.to}`}</Heading>
               <Box fontSize={"12px"}>
-                <Text>
+                <Text
+                  position={"relative"}
+                  _before={{
+                    content: `""`,
+                    display: "inline-block",
+                    position: "absolute",
+                    left: "-17px",
+                    top: "9.5px",
+                    w: "15px",
+                    h: "2px",
+                    bg: "border",
+                    opacity: "0.6",
+                  }}
+                >
                   {dayjs(ret.date).format("D MMM, ") +
                     ret.date[0] +
                     ret.date[1]}
                 </Text>
                 <Text>{ret.time}</Text>
                 <Text>{ret.type}</Text>
-                <Text>{ret.code}</Text>
+                <Text position={"relative"}>
+                  <Image position={"absolute"} left="-20px" src={LogoSvg} />
+                  {ret.code}
+                </Text>
               </Box>
             </Box>
           ) : (
@@ -113,12 +148,17 @@ export const Full: FC<FooterProps> = ({
         )}
         <Box display={"flex"} columnGap="25px">
           {departure && ret && (
-            <Box>
-              <Text>Total price for {passenger} passengers</Text>
-              <Text textAlign={"right"}>CHF {total}</Text>
-            </Box>
+            <>
+              <Box>
+                <Text>Total price for {passenger} passengers</Text>
+                <Text textAlign={"right"}>CHF {total}</Text>
+              </Box>
+              <RedButton
+                text="Confirm"
+                clickHandler={() => alert("Confirmed")}
+              />
+            </>
           )}
-          <RedButton text="Confirm" clickHandler={() => {}} />
         </Box>
       </Box>
     </>
