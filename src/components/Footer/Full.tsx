@@ -18,6 +18,8 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
   const total = additional
     ? price + ret?.price! + allAdditional!
     : price + ret?.price!;
+
+  const dateText = dayjs(date).format("D MMM, ") + date[0] + date[1];
   return (
     <>
       <Box display={"flex"}>
@@ -45,7 +47,7 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
                   opacity: "0.6",
                 }}
               >
-                {dayjs(date).format("D MMM, ") + date[0] + date[1]}
+                {dateText}
               </Text>
               <Text>{time}</Text>
               <Text>{type}</Text>
