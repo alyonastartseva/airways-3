@@ -26,7 +26,6 @@ class aviasalesService {
         },
       });
       const usersInfo = response.data;
-      console.log(usersInfo)
       const users: IPerson[] = usersInfo.map(
         ({
           id,
@@ -74,7 +73,6 @@ class aviasalesService {
         "@type": "passenger",
         roles: [{ id: "2", name: "ROLE_PASSENGER" }],
       });
-      console.log('a',response)
       if (response.statusText === "Created") {
         return response;
       } else {
