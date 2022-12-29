@@ -4,25 +4,29 @@ import { IPerson } from "@interfaces/person";
 class aviasalesService {
   getAuthorizationToken = async () => {
     const res = await axios
-      .post("http://localhost:5173/api/auth/login", {
+      .post("http://localhost:8080/api/auth/login", {
         password: "admin",
         username: "admin@mail.ru",
       })
       .catch((err) => Promise.reject(err));
     localStorage.setItem("token", res.data.accessToken);
-    return res;
+    return res.data.accessToken;
   };
 
   getUsers = async () => {
+    if (!localStorage.getItem("token")) {
+      await this.getAuthorizationToken();
+    }
     const token = localStorage.getItem("token");
     try {
-      const response = await axios.get("http://localhost:5173/api/user", {
+      const response = await axios.get("http://localhost:8080/api/user", {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
       const usersInfo = response.data;
+      console.log(usersInfo)
       const users: IPerson[] = usersInfo.map(
         ({
           id,
@@ -64,16 +68,20 @@ class aviasalesService {
     email: string;
     passport: { passportIssuingCountry: string };
   }) => {
-    console.log(user)
     try {
-      const response = await axios.post("http://localhost:5173/api/user", {
+      const response = await axios.post("http://localhost:8080/api/user", {
         ...user,
         "@type": "passenger",
         roles: [{ id: "2", name: "ROLE_PASSENGER" }],
       });
-      return response;
+      console.log('a',response)
+      if (response.statusText === "Created") {
+        return response;
+      } else {
+        throw Error;
+      }
     } catch (error) {
-      return error;
+      return Promise.reject(error)
     }
   };
 }

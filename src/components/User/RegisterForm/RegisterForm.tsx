@@ -16,42 +16,37 @@ import {
 } from "@chakra-ui/react";
 
 import { ViewIcon } from "@chakra-ui/icons";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputField from "@common/Form/Input";
 import SelectField from "@common/Form/Select";
-import {
-  years,
-  months,
-  getAllDaysInMonth,
-  prepareFormData,
-} from "@utils/form-data";
-import flightsService from "@services/flights-service";
+import { years, months, getAllDaysInMonth } from "@utils/form-data";
 
 const yupSchema = yup
   .object()
   .shape({
     firstName: yup.string().required(),
     lastName: yup.string().required(),
-  //   password: yup
-  //     .string()
-  //     .required("Password is mendatory")
-  //     .min(3, "Password must be at 3 char long"),
-  //   repeatPassword: yup
-  //     .string()
-  //     .required("Password is mendatory")
-  //     .oneOf([yup.ref("password")], "Passwords does not match"),
-  //   yearOfBirth: yup.string().required(),
-  //   monthOfBirth: yup.string().required(),
-  //   dayOfBirth: yup.string().required(),
-  //   telNumber: yup.string().required(),
-  //   telCode: yup.string().required(),
+    password: yup.string().required().min(3, "Password must be at 3 char long"),
+    repeatPassword: yup
+      .string()
+      .required()
+      .oneOf([yup.ref("password")], "Passwords does not match"),
+    yearOfBirth: yup.string().required(),
+    monthOfBirth: yup.string().required(),
+    dayOfBirth: yup.string().required(),
+    telNumber: yup.string().required(),
+    telCode: yup.string().required(),
   })
   .required();
 
-function RegisterForm() {
+function RegisterForm({
+  onSubmit,
+}: {
+  onSubmit: SubmitHandler<IFormValuesRegisterUser>;
+}) {
   const fetchCountries = async () => {
     const countriesRequest = await fetch("https://restcountries.com/v2/all");
     const countriesData = await countriesRequest.json();
@@ -79,11 +74,6 @@ function RegisterForm() {
     },
   });
 
-  function onSubmit(values: IFormValuesRegisterUser) {
-    const data = prepareFormData(values);
-    flightsService.createUserAsPassenger(data);
-    return data;
-  }
   const [show, setShow] = useState(false);
   const handleViewClick = () => setShow(!show);
 
@@ -103,7 +93,7 @@ function RegisterForm() {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <form onSubmit={methods.handleSubmit(onSubmit)} name="register">
         <Flex columnGap={2}>
           <InputField name="firstName" label="First name" />
           <InputField name="lastName" label="Last name" />
@@ -141,6 +131,7 @@ function RegisterForm() {
             boxShadow="0px 2px 2px rgba(0, 0, 0, 0.25)"
             borderRadius="4px"
             id="country"
+            aria-label="country"
             {...methods.register("country")}
           >
             <option value=""></option>
@@ -148,7 +139,12 @@ function RegisterForm() {
               countries.map(({ name }) => <option key={name}>{name}</option>)}
           </Select>
           {methods.formState.errors?.country && (
-            <Text color="#E32E22" fontWeight="400" fontSize="12px">
+            <Text
+              aria-label=""
+              color="#E32E22"
+              fontWeight="400"
+              fontSize="12px"
+            >
               {methods.formState.errors.country.message}
             </Text>
           )}
@@ -183,6 +179,8 @@ function RegisterForm() {
                 boxShadow="0px 2px 2px rgba(0, 0, 0, 0.25)"
                 borderRadius="4px 0px 0px 4px"
                 width="40%"
+                aria-label="telCode"
+                id="telCode"
                 {...methods.register("telCode")}
               >
                 <option value=""></option>
@@ -204,6 +202,7 @@ function RegisterForm() {
                 id="tel"
                 type="tel"
                 placeholder="(xxx) XXX XX  XX"
+                aria-label="tel"
                 {...methods.register("telNumber")}
               ></Input>
             </Flex>
@@ -237,6 +236,7 @@ function RegisterForm() {
                 boxShadow="0px 2px 2px rgba(0, 0, 0, 0.25)"
                 borderRadius="4px"
                 id="password"
+                aria-label="password"
                 type={show ? "text" : "password"}
                 {...methods.register("password")}
               />
@@ -271,6 +271,7 @@ function RegisterForm() {
                 border="1px solid #D9D9D9"
                 boxShadow="0px 2px 2px rgba(0, 0, 0, 0.25)"
                 borderRadius="0.25rem"
+                aria-label="repeatPassword"
                 id="repeatPassword"
                 type={show ? "text" : "password"}
                 {...methods.register("repeatPassword")}
@@ -309,6 +310,7 @@ function RegisterForm() {
               boxShadow="0px 2px 2px rgba(0, 0, 0, 0.25)"
               borderRadius="4px"
               id="question"
+              aria-label="question"
               {...methods.register("question")}
             >
               <option></option>
@@ -333,6 +335,7 @@ function RegisterForm() {
             colorScheme="teal"
             isLoading={methods.formState.isSubmitting}
             type="submit"
+            id="submit"
             background="#E32E22"
             boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
           >

@@ -76,22 +76,9 @@ function Users() {
       header: "Дата рождения",
       cell: (props) => props.getValue(),
     }),
-    columnHelper.accessor((row) => row.passport?.serialNumberPassport, {
-      id: "Серийный номер",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor((row) => row.passport?.passportIssuingCountry, {
-      id: "Гражданство",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor((row) => row.passport?.passportIssuingDate, {
-      id: "Дата выхода паспорта",
-      cell: (info) => info.getValue(),
-    }),
     columnHelper.display({
       id: "actions",
       cell: (props) => {
-        // console.log(props.row.original);
         return (
           <>
             <Popover>
@@ -131,17 +118,17 @@ function Users() {
   const { isLoading, data } = useQuery("users", () =>
     flightsService.getUsers()
   );
-
   const table = useReactTable({
-    data: data
-      ? data.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize)
-      : [],
+    data:
+      data && Array.isArray(data)
+        ? data.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize)
+        : [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
   });
 
-  if (data) {
+  if (data && Array.isArray(data)) {
     const setPaginationData = (pageIndex: number) => {
       if (pageIndex >= 0 && pageIndex < data.length / pageSize) {
         setPagination((prev) => ({

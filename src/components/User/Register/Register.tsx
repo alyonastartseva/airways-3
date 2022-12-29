@@ -1,18 +1,67 @@
-import { Box, Flex, Grid, Heading, Text, Image, Link } from "@chakra-ui/react";
+import {
+  useDisclosure,
+  Box,
+  Flex,
+  Grid,
+  Heading,
+  Text,
+  Image,
+  Link,
+  AlertIcon,
+  CloseButton,
+  AlertTitle,
+  AlertDescription,
+  Alert,
+  SlideFade,
+} from "@chakra-ui/react";
 
 import penIcon from "@images/svg/pen.svg";
 import chevronIcon from "@images/svg/chevron.svg";
 
 import { RegisterForm } from "../RegisterForm";
+import { IFormValuesRegisterUser } from "@interfaces/form-values-register-user";
+import flightsService from "@services/flights-service";
+import { prepareFormData } from "@utils/form-data";
 
 function Register() {
+  const {
+    isOpen: isVisible,
+    onClose,
+    onOpen,
+  } = useDisclosure({ defaultIsOpen: false });
+
+  const onSubmit = async (values: IFormValuesRegisterUser) => {
+    const data = prepareFormData(values);
+    await flightsService.createUserAsPassenger(data).then(() => onOpen());
+  };
+
   return (
     <Box>
       <Grid my={5} gridTemplateColumns={"7fr 6fr"}>
         <Box>
           <Box mx={10}>
+            {isVisible && (
+              <SlideFade in={isVisible} offsetY="20px">
+                <Alert status="success" background="none">
+                  <AlertIcon />
+                  <Box w="100%">
+                    <AlertTitle>Success!</AlertTitle>
+                    <AlertDescription>
+                    You have been registered
+                    </AlertDescription>
+                  </Box>
+                  <CloseButton
+                    alignSelf="flex-start"
+                    position="relative"
+                    right={-1}
+                    top={-1}
+                    onClick={onClose}
+                  />
+                </Alert>
+              </SlideFade>
+            )}
             <Heading fontWeight="400" fontSize="24px" color="#0A66C2">
-              Member Profile Details{" "}
+              Member Profile Details
             </Heading>
             <Box>
               <Flex justify="flex-end">
@@ -22,7 +71,7 @@ function Register() {
                 </Text>
               </Flex>
             </Box>
-            <RegisterForm />
+            <RegisterForm onSubmit={onSubmit}/>
           </Box>
         </Box>
         <Box my="2rem" p="3rem 5rem">

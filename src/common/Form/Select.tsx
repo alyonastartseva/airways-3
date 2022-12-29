@@ -33,6 +33,7 @@ function SelectField({ name, label, options }: ISelectFieldProps) {
         borderRadius="4px"
         textAlign="center"
         id={name}
+        aria-label={name}
         {...register(name)}
       >
         {options}

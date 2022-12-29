@@ -30,6 +30,7 @@ function InputField({ name, label, type = "" }: IInputFieldProps) {
         borderRadius="4px"
         id={name}
         type={type}
+        aria-label={name}
         {...register(name)}
       />
       {errors?.[name] && (
