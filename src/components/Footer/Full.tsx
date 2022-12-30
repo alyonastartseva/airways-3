@@ -60,7 +60,7 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
 						<Flex columnGap="1.25rem">
 							<Heading>Return</Heading>
 							<Heading>{`${ret.from} - ${ret.to}`}</Heading>
-							<Box fontSize={".875rem"}>
+							<Box fontSize={".750rem"}>
 								<Text
 									position={"relative"}
 									_before={{
