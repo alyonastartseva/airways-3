@@ -1,0 +1,873 @@
+// Vitest Snapshot v1
+
+exports[`Footer > Footer with 1 props > 1props 1`] = `
+<div>
+  <div
+    class="css-3c5inh"
+  >
+    <div
+      class="css-k008qs"
+    >
+      <div
+        class="css-13876xk"
+      >
+        <div
+          class="css-ky0lkx"
+        >
+          <h2
+            class="chakra-heading css-0"
+          >
+            Departure
+          </h2>
+          <h2
+            class="chakra-heading css-0"
+          >
+            ZRH - JFK
+          </h2>
+          <div
+            class="css-1jqojq2"
+          >
+            <p
+              class="chakra-text css-1860ddu"
+            >
+              30 Dec, Fr
+            </p>
+            <p
+              class="chakra-text css-0"
+            >
+              Departure 19:00
+            </p>
+            <p
+              class="chakra-text css-0"
+            >
+              ECONOMY - Eco Light
+            </p>
+            <p
+              class="chakra-text css-79elbk"
+            >
+              <img
+                class="chakra-image css-1kjwwcr"
+                src="/src/assets/images/LOGO.svg"
+              />
+              UA0018
+            </p>
+          </div>
+        </div>
+        <div
+          class="css-x4tj1o"
+        >
+           
+        </div>
+        <p
+          class="chakra-text css-mx9oo2"
+        >
+          Select Return Flight
+        </p>
+      </div>
+    </div>
+    <div
+      class="css-0"
+    >
+      <div
+        class="css-9s20yf"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Footer > Footer with 2 props > 2props 1`] = `
+<div>
+  <div
+    class="css-3c5inh"
+  >
+    <div
+      class="css-k008qs"
+    >
+      <div
+        class="css-13876xk"
+      >
+        <div
+          class="css-ky0lkx"
+        >
+          <h2
+            class="chakra-heading css-0"
+          >
+            Departure
+          </h2>
+          <h2
+            class="chakra-heading css-0"
+          >
+            ZRH - JFK
+          </h2>
+          <div
+            class="css-1jqojq2"
+          >
+            <p
+              class="chakra-text css-1860ddu"
+            >
+              30 Dec, Fr
+            </p>
+            <p
+              class="chakra-text css-0"
+            >
+              Departure 19:00
+            </p>
+            <p
+              class="chakra-text css-0"
+            >
+              ECONOMY - Eco Light
+            </p>
+            <p
+              class="chakra-text css-79elbk"
+            >
+              <img
+                class="chakra-image css-1kjwwcr"
+                src="/src/assets/images/LOGO.svg"
+              />
+              UA0018
+            </p>
+          </div>
+        </div>
+        <div
+          class="css-x4tj1o"
+        >
+           
+        </div>
+        <div
+          class="css-ky0lkx"
+        >
+          <h2
+            class="chakra-heading css-0"
+          >
+            Return
+          </h2>
+          <h2
+            class="chakra-heading css-0"
+          >
+            JFK - ZRH
+          </h2>
+          <div
+            class="css-1jqojq2"
+          >
+            <p
+              class="chakra-text css-1860ddu"
+            >
+              10 Oct, Fr
+            </p>
+            <p
+              class="chakra-text css-0"
+            >
+              Departure 08:00
+            </p>
+            <p
+              class="chakra-text css-0"
+            >
+              ECONOMY - Eco Light
+            </p>
+            <p
+              class="chakra-text css-79elbk"
+            >
+              <img
+                class="chakra-image css-1kjwwcr"
+                src="/src/assets/images/LOGO.svg"
+              />
+              UA0018
+            </p>
+          </div>
+        </div>
+        <div
+          class="css-x4tj1o"
+        >
+           
+        </div>
+        <p
+          class="chakra-text css-o2qitt"
+        >
+          See Price Details
+        </p>
+      </div>
+    </div>
+    <div
+      class="css-0"
+    >
+      <div
+        class="css-9s20yf"
+      >
+        <div
+          class="css-0"
+        >
+          <p
+            class="chakra-text css-0"
+          >
+            Total price for 
+            1
+             passengers
+          </p>
+          <p
+            class="chakra-text css-s2uf1z"
+          >
+            CHF 
+            6200
+          </p>
+        </div>
+        <button
+          class="chakra-button css-bvuw0j"
+          type="button"
+        >
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Footer > Footer with 3 props > 3 1`] = `
+<div>
+  <div
+    class="css-3c5inh"
+  >
+    <div
+      class="css-k008qs"
+    >
+      <div
+        class="css-13876xk"
+      >
+        <div
+          class="css-ky0lkx"
+        >
+          <h2
+            class="chakra-heading css-0"
+          >
+            Departure
+          </h2>
+          <h2
+            class="chakra-heading css-0"
+          >
+            ZRH - JFK
+          </h2>
+          <div
+            class="css-1jqojq2"
+          >
+            <p
+              class="chakra-text css-1860ddu"
+            >
+              30 Dec, Fr
+            </p>
+            <p
+              class="chakra-text css-0"
+            >
+              Departure 19:00
+            </p>
+            <p
+              class="chakra-text css-0"
+            >
+              ECONOMY - Eco Light
+            </p>
+            <p
+              class="chakra-text css-79elbk"
+            >
+              <img
+                class="chakra-image css-1kjwwcr"
+                src="/src/assets/images/LOGO.svg"
+              />
+              UA0018
+            </p>
+          </div>
+        </div>
+        <div
+          class="css-x4tj1o"
+        >
+           
+        </div>
+        <div
+          class="css-ky0lkx"
+        >
+          <h2
+            class="chakra-heading css-0"
+          >
+            Return
+          </h2>
+          <h2
+            class="chakra-heading css-0"
+          >
+            JFK - ZRH
+          </h2>
+          <div
+            class="css-1jqojq2"
+          >
+            <p
+              class="chakra-text css-1860ddu"
+            >
+              10 Oct, Fr
+            </p>
+            <p
+              class="chakra-text css-0"
+            >
+              Departure 08:00
+            </p>
+            <p
+              class="chakra-text css-0"
+            >
+              ECONOMY - Eco Light
+            </p>
+            <p
+              class="chakra-text css-79elbk"
+            >
+              <img
+                class="chakra-image css-1kjwwcr"
+                src="/src/assets/images/LOGO.svg"
+              />
+              UA0018
+            </p>
+          </div>
+        </div>
+        <div
+          class="css-x4tj1o"
+        >
+           
+        </div>
+        <p
+          class="chakra-text css-o2qitt"
+        >
+          See Price Details
+        </p>
+      </div>
+    </div>
+    <div
+      class="css-0"
+    >
+      <div
+        class="css-oxm8hx"
+      >
+        <div
+          class="css-a6rva7"
+        >
+          <h3
+            class="chakra-heading css-mf7hik"
+          >
+            Ticket Price
+          </h3>
+          <p
+            class="chakra-text css-1d1r44r"
+          >
+            Flight Price
+             
+          </p>
+          <p
+            class="chakra-text css-1d1r44r"
+          >
+            Taxes and Fees
+             
+          </p>
+          <h3
+            class="chakra-heading css-mf7hik"
+          >
+            Additional Services
+          </h3>
+          <p
+            class="chakra-text css-s2uf1z"
+          >
+            Seat Selection
+          </p>
+          <p
+            class="chakra-text css-s2uf1z"
+          >
+            Extra Baggage
+          </p>
+        </div>
+        <div
+          class="css-126n10b"
+        >
+          <h3
+            class="chakra-heading css-mf7hik"
+          >
+            6200
+          </h3>
+          <p
+            class="chakra-text css-1d1r44r"
+          >
+            5890
+          </p>
+          <p
+            class="chakra-text css-1d1r44r"
+          >
+            310
+          </p>
+          <h3
+            class="chakra-heading css-mf7hik"
+          >
+            2200
+          </h3>
+          <p
+            class="chakra-text css-s2uf1z"
+          >
+            100
+          </p>
+          <p
+            class="chakra-text css-s2uf1z"
+          >
+            2100
+          </p>
+        </div>
+      </div>
+      <div
+        class="css-9s20yf"
+      >
+        <div
+          class="css-0"
+        >
+          <p
+            class="chakra-text css-0"
+          >
+            Total price for 
+            1
+             passengers
+          </p>
+          <p
+            class="chakra-text css-s2uf1z"
+          >
+            CHF 
+            8400
+          </p>
+        </div>
+        <button
+          class="chakra-button css-bvuw0j"
+          type="button"
+        >
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Footer > Footer with 3 props > 3props 1`] = `
+<div>
+  <div
+    class="css-3c5inh"
+  >
+    <div
+      class="css-k008qs"
+    >
+      <div
+        class="css-13876xk"
+      >
+        <div
+          class="css-ky0lkx"
+        >
+          <h2
+            class="chakra-heading css-0"
+          >
+            Departure
+          </h2>
+          <h2
+            class="chakra-heading css-0"
+          >
+            ZRH - JFK
+          </h2>
+          <div
+            class="css-1jqojq2"
+          >
+            <p
+              class="chakra-text css-1860ddu"
+            >
+              30 Dec, Fr
+            </p>
+            <p
+              class="chakra-text css-0"
+            >
+              Departure 19:00
+            </p>
+            <p
+              class="chakra-text css-0"
+            >
+              ECONOMY - Eco Light
+            </p>
+            <p
+              class="chakra-text css-79elbk"
+            >
+              <img
+                class="chakra-image css-1kjwwcr"
+                src="/src/assets/images/LOGO.svg"
+              />
+              UA0018
+            </p>
+          </div>
+        </div>
+        <div
+          class="css-x4tj1o"
+        >
+           
+        </div>
+        <div
+          class="css-ky0lkx"
+        >
+          <h2
+            class="chakra-heading css-0"
+          >
+            Return
+          </h2>
+          <h2
+            class="chakra-heading css-0"
+          >
+            JFK - ZRH
+          </h2>
+          <div
+            class="css-1jqojq2"
+          >
+            <p
+              class="chakra-text css-1860ddu"
+            >
+              10 Oct, Fr
+            </p>
+            <p
+              class="chakra-text css-0"
+            >
+              Departure 08:00
+            </p>
+            <p
+              class="chakra-text css-0"
+            >
+              ECONOMY - Eco Light
+            </p>
+            <p
+              class="chakra-text css-79elbk"
+            >
+              <img
+                class="chakra-image css-1kjwwcr"
+                src="/src/assets/images/LOGO.svg"
+              />
+              UA0018
+            </p>
+          </div>
+        </div>
+        <div
+          class="css-x4tj1o"
+        >
+           
+        </div>
+        <p
+          class="chakra-text css-o2qitt"
+        >
+          See Price Details
+        </p>
+      </div>
+    </div>
+    <div
+      class="css-0"
+    >
+      <div
+        class="css-oxm8hx"
+      >
+        <div
+          class="css-a6rva7"
+        >
+          <h3
+            class="chakra-heading css-mf7hik"
+          >
+            Ticket Price
+          </h3>
+          <p
+            class="chakra-text css-1d1r44r"
+          >
+            Flight Price
+             
+          </p>
+          <p
+            class="chakra-text css-1d1r44r"
+          >
+            Taxes and Fees
+             
+          </p>
+          <h3
+            class="chakra-heading css-mf7hik"
+          >
+            Additional Services
+          </h3>
+          <p
+            class="chakra-text css-s2uf1z"
+          >
+            Seat Selection
+          </p>
+          <p
+            class="chakra-text css-s2uf1z"
+          >
+            Extra Baggage
+          </p>
+        </div>
+        <div
+          class="css-126n10b"
+        >
+          <h3
+            class="chakra-heading css-mf7hik"
+          >
+            6200
+          </h3>
+          <p
+            class="chakra-text css-1d1r44r"
+          >
+            5890
+          </p>
+          <p
+            class="chakra-text css-1d1r44r"
+          >
+            310
+          </p>
+          <h3
+            class="chakra-heading css-mf7hik"
+          >
+            2200
+          </h3>
+          <p
+            class="chakra-text css-s2uf1z"
+          >
+            100
+          </p>
+          <p
+            class="chakra-text css-s2uf1z"
+          >
+            2100
+          </p>
+        </div>
+      </div>
+      <div
+        class="css-9s20yf"
+      >
+        <div
+          class="css-0"
+        >
+          <p
+            class="chakra-text css-0"
+          >
+            Total price for 
+            1
+             passengers
+          </p>
+          <p
+            class="chakra-text css-s2uf1z"
+          >
+            CHF 
+            8400
+          </p>
+        </div>
+        <button
+          class="chakra-button css-bvuw0j"
+          type="button"
+        >
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Footer > Footer without props > 0 1`] = `
+<div>
+  <div
+    class="css-3c5inh"
+  >
+    <div
+      class="css-1x69zh0"
+    >
+      <a
+        class="chakra-link css-0"
+        href="#"
+        target="_blank"
+      >
+        About us
+      </a>
+      I
+      <a
+        class="chakra-link css-0"
+        href="#"
+        target="_blank"
+      >
+        Terms and Conditions
+      </a>
+      I
+      <a
+        class="chakra-link css-0"
+        href="#"
+        target="_blank"
+      >
+        Contact Us
+      </a>
+    </div>
+    <div
+      class="css-rk5plh"
+    >
+      <p
+        class="chakra-text css-1vg6q84"
+      >
+        UX AIR APP
+      </p>
+      <div
+        class="css-ky0lkx"
+      >
+        <a
+          class="chakra-link css-0"
+          href="#"
+          target="_blank"
+        >
+          <img
+            class="chakra-image css-0"
+            src="/src/assets/images/appstore.png"
+          />
+        </a>
+        <a
+          class="chakra-link css-0"
+          href="#"
+          target="_blank"
+        >
+          <img
+            class="chakra-image css-0"
+            src="/src/assets/images/googleplay.png"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Footer > Footer without props > 0props 1`] = `
+<div>
+  <div
+    class="css-3c5inh"
+  >
+    <div
+      class="css-1x69zh0"
+    >
+      <a
+        class="chakra-link css-0"
+        href="#"
+        target="_blank"
+      >
+        About us
+      </a>
+      I
+      <a
+        class="chakra-link css-0"
+        href="#"
+        target="_blank"
+      >
+        Terms and Conditions
+      </a>
+      I
+      <a
+        class="chakra-link css-0"
+        href="#"
+        target="_blank"
+      >
+        Contact Us
+      </a>
+    </div>
+    <div
+      class="css-rk5plh"
+    >
+      <p
+        class="chakra-text css-1vg6q84"
+      >
+        UX AIR APP
+      </p>
+      <div
+        class="css-ky0lkx"
+      >
+        <a
+          class="chakra-link css-0"
+          href="#"
+          target="_blank"
+        >
+          <img
+            class="chakra-image css-0"
+            src="/src/assets/images/appstore.png"
+          />
+        </a>
+        <a
+          class="chakra-link css-0"
+          href="#"
+          target="_blank"
+        >
+          <img
+            class="chakra-image css-0"
+            src="/src/assets/images/googleplay.png"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Footer > Footer without props 1`] = `
+<div>
+  <div
+    class="css-3c5inh"
+  >
+    <div
+      class="css-1x69zh0"
+    >
+      <a
+        class="chakra-link css-0"
+        href="#"
+        target="_blank"
+      >
+        About us
+      </a>
+      I
+      <a
+        class="chakra-link css-0"
+        href="#"
+        target="_blank"
+      >
+        Terms and Conditions
+      </a>
+      I
+      <a
+        class="chakra-link css-0"
+        href="#"
+        target="_blank"
+      >
+        Contact Us
+      </a>
+    </div>
+    <div
+      class="css-rk5plh"
+    >
+      <p
+        class="chakra-text css-1vg6q84"
+      >
+        UX AIR APP
+      </p>
+      <div
+        class="css-ky0lkx"
+      >
+        <a
+          class="chakra-link css-0"
+          href="#"
+          target="_blank"
+        >
+          <img
+            class="chakra-image css-0"
+            src="/src/assets/images/appstore.png"
+          />
+        </a>
+        <a
+          class="chakra-link css-0"
+          href="#"
+          target="_blank"
+        >
+          <img
+            class="chakra-image css-0"
+            src="/src/assets/images/googleplay.png"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

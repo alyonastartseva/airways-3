@@ -4,32 +4,24 @@ import { departure, Footer, ret, additional } from "@components/Footer";
 
 describe("Footer", () => {
 	it("Footer without props", () => {
-		render(<Footer />);
-		expect(screen.getByText(/about us/i)).toBeDefined();
-		expect(screen.getByText(/terms and conditions/i)).toBeDefined();
-		expect(screen.getByText(/contact us/i)).toBeDefined();
-		expect(screen.getAllByRole("link")).toBeDefined();
+		const { container } = render(<Footer />);
+		expect(container).toMatchSnapshot("0props");
 	});
 
 	it("Footer with 1 props", () => {
-		render(<Footer departure={departure} />);
-		expect(screen.getAllByText(/Departure/i)).toBeDefined();
+		const { container } = render(<Footer departure={departure} />);
+		expect(container).toMatchSnapshot("1props");
 	});
 
 	it("Footer with 2 props", () => {
-		render(<Footer departure={departure} return={ret} />);
-		expect(screen.getAllByText(/Departure/i)).toBeDefined();
-		expect(screen.getAllByText(/Return/i)).toBeDefined();
-		expect(screen.getAllByText(/total price/i)).toBeDefined();
-		expect(screen.getByRole("button")).toBeDefined();
+		const { container } = render(<Footer departure={departure} return={ret} />);
+		expect(container).toMatchSnapshot("2props");
 	});
 
 	it("Footer with 3 props", () => {
-		render(
+		const { container } = render(
 			<Footer departure={departure} return={ret} additional={additional} />,
 		);
-		expect(screen.getAllByText(/Departure/i)).toBeDefined();
-		expect(screen.getAllByText(/return/i)).toBeDefined();
-		expect(screen.getAllByText(/additional services/i)).toBeDefined();
+		expect(container).toMatchSnapshot("3props");
 	});
 });
