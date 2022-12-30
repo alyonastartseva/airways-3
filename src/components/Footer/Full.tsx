@@ -1,5 +1,5 @@
 import { RedButton } from "@/common/RedButton";
-import { IDeparture, IReturn, TAdditional } from "@/interfaces/footer";
+import { IDeparture, IReturn, TAdditionalServices } from "@/interfaces/footer";
 import { Box, Heading, Text, Image, Flex } from "@chakra-ui/react";
 import Dayjs from "dayjs";
 import React, { FC } from "react";
@@ -8,7 +8,7 @@ import LogoSvg from "@images/LOGO.svg";
 interface IProps {
 	departure?: IDeparture;
 	return?: IReturn;
-	additional?: TAdditional;
+	additional?: TAdditionalServices;
 }
 
 export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {

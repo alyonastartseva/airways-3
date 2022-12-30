@@ -1,13 +1,13 @@
 import { FC } from "react";
 import { Box, Flex } from "@chakra-ui/react";
-import { IDeparture, IReturn, TAdditional } from "@interfaces/footer";
+import { IDeparture, IReturn, TAdditionalServices } from "@interfaces/footer";
 import { Full } from "./Full";
 import { Empty } from "./Empty";
 
 interface IProps {
 	departure?: IDeparture;
 	return?: IReturn;
-	additional?: TAdditional;
+	additional?: TAdditionalServices;
 }
 
 export const Footer: FC<IProps> = ({ departure, return: ret, additional }) => {
@@ -49,7 +49,7 @@ export const ret: IReturn = {
 	price: 3100,
 };
 
-export const additional: TAdditional = [
+export const additional: TAdditionalServices = [
 	["Seat Selection", 100],
 	["Extra Baggage", 2100],
 ];

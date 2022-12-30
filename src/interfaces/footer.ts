@@ -20,4 +20,4 @@ export interface IReturn {
   price: number;
 }
 
-export type TAdditional = [string, number][];
+export type TAdditionalServices = [string, number][];
