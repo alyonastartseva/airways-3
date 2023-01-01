@@ -39,7 +39,7 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
 									top: ".56rem",
 									w: "1rem",
 									h: ".125rem",
-									bg: "border",
+									bg: "#D9D9D9",
 									opacity: "0.6",
 								}}
 							>
@@ -71,7 +71,7 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
 										top: ".56rem",
 										w: "1rem",
 										h: ".125rem",
-										bg: "border",
+										bg: "#D9D9D9",
 										opacity: "0.6",
 									}}
 								>
@@ -108,10 +108,10 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
 							<Heading textAlign={"right"} fontWeight={"700"} as={"h3"}>
 								Ticket Price
 							</Heading>
-							<Text textAlign={"right"} color="border">
+							<Text textAlign={"right"} color="#D9D9D9">
 								Flight Price{" "}
 							</Text>
-							<Text textAlign={"right"} color="border">
+							<Text textAlign={"right"} color="#D9D9D9">
 								Taxes and Fees{" "}
 							</Text>
 							<Heading textAlign={"right"} fontWeight={"700"} as={"h3"}>
@@ -127,10 +127,10 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
 							<Heading textAlign={"right"} fontWeight={"700"} as={"h3"}>
 								{price + ret?.price!}
 							</Heading>
-							<Text textAlign={"right"} color="border">
+							<Text textAlign={"right"} color="#D9D9D9">
 								{((price + ret?.price!) / 100) * 95}
 							</Text>
-							<Text textAlign={"right"} color="border">
+							<Text textAlign={"right"} color="#D9D9D9">
 								{((price + ret?.price!) / 100) * 5}
 							</Text>
 							<Heading textAlign={"right"} fontWeight={"700"} as={"h3"}>
