@@ -1,18 +1,7 @@
-import {QueryClient, QueryClientProvider} from 'react-query'
-import {ChakraProvider} from '@chakra-ui/react'
 import './App.css'
-import {LoginAdminForm} from "@components/LoginAdminForm"
-
-const queryClient = new QueryClient()
-
+import { LoginAdminForm } from '@components/LoginAdminForm'
 function App() {
-    return (
-        <ChakraProvider>
-            <QueryClientProvider client={queryClient}>
-                <LoginAdminForm/>
-            </QueryClientProvider>
-        </ChakraProvider>
-    )
+	return <LoginAdminForm />
 }
 
 export default App

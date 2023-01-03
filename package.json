@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "prepare": "husky install",
-    "lint:fix": "rome check . --apply"
+    "lint:fix": "rome check . --apply",
+    "prettier:fix": "rome format . --write"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.4.3",
@@ -23,10 +24,14 @@
     "react-router-dom": "^6.5.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react": "^3.0.0",
     "husky": "^8.0.0",
+    "jsdom": "^20.0.3",
     "rome": "^11.0.0",
     "typescript": "^4.9.3",
     "vite": "^4.0.0",
