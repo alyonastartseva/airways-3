@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ChakraProvider } from "@chakra-ui/react";
 import "@/App.css";
-import { Footer } from "@components/Footer";
+import { additional, departure, Footer, ret } from "@components/Footer";
 
 const queryClient = new QueryClient();
 
@@ -9,7 +9,11 @@ function App() {
   return (
     <ChakraProvider>
       <QueryClientProvider client={queryClient}>
-        <Footer />
+        <Footer
+          departure={departure}
+          return={ret}
+          // additional={additional}
+        />
       </QueryClientProvider>
     </ChakraProvider>
   );

@@ -42,7 +42,7 @@ export const ret: IReturn = {
   from: "JFK",
   to: "ZRH",
   type: "ECONOMY - Eco Light",
-  code: "UA0018",
+  code: "UA0041",
   time: "Departure 08:00",
   date: new Date("1012-10-10").toDateString(),
   passenger: 1,

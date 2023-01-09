@@ -1,7 +1,7 @@
 import { Box, Link, Text, Image, Flex } from "@chakra-ui/react";
 import React from "react";
-import googleplay from "@images/googleplay.png";
-import appstore from "@images/appstore.png";
+import googleplay from "@images/google-play.png";
+import appstore from "@images/app-store.png";
 
 export const Empty = () => {
   return (
