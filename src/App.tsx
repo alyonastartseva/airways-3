@@ -4,4 +4,4 @@ function App() {
 	return <LoginAdminForm />
 }
 
-export default App
+export default App;
