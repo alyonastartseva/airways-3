@@ -1,10 +1,4 @@
-export interface FooterProps {
-  departure?: Departure;
-  return?: Return;
-  additional?: Additional;
-}
-
-export interface Departure {
+export interface IDeparture {
   from: string;
   to: string;
   time: string;
@@ -15,7 +9,7 @@ export interface Departure {
   price: number;
 }
 
-export interface Return {
+export interface IReturn {
   from: string;
   to: string;
   time: string;
@@ -26,4 +20,4 @@ export interface Return {
   price: number;
 }
 
-export type Additional = [string, number][];
+export type TAdditional = [string, number][];

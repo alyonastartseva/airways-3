@@ -1,15 +1,17 @@
 import { RedButton } from "@/common/RedButton";
-import { FooterProps } from "@/interfaces/footer";
+import { IDeparture, IReturn, TAdditional } from "@/interfaces/footer";
 import { Box, Heading, Text, Image } from "@chakra-ui/react";
 import * as dayjs from "dayjs";
 import React, { FC } from "react";
-import LogoSvg from "../../images/LOGO.svg";
+import LogoSvg from "@images/LOGO.svg";
 
-export const Full: FC<FooterProps> = ({
-  additional,
-  departure,
-  return: ret,
-}) => {
+interface IProps {
+  departure?: IDeparture;
+  return?: IReturn;
+  additional?: TAdditional;
+}
+
+export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
   const { to, from, date, time, code, type, price, passenger } = departure!;
 
   const allAdditional = additional?.reduce((acc, item) => acc + item[1], 0);
