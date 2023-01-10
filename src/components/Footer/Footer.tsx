@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { IDeparture, IReturn, TAdditional } from "@interfaces/footer";
 import { Full } from "./Full";
 import { Empty } from "./Empty";
@@ -12,20 +12,19 @@ interface IProps {
 
 export const Footer: FC<IProps> = ({ departure, return: ret, additional }) => {
 	return (
-		<Box
-			display={"flex"}
+		<Flex
 			justifyContent="space-between"
 			alignItems={"start  "}
 			bg={"blue.200"}
 			color="white"
-			p={"18px 23px"}
+			p={"1.125rem 1.5rem"}
 		>
 			{departure ? (
 				<Full departure={departure} return={ret} additional={additional} />
 			) : (
 				<Empty />
 			)}
-		</Box>
+		</Flex>
 	);
 };
 

@@ -1,6 +1,6 @@
 import { RedButton } from "@/common/RedButton";
 import { IDeparture, IReturn, TAdditional } from "@/interfaces/footer";
-import { Box, Heading, Text, Image } from "@chakra-ui/react";
+import { Box, Heading, Text, Image, Flex } from "@chakra-ui/react";
 import Dayjs from "dayjs";
 import React, { FC } from "react";
 import LogoSvg from "@images/LOGO.svg";
@@ -23,27 +23,22 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
 	const dateText2 = ret && Dayjs(ret.date).format("D MMM, ") + date.slice(0, 2);
 	return (
 		<>
-			<Box display={"flex"}>
-				<Box
-					display={"flex"}
-					columnGap="30px"
-					fontWeight={"700"}
-					fontSize={"14px"}
-				>
-					<Box display={"flex"} columnGap="20px">
+			<Flex>
+				<Flex columnGap="2.875rem" fontWeight={"700"} fontSize={".875rem"}>
+					<Flex columnGap="1.25rem">
 						<Heading>Departure</Heading>
 						<Heading>{`${from} - ${to}`}</Heading>
-						<Box fontSize={"12px"}>
+						<Box fontSize={".750rem"}>
 							<Text
 								position={"relative"}
 								_before={{
 									content: `""`,
 									display: "inline-block",
 									position: "absolute",
-									left: "-17px",
-									top: "9.5px",
-									w: "15px",
-									h: "2px",
+									left: "-1rem",
+									top: ".56rem",
+									w: "1rem",
+									h: ".125rem",
 									bg: "border",
 									opacity: "0.6",
 								}}
@@ -53,29 +48,29 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
 							<Text>{time}</Text>
 							<Text>{type}</Text>
 							<Text position={"relative"}>
-								<Image position={"absolute"} left="-20px" src={LogoSvg} />
+								<Image position={"absolute"} left="-1.25rem" src={LogoSvg} />
 								{code}
 							</Text>
 						</Box>
-					</Box>
+					</Flex>
 					<Box h={"100%"} w="1px" bg={"white"}>
 						{" "}
 					</Box>
 					{ret ? (
-						<Box display={"flex"} columnGap="20px">
+						<Flex columnGap="1.25rem">
 							<Heading>Return</Heading>
 							<Heading>{`${ret.from} - ${ret.to}`}</Heading>
-							<Box fontSize={"12px"}>
+							<Box fontSize={".875rem"}>
 								<Text
 									position={"relative"}
 									_before={{
 										content: `""`,
 										display: "inline-block",
 										position: "absolute",
-										left: "-17px",
-										top: "9.5px",
-										w: "15px",
-										h: "2px",
+										left: "-1rem",
+										top: ".56rem",
+										w: "1rem",
+										h: ".125rem",
 										bg: "border",
 										opacity: "0.6",
 									}}
@@ -85,11 +80,11 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
 								<Text>{ret.time}</Text>
 								<Text>{ret.type}</Text>
 								<Text position={"relative"}>
-									<Image position={"absolute"} left="-20px" src={LogoSvg} />
+									<Image position={"absolute"} left="-1.25rem" src={LogoSvg} />
 									{ret.code}
 								</Text>
 							</Box>
-						</Box>
+						</Flex>
 					) : (
 						<Text color={"red.100"}>Select Return Flight</Text>
 					)}
@@ -98,17 +93,17 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
 							<Box h={"100%"} w="1px" bg={"white"}>
 								{" "}
 							</Box>
-							<Text marginLeft={"-25px"} color={"red.100"}>
+							<Text marginLeft={"-1.5rem"} color={"red.100"}>
 								See Price Details
 							</Text>
 						</>
 					)}
-				</Box>
-			</Box>
+				</Flex>
+			</Flex>
 
 			<Box>
 				{additional && (
-					<Box w="80%" display={"flex"}>
+					<Flex w="80%">
 						<Box w="60%">
 							<Heading textAlign={"right"} fontWeight={"700"} as={"h3"}>
 								Ticket Price
@@ -147,9 +142,9 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
 								</Text>
 							))}
 						</Box>
-					</Box>
+					</Flex>
 				)}
-				<Box display={"flex"} columnGap="25px">
+				<Flex columnGap="1.5rem">
 					{departure && ret && (
 						<>
 							<Box>
@@ -162,7 +157,7 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
 							/>
 						</>
 					)}
-				</Box>
+				</Flex>
 			</Box>
 		</>
 	);
