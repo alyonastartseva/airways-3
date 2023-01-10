@@ -1,7 +1,11 @@
-import { Users } from "@components/Admin/Users";
+import { Header } from "@/components/Header";
+import {Users} from "@components/Admin/Users";
 
 function UsersPage() {
-  return <Users />;
+    return <>
+        <Header/>
+        <Users/>
+    </>
 }
 
 export default UsersPage;
