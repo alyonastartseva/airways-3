@@ -10,7 +10,7 @@ export const RedButton: FC<IProps> = ({ text, clickHandler }) => {
 	return (
 		<Button
 			fontWeight={"700"}
-			bg="red.200"
+			bg="#E32E22"
 			borderRadius={".25rem"}
 			p=".65rem 2.25rem"
 			onClick={clickHandler}

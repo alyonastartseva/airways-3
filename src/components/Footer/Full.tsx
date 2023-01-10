@@ -53,7 +53,7 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
 							</Text>
 						</Box>
 					</Flex>
-					<Box h={"100%"} w="1px" bg={"white"}>
+					<Box h={"100%"} w="1px" bg={"#fff"}>
 						{" "}
 					</Box>
 					{ret ? (
@@ -86,14 +86,14 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
 							</Box>
 						</Flex>
 					) : (
-						<Text color={"red.100"}>Select Return Flight</Text>
+						<Text color={"#EE5F5F"}>Select Return Flight</Text>
 					)}
 					{departure && ret && (
 						<>
-							<Box h={"100%"} w="1px" bg={"white"}>
+							<Box h={"100%"} w="1px" bg={"#fff"}>
 								{" "}
 							</Box>
-							<Text marginLeft={"-1.5rem"} color={"red.100"}>
+							<Text marginLeft={"-1.5rem"} color={"#EE5F5F"}>
 								See Price Details
 							</Text>
 						</>

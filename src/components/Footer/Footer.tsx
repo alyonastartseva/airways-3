@@ -15,8 +15,8 @@ export const Footer: FC<IProps> = ({ departure, return: ret, additional }) => {
 		<Flex
 			justifyContent="space-between"
 			alignItems={"start  "}
-			bg={"blue.200"}
-			color="white"
+			bg={"#04396D"}
+			color="#fff"
 			p={"1.125rem 1.5rem"}
 		>
 			{departure ? (
