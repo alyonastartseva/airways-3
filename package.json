@@ -17,6 +17,7 @@
     "@chakra-ui/react": "^2.4.3",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@fontsource/open-sans": "^4.5.13",
     "@hookform/resolvers": "^2.9.10",
     "@tanstack/react-table": "^8.7.4",
     "@testing-library/jest-dom": "^5.16.4",
