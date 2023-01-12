@@ -4,6 +4,7 @@ import { App } from "@components/App";
 import "./index.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
+import { Footer } from "@components/Footer";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();

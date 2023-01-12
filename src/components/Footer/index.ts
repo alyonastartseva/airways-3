@@ -1,3 +1,2 @@
 export * from "@components/Footer/Footer";
-export * from "@components/Footer/Full";
-export * from "@components/Footer/Empty";
+export * from "@/components/Footer/Full/Full";

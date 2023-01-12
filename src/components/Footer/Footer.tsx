@@ -1,8 +1,9 @@
 import { FC } from "react";
-import { Box, Flex } from "@chakra-ui/react";
 import { IDeparture, IReturn, TAdditionalServices } from "@interfaces/footer";
-import { Full } from "@components/Footer";
-import { Empty } from "@components/Footer";
+import { Full } from "@components/Footer/Full";
+import { Box, Link, Text, Image, Flex } from "@chakra-ui/react";
+import googleplay from "@images/google-play.png";
+import appstore from "@images/app-store.png";
 
 interface IProps {
   departure?: IDeparture;
@@ -14,15 +15,40 @@ export const Footer: FC<IProps> = ({ departure, return: ret, additional }) => {
   return (
     <Flex
       justifyContent="space-between"
-      alignItems={"start  "}
-      bg={"#04396D"}
+      alignItems="start"
+      bg="#04396D"
       color="#fff"
-      p={"1.125rem 1.5rem"}
+      p="1.125rem 1.5rem"
     >
       {departure ? (
         <Full departure={departure} return={ret} additional={additional} />
       ) : (
-        <Empty />
+        <>
+          <Box display="flex" columnGap="1.25rem" fontSize=".875rem">
+            <Link href="#" target="_blank">
+              About us
+            </Link>
+            I
+            <Link href="#" target="_blank">
+              Terms and Conditions
+            </Link>
+            I
+            <Link href="#" target="_blank">
+              Contact Us
+            </Link>
+          </Box>
+          <Flex alignItems="center" columnGap="3.875rem">
+            <Text fontWeight="700">UX AIR APP</Text>
+            <Flex columnGap="1.25rem">
+              <Link href="#" target="_blank">
+                <Image src={appstore} />
+              </Link>
+              <Link href="#" target="_blank">
+                <Image src={googleplay} />
+              </Link>
+            </Flex>
+          </Flex>
+        </>
       )}
     </Flex>
   );
