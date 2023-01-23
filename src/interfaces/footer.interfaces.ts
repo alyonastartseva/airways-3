@@ -9,7 +9,7 @@ export interface IDeparture {
   price: number;
 }
 
-export interface IReturn {
+export interface ITickerReturn {
   from: string;
   to: string;
   time: string;

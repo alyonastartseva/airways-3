@@ -15,32 +15,32 @@ import {
   Checkbox,
   Flex,
   Link,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
+import { useMutation } from 'react-query';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
-import {useMutation} from 'react-query'
-import {SubmitHandler, useForm} from 'react-hook-form'
-import {useAuthAdmin} from '@services/auth'
+import { useAuthAdmin } from '@services/auth';
 
 export interface IUserForm {
-  username: string
-  password: string
-  checkbox: boolean
+  username: string;
+  password: string;
+  checkbox: boolean;
 }
 
 export default function LoginAdminForm() {
-  const {isOpen, onOpen, onClose} = useDisclosure()
-  const {loginAdmin} = useAuthAdmin()
-  const mutation = useMutation(['login'], loginAdmin)
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { loginAdmin } = useAuthAdmin();
+  const mutation = useMutation(['login'], loginAdmin);
 
-  const {register, handleSubmit, reset} = useForm<IUserForm>({
+  const { register, handleSubmit, reset } = useForm<IUserForm>({
     mode: 'onBlur',
-  })
+  });
   const handleFormSubmit: SubmitHandler<IUserForm> = (data, e) => {
-    reset()
-    const {username, password} = data
-    e?.preventDefault()
-    mutation.mutate({username, password})
-  }
+    reset();
+    const { username, password } = data;
+    e?.preventDefault();
+    mutation.mutate({ username, password });
+  };
 
   return (
     <>
@@ -51,11 +51,11 @@ export default function LoginAdminForm() {
       )}
       <Modal isOpen={isOpen} onClose={onClose} data-testid="modal">
         <div data-testid="modal">
-          <ModalOverlay/>
+          <ModalOverlay />
           <ModalContent
             maxW="400px"
             m="2em auto"
-            border='1px solid gray'
+            border="1px solid gray"
             borderRadius="5px"
             p="1em"
             pt="2em"
@@ -71,7 +71,7 @@ export default function LoginAdminForm() {
             </ModalHeader>
             <ModalBody mt="1em">
               <form onSubmit={handleSubmit(handleFormSubmit)}>
-                <Text fontSize='xl'>Sign in to your account</Text>
+                <Text fontSize="xl">Sign in to your account</Text>
                 <FormControl w="100%" mt="1em">
                   <FormLabel htmlFor="username" mb="0">
                     Email address
@@ -79,9 +79,9 @@ export default function LoginAdminForm() {
                   <Input
                     w="100%"
                     h="30px"
-                    type='email'
+                    type="email"
                     id="username"
-                    {...register('username', {required: true})}
+                    {...register('username', { required: true })}
                   />
                 </FormControl>
                 <FormControl w="100%" mt="1em">
@@ -90,10 +90,10 @@ export default function LoginAdminForm() {
                   </FormLabel>
                   <Input
                     w="100%"
-                    type='password'
+                    type="password"
                     id="password"
                     h="30px"
-                    {...register('password', {required: true})}
+                    {...register('password', { required: true })}
                   />
                 </FormControl>
                 <Flex mt="1em" w="100%" justifyContent="space-between">
@@ -117,5 +117,5 @@ export default function LoginAdminForm() {
         </div>
       </Modal>
     </>
-  )
+  );
 }

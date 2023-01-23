@@ -1,65 +1,72 @@
-import { useState, useEffect } from "react";
-import { IFormValuesRegisterUser } from "@interfaces/form-values-register-user";
-import { ICountry } from "@interfaces/country";
+import { ViewIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
+  Divider,
   Flex,
   FormLabel,
   Grid,
   Input,
-  Select,
-  Divider,
   InputGroup,
-  Link,
+  Select,
   Text,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useEffect, useState } from 'react';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
-import { ViewIcon } from "@chakra-ui/icons";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import InputField from '@common/Form/Input';
+import SelectField from '@common/Form/Select';
+import { ICountry } from '@interfaces/country.interfaces';
+import { IFormValuesRegisterUser } from '@interfaces/form-values-register-user.interfaces';
+import { getAllDaysInMonth, months, years } from '@utils/form-data.utils';
 
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import InputField from "@common/Form/Input";
-import SelectField from "@common/Form/Select";
-import { years, months, getAllDaysInMonth } from "@utils/form-data";
+interface IRegisterForm {
+  onSubmit: SubmitHandler<IFormValuesRegisterUser>;
+}
 
 const yupSchema = yup
-  .object()
-  .shape({
+  .object({
     firstName: yup.string().required(),
     lastName: yup.string().required(),
-    password: yup.string().required().min(3, "Password must be at 3 char long"),
+    password: yup.string().required().min(3, 'Password must be at 3 char long'),
     repeatPassword: yup
       .string()
       .required()
-      .oneOf([yup.ref("password")], "Passwords does not match"),
-    yearOfBirth: yup.string().required(),
-    monthOfBirth: yup.string().required(),
-    dayOfBirth: yup.string().required(),
+      .oneOf([yup.ref('password')], 'Passwords does not match'),
+    yearOfBirth: yup.number().required(),
+    monthOfBirth: yup.number().required(),
+    dayOfBirth: yup.number().required(),
     telNumber: yup.string().required(),
     telCode: yup.string().required(),
+    country: yup.string().required(),
+    email: yup.string().required().email(),
+    question: yup.string().required(),
+    answer: yup.string().required(),
   })
   .required();
 
-function RegisterForm({
-  onSubmit,
-}: {
-  onSubmit: SubmitHandler<IFormValuesRegisterUser>;
-}) {
-  const fetchCountries = async () => {
-    const countriesRequest = await fetch("https://restcountries.com/v2/all");
-    const countriesData = await countriesRequest.json();
+type TCountryName = {
+  name: string;
+  callingCodes: string[];
+};
 
-    const countriesList = countriesData.map(
-      ({ name, callingCodes }: ICountry) => {
-        return { name, callingCodes };
-      }
-    );
-    setCountries(countriesList);
+const RegisterForm = ({ onSubmit }: IRegisterForm) => {
+  const [countries, setCountries] = useState<TCountryName[]>();
+
+  const fetchCountries = () => {
+    fetch('https://restcountries.com/v2/all')
+      .then((response) => response.json())
+      .then((countriesData: ICountry[]) => {
+        const countriesList = countriesData.map((country: ICountry) => ({
+          name: country.name,
+          callingCodes: country.callingCodes,
+        }));
+        setCountries(countriesList);
+      })
+      .catch((err) => console.log(err));
   };
-
-  const [countries, setCountries] = useState<ICountry[]>();
 
   useEffect(() => {
     fetchCountries();
@@ -77,23 +84,21 @@ function RegisterForm({
   const [show, setShow] = useState(false);
   const handleViewClick = () => setShow(!show);
 
-  const monthsOptions = months.map((i) => {
-    return (
-      <option value={i + 1} key={i + 1}>
-        {new Date(0, i + 1, 0).toLocaleDateString("en", { month: "long" })}
-      </option>
-    );
-  });
+  const monthsOptions = months.map((i) => (
+    <option value={i + 1} key={i + 1}>
+      {new Date(0, i + 1, 0).toLocaleDateString('en', { month: 'long' })}
+    </option>
+  ));
 
   const yearsOptions = years.map((year) => (
-    <option style={{ marginLeft: "2rem" }} key={year} value={year}>
+    <option style={{ marginLeft: '2rem' }} key={year} value={year}>
       {year}
     </option>
   ));
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} name="register">
+      <form onSubmit={() => methods.handleSubmit(onSubmit)} name="register">
         <Flex columnGap={2}>
           <InputField name="firstName" label="First name" />
           <InputField name="lastName" label="Last name" />
@@ -103,10 +108,10 @@ function RegisterForm({
             name="dayOfBirth"
             label="Day"
             options={getAllDaysInMonth(
-              methods.watch("monthOfBirth"),
-              methods.watch("yearOfBirth")
+              methods.watch('monthOfBirth'),
+              methods.watch('yearOfBirth')
             ).map((day, i) => (
-              <option key={i + 1}>{i + 1}</option>
+              <option key={`${Date.now()}`}>{i + 1}</option>
             ))}
           />
           <SelectField
@@ -132,9 +137,8 @@ function RegisterForm({
             borderRadius="4px"
             id="country"
             aria-label="country"
-            {...methods.register("country")}
+            {...methods.register('country')}
           >
-            <option value=""></option>
             {countries &&
               countries.map(({ name }) => <option key={name}>{name}</option>)}
           </Select>
@@ -150,7 +154,7 @@ function RegisterForm({
           )}
         </Box>
         <Flex columnGap={2}>
-          <InputField name="email" label="E-mail Adress" type="email" />
+          <InputField name="email" label="E-mail Adress" typeField="email" />
           <Box width="100%">
             <FormLabel
               color="#716f6f"
@@ -181,19 +185,16 @@ function RegisterForm({
                 width="40%"
                 aria-label="telCode"
                 id="telCode"
-                {...methods.register("telCode")}
+                {...methods.register('telCode')}
               >
-                <option value=""></option>
                 {countries &&
-                  countries.map(({ callingCodes }) => {
-                    return callingCodes.map((code) => {
-                      return (
-                        <option value={`+${code}`} key={code}>
-                          +{code}
-                        </option>
-                      );
-                    });
-                  })}
+                  countries.map(({ callingCodes }) =>
+                    callingCodes.map((code) => (
+                      <option value={`+${code}`} key={code}>
+                        +{code}
+                      </option>
+                    ))
+                  )}
               </Select>
               <Input
                 border="1px solid #D9D9D9"
@@ -203,8 +204,8 @@ function RegisterForm({
                 type="tel"
                 placeholder="(xxx) XXX XX  XX"
                 aria-label="tel"
-                {...methods.register("telNumber")}
-              ></Input>
+                {...methods.register('telNumber')}
+              />
             </Flex>
             {methods.formState.errors?.telNumber && (
               <Text color="#E32E22" fontWeight="400" fontSize="1rem">
@@ -237,8 +238,8 @@ function RegisterForm({
                 borderRadius="4px"
                 id="password"
                 aria-label="password"
-                type={show ? "text" : "password"}
-                {...methods.register("password")}
+                type={show ? 'text' : 'password'}
+                {...methods.register('password')}
               />
               <ViewIcon
                 onClick={() => handleViewClick()}
@@ -247,7 +248,7 @@ function RegisterForm({
                 position="absolute"
                 right="0.5rem"
                 top="0.8rem"
-                _hover={{ color: "#0A66C2" }}
+                _hover={{ color: '#0A66C2' }}
               />
             </InputGroup>
             {methods.formState.errors?.password && (
@@ -273,8 +274,8 @@ function RegisterForm({
                 borderRadius="0.25rem"
                 aria-label="repeatPassword"
                 id="repeatPassword"
-                type={show ? "text" : "password"}
-                {...methods.register("repeatPassword")}
+                type={show ? 'text' : 'password'}
+                {...methods.register('repeatPassword')}
               />
               <ViewIcon
                 onClick={handleViewClick}
@@ -283,7 +284,7 @@ function RegisterForm({
                 position="absolute"
                 right="0.5rem"
                 top="0.8rem"
-                _hover={{ color: "#0A66C2" }}
+                _hover={{ color: '#0A66C2' }}
               />
             </InputGroup>
             {methods.formState.errors?.repeatPassword && (
@@ -293,7 +294,7 @@ function RegisterForm({
             )}
           </Box>
         </Flex>
-        <Flex></Flex>
+        <Flex />
         <Flex columnGap={2} my={5}>
           <Box width="100%">
             <FormLabel
@@ -311,10 +312,8 @@ function RegisterForm({
               borderRadius="4px"
               id="question"
               aria-label="question"
-              {...methods.register("question")}
-            >
-              <option></option>
-            </Select>
+              {...methods.register('question')}
+            />
             {methods.formState.errors?.question && (
               <Text color="#E32E22" fontWeight="400" fontSize="1rem">
                 {methods.formState.errors.question.message}
@@ -326,10 +325,10 @@ function RegisterForm({
           </Box>
         </Flex>
         <Flex align="flex-end" flexDirection="column">
-          <Link color="#0A66C2" href="#" fontSize="1.2rem">
-            By clicking “Create Account”, I agree to{" "}
+          <Button color="#0A66C2" fontSize="1.2rem">
+            By clicking “Create Account”, I agree to
             <u>Terms and Conditions.</u>
-          </Link>
+          </Button>
           <Button
             mt={4}
             colorScheme="teal"
@@ -345,6 +344,6 @@ function RegisterForm({
       </form>
     </FormProvider>
   );
-}
+};
 
 export default RegisterForm;

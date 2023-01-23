@@ -1,17 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { App } from "@components/App";
-import "./index.css";
-import { ChakraProvider } from "@chakra-ui/react";
-import { BrowserRouter } from "react-router-dom";
-import { Footer } from "@components/Footer";
-import { QueryClient, QueryClientProvider } from "react-query";
-import theme from "@utils/theme";
-import "@fontsource/open-sans/700.css";
+import { ChakraProvider } from '@chakra-ui/react';
+import '@fontsource/open-sans/700.css';
+import { StrictMode } from 'react';
+import * as ReactDOM from 'react-dom/client';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { BrowserRouter } from 'react-router-dom';
+
+import { App } from '@components/App';
+import theme from '@utils/theme.utils';
+
+import './index.css';
 
 const queryClient = new QueryClient();
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <StrictMode>
     <ChakraProvider theme={theme}>
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
@@ -19,5 +20,5 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         </QueryClientProvider>
       </BrowserRouter>
     </ChakraProvider>
-  </React.StrictMode>
+  </StrictMode>
 );

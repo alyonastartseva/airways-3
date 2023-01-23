@@ -1,16 +1,16 @@
-import { Box, FormLabel, Input, Text } from "@chakra-ui/react";
-import { useFormContext } from "react-hook-form";
+import { Box, FormLabel, Input, Text } from '@chakra-ui/react';
+import { useFormContext } from 'react-hook-form';
 
 interface IInputFieldProps {
   name: string;
   label: string;
-  type?: string;
+  typeField?: string;
 }
 
-function InputField({ name, label, type = "" }: IInputFieldProps) {
+function InputField({ name, label, typeField = '' }: IInputFieldProps) {
   const {
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useFormContext();
 
   return (
@@ -29,7 +29,7 @@ function InputField({ name, label, type = "" }: IInputFieldProps) {
         boxShadow="0px 2px 2px rgba(0, 0, 0, 0.25)"
         borderRadius="4px"
         id={name}
-        type={type}
+        type={typeField}
         aria-label={name}
         {...register(name)}
       />

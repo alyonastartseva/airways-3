@@ -12,4 +12,6 @@ export interface IFormValuesRegisterUser {
   repeatPassword: string;
   question: string;
   answer: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
 }

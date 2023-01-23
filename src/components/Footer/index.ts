@@ -1,2 +1,1 @@
-export * from "@components/Footer/Footer";
-export * from "@/components/Footer/Full/Full";
+export { default as Footer } from './Footer';

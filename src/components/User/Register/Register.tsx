@@ -1,27 +1,26 @@
 import {
-  useDisclosure,
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Box,
+  CloseButton,
   Flex,
   Grid,
   Heading,
-  Text,
   Image,
   Link,
-  AlertIcon,
-  CloseButton,
-  AlertTitle,
-  AlertDescription,
-  Alert,
   SlideFade,
-} from "@chakra-ui/react";
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
 
-import penIcon from "@images/svg/pen.svg";
-import chevronIcon from "@images/svg/chevron.svg";
-
-import { RegisterForm } from "../RegisterForm";
-import { IFormValuesRegisterUser } from "@interfaces/form-values-register-user";
-import flightsService from "@services/flights-service";
-import { prepareFormData } from "@utils/form-data";
+import { RegisterForm } from '@components/User/RegisterForm';
+import chevronIcon from '@images/svg/chevron.svg';
+import penIcon from '@images/svg/pen.svg';
+import { IFormValuesRegisterUser } from '@interfaces/form-values-register-user.interfaces';
+import AviasalesService from '@services/flights-service';
+import { prepareFormData } from '@utils/form-data.utils';
 
 function Register() {
   const {
@@ -32,12 +31,13 @@ function Register() {
 
   const onSubmit = async (values: IFormValuesRegisterUser) => {
     const data = prepareFormData(values);
-    await flightsService.createUserAsPassenger(data).then(() => onOpen());
+    const avia = new AviasalesService();
+    await avia.createUserAsPassenger(data).then(() => onOpen());
   };
 
   return (
     <Box>
-      <Grid my={5} gridTemplateColumns={"7fr 6fr"}>
+      <Grid my={5} gridTemplateColumns="7fr 6fr">
         <Box>
           <Box mx={10}>
             {isVisible && (
@@ -47,7 +47,7 @@ function Register() {
                   <Box w="100%">
                     <AlertTitle>Success!</AlertTitle>
                     <AlertDescription>
-                    You have been registered
+                      You have been registered
                     </AlertDescription>
                   </Box>
                   <CloseButton
@@ -71,7 +71,7 @@ function Register() {
                 </Text>
               </Flex>
             </Box>
-            <RegisterForm onSubmit={onSubmit}/>
+            <RegisterForm onSubmit={onSubmit} />
           </Box>
         </Box>
         <Box my="2rem" p="3rem 5rem">

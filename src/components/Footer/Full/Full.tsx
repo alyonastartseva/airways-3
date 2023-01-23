@@ -1,31 +1,39 @@
-import { RedButton } from "@/common/RedButton/RedButton";
-import { IDeparture, IReturn, TAdditionalServices } from "@/interfaces/footer";
-import { Box, Heading, Text, Image, Flex } from "@chakra-ui/react";
-import Dayjs from "dayjs";
-import React, { FC, useState } from "react";
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Box, Flex, Heading, Text } from '@chakra-ui/react';
+import dayjs from 'dayjs';
+import { FC, useState } from 'react';
 
-interface IProps {
+import { RedButton } from '@common/RedButton/RedButton';
+import {
+  IDeparture,
+  ITickerReturn,
+  TAdditionalServices,
+} from '@interfaces/footer.interfaces';
+
+interface IFullProps {
   departure?: IDeparture;
-  return?: IReturn;
+  ticketReturn?: ITickerReturn;
   additional?: TAdditionalServices;
 }
 
-export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
+const Full: FC<IFullProps> = ({ additional, departure, ticketReturn }) => {
   const [details, setDetails] = useState(false);
 
   const { to, from, date, time, code, type, price, passenger } = departure!;
 
   const allAdditional = additional?.reduce((acc, item) => acc + item[1], 0);
   const total = additional
-    ? price + ret?.price! + allAdditional!
-    : price + ret?.price!;
+    ? price + ticketReturn!.price + allAdditional!
+    : price + ticketReturn!.price!;
 
-  const dateText = Dayjs(date).format("D MMM, ") + date.slice(0, 2);
-  const dateText2 = ret && Dayjs(ret.date).format("D MMM, ") + date.slice(0, 2);
+  const dateText = dayjs(date).format('D MMM, ') + date.slice(0, 2);
+  const dateText2 =
+    ticketReturn &&
+    dayjs(ticketReturn.date).format('D MMM, ') + date.slice(0, 2);
 
   const toggleDetails = (event: React.MouseEvent): void => {
     event.stopPropagation();
-    setDetails((details) => !details);
+    setDetails((prop) => !prop);
   };
   return (
     <>
@@ -42,26 +50,26 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
             </Box>
           </Flex>
           <Box h="100%" w="1px" bg="#fff">
-            {" "}
+            {' '}
           </Box>
-          {ret ? (
+          {ticketReturn ? (
             <Flex columnGap="1.25rem">
               <Heading fontSize="1rem">Return</Heading>
-              <Heading fontSize="1rem">{`${ret.from} - ${ret.to}`}</Heading>
+              <Heading fontSize="1rem">{`${ticketReturn.from} - ${ticketReturn.to}`}</Heading>
               <Box fontSize=".750rem">
                 <Text position="relative">{dateText2}</Text>
-                <Text>{ret.time}</Text>
-                <Text>{ret.type}</Text>
-                <Text position="relative">{ret.code}</Text>
+                <Text>{ticketReturn.time}</Text>
+                <Text>{ticketReturn.type}</Text>
+                <Text position="relative">{ticketReturn.code}</Text>
               </Box>
             </Flex>
           ) : (
             <Text color="#EE5F5F">Select Return Flight</Text>
           )}
-          {departure && ret && (
+          {departure && ticketReturn && (
             <>
               <Box h="100%" w="1px" bg="#fff">
-                {" "}
+                {' '}
               </Box>
               <Text
                 role="button"
@@ -117,13 +125,13 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
                 fontWeight="700"
                 as="h3"
               >
-                {price + ret?.price!}
+                {price + ticketReturn!.price!}
               </Heading>
               <Text textAlign="right" color="#D9D9D9">
-                {((price + ret?.price!) / 100) * 95}
+                {((price + ticketReturn!.price!) / 100) * 95}
               </Text>
               <Text textAlign="right" color="#D9D9D9">
-                {((price + ret?.price!) / 100) * 5}
+                {((price + ticketReturn!.price!) / 100) * 5}
               </Text>
               <Heading
                 fontSize="1rem"
@@ -142,7 +150,7 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
           </Flex>
         )}
         <Flex columnGap="1.5rem">
-          {departure && ret && (
+          {departure && ticketReturn && (
             <>
               <Box>
                 <Text fontSize=".875rem">
@@ -152,7 +160,7 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
               </Box>
               <RedButton
                 text="Confirm"
-                clickHandler={() => alert("Confirmed")}
+                clickHandler={() => alert('Confirmed')}
               />
             </>
           )}
@@ -161,3 +169,5 @@ export const Full: FC<IProps> = ({ additional, departure, return: ret }) => {
     </>
   );
 };
+
+export default Full;

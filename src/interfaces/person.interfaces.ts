@@ -1,4 +1,4 @@
-export interface IPerson {
+export type TPerson = {
   id: number;
   firstName?: string;
   lastName?: string;
@@ -12,4 +12,4 @@ export interface IPerson {
     passportIssuingDate?: string;
     serialNumberPassport?: string;
   };
-}
+};

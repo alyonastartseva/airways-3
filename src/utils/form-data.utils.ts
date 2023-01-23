@@ -1,7 +1,8 @@
-import { IFormValuesRegisterUser } from "@interfaces/form-values-register-user";
-import { format } from "date-fns";
+import dayjs from 'dayjs';
 
-const getAllDaysInMonth = (month: any, year: any) =>
+import { IFormValuesRegisterUser } from '@interfaces/form-values-register-user.interfaces';
+
+const getAllDaysInMonth = (month: number, year: number) =>
   Array.from(
     { length: new Date(year, month, 0).getDate() },
     (_, i) => new Date(year, month - 1, i + 1)
@@ -26,13 +27,12 @@ const prepareFormData = (values: IFormValuesRegisterUser) => {
     password,
     question,
     email,
-    country
+    country,
   } = values;
   const phoneNumber = `${telCode} ${telNumber}`;
-  const birthDate = format(
-    new Date(yearOfBirth, monthOfBirth - 1, dayOfBirth),
-    "yyyy-MM-dd"
-  );
+  const birthDate = dayjs(
+    new Date(yearOfBirth, monthOfBirth - 1, dayOfBirth)
+  ).format('yyyy-MM-dd');
   const data = {
     firstName,
     lastName,
@@ -42,9 +42,9 @@ const prepareFormData = (values: IFormValuesRegisterUser) => {
     birthDate,
     email,
     passport: {
-      passportIssuingCountry: country
+      passportIssuingCountry: country,
     },
-    roles: [{ id: 2, name: "ROLE_PASSENGER" }],
+    roles: [{ id: 2, name: 'ROLE_PASSENGER' }],
   };
   return data;
 };
