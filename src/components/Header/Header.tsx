@@ -2,7 +2,6 @@ import { Box, Image, Text, Button } from '@chakra-ui/react';
 
 const Header = () => (
   <Box
-    w={1455}
     h={75}
     display="flex"
     bg="#04396D"
