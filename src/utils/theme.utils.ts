@@ -1,9 +1,8 @@
-/* eslint-disable quotes */
 import { extendTheme } from '@chakra-ui/react';
 
 const theme = extendTheme({
   fonts: {
-    body: `'Open Sans', sans-serif`,
+    body: `${'Open Sans'}, sans-serif`,
   },
 });
 
