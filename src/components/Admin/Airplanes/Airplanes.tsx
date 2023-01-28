@@ -30,42 +30,31 @@ import {
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 
-import { TPerson } from '@/interfaces/person.interfaces';
-import AviasalesService from '@/services/flights-service';
-import { getVisiblePages } from '@/utils/pagination.utils';
+import AviasalesService from '@services/flights-service';
+import { getVisiblePages } from '@utils/pagination.utils';
+import { TPlane } from '@interfaces/plane.interfaces';
 
-const Users = () => {
-  const columnHelper = createColumnHelper<TPerson>();
+const Airplanes = () => {
+  const columnHelper = createColumnHelper<TPlane>();
   const columns = [
     columnHelper.accessor('id', {
       cell: (info) => info.getValue(),
       header: 'ID',
     }),
-    columnHelper.accessor(
-      (row) =>
-        `${row.firstName ?? ''} ${row.lastName ?? ''} ${row.middleName ?? ''} `,
-      {
-        id: 'Имя, Фамилия, Отчество',
-      }
-    ),
-    columnHelper.accessor((row) => row.roles, {
-      id: 'Роль',
-      cell: (info) =>
-        info
-          .getValue()
-          .map((role) => role.name)
-          .join(' '),
+    columnHelper.accessor('aircraftNumber', {
+      cell: (info) => info.getValue(),
+      header: 'Номер',
     }),
-    columnHelper.accessor('gender', {
-      header: 'Пол',
+    columnHelper.accessor('model', {
+      header: 'Модель',
       cell: (info) => info.getValue<string>(),
     }),
-    columnHelper.accessor('phoneNumber', {
-      header: 'Телефон',
+    columnHelper.accessor('modelYear', {
+      header: 'Год модели',
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor('birthDate', {
-      header: 'Дата рождения',
+    columnHelper.accessor('flightRange', {
+      header: 'Дальность полета',
       cell: (info) => info.getValue(),
     }),
     columnHelper.display({
@@ -101,10 +90,11 @@ const Users = () => {
   ];
   const [{ pageIndex, pageSize }, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 4,
+    pageSize: 10,
   });
   const avia = new AviasalesService();
-  const { isLoading, data } = useQuery('users', () => avia.getUsers());
+  const { isLoading, data } = useQuery('planes', () => avia.getPlanes());
+
   const table = useReactTable({
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     data:
@@ -131,12 +121,12 @@ const Users = () => {
         <Flex my={5} align="center" justify="space-between" w="100%">
           <Box>
             <Heading color="rgba(47,79,79)" as="h4" size="md">
-              Пользователи
+              Самолеты
             </Heading>
           </Box>
           <Box>
             <Button border="1px solid rgba(247, 79, 79, .2)">
-              Добавить пользователя
+              Добавить самолет +
             </Button>
           </Box>
         </Flex>
@@ -177,7 +167,7 @@ const Users = () => {
               ))}
             </Tbody>
           </Table>
-          <Flex my={8}>
+          <Flex align="center" justifyContent="center" my={8}>
             <Button
               mx={1}
               className="border rounded p-1"
@@ -196,10 +186,10 @@ const Users = () => {
               {getVisiblePages(
                 pageIndex,
                 Math.ceil(data.length / pageSize)
-              ).map((page) => (
+              ).map((page, index) => (
                 <Button
                   mx={1}
-                  key={`page-${Date.now()}}`}
+                  key={`page-${Date.now()}+${index}`}
                   onClick={() => setPaginationData(page - 1)}
                 >
                   {page}
@@ -245,4 +235,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Airplanes;
