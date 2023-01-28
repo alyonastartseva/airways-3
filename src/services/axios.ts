@@ -31,7 +31,7 @@ clientInstance.interceptors.request.use(
     }
     config.headers.set(
       'Authorization',
-      `Bearer ${localStorage.getItem('accessToken')}`
+      `Bearer ${localStorage.getItem('token')}`
     );
     return config;
   },
@@ -49,7 +49,7 @@ export const getToken = async () => {
       password: 'admin',
       username: 'admin@mail.ru',
     });
-    localStorage.setItem('accessToken', response.data.accessToken);
+    localStorage.setItem('token', response.data.accessToken);
   } catch (err) {
     console.log(err);
   }

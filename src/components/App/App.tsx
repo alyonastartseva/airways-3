@@ -5,10 +5,12 @@ import { Footer } from '@components/Footer';
 import { UsersPage } from '@/pages/Admin/UsersPage';
 import { AirplanesPage } from '@/pages/Admin/AirplanesPage';
 import { RegisterPage } from '@/pages/User/RegisterPage';
+import { getToken } from '@services/axios';
 
 const queryClient = new QueryClient({});
 
 const App = () => {
+  getToken();
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>
