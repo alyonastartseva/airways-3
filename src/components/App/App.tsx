@@ -10,7 +10,6 @@ import { getToken } from '@services/axios';
 const queryClient = new QueryClient({});
 
 const App = () => {
-  getToken();
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>
