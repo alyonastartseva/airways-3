@@ -1,6 +1,6 @@
 import { Box, Image, Text, Button } from '@chakra-ui/react';
 
-import logo from '../../assets/images/logo.png';
+import headerLogo from '../../assets/images/logo.png';
 
 const Header = () => (
   <Box
@@ -17,7 +17,7 @@ const Header = () => (
         height="3.8em"
         mt="1em"
         ml="1em"
-        src={logo}
+        src={headerLogo}
       />
       <Text
         className="name"
