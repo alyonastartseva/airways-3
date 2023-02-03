@@ -19,6 +19,7 @@
     * Eslint
     * React-Query
     * Axios
+    * Tailwindcss
 
 ## Требование к запуску проекта
 
