@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import { IFormPassanger } from '@/interfaces/form-passanger.interfaces';
 class AviasalesService {
   async getAuthorizationToken(): Promise<string> {
     try {
@@ -15,9 +16,8 @@ class AviasalesService {
   }
 
   getUsers = async () => {
-    if (!localStorage.getItem('token')) {
-      await this.getAuthorizationToken();
-    }
+    await this.getAuthorizationToken();
+
     const token: string | null = localStorage.getItem('token');
     try {
       const response = await axios.get('http://localhost:8080/api/user', {
@@ -69,16 +69,7 @@ class AviasalesService {
     }
   };
 
-  createUserAsPassenger = async (user: {
-    firstName: string;
-    lastName: string;
-    password: string;
-    question: string;
-    phoneNumber: string;
-    birthDate: string;
-    email: string;
-    passport: { passportIssuingCountry: string };
-  }) => {
+  static createUserAsPassenger = async (user: IFormPassanger) => {
     try {
       const response = await axios.post('http://localhost:8080/api/user', {
         ...user,

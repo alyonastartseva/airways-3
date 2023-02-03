@@ -20,6 +20,14 @@ import {
   Th,
   Thead,
   Tr,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
@@ -29,12 +37,25 @@ import {
 } from '@tanstack/react-table';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
+import { useForm } from 'react-hook-form';
 
-import { TPerson } from '@/interfaces/person.interfaces';
-import AviasalesService from '@/services/flights-service';
-import { getVisiblePages } from '@/utils/pagination.utils';
+import AviasalesService from '@services/flights-service';
+import { TPerson } from '@interfaces/person.interfaces';
+import { getVisiblePages } from '@utils/pagination.utils';
+import { IFormPassanger } from '@/interfaces/form-passanger.interfaces';
+
+import { UserInput } from '../UserInput';
 
 const Users = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { handleSubmit, register } = useForm();
+
+  function onSubmit(values: IFormPassanger) {
+    AviasalesService.createUserAsPassenger(values);
+    onClose();
+  }
+
   const columnHelper = createColumnHelper<TPerson>();
   const columns = [
     columnHelper.accessor('id', {
@@ -125,9 +146,63 @@ const Users = () => {
         }));
       }
     };
+    interface IInputProps {
+      name: string;
+      regValue: string;
+      typeField?: string;
+    }
+
+    const InputsStorage: IInputProps[] = [
+      { name: 'Имя', regValue: 'firstname' },
+      { name: 'Фамилия', regValue: 'lastName' },
+      { name: 'Пароль', regValue: 'password', typeField: 'password' },
+      { name: 'Секретный вопрос', regValue: 'question' },
+      { name: 'Телефон', regValue: 'phoneNumber', typeField: 'tel' },
+      { name: 'Дата рождения', regValue: 'birthDate', typeField: 'date' },
+      { name: 'Электронная почта', regValue: 'email', typeField: 'email' },
+      {
+        name: 'Гражданство вопрос',
+        regValue: 'passport.passportIssuingCountry',
+      },
+    ];
 
     return (
       <Box my={10} mx={10}>
+        <Modal isOpen={isOpen} onClose={onClose} size="xl">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Создание пользователя</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody pb={0}>
+                {InputsStorage.map((item: IInputProps) => (
+                  <UserInput
+                    register={register}
+                    name={item.name}
+                    key={`${item.name} ${item.regValue}`}
+                    regValue={item.regValue}
+                    typeField={item.typeField}
+                  />
+                ))}
+              </ModalBody>
+
+              <ModalFooter display="flex" flexDirection="column">
+                <Button
+                  type="submit"
+                  mr={3}
+                  margin="auto"
+                  width="100%"
+                  marginBottom={5}
+                >
+                  Сохранить
+                </Button>
+                <Button onClick={onClose} width="100%">
+                  Отменить
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </form>
+        </Modal>
         <Flex my={5} align="center" justify="space-between" w="100%">
           <Box>
             <Heading color="rgba(47,79,79)" as="h4" size="md">
@@ -135,7 +210,12 @@ const Users = () => {
             </Heading>
           </Box>
           <Box>
-            <Button border="1px solid rgba(247, 79, 79, .2)">
+            <Button
+              onClick={() => {
+                onOpen();
+              }}
+              border="1px solid rgba(247, 79, 79, .2)"
+            >
               Добавить пользователя
             </Button>
           </Box>
