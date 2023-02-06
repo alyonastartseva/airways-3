@@ -1,5 +1,5 @@
 import { ILoginRequest, ILoginResponse } from '@interfaces/login.interfaces';
-import axiosInstance from '@services/axios';
+import { axiosInstance } from '@services/axios';
 import ERoutes from '@services/endpoints';
 
 export const useAuthAdmin = () => {
