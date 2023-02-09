@@ -5,6 +5,7 @@ import { UsersPage } from '@pages/Admin/UsersPage';
 import { RegisterPage } from '@pages/User/RegisterPage';
 import { SearchPage } from '@pages/User/SearchPage';
 import Layout from '@/layout/layout';
+import { AirplanesPage } from '@/pages/Admin/AirplanesPage';
 
 const queryClient = new QueryClient({});
 
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="searchService" element={<SearchPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="admin" element={<UsersPage />} />
+          <Route path="admin/airplanes" element={<AirplanesPage />} />
         </Route>
       </Routes>
     </QueryClientProvider>
