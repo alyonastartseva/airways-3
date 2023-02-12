@@ -52,7 +52,8 @@ const Users = () => {
   const { handleSubmit, register } = useForm();
 
   function onSubmit(values: IFormPassanger) {
-    AviasalesService.createUserAsPassenger(values);
+    const avia = new AviasalesService();
+    avia.createUserAsPassenger(values);
     onClose();
   }
 
