@@ -1,16 +1,16 @@
-import { Box, Flex, Image, Text, Link } from '@chakra-ui/react';
+import { Box, Flex, Image, Link, Text } from '@chakra-ui/react';
 
-import background from '@images/search-page-bg.png';
+import aSImage from '@assets/images/articles/ASImage.png';
+import bestOffersImage from '@assets/images/articles/BestOffersImage.png';
 import discoverImage from '@assets/images/articles/discoverImage.png';
 import holidayImage from '@assets/images/articles/holidayImage.png';
-import bestOffersImage from '@assets/images/articles/bestOffersImage.png';
-import aSImage from '@assets/images/articles/aSImage.png';
 import facebookIcon from '@assets/images/svg/social/facebook.svg';
-import twitterIcon from '@assets/images/svg/social/twitter.svg';
-import linkedinIcon from '@assets/images/svg/social/linkedin.svg';
 import instagramIcon from '@assets/images/svg/social/instagram.svg';
+import linkedinIcon from '@assets/images/svg/social/linkedin.svg';
+import twitterIcon from '@assets/images/svg/social/twitter.svg';
 import youtubeIcon from '@assets/images/svg/social/youtube.svg';
 import { SearchPageTabs } from '@components/Search/SearchPageTabs';
+import background from '@images/search-page-bg.png';
 import { IArticle } from '@interfaces/search.interfaces';
 
 import { ArticleCard } from './ArticleCard';

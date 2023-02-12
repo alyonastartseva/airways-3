@@ -1,33 +1,33 @@
 import {
-  Button,
-  FormControl,
-  FormLabel,
-  useDisclosure,
-  ModalBody,
-  ModalCloseButton,
-  ModalHeader,
-  ModalContent,
-  ModalOverlay,
-  Modal,
-  Input,
-  Text,
   Box,
+  Button,
   Checkbox,
   Flex,
+  FormControl,
+  FormLabel,
+  Input,
   Link,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useDisclosure,
 } from '@chakra-ui/react';
-import { useMutation } from 'react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
 
 import { useAuthAdmin } from '@services/auth';
 
-export interface IUserForm {
+interface IUserForm {
   username: string;
   password: string;
   checkbox: boolean;
 }
 
-export default function LoginAdminForm() {
+const LoginAdminForm = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { loginAdmin } = useAuthAdmin();
   const mutation = useMutation(['login'], loginAdmin);
@@ -118,4 +118,6 @@ export default function LoginAdminForm() {
       </Modal>
     </>
   );
-}
+};
+
+export default LoginAdminForm;
