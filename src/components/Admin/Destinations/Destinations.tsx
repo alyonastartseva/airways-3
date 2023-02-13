@@ -15,19 +15,80 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverBody,
 } from '@chakra-ui/react';
+import { createColumnHelper } from '@tanstack/react-table';
 import { useQuery } from 'react-query';
 import { useState } from 'react';
+import { AddIcon } from '@chakra-ui/icons';
 
-import searchService from '@services/searchService';
 import { Pagination } from '@components/Pagination';
+import searchService from '@services/searchService';
+import { IDestination } from '@/interfaces/search.interfaces';
 
 const Destinations = () => {
-  const {
-    data: destinations,
-    isError,
-    isLoading,
-  } = useQuery('destination list', searchService.getDestinations);
+  const { data: destinations, isLoading } = useQuery(
+    'destination list',
+    searchService.getDestinations
+  );
+
+  const columnHelper = createColumnHelper<IDestination>();
+  const columns = [
+    columnHelper.accessor('id', {
+      header: 'ID',
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor('countryName', {
+      header: 'Страна',
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor('cityName', {
+      header: 'Город',
+      cell: (info) => info.getValue<string>(),
+    }),
+    columnHelper.accessor('airportName', {
+      header: 'Имя аэропорта',
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor('airportCode', {
+      header: 'Код аэропорта',
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.display({
+      id: 'actions',
+      cell: () => (
+        <Popover>
+          <PopoverTrigger>
+            <Box
+              w="15px"
+              h="15px"
+              cursor="pointer"
+              _after={{ content: '"\\2807"' }}
+            />
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverBody>
+              <Flex flexDirection="column">
+                <Button size="sm" my={1} variant="solid">
+                  Редактировать
+                </Button>
+                <Button size="sm" colorScheme="red">
+                  Удалить
+                </Button>
+              </Flex>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
+      ),
+    }),
+  ];
 
   const borderColor = '1px solid lightgrey';
 
@@ -55,67 +116,70 @@ const Destinations = () => {
       </Flex>
     );
   }
-  if (isError) {
+  if (Array.isArray(destinations?.data) && destinations?.data.length) {
     return (
-      <Flex position="absolute" left="50%" my="10%" justify="center">
-        <Alert status="error">
-          <AlertIcon />
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>Something went wrong</AlertDescription>
-        </Alert>
-      </Flex>
+      <TableContainer my={10} mx={14}>
+        <Flex my={5} align="center" justify="space-between">
+          <Box>
+            <Heading color="rgba(47,79,79)" as="h4" size="md">
+              Место назначения
+            </Heading>
+          </Box>
+          <Box>
+            <Button
+              border={borderColor}
+              borderRadius="4"
+              rightIcon={<AddIcon boxSize="3" />}
+            >
+              Добавить пункт назначения
+            </Button>
+          </Box>
+        </Flex>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th border={borderColor}>ID</Th>
+              <Th border={borderColor}>Страна</Th>
+              <Th border={borderColor}>Город</Th>
+              <Th border={borderColor}>Имя аэропорта</Th>
+              <Th border={borderColor}>Код аэропорта</Th>
+              <Th border={borderColor}>Часовой пояс</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {Array.isArray(destinations?.data) &&
+              destinations?.data.map((item, id) => (
+                <Tr key={id}>
+                  <Td border={borderColor}>{item.id}</Td>
+                  <Td border={borderColor}>{item.countryName}</Td>
+                  <Td border={borderColor}>{item.cityName}</Td>
+                  <Td border={borderColor}>{item.airportName}</Td>
+                  <Td border={borderColor}>{item.airportCode}</Td>
+                  <Td border={borderColor}>{item.timezone}</Td>
+                </Tr>
+              ))}
+          </Tbody>
+        </Table>
+        {Array.isArray(destinations?.data) && destinations?.data.length && (
+          <Pagination
+            data={destinations?.data}
+            pageIndex={pageIndex}
+            pageSize={pageSize}
+            setPaginationData={setPaginationData}
+          />
+        )}
+      </TableContainer>
     );
   }
 
   return (
-    <TableContainer my={10} mx={14}>
-      <Flex my={5} align="center" justify="space-between">
-        <Box>
-          <Heading color="rgba(47,79,79)" as="h4" size="md">
-            Место назначения
-          </Heading>
-        </Box>
-        <Box>
-          <Button border={borderColor} borderRadius="4">
-            Добавить пункт назначения +
-          </Button>
-        </Box>
-      </Flex>
-      <Table>
-        <Thead>
-          <Tr>
-            <Th border={borderColor}>ID</Th>
-            <Th border={borderColor}>Страна</Th>
-            <Th border={borderColor}>Город</Th>
-            <Th border={borderColor}>Имя аэропорта</Th>
-            <Th border={borderColor}>Код аэропорта</Th>
-            <Th border={borderColor}>Часовой пояс</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {destinations?.data?.map((item, id) => {
-            return (
-              <Tr key={id}>
-                <Td border={borderColor}>{item.id}</Td>
-                <Td border={borderColor}>{item.countryName}</Td>
-                <Td border={borderColor}>{item.cityName}</Td>
-                <Td border={borderColor}>{item.airportName}</Td>
-                <Td border={borderColor}>{item.airportCode}</Td>
-                <Td border={borderColor}>{item.timezone}</Td>
-              </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
-      {destinations?.data.length && (
-        <Pagination
-          data={destinations?.data}
-          pageIndex={pageIndex}
-          pageSize={pageSize}
-          setPaginationData={setPaginationData}
-        />
-      )}
-    </TableContainer>
+    <Flex position="absolute" left="50%" my="10%" justify="center">
+      <Alert status="error">
+        <AlertIcon />
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>Something went wrong</AlertDescription>
+      </Alert>
+    </Flex>
   );
 };
 
