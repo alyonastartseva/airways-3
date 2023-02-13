@@ -5,12 +5,12 @@ import {
   CardHeader,
   Flex,
   Heading,
+  Image,
   Link,
   Text,
-  Image,
 } from '@chakra-ui/react';
 
-import arrowLeftIcon from '@assets/images/svg/ArrowLeft.svg';
+import arrowLeftIcon from '@assets/images/svg/arrowLeft.svg';
 
 const CovidCard = () => {
   return (

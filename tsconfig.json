@@ -24,6 +24,7 @@
       "@icons/*": ["src/common/icons/*"],
       "@images/*": ["src/assets/images/*"],
       "@interfaces/*": ["src/interfaces/*"],
+      "@layout/*": ["src/layout/*"],
       "@hooks/*": ["src/hooks/*"],
       "@pages/*": ["src/pages/*"],
       "@services/*": ["src/services/*"],

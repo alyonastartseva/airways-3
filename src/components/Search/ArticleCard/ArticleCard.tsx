@@ -5,11 +5,11 @@ import {
   CardHeader,
   Flex,
   Heading,
-  Text,
   Image,
+  Text,
 } from '@chakra-ui/react';
 
-import arrowLeftIcon from '@assets/images/svg/ArrowLeft.svg';
+import arrowLeftIcon from '@assets/images/svg/arrowLeft.svg';
 import { IArticle } from '@interfaces/search.interfaces';
 
 const ArticleCard: React.FC<IArticle> = (props: IArticle) => {
