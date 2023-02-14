@@ -1,4 +1,4 @@
-import axiosInstance from '@services/axios';
+import { axiosInstance } from '@services/axios';
 import { IDestination, ISearchQuery } from '@interfaces/search.interfaces';
 import { ILoginRequest } from '@interfaces/login.interfaces';
 import ERoutes from '@services/endpoints';
