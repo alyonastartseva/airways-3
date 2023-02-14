@@ -19,23 +19,140 @@ import {
   PopoverTrigger,
   PopoverContent,
   PopoverArrow,
-  PopoverCloseButton,
   PopoverBody,
+  PopoverHeader,
 } from '@chakra-ui/react';
-import { createColumnHelper } from '@tanstack/react-table';
-import { useQuery } from 'react-query';
+import {
+  createColumnHelper,
+  getCoreRowModel,
+  useReactTable,
+  flexRender,
+} from '@tanstack/react-table';
+//import { useQuery } from 'react-query';
 import { useState } from 'react';
-import { AddIcon } from '@chakra-ui/icons';
+import { AddIcon, CloseIcon, EditIcon } from '@chakra-ui/icons';
 
 import { Pagination } from '@components/Pagination';
-import searchService from '@services/searchService';
+// import searchService from '@services/searchService';
 import { IDestination } from '@/interfaces/search.interfaces';
 
 const Destinations = () => {
-  const { data: destinations, isLoading } = useQuery(
-    'destination list',
-    searchService.getDestinations
-  );
+  //  const { data: destinations, isLoading } = useQuery(
+  //    'destination list',
+  //    searchService.getDestinations
+  //  );
+
+  const [{ pageIndex, pageSize }, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+
+  const destinationsMock = [
+    {
+      id: 1,
+      airportCode: '1',
+      airportName: '1',
+      cityName: '1',
+      countryName: '1',
+      timezone: '1',
+    },
+    {
+      id: 1,
+      airportCode: '1',
+      airportName: '1',
+      cityName: '1',
+      countryName: '1',
+      timezone: '1',
+    },
+    {
+      id: 1,
+      airportCode: '1',
+      airportName: '1',
+      cityName: '1',
+      countryName: '1',
+      timezone: '1',
+    },
+    {
+      id: 1,
+      airportCode: '1',
+      airportName: '1',
+      cityName: '1',
+      countryName: '1',
+      timezone: '1',
+    },
+    {
+      id: 1,
+      airportCode: '1',
+      airportName: '1',
+      cityName: '1',
+      countryName: '1',
+      timezone: '1',
+    },
+    {
+      id: 1,
+      airportCode: '1',
+      airportName: '1',
+      cityName: '1',
+      countryName: '1',
+      timezone: '1',
+    },
+    {
+      id: 1,
+      airportCode: '1',
+      airportName: '1',
+      cityName: '1',
+      countryName: '1',
+      timezone: '1',
+    },
+    {
+      id: 1,
+      airportCode: '1',
+      airportName: '1',
+      cityName: '1',
+      countryName: '1',
+      timezone: '1',
+    },
+    {
+      id: 1,
+      airportCode: '1',
+      airportName: '1',
+      cityName: '1',
+      countryName: '1',
+      timezone: '1',
+    },
+    {
+      id: 1,
+      airportCode: '1',
+      airportName: '1',
+      cityName: '1',
+      countryName: '1',
+      timezone: '1',
+    },
+    {
+      id: 1,
+      airportCode: '1',
+      airportName: '1',
+      cityName: '1',
+      countryName: '1',
+      timezone: '1',
+    },
+    {
+      id: 1,
+      airportCode: '1',
+      airportName: '1',
+      cityName: '1',
+      countryName: '1',
+      timezone: '1',
+    },
+    {
+      id: 1,
+      airportCode: '1',
+      airportName: '1',
+      cityName: '1',
+      countryName: '1',
+      timezone: '1',
+    },
+  ];
 
   const columnHelper = createColumnHelper<IDestination>();
   const columns = [
@@ -59,47 +176,109 @@ const Destinations = () => {
       header: 'Код аэропорта',
       cell: (info) => info.getValue(),
     }),
+    columnHelper.accessor('timezone', {
+      header: 'Часовой пояс',
+      cell: (info) => info.getValue(),
+    }),
     columnHelper.display({
       id: 'actions',
       cell: () => (
-        <Popover>
-          <PopoverTrigger>
-            <Box
-              w="15px"
-              h="15px"
-              cursor="pointer"
-              _after={{ content: '"\\2807"' }}
-            />
-          </PopoverTrigger>
-          <PopoverContent>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            <PopoverBody>
-              <Flex flexDirection="column">
-                <Button size="sm" my={1} variant="solid">
-                  Редактировать
-                </Button>
-                <Button size="sm" colorScheme="red">
-                  Удалить
-                </Button>
-              </Flex>
-            </PopoverBody>
-          </PopoverContent>
+        <Popover placement="left-start" arrowSize={10}>
+          {({ onClose }) => (
+            <>
+              <PopoverTrigger>
+                <Box
+                  w="15px"
+                  h="15px"
+                  cursor="pointer"
+                  _after={{ content: '"\\2807"' }}
+                />
+              </PopoverTrigger>
+              <PopoverContent
+                color="#0E153A"
+                border="1px solid #2B2B2B"
+                borderRadius="6px"
+                width="209px"
+                height="100px"
+              >
+                <PopoverArrow border="1px solid #2B2B2B" bgColor="#E2F3F5" />
+                <PopoverHeader
+                  border="none"
+                  borderBottom="1px solid #2B2B2B"
+                  p={0}
+                >
+                  <Button
+                    leftIcon={<EditIcon height="14px" width="14px" />}
+                    border="none"
+                    height="48px"
+                    width="100%"
+                    borderRadius="none"
+                    borderTopLeftRadius="6px"
+                    borderTopRightRadius="6px"
+                    fontSize="14px"
+                    justifyContent="flex-start"
+                    _hover={{
+                      backgroundColor: '#C5E3F6',
+                    }}
+                    bgColor="#E2F3F5"
+                    onClick={onClose}
+                  >
+                    Редактировать
+                  </Button>
+                </PopoverHeader>
+                <PopoverBody border="none" p={0}>
+                  <Button
+                    leftIcon={
+                      <CloseIcon
+                        height="10px"
+                        width="10px"
+                        marginInlineEnd="0.2rem"
+                      />
+                    }
+                    marginInlineEnd="0.9rem"
+                    border="none"
+                    height="49px"
+                    width="100%"
+                    borderRadius="none"
+                    borderBottomLeftRadius="6px"
+                    borderBottomRightRadius="6px"
+                    fontSize="14px"
+                    justifyContent="flex-start"
+                    _hover={{
+                      backgroundColor: '#C5E3F6',
+                    }}
+                    bgColor="#E2F3F5"
+                    onClick={onClose}
+                  >
+                    Удалить
+                  </Button>
+                </PopoverBody>
+              </PopoverContent>
+            </>
+          )}
         </Popover>
       ),
     }),
   ];
 
-  const borderColor = '1px solid lightgrey';
-
-  const [{ pageIndex, pageSize }, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 10,
+  const table = useReactTable({
+    data:
+      destinationsMock.length && Array.isArray(destinationsMock)
+        ? destinationsMock.slice(
+            pageIndex * pageSize,
+            pageIndex * pageSize + pageSize
+          )
+        : [],
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    manualPagination: true,
   });
 
+  const borderColor = '1px solid #DEDEDE';
+
   const setPaginationData = (pageNumber: number) => {
-    if (destinations?.data.length) {
-      const destinationsLength = destinations?.data.length;
+    if (destinationsMock.length) {
+      const destinationsLength = destinationsMock.length;
       if (pageNumber >= 0 && pageNumber < destinationsLength / pageSize) {
         setPagination((prev) => ({
           ...prev,
@@ -109,27 +288,34 @@ const Destinations = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <Flex position="absolute" left="50%" my="10%" justify="center">
-        <Spinner size="xl" />
-      </Flex>
-    );
-  }
-  if (Array.isArray(destinations?.data) && destinations?.data.length) {
+  //if (isLoading) {
+  //  return (
+  //    <Flex position="absolute" left="50%" my="10%" justify="center">
+  //      <Spinner size="xl" />
+  //    </Flex>
+  //  );
+  //}
+
+  if (Array.isArray(destinationsMock) && destinationsMock.length) {
     return (
       <TableContainer my={10} mx={14}>
         <Flex my={5} align="center" justify="space-between">
           <Box>
-            <Heading color="rgba(47,79,79)" as="h4" size="md">
+            <Heading color="#818080" fontWeight="600" size="md">
               Место назначения
             </Heading>
           </Box>
           <Box>
             <Button
               border={borderColor}
-              borderRadius="4"
+              borderRadius="2"
+              bgColor="#F9F9F9"
+              fontSize="14px"
               rightIcon={<AddIcon boxSize="3" />}
+              _hover={{
+                border: `${borderColor}`,
+                boxShadow: '0px 5px 5px rgba(0, 0, 0, 0.06)',
+              }}
             >
               Добавить пункт назначения
             </Button>
@@ -137,32 +323,52 @@ const Destinations = () => {
         </Flex>
         <Table>
           <Thead>
-            <Tr>
-              <Th border={borderColor}>ID</Th>
-              <Th border={borderColor}>Страна</Th>
-              <Th border={borderColor}>Город</Th>
-              <Th border={borderColor}>Имя аэропорта</Th>
-              <Th border={borderColor}>Код аэропорта</Th>
-              <Th border={borderColor}>Часовой пояс</Th>
-            </Tr>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <Tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <Th
+                    border={borderColor}
+                    color="#000000"
+                    key={header.id}
+                    fontSize="14px"
+                    lineHeight="18px"
+                    textTransform="none"
+                    fontWeight="semibold"
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </Th>
+                ))}
+              </Tr>
+            ))}
           </Thead>
           <Tbody>
-            {Array.isArray(destinations?.data) &&
-              destinations?.data.map((item, id) => (
-                <Tr key={id}>
-                  <Td border={borderColor}>{item.id}</Td>
-                  <Td border={borderColor}>{item.countryName}</Td>
-                  <Td border={borderColor}>{item.cityName}</Td>
-                  <Td border={borderColor}>{item.airportName}</Td>
-                  <Td border={borderColor}>{item.airportCode}</Td>
-                  <Td border={borderColor}>{item.timezone}</Td>
-                </Tr>
-              ))}
+            {table.getRowModel().rows.map((row) => (
+              <Tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <Td
+                    border={borderColor}
+                    color="#393939"
+                    fontSize="14px"
+                    lineHeight="18px"
+                    key={cell.id}
+                    textTransform="none"
+                    fontWeight="normal"
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Td>
+                ))}
+              </Tr>
+            ))}
           </Tbody>
         </Table>
-        {Array.isArray(destinations?.data) && destinations?.data.length && (
+        {Array.isArray(destinationsMock) && destinationsMock.length && (
           <Pagination
-            data={destinations?.data}
+            data={destinationsMock}
             pageIndex={pageIndex}
             pageSize={pageSize}
             setPaginationData={setPaginationData}
