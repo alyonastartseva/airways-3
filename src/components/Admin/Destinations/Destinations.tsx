@@ -20,6 +20,7 @@ import {
   PopoverArrow,
   PopoverBody,
   PopoverHeader,
+  Spinner,
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
@@ -27,131 +28,24 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-//import { useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import { useState } from 'react';
 import { AddIcon, CloseIcon, EditIcon } from '@chakra-ui/icons';
 
 import { Pagination } from '@components/Pagination';
-// import searchService from '@services/searchService';
+import searchService from '@services/searchService';
 import { IDestination } from '@/interfaces/search.interfaces';
 
 const Destinations = () => {
-  //  const { data: destinations, isLoading } = useQuery(
-  //    'destination list',
-  //    searchService.getDestinations
-  //  );
+  const { data: destinations, isLoading } = useQuery(
+    'destination list',
+    searchService.getDestinations
+  );
 
   const [{ pageIndex, pageSize }, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
   });
-
-  const destinationsMock = [
-    {
-      id: 1,
-      airportCode: '1',
-      airportName: '1',
-      cityName: '1',
-      countryName: '1',
-      timezone: '1',
-    },
-    {
-      id: 1,
-      airportCode: '1',
-      airportName: '1',
-      cityName: '1',
-      countryName: '1',
-      timezone: '1',
-    },
-    {
-      id: 1,
-      airportCode: '1',
-      airportName: '1',
-      cityName: '1',
-      countryName: '1',
-      timezone: '1',
-    },
-    {
-      id: 1,
-      airportCode: '1',
-      airportName: '1',
-      cityName: '1',
-      countryName: '1',
-      timezone: '1',
-    },
-    {
-      id: 1,
-      airportCode: '1',
-      airportName: '1',
-      cityName: '1',
-      countryName: '1',
-      timezone: '1',
-    },
-    {
-      id: 1,
-      airportCode: '1',
-      airportName: '1',
-      cityName: '1',
-      countryName: '1',
-      timezone: '1',
-    },
-    {
-      id: 1,
-      airportCode: '1',
-      airportName: '1',
-      cityName: '1',
-      countryName: '1',
-      timezone: '1',
-    },
-    {
-      id: 1,
-      airportCode: '1',
-      airportName: '1',
-      cityName: '1',
-      countryName: '1',
-      timezone: '1',
-    },
-    {
-      id: 1,
-      airportCode: '1',
-      airportName: '1',
-      cityName: '1',
-      countryName: '1',
-      timezone: '1',
-    },
-    {
-      id: 1,
-      airportCode: '1',
-      airportName: '1',
-      cityName: '1',
-      countryName: '1',
-      timezone: '1',
-    },
-    {
-      id: 1,
-      airportCode: '1',
-      airportName: '1',
-      cityName: '1',
-      countryName: '1',
-      timezone: '1',
-    },
-    {
-      id: 1,
-      airportCode: '1',
-      airportName: '1',
-      cityName: '1',
-      countryName: '1',
-      timezone: '1',
-    },
-    {
-      id: 1,
-      airportCode: '1',
-      airportName: '1',
-      cityName: '1',
-      countryName: '1',
-      timezone: '1',
-    },
-  ];
 
   const columnHelper = createColumnHelper<IDestination>();
   const columns = [
@@ -262,8 +156,8 @@ const Destinations = () => {
 
   const table = useReactTable({
     data:
-      destinationsMock.length && Array.isArray(destinationsMock)
-        ? destinationsMock.slice(
+      destinations?.data.length && Array.isArray(destinations?.data)
+        ? destinations?.data.slice(
             pageIndex * pageSize,
             pageIndex * pageSize + pageSize
           )
@@ -276,8 +170,8 @@ const Destinations = () => {
   const borderColor = '1px solid #DEDEDE';
 
   const setPaginationData = (pageNumber: number) => {
-    if (destinationsMock.length) {
-      const destinationsLength = destinationsMock.length;
+    if (destinations?.data.length) {
+      const destinationsLength = destinations?.data.length;
       if (pageNumber >= 0 && pageNumber < destinationsLength / pageSize) {
         setPagination((prev) => ({
           ...prev,
@@ -287,15 +181,15 @@ const Destinations = () => {
     }
   };
 
-  //if (isLoading) {
-  //  return (
-  //    <Flex position="absolute" left="50%" my="10%" justify="center">
-  //      <Spinner size="xl" />
-  //    </Flex>
-  //  );
-  //}
+  if (isLoading) {
+    return (
+      <Flex position="absolute" left="50%" my="10%" justify="center">
+        <Spinner size="xl" />
+      </Flex>
+    );
+  }
 
-  if (Array.isArray(destinationsMock) && destinationsMock.length) {
+  if (Array.isArray(destinations?.data) && destinations?.data.length) {
     return (
       <TableContainer my={10} mx={14}>
         <Flex my={5} align="center" justify="space-between">
@@ -365,9 +259,9 @@ const Destinations = () => {
             ))}
           </Tbody>
         </Table>
-        {Array.isArray(destinationsMock) && destinationsMock.length && (
+        {Array.isArray(destinations?.data) && destinations?.data.length && (
           <Pagination
-            data={destinationsMock}
+            data={destinations?.data}
             pageIndex={pageIndex}
             pageSize={pageSize}
             setPaginationData={setPaginationData}
