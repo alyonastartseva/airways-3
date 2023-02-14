@@ -1,9 +1,9 @@
 import { Button, ButtonGroup, Flex } from '@chakra-ui/react';
 
-import { IPagination } from '@/interfaces/pagination.interfaces';
+import { IPagination } from '@interfaces/pagination.interfaces';
 import { getVisiblePages } from '@utils/pagination.utils';
 
-const Pagination = (props: IPagination) => {
+const Pagination = <TData,>(props: IPagination<TData>) => {
   const { data, setPaginationData, pageIndex, pageSize } = props;
   return (
     <Flex my={8}>

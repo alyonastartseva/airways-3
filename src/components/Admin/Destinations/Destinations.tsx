@@ -34,7 +34,7 @@ import { AddIcon, CloseIcon, EditIcon } from '@chakra-ui/icons';
 
 import { Pagination } from '@components/Pagination';
 import searchService from '@services/searchService';
-import { IDestination } from '@/interfaces/search.interfaces';
+import { IDestination } from '@interfaces/search.interfaces';
 
 const Destinations = () => {
   const { data: destinations, isLoading } = useQuery(

@@ -1,4 +1,4 @@
-import { Destinations } from '@/components/Admin/Destinations';
+import { Destinations } from '@components/Admin/Destinations';
 
 function DestinationsPage() {
   return <Destinations />;

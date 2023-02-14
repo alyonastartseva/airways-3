@@ -1,10 +1,11 @@
-import { TPlane } from '@/interfaces/plane.interfaces';
-import { TPerson } from '@/interfaces/person.interfaces';
-
+import { TPerson } from './person.interfaces';
+import { TPlane } from './plane.interfaces';
 import { IDestination } from './search.interfaces';
 
-export interface IPagination {
-  data: TPlane[] | TPerson[] | IDestination[];
+export type TData = TPlane | TPerson | IDestination;
+
+export interface IPagination<Data> {
+  data: Data[];
   pageSize: number;
   pageIndex: number;
   setPaginationData: (pageNumber: number) => void;
