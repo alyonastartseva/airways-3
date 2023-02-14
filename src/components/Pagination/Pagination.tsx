@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Flex } from '@chakra-ui/react';
+import { Button, ButtonGroup, Flex } from '@chakra-ui/react';
 
 import { IPagination } from '@/interfaces/pagination.interfaces';
 import { getVisiblePages } from '@utils/pagination.utils';
