@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -6,16 +7,12 @@ import {
   FormControl,
   FormLabel,
   Input,
+  InputGroup,
+  InputRightElement,
   Link,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
   Text,
-  useDisclosure,
 } from '@chakra-ui/react';
+import { CloseIcon, ViewOffIcon, ViewIcon } from '@chakra-ui/icons';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 
@@ -28,94 +25,121 @@ interface IUserForm {
 }
 
 const LoginAdminForm = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const { loginAdmin } = useAuthAdmin();
+
   const mutation = useMutation(['login'], loginAdmin);
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
 
   const { register, handleSubmit, reset } = useForm<IUserForm>({
     mode: 'onBlur',
   });
+
   const handleFormSubmit: SubmitHandler<IUserForm> = (data, e) => {
     reset();
     const { username, password } = data;
     e?.preventDefault();
     mutation.mutate({ username, password });
   };
-
   return (
     <>
-      {!isOpen && (
-        <Button onClick={onOpen} data-testid="modal-open">
-          Sign in
-        </Button>
-      )}
-      <Modal isOpen={isOpen} onClose={onClose} data-testid="modal">
-        <div data-testid="modal">
-          <ModalOverlay />
-          <ModalContent
-            maxW="400px"
-            m="2em auto"
-            border="1px solid gray"
-            borderRadius="5px"
-            p="1em"
-            pt="2em"
-          >
-            <ModalHeader display="flex" justifyContent="flex-end" p="0">
-              <ModalCloseButton
-                bg="none"
-                w="fit-content"
-                h="fit-content"
-                p="0"
-                data-testid="modal-close"
-              />
-            </ModalHeader>
-            <ModalBody mt="1em">
-              <form onSubmit={handleSubmit(handleFormSubmit)}>
-                <Text fontSize="xl">Sign in to your account</Text>
-                <FormControl w="100%" mt="1em">
-                  <FormLabel htmlFor="username" mb="0">
-                    Email address
-                  </FormLabel>
+      <Box mt="12.05rem" mb="12.05rem">
+        <Box
+          w="25rem"
+          m="0 auto"
+          border="1px solid"
+          py="1rem"
+          px="3rem"
+          borderColor="#D9D9D9"
+          color="rgba(78, 76, 76, 0.71);"
+          pos="relative"
+        >
+          <CloseIcon
+            color="blue"
+            float="right"
+            pos="absolute"
+            right="1rem"
+            top="1rem"
+            cursor="pointer"
+          />
+          <div>
+            <form onSubmit={handleSubmit(handleFormSubmit)}>
+              <Text fontSize="md" mb="3rem" mt="2rem">
+                Sign in to your account
+              </Text>
+              <Text fontSize="md" color="red">
+                {mutation.isError ? 'Ошибка при Авторизации' : null}
+              </Text>
+
+              <FormControl w="100%" mt="1em">
+                <FormLabel
+                  htmlFor="username"
+                  mb="0"
+                  fontSize="12px"
+                  color="rgba(78, 76, 76, 0.71);"
+                >
+                  Email address
+                </FormLabel>
+                <Input
+                  borderColor={mutation.isError ? 'red' : 'inherit'}
+                  size="md"
+                  type="email"
+                  id="username"
+                  {...register('username', { required: true })}
+                />
+              </FormControl>
+              <FormControl w="100%" mt="1em">
+                <FormLabel htmlFor="password" mb="0" fontSize="12px">
+                  Password
+                </FormLabel>
+                <InputGroup size="md">
                   <Input
-                    w="100%"
-                    h="30px"
-                    type="email"
-                    id="username"
-                    {...register('username', { required: true })}
-                  />
-                </FormControl>
-                <FormControl w="100%" mt="1em">
-                  <FormLabel htmlFor="password" mb="0">
-                    Password
-                  </FormLabel>
-                  <Input
-                    w="100%"
-                    type="password"
+                    borderColor={mutation.isError ? 'red' : 'inherit'}
+                    type={show ? 'text' : 'password'}
                     id="password"
-                    h="30px"
                     {...register('password', { required: true })}
                   />
-                </FormControl>
-                <Flex mt="1em" w="100%" justifyContent="space-between">
-                  <FormControl>
-                    <Checkbox {...register('checkbox')}>Remember me</Checkbox>
-                  </FormControl>
-                  <Box w="fit-content">
-                    <Link color="red" whiteSpace="nowrap">
-                      Forgot password?
-                    </Link>
-                  </Box>
-                </Flex>
-                <Flex justifyContent="flex-end">
-                  <Button color="white" mt="1.5em" type="submit" bg="red">
-                    Sign in
-                  </Button>
-                </Flex>
-              </form>
-            </ModalBody>
-          </ModalContent>
-        </div>
-      </Modal>
+                  <InputRightElement width="2.5rem">
+                    <Text h="1.75rem" onClick={handleClick}>
+                      {show ? <ViewOffIcon /> : <ViewIcon />}
+                    </Text>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+              <Flex
+                mt="2.5rem"
+                mb="2rem"
+                w="100%"
+                justifyContent="space-between"
+                fontSize="12px"
+              >
+                <FormLabel fontSize="12px" htmlFor="checkbox">
+                  <Checkbox id="checkbox" {...register('checkbox')}>
+                    <FormLabel
+                      htmlFor="checkbox"
+                      mb="0"
+                      fontSize="12px"
+                      cursor="pointer"
+                    >
+                      Remember me
+                    </FormLabel>
+                  </Checkbox>
+                </FormLabel>
+                <Box w="fit-content">
+                  <Link color="red" whiteSpace="nowrap">
+                    Forgot password?
+                  </Link>
+                </Box>
+              </Flex>
+              <Flex justifyContent="flex-end">
+                <Button color="white" mt="1.5em" type="submit" bg="red">
+                  Sign in
+                </Button>
+              </Flex>
+            </form>
+          </div>
+        </Box>
+      </Box>
     </>
   );
 };

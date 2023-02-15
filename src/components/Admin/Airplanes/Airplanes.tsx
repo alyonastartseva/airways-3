@@ -32,7 +32,7 @@ import { useQuery } from 'react-query';
 
 import AviasalesService from '@services/flights-service';
 import { TPlane } from '@interfaces/plane.interfaces';
-import { Pagination } from '@/components/Pagination';
+import { Pagination } from '@components/Pagination';
 
 const Airplanes = () => {
   const columnHelper = createColumnHelper<TPlane>();
