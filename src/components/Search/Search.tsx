@@ -9,12 +9,11 @@ import instagramIcon from '@assets/images/svg/social/instagram.svg';
 import linkedinIcon from '@assets/images/svg/social/linkedin.svg';
 import twitterIcon from '@assets/images/svg/social/twitter.svg';
 import youtubeIcon from '@assets/images/svg/social/youtube.svg';
-import { SearchPageTabs } from '@components/Search/SearchPageTabs';
+import { SearchPageTabs } from '@common/SearchPageTabs';
 import background from '@images/search-page-bg.png';
 import { IArticle } from '@interfaces/search.interfaces';
-
-import { ArticleCard } from './ArticleCard';
-import { CovidCard } from './CovidCard';
+import { ArticleCard } from '@common/ArticleCard';
+import { CovidCard } from '@common/CovidCard';
 
 const articles: IArticle[] = [
   {

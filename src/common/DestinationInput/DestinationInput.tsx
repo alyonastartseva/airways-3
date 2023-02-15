@@ -22,10 +22,9 @@ const DestinationInput: React.FC<IDestProps> = (props: IDestProps) => {
     () => searchService.getDestinations(),
     {
       onSuccess: (res) => {
-        console.log(res);
         setDestinationList(res.data);
       },
-      onError: (err) => console.log(err),
+      onError: (err) => console.error(err),
     }
   );
 

@@ -41,8 +41,8 @@ import { useForm } from 'react-hook-form';
 
 import AviasalesService from '@services/flights-service';
 import { TPerson } from '@interfaces/person.interfaces';
-import { IFormPassanger } from '@/interfaces/form-passanger.interfaces';
-import { Pagination } from '@/components/Pagination';
+import { IFormPassanger } from '@interfaces/form-passanger.interfaces';
+import { Pagination } from '@components/Pagination';
 
 import { UserInput } from '../UserInput';
 

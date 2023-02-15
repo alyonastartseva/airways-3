@@ -1,6 +1,6 @@
 import { Box, Button, Flex } from '@chakra-ui/react';
 
-import { IPagination } from '@/interfaces/pagination.interfaces';
+import { IPagination } from '@interfaces/pagination.interfaces';
 import { getVisiblePages } from '@utils/pagination.utils';
 
 const Pagination = (props: IPagination) => {

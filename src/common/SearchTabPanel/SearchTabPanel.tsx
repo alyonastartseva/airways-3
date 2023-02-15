@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from 'react-query';
 
-import { DestinationInput } from '@components/Search/SearchTabPanel/DestinationInput';
+import { DestinationInput } from '@common/DestinationInput';
 import arrows from '@images/svg/arrows.svg';
 import dateIcon from '@images/svg/calendar.svg';
 import arrowDownSvg from '@images/svg/arrowDown.svg';
@@ -53,7 +53,7 @@ const SearchTabPanel: React.FC = () => {
         console.log(data);
       },
       onError: (error) => {
-        console.log(error);
+        console.error(error);
       },
       enabled: false,
       retry: false,
