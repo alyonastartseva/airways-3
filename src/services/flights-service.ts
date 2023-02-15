@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { IFormPassanger } from '@/interfaces/form-passanger.interfaces';
+import { IFormPassanger } from '@interfaces/form-passanger.interfaces';
 class AviasalesService {
   async getAuthorizationToken(): Promise<string> {
     try {

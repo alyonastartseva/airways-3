@@ -65,7 +65,7 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
         }));
         setCountries(countriesList);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   };
 
   useEffect(() => {
