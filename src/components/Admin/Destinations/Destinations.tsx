@@ -59,7 +59,7 @@ const Destinations = () => {
     }),
     columnHelper.accessor('cityName', {
       header: 'Город',
-      cell: (info) => info.getValue<string>(),
+      cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('airportName', {
       header: 'Имя аэропорта',
@@ -75,7 +75,7 @@ const Destinations = () => {
     }),
     columnHelper.display({
       id: 'actions',
-      cell: () => (
+      cell: (info) => (
         <Popover placement="left-start" arrowSize={10}>
           {({ onClose }) => (
             <>
@@ -85,6 +85,7 @@ const Destinations = () => {
                   h="15px"
                   cursor="pointer"
                   _after={{ content: '"\\2807"' }}
+                  onClick={() => console.log(info)}
                 />
               </PopoverTrigger>
               <PopoverContent
