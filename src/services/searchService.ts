@@ -35,6 +35,26 @@ class searchService {
     );
   };
 
+  patchDestinations = async (data: IDestination | null) => {
+    if (data) {
+      const { id, ...rest } = data;
+      return await axiosInstance.patch<IDestination>(
+        ERoutes.DESTINATION + data.id,
+        rest,
+        await this.getHeaders()
+      );
+    }
+  };
+
+  deleteDestination = async (id: string | undefined) => {
+    if (id) {
+      return await axiosInstance.delete<IDestination>(
+        ERoutes.DESTINATION + id,
+        await this.getHeaders()
+      );
+    }
+  };
+
   getSearchId = async (searchQuery: ISearchQuery) => {
     return axiosInstance.post<number>(
       '/search',
