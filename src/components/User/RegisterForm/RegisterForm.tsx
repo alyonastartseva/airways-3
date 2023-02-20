@@ -17,10 +17,10 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import InputField from '@common/Form/Input';
-import SelectField from '@common/Form/Select';
+import SelectField from '@common/SelectField/SelectField';
 import { ICountry } from '@interfaces/country.interfaces';
 import { IFormValuesRegisterUser } from '@interfaces/form-values-register-user.interfaces';
-import { getAllDaysInMonth, months, years } from '@utils/form-data.utils';
+import { months, years, days } from '@utils/form-data.utils';
 
 interface IRegisterForm {
   onSubmit: SubmitHandler<IFormValuesRegisterUser>;
@@ -80,22 +80,35 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
       dayOfBirth: 0,
     },
   });
-
   const [show, setShow] = useState(false);
   const handleViewClick = () => setShow(!show);
 
   const monthsOptions = months.map((i) => (
-    <option value={i + 1} key={i + 1}>
+    <option data-testid="select-option" value={i + 1} key={i + 1}>
       {new Date(0, i + 1, 0).toLocaleDateString('en', { month: 'long' })}
     </option>
   ));
 
   const yearsOptions = years.map((year) => (
-    <option style={{ marginLeft: '2rem' }} key={year} value={year}>
+    <option
+      data-testid="select-option"
+      style={{ marginLeft: '2rem' }}
+      key={year}
+      value={year}
+    >
       {year}
     </option>
   ));
-
+  const daysOptions = days.map((i) => (
+    <option
+      data-testid="select-option"
+      style={{ marginLeft: '2rem' }}
+      key={i}
+      value={i + 1}
+    >
+      {i + 1}
+    </option>
+  ));
   return (
     <FormProvider {...methods}>
       <form onSubmit={() => methods.handleSubmit(onSubmit)} name="register">
@@ -104,16 +117,7 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
           <InputField name="lastName" label="Last name" />
         </Flex>
         <Grid gridColumnGap={2} gridTemplateColumns="2fr 3fr 2fr" my={4}>
-          <SelectField
-            name="dayOfBirth"
-            label="Day"
-            options={getAllDaysInMonth(
-              methods.watch('monthOfBirth'),
-              methods.watch('yearOfBirth')
-            ).map((day, i) => (
-              <option key={`${Date.now()}`}>{i + 1}</option>
-            ))}
-          />
+          <SelectField name="dayOfBirth" label="Day" options={daysOptions} />
           <SelectField
             name="monthOfBirth"
             label="Month"
@@ -154,7 +158,7 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
           )}
         </Box>
         <Flex columnGap={2}>
-          <InputField name="email" label="E-mail Adress" typeField="email" />
+          <InputField name="email" label="E-mail Address" typeField="email" />
           <Box width="100%">
             <FormLabel
               color="#716f6f"

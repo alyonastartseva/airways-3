@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-named-as-default
 import axiosInstance from '@services/axios';
 import { IDestination, ISearchQuery } from '@interfaces/search.interfaces';
 import { ILoginRequest } from '@interfaces/login.interfaces';

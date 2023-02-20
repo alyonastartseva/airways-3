@@ -13,6 +13,7 @@ function SelectField({ name, label, options }: ISelectFieldProps) {
     register,
     formState: { errors },
   } = useFormContext();
+
   return (
     <Box position="relative" width="100%">
       <FormLabel
@@ -28,6 +29,7 @@ function SelectField({ name, label, options }: ISelectFieldProps) {
         {label}
       </FormLabel>
       <Select
+        data-testid="select"
         border="1px solid #D9D9D9"
         boxShadow="0px 2px 2px rgba(0, 0, 0, 0.25)"
         borderRadius="4px"
