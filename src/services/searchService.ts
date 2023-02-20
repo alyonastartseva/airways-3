@@ -39,14 +39,14 @@ class searchService {
     if (data) {
       const { id, ...rest } = data;
       return await axiosInstance.patch<IDestination>(
-        ERoutes.DESTINATION + data.id,
+        ERoutes.DESTINATION + id,
         rest,
         await this.getHeaders()
       );
     }
   };
 
-  deleteDestination = async (id: string | undefined) => {
+  deleteDestination = async (id: number | undefined) => {
     if (id) {
       return await axiosInstance.delete<IDestination>(
         ERoutes.DESTINATION + id,

@@ -2,6 +2,8 @@ import { Table } from '@tanstack/react-table';
 import { AxiosResponse } from 'axios';
 import { UseMutateFunction } from 'react-query';
 
+import { TPerson } from './person.interfaces';
+import { TPlane } from './plane.interfaces';
 import { IDestination } from './search.interfaces';
 
 export interface IEditableCell {
@@ -12,11 +14,14 @@ export interface IEditableCell {
   updateData(id: string, value: string): void;
 }
 
-export interface IsRowEditing {
-  (index: number, id: string, value: string | undefined):
-    | string
-    | number
-    | undefined;
+export interface IsRowEditing<Data> {
+  (
+    index: number,
+    id: string,
+    value: string | undefined,
+    row: Data | null,
+    editableIndex: number | null
+  ): string | number | undefined;
 }
 
 export interface IFlexCell {
@@ -32,15 +37,15 @@ export interface IButtonName {
   name: string;
 }
 
-export interface IPopoverTable {
-  row: IDestination;
+export interface IPopoverTable<Data> {
+  row: Data;
   index: number;
-  id: string;
-  handleEditRow(row: IDestination, index: number): void;
+  id: number | undefined;
+  handleEditRow(row: Data, index: number): void;
   deleteDestination: UseMutateFunction<
-    AxiosResponse<IDestination, any> | undefined,
+    AxiosResponse<Data, any> | undefined,
     unknown,
-    string | undefined,
+    number | undefined,
     unknown
   >;
 }
@@ -68,3 +73,7 @@ export interface IFooterTable<Data> {
   patchDestination(): void;
   setPaginationData(pageNumber: number): void;
 }
+
+// самолеты, места назначения, пассажиры: done
+// часовые пояса и рейсы: to do
+export type TTableData = TPerson | IDestination | TPlane;

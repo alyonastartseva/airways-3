@@ -9,7 +9,6 @@ import { useState } from 'react';
 
 import searchService from '@services/searchService';
 import { IDestination } from '@interfaces/search.interfaces';
-import { IsRowEditing } from '@interfaces/table.interfaces';
 import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
@@ -17,7 +16,8 @@ import { AlertMessage } from '@common/AlertMessage';
 import { TableCreator } from '@common/TableCreator';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { HeaderAdmin } from '@/common/HeaderAdmin';
-import FooterTable from '@/common/FooterTable/FooterTable';
+import { FooterTable } from '@/common/FooterTable';
+import { isRowEditing } from '@utils/table.utils';
 
 const Destinations = () => {
   // индекс и размер пагинации
@@ -66,15 +66,6 @@ const Destinations = () => {
     setEditableRowState({ ...editableRowState, [id]: value });
   };
 
-  // проверка: редактируется ли строка
-  const isRowEditing: IsRowEditing = (index, id, value) => {
-    return editableRowState &&
-      editableRowIndex !== null &&
-      editableRowIndex === index
-      ? editableRowState[id as keyof IDestination]
-      : value;
-  };
-
   // создание столбцов таблицы
   const columnHelper = createColumnHelper<IDestination>();
   const columns = [
@@ -87,7 +78,13 @@ const Destinations = () => {
       header: 'Страна',
       cell: (info) => (
         <EditableCell
-          value={isRowEditing(info.row.index, info.column.id, info.getValue())}
+          value={isRowEditing(
+            info.row.index,
+            info.column.id,
+            info.getValue(),
+            editableRowState,
+            editableRowIndex
+          )}
           index={info.row.index}
           id={info.column.id}
           editableRowIndex={editableRowIndex}
@@ -99,7 +96,13 @@ const Destinations = () => {
       header: 'Город',
       cell: (info) => (
         <EditableCell
-          value={isRowEditing(info.row.index, info.column.id, info.getValue())}
+          value={isRowEditing(
+            info.row.index,
+            info.column.id,
+            info.getValue(),
+            editableRowState,
+            editableRowIndex
+          )}
           index={info.row.index}
           id={info.column.id}
           editableRowIndex={editableRowIndex}
@@ -111,7 +114,13 @@ const Destinations = () => {
       header: 'Имя аэропорта',
       cell: (info) => (
         <EditableCell
-          value={isRowEditing(info.row.index, info.column.id, info.getValue())}
+          value={isRowEditing(
+            info.row.index,
+            info.column.id,
+            info.getValue(),
+            editableRowState,
+            editableRowIndex
+          )}
           index={info.row.index}
           id={info.column.id}
           editableRowIndex={editableRowIndex}
@@ -123,7 +132,13 @@ const Destinations = () => {
       header: 'Код аэропорта',
       cell: (info) => (
         <EditableCell
-          value={isRowEditing(info.row.index, info.column.id, info.getValue())}
+          value={isRowEditing(
+            info.row.index,
+            info.column.id,
+            info.getValue(),
+            editableRowState,
+            editableRowIndex
+          )}
           index={info.row.index}
           id={info.column.id}
           editableRowIndex={editableRowIndex}
@@ -135,7 +150,13 @@ const Destinations = () => {
       header: 'Часовой пояс',
       cell: (info) => (
         <EditableCell
-          value={isRowEditing(info.row.index, info.column.id, info.getValue())}
+          value={isRowEditing(
+            info.row.index,
+            info.column.id,
+            info.getValue(),
+            editableRowState,
+            editableRowIndex
+          )}
           index={info.row.index}
           id={info.column.id}
           editableRowIndex={editableRowIndex}
@@ -150,7 +171,7 @@ const Destinations = () => {
         <PopoverTable
           row={info.row.original}
           index={info.row.index}
-          id={info.row.id}
+          id={info.row.original.id}
           handleEditRow={handleEditRow}
           deleteDestination={deleteDestination}
         />

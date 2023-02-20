@@ -12,13 +12,13 @@ import { EditIcon, CloseIcon } from '@chakra-ui/icons';
 
 import { IPopoverTable } from '@interfaces/table.interfaces';
 
-const PopoverTable = ({
+const PopoverTable = <Data,>({
   row,
   index,
   id,
   handleEditRow,
   deleteDestination,
-}: IPopoverTable) => (
+}: IPopoverTable<Data>) => (
   <Popover placement="left-start" arrowSize={10}>
     <PopoverTrigger>
       <Box
