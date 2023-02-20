@@ -50,7 +50,6 @@ const Users = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { handleSubmit, register } = useForm();
-
   function onSubmit(values: IFormPassanger) {
     const avia = new AviasalesService();
     avia.createUserAsPassenger(values);
