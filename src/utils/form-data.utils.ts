@@ -7,7 +7,7 @@ const getAllDaysInMonth = (month: number, year: number) =>
     { length: new Date(year, month, 0).getDate() },
     (_, i) => new Date(year, month - 1, i + 1)
   );
-
+const days = Array.from({ length: 31 }, (e, i) => i);
 const months = Array.from({ length: 12 }, (e, i) => i);
 
 const years = Array.from(
@@ -49,4 +49,4 @@ const prepareFormData = (values: IFormValuesRegisterUser) => {
   return data;
 };
 
-export { getAllDaysInMonth, months, years, prepareFormData };
+export { getAllDaysInMonth, months, years, prepareFormData, days };
