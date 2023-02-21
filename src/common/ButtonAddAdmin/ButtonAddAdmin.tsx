@@ -1,9 +1,9 @@
 import { Button } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 
-import { IButtonName } from '@interfaces/table.interfaces';
+import { IButtonAddAdmin } from '@interfaces/table.interfaces';
 
-const ButtonAddAdmin = ({ name }: IButtonName) => (
+const ButtonAddAdmin = ({ name, onClick }: IButtonAddAdmin) => (
   <Button
     border="1px solid #DEDEDE"
     borderRadius="2"
@@ -16,6 +16,7 @@ const ButtonAddAdmin = ({ name }: IButtonName) => (
       borderColor: '#398AEA',
       color: '#FFFFFF',
     }}
+    onClick={onClick}
   >
     {name}
   </Button>

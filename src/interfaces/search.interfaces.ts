@@ -22,6 +22,14 @@ export interface IDestination {
   countryName?: string;
 }
 
+export interface IDestinationPost {
+  airportCode?: string;
+  airportName?: string;
+  cityName?: string;
+  timezone?: string;
+  countryName?: string;
+}
+
 export type TDestQuery = Omit<IDestination, 'id'>;
 
 export interface ISearchQuery {

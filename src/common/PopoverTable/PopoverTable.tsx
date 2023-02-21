@@ -47,6 +47,7 @@ const PopoverTable = <Data,>({
           borderTopLeftRadius="6px"
           borderTopRightRadius="6px"
           fontSize="14px"
+          fontWeight="medium"
           justifyContent="flex-start"
           _hover={{
             backgroundColor: '#C5E3F6',
@@ -70,6 +71,7 @@ const PopoverTable = <Data,>({
           borderBottomLeftRadius="6px"
           borderBottomRightRadius="6px"
           fontSize="14px"
+          fontWeight="normal"
           justifyContent="flex-start"
           _hover={{
             backgroundColor: '#C5E3F6',

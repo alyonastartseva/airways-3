@@ -18,6 +18,7 @@ import { SpinnerBlock } from '@common/SpinnerBlock';
 import { HeaderAdmin } from '@/common/HeaderAdmin';
 import { FooterTable } from '@/common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
+import { ModalFormDestinations } from '@/common/ModalFormDestinations';
 
 const Destinations = () => {
   // индекс и размер пагинации
@@ -217,7 +218,7 @@ const Destinations = () => {
       <TableContainer my={10} mx={14}>
         <HeaderAdmin
           heading="Место назначения"
-          buttonName="Добавить пункт назначения"
+          modal={<ModalFormDestinations name="Добавить пункт назначения" />}
         />
         <TableCreator table={table} />
         <FooterTable

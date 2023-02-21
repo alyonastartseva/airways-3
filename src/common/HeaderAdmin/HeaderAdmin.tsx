@@ -2,12 +2,12 @@ import { Flex } from '@chakra-ui/react';
 
 import { IHeaderAdmin } from '@interfaces/table.interfaces';
 import { HeadingAdmin } from '@common/HeadingAdmin';
-import { ButtonAddAdmin } from '@common/ButtonAddAdmin';
+import { ModalForm } from '@common/ModalForm';
 
-const HeaderAdmin = ({ heading, buttonName }: IHeaderAdmin) => (
+const HeaderAdmin = ({ heading, modal }: IHeaderAdmin) => (
   <Flex my={5} align="center" justify="space-between">
     <HeadingAdmin name={heading} />
-    <ButtonAddAdmin name={buttonName} />
+    <ModalForm modal={modal} />
   </Flex>
 );
 

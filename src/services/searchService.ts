@@ -1,5 +1,9 @@
 import { axiosInstance } from '@services/axios';
-import { IDestination, ISearchQuery } from '@interfaces/search.interfaces';
+import {
+  IDestination,
+  ISearchQuery,
+  IDestinationPost,
+} from '@interfaces/search.interfaces';
 import { ILoginRequest } from '@interfaces/login.interfaces';
 import ERoutes from '@services/endpoints';
 
@@ -53,6 +57,14 @@ class searchService {
         await this.getHeaders()
       );
     }
+  };
+
+  postDestinations = async (data: IDestinationPost) => {
+    return await axiosInstance.post<IDestinationPost>(
+      ERoutes.DESTINATION,
+      data,
+      await this.getHeaders()
+    );
   };
 
   getSearchId = async (searchQuery: ISearchQuery) => {

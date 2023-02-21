@@ -33,10 +33,6 @@ export interface IHeadingAdmin {
   name: string;
 }
 
-export interface IButtonName {
-  name: string;
-}
-
 export interface IPopoverTable<Data> {
   row: Data;
   index: number;
@@ -50,6 +46,11 @@ export interface IPopoverTable<Data> {
   >;
 }
 
+export interface IButtonAddAdmin {
+  name: string;
+  onClick(): void;
+}
+
 export interface IButtonGroupAdmin {
   cancelEditing(): void;
   patchDestination(): void;
@@ -61,7 +62,7 @@ export interface ITableCreator<Data> {
 
 export interface IHeaderAdmin {
   heading: string;
-  buttonName: string;
+  modal: React.ReactNode;
 }
 
 export interface IFooterTable<Data> {
@@ -72,6 +73,14 @@ export interface IFooterTable<Data> {
   cancelEditing(): void;
   patchDestination(): void;
   setPaginationData(pageNumber: number): void;
+}
+
+export interface IModalFormPage {
+  name: string;
+}
+
+export interface IModalForm {
+  modal: React.ReactNode;
 }
 
 // самолеты, места назначения, пассажиры: done
