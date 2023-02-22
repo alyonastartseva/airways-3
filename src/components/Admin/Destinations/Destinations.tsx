@@ -17,8 +17,8 @@ import { TableCreator } from '@common/TableCreator';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { HeaderAdmin } from '@/common/HeaderAdmin';
 import { FooterTable } from '@/common/FooterTable';
-import { isRowEditing } from '@utils/table.utils';
 import { ModalFormDestinations } from '@/common/ModalFormDestinations';
+import { isRowEditing } from '@utils/table.utils';
 
 const Destinations = () => {
   // индекс и размер пагинации
