@@ -1,6 +1,6 @@
 import { describe, it } from 'vitest';
 
-import Full from '@components/Footer/Full/Full';
+import Full from '@/common/Full/Full';
 import { fireEvent, render, screen } from '@utils/test-utils';
 
 describe('Full component tests', () => {

@@ -1,7 +1,7 @@
 import { Box, Flex, Image, Link, Text } from '@chakra-ui/react';
 import { FC } from 'react';
 
-import Full from '@components/Footer/Full/Full';
+import Full from '@common/Full/Full';
 import appstore from '@images/app-store.png';
 import googleplay from '@images/google-play.png';
 import {
