@@ -20,6 +20,6 @@ describe('FlexCell test', () => {
     const cell = screen.getByText(value);
     const styles = getComputedStyle(cell);
 
-    expect(styles.paddingLeft).toBe(`${padding}px`);
+    expect(styles.paddingLeft).toBe(`${padding / 16}rem`);
   });
 });

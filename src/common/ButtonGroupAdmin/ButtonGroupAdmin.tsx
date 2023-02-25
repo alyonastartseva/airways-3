@@ -19,7 +19,7 @@ const ButtonGroupAdmin = ({
         borderColor: '#398AEA',
         color: '#FFFFFF',
       }}
-      onClick={() => cancelEditing()}
+      onClick={cancelEditing}
     >
       Отменить
     </Button>
@@ -35,7 +35,7 @@ const ButtonGroupAdmin = ({
         borderColor: '#398AEA',
         color: '#FFFFFF',
       }}
-      onClick={() => patchDestination()}
+      onClick={patchDestination}
     >
       Сохранить
     </Button>

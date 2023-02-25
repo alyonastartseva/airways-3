@@ -22,26 +22,26 @@ const PopoverTable = <Data,>({
   <Popover placement="left-start" arrowSize={10}>
     <PopoverTrigger>
       <Box
-        w="15px"
-        h="15px"
+        w="1rem"
+        h="1rem"
         cursor="pointer"
         _after={{ content: '"\\2807"' }}
-        paddingLeft="16px"
+        paddingLeft="1rem"
       />
     </PopoverTrigger>
     <PopoverContent
       color="#0E153A"
       border="1px solid #2B2B2B"
       borderRadius="6px"
-      width="209px"
-      height="100px"
+      width="13rem"
+      height="6.25rem"
     >
       <PopoverArrow border="1px solid #2B2B2B" bgColor="#E2F3F5" />
       <PopoverHeader border="none" borderBottom="1px solid #2B2B2B" p={0}>
         <Button
-          leftIcon={<EditIcon height="14px" width="14px" />}
+          leftIcon={<EditIcon height="0.67rem" width="0.67rem" />}
           border="none"
-          height="48px"
+          height="3rem"
           width="100%"
           borderRadius="none"
           borderTopLeftRadius="6px"
@@ -61,11 +61,16 @@ const PopoverTable = <Data,>({
       <PopoverBody border="none" p={0}>
         <Button
           leftIcon={
-            <CloseIcon height="10px" width="10px" marginInlineEnd="0.2rem" />
+            <CloseIcon
+              height="0.625rem"
+              width="0.625rem"
+              marginInlineEnd="0.2rem"
+              marginTop="0.0625rem"
+            />
           }
           marginInlineEnd="0.9rem"
           border="none"
-          height="49px"
+          height="3.063rem"
           width="100%"
           borderRadius="none"
           borderBottomLeftRadius="6px"

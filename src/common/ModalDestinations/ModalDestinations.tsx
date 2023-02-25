@@ -11,11 +11,11 @@ import {
   ModalBody,
 } from '@chakra-ui/react';
 
-import searchService from '@/services/searchService';
+import searchService from '@services/searchService';
 import { ModalInput } from '@common/ModalInput';
 import { ButtonSubmitAdmin } from '@common/ButtonSubmitAdmin';
 import { HeadingAdmin } from '@common/HeadingAdmin';
-import { IModalFormPage } from '@/interfaces/table.interfaces';
+import { IModalFormPage } from '@interfaces/table.interfaces';
 
 import { ButtonAddAdmin } from '../ButtonAddAdmin';
 
