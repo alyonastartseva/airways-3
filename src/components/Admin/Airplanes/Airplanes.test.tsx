@@ -6,18 +6,18 @@ import { Airplanes } from './index';
 
 afterEach(cleanup);
 
-describe('Users', () => {
+describe('Airplanes', () => {
   it('Test component info rendered to the page', () => {
     const { container } = render(<Airplanes />);
     expect(container.querySelector('h4')).toBeInTheDocument();
-    expect(container.querySelector('h4')).toHaveTextContent('Пользователи');
+    expect(container.querySelector('h4')).toHaveTextContent('Самолеты');
   });
 
   it('Test component table with data rendered to the page', () => {
     vi.mock('react-query', () => {
       const testData = [
         {
-          aircraftName: 'testName',
+          model: 'testName',
           aircraftNumber: 1234,
           id: 3,
         },

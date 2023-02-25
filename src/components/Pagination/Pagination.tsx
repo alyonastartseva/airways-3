@@ -5,7 +5,8 @@ import { getVisiblePages } from '@utils/pagination.utils';
 
 const Pagination = <Data,>(props: IPagination<Data>) => {
   const { data, setPaginationData, pageIndex, pageSize } = props;
-  return (
+
+  return data ? (
     <Flex my={8}>
       <Button
         me={2}
@@ -18,10 +19,12 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
         _hover={{
           backgroundColor: '#398AEA',
           borderColor: '#398AEA',
+          color: '#ffffff',
         }}
         _active={{
           backgroundColor: '#398AEA',
           borderColor: '#398AEA',
+          color: '#ffffff',
         }}
       >
         {'<<'}
@@ -37,31 +40,37 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
         _hover={{
           backgroundColor: '#398AEA',
           borderColor: '#398AEA',
+          color: '#ffffff',
         }}
         _active={{
           backgroundColor: '#398AEA',
           borderColor: '#398AEA',
+          color: '#ffffff',
         }}
       >
         {'<'}
       </Button>
       <ButtonGroup spacing={2}>
-        {getVisiblePages(pageIndex, Math.ceil(data.length / pageSize)).map(
+        {getVisiblePages(pageIndex, Math.ceil(data?.length / pageSize)).map(
           (page, index) => (
             <Button
               key={`page-${Date.now()}}+${index}`}
               onClick={() => setPaginationData(page - 1)}
               borderRadius="2px"
               border="1px solid #DEDEDE"
-              bgColor="rgba(217, 217, 217, 0.15)"
-              color="#393939"
+              bgColor={
+                page === pageIndex + 1 ? '#398AEA' : 'rgba(217, 217, 217, 0.15)'
+              }
+              color={page === pageIndex + 1 ? '#FFFFFF' : '#393939'}
               _hover={{
                 backgroundColor: '#398AEA',
                 borderColor: '#398AEA',
+                color: '#ffffff',
               }}
               _active={{
                 backgroundColor: '#398AEA',
                 borderColor: '#398AEA',
+                color: '#ffffff',
               }}
             >
               {page}
@@ -80,10 +89,12 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
         _hover={{
           backgroundColor: '#398AEA',
           borderColor: '#398AEA',
+          color: '#ffffff',
         }}
         _active={{
           backgroundColor: '#398AEA',
           borderColor: '#398AEA',
+          color: '#ffffff',
         }}
       >
         {'>'}
@@ -101,16 +112,18 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
         _hover={{
           backgroundColor: '#398AEA',
           borderColor: '#398AEA',
+          color: '#ffffff',
         }}
         _active={{
           backgroundColor: '#398AEA',
           borderColor: '#398AEA',
+          color: '#ffffff',
         }}
       >
         {'>>'}
       </Button>
     </Flex>
-  );
+  ) : null;
 };
 
 export default Pagination;

@@ -1,8 +1,17 @@
-import { TableContainer } from '@chakra-ui/react';
+import {
+  TableContainer,
+  Table,
+  Tbody,
+  Thead,
+  Td,
+  Tr,
+  Th,
+} from '@chakra-ui/react';
 import {
   createColumnHelper,
   getCoreRowModel,
   useReactTable,
+  flexRender,
 } from '@tanstack/react-table';
 import { useMutation, useQuery } from 'react-query';
 import { useState } from 'react';
@@ -13,12 +22,12 @@ import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
 import { AlertMessage } from '@common/AlertMessage';
-import { TableCreator } from '@common/TableCreator';
 import { SpinnerBlock } from '@common/SpinnerBlock';
-import { HeaderAdmin } from '@/common/HeaderAdmin';
-import { FooterTable } from '@/common/FooterTable';
-import { ModalFormDestinations } from '@/common/ModalFormDestinations';
+import { HeaderAdmin } from '@common/HeaderAdmin';
+import { FooterTable } from '@common/FooterTable';
+import { ModalDestinations } from '@common/ModalDestinations';
 import { isRowEditing } from '@utils/table.utils';
+import { sortDestinations } from '@utils/sort.utils';
 
 const Destinations = () => {
   // индекс и размер пагинации
@@ -64,7 +73,15 @@ const Destinations = () => {
 
   // обновление редактируемой строки
   const handleUpdateRow = (id: string, value: string) => {
-    setEditableRowState({ ...editableRowState, [id]: value });
+    if (editableRowState)
+      setEditableRowState({ ...editableRowState, [id]: value });
+  };
+
+  const tableData = (data?: IDestination[]) => {
+    if (Array.isArray(data) && data.length) {
+      return sortDestinations(data);
+    }
+    return [];
   };
 
   // создание столбцов таблицы
@@ -182,13 +199,10 @@ const Destinations = () => {
 
   // создание таблицы
   const table = useReactTable({
-    data:
-      Array.isArray(destinations?.data) && destinations?.data.length
-        ? destinations?.data.slice(
-            pageIndex * pageSize,
-            pageIndex * pageSize + pageSize
-          )
-        : [],
+    data: tableData(destinations?.data).slice(
+      pageIndex * pageSize,
+      pageIndex * pageSize + pageSize
+    ),
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
@@ -201,7 +215,7 @@ const Destinations = () => {
       if (pageNumber >= 0 && pageNumber < destinationsLength / pageSize) {
         setPagination((prev) => ({
           ...prev,
-          pageNumber,
+          pageIndex: pageNumber,
         }));
       }
     }
@@ -218,11 +232,58 @@ const Destinations = () => {
       <TableContainer my={10} mx={14}>
         <HeaderAdmin
           heading="Место назначения"
-          modal={<ModalFormDestinations name="Добавить пункт назначения" />}
+          modal={<ModalDestinations name="Добавить пункт назначения" />}
         />
-        <TableCreator table={table} />
+        <Table>
+          <Thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <Tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <Th
+                    border="1px solid #DEDEDE"
+                    color="#000000"
+                    key={header.id}
+                    fontSize="14px"
+                    lineHeight="18px"
+                    textTransform="none"
+                    fontWeight="semibold"
+                    width={header.getSize()}
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </Th>
+                ))}
+              </Tr>
+            ))}
+          </Thead>
+          <Tbody>
+            {table.getRowModel().rows.map((row) => (
+              <Tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <Td
+                    border="1px solid #DEDEDE"
+                    color="#393939"
+                    fontSize="14px"
+                    lineHeight="18px"
+                    key={cell.id}
+                    textTransform="none"
+                    fontWeight="normal"
+                    paddingX="4px"
+                    paddingY="2px"
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Td>
+                ))}
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
         <FooterTable
-          data={destinations?.data}
+          data={tableData(destinations?.data)}
           pageIndex={pageIndex}
           pageSize={pageSize}
           setPaginationData={setPaginationData}

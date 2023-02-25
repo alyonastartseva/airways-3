@@ -39,7 +39,11 @@ const ModalInput = <TFormValues extends Record<string, unknown>>({
           mb={1}
           {...register(fieldName, rules)}
         />
-        {errorMessage && <Text color="#F56565">{errorMessage}</Text>}
+        {errorMessage && (
+          <Text color="#F56565" role="alert">
+            {errorMessage}
+          </Text>
+        )}
       </FormLabel>
     </>
   );

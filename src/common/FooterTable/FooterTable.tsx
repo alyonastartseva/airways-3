@@ -20,7 +20,7 @@ const FooterTable = <Data,>({
       pageSize={pageSize}
       setPaginationData={setPaginationData}
     />
-    {editableRowIndex !== null && (
+    {data && editableRowIndex !== null && (
       <ButtonGroupAdmin
         cancelEditing={cancelEditing}
         patchDestination={patchDestination}

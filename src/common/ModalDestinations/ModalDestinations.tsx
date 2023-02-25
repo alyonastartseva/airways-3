@@ -26,7 +26,7 @@ interface IDestinationForm extends FieldValues {
   airportCode: string;
   timezone: string;
 }
-const ModalFormDestinations = ({ name }: IModalFormPage) => {
+const ModalDestinations = ({ name }: IModalFormPage) => {
   const {
     register,
     handleSubmit,
@@ -85,7 +85,7 @@ const ModalFormDestinations = ({ name }: IModalFormPage) => {
                 rules={{
                   required: 'Введите название города',
                   minLength: { value: 1, message: 'Минимум 1 символ' },
-                  maxLength: { value: 21, message: 'Максимум 21 символов' },
+                  maxLength: { value: 21, message: 'Максимум 21 символ' },
                 }}
               />
               <ModalInput<IDestinationForm>
@@ -137,4 +137,4 @@ const ModalFormDestinations = ({ name }: IModalFormPage) => {
   );
 };
 
-export default ModalFormDestinations;
+export default ModalDestinations;

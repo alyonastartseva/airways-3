@@ -13,7 +13,6 @@ export interface IEditableCell {
   editableRowIndex: number | null;
   updateData(id: string, value: string): void;
 }
-
 export interface IsRowEditing<Data> {
   (
     index: number,
@@ -48,16 +47,12 @@ export interface IPopoverTable<Data> {
 
 export interface IButtonAddAdmin {
   name: string;
-  onClick(): void;
+  onClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
 }
 
 export interface IButtonGroupAdmin {
   cancelEditing(): void;
   patchDestination(): void;
-}
-
-export interface ITableCreator<Data> {
-  table: Table<Data>;
 }
 
 export interface IHeaderAdmin {
@@ -66,7 +61,7 @@ export interface IHeaderAdmin {
 }
 
 export interface IFooterTable<Data> {
-  data: Data[];
+  data: Data[] | undefined;
   editableRowIndex: number | null;
   pageIndex: number;
   pageSize: number;
