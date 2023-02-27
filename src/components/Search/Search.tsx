@@ -1,14 +1,16 @@
-import { Box, Flex, Image, Link, Text } from '@chakra-ui/react';
+import { Box, Flex, Link, Text } from '@chakra-ui/react';
 
+import {
+  InstagramIcon,
+  LinkedInIcon,
+  TwitterIcon,
+  YouTubeIcon,
+  FacebookIcon,
+} from '@common/icons/social';
 import aSImage from '@assets/images/articles/ASImage.png';
 import bestOffersImage from '@assets/images/articles/BestOffersImage.png';
 import discoverImage from '@assets/images/articles/discoverImage.png';
 import holidayImage from '@assets/images/articles/holidayImage.png';
-import facebookIcon from '@assets/images/svg/social/facebook.svg';
-import instagramIcon from '@assets/images/svg/social/instagram.svg';
-import linkedinIcon from '@assets/images/svg/social/linkedin.svg';
-import twitterIcon from '@assets/images/svg/social/twitter.svg';
-import youtubeIcon from '@assets/images/svg/social/youtube.svg';
 import { SearchPageTabs } from '@common/SearchPageTabs';
 import background from '@images/search-page-bg.png';
 import { IArticle } from '@interfaces/search.interfaces';
@@ -48,21 +50,6 @@ const articles: IArticle[] = [
 const articleCards = articles.map((article) => (
   <ArticleCard key={article.title} {...article} />
 ));
-
-const social: string[] = [
-  facebookIcon,
-  twitterIcon,
-  linkedinIcon,
-  instagramIcon,
-  youtubeIcon,
-];
-
-const socialIcons = social.map((item) => (
-  <Link key={item} href="#" target="_blank">
-    <Image src={item} />
-  </Link>
-));
-
 const Search: React.FC = () => {
   return (
     <Box position="relative" minHeight="52.9375rem">
@@ -74,14 +61,26 @@ const Search: React.FC = () => {
         borderTop="0.0625rem solid"
       >
         <SearchPageTabs />
-
         <CovidCard />
-
         <Flex ml="3.5625rem" mt="0.5625rem" gap="1.625rem">
           {articleCards}
         </Flex>
         <Flex justifyContent="center" gap="0.3125rem" mt="1.5625rem">
-          {socialIcons}
+          <Link href="#" target="_blank">
+            <FacebookIcon />
+          </Link>
+          <Link href="#" target="_blank">
+            <TwitterIcon />
+          </Link>
+          <Link href="#" target="_blank">
+            <LinkedInIcon />
+          </Link>
+          <Link href="#" target="_blank">
+            <InstagramIcon />
+          </Link>
+          <Link href="#" target="_blank">
+            <YouTubeIcon />
+          </Link>
         </Flex>
       </Box>
       <Box

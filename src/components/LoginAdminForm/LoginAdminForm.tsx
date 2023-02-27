@@ -15,6 +15,7 @@ import {
 import { CloseIcon, ViewOffIcon, ViewIcon } from '@chakra-ui/icons';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 
 import { useAuthAdmin } from '@services/auth';
 
@@ -26,7 +27,7 @@ interface IUserForm {
 
 const LoginAdminForm = () => {
   const { loginAdmin } = useAuthAdmin();
-
+  const navigate = useNavigate();
   const mutation = useMutation(['login'], loginAdmin);
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
@@ -41,6 +42,7 @@ const LoginAdminForm = () => {
     e?.preventDefault();
     mutation.mutate({ username, password });
   };
+  !mutation.isLoading && !mutation.isError ? navigate('/users') : null;
   return (
     <>
       <Box mt="12.05rem" mb="12.05rem">

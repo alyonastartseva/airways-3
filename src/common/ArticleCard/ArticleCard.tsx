@@ -9,7 +9,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-import arrowLeftIcon from '@assets/images/svg/arrowLeft.svg';
+import { ArrowRightIcon } from '@common/icons';
 import { IArticle } from '@interfaces/search.interfaces';
 
 const ArticleCard: React.FC<IArticle> = (props: IArticle) => {
@@ -35,7 +35,9 @@ const ArticleCard: React.FC<IArticle> = (props: IArticle) => {
               {title}
             </Text>
           </Heading>
-          <Image src={arrowLeftIcon} mr="0.5625rem" mt="0.25rem" />
+          <Box mr="0.5625rem" mt="0.3rem" w="1rem" h="1rem">
+            <ArrowRightIcon />
+          </Box>
         </Flex>
         <Box mt="0.125rem" h="0.0625rem" w="15.375rem" bgColor="#D9D9D9" />
       </CardHeader>

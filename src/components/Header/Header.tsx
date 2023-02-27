@@ -25,7 +25,7 @@ const Header = () => (
         alignSelf="end"
         color="white"
         fontWeight="600"
-        right="-1.2em"
+        right="-1.7em"
         bottom="0.3em"
       >
         UX AIR

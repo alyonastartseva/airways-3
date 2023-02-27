@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it } from 'vitest';
 
-import planeIcon from '@images/svg/plane-tab-icon.svg';
+import { PlaneTabIcon } from '@common/icons';
 
 import SearchPageTabs from './SearchPageTabs';
 
 describe('SearchPageTabs component', () => {
   it('renders tabs', () => {
     const tabs = [
-      { label: 'flights', icon: planeIcon },
+      { label: 'flights', icon: PlaneTabIcon },
       { label: 'check-in' },
       { label: 'manage booking' },
     ];
