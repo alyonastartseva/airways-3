@@ -3,7 +3,7 @@ import {
   Box,
   Button,
   Flex,
-  Image,
+  Icon,
   Input,
   InputGroup,
   InputLeftElement,
@@ -16,11 +16,13 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from 'react-query';
 
+import {
+  ArrowDownIcon,
+  ResetIcon,
+  ArrowsIcon,
+  CalendarIcon,
+} from '@common/icons';
 import { DestinationInput } from '@common/DestinationInput';
-import arrows from '@images/svg/arrows.svg';
-import dateIcon from '@images/svg/calendar.svg';
-import arrowDownSvg from '@images/svg/arrowDown.svg';
-import resetIcon from '@images/svg/reset.svg';
 import searchService from '@services/searchService';
 import {
   IFromTo,
@@ -162,12 +164,14 @@ const SearchTabPanel: React.FC = () => {
                 fromOrTo={'From'}
                 fromTo={fromTo}
               />
-              <Image
-                src={arrows}
-                mt="0.9375rem"
+              <Box
+                mt="1.5rem"
                 cursor="pointer"
                 onClick={() => onChangeFromTo(searchParams)}
-              />
+              >
+                <ArrowsIcon />
+              </Box>
+
               <DestinationInput
                 onSetDestination={onSetDestination}
                 fromOrTo={'To'}
@@ -181,7 +185,7 @@ const SearchTabPanel: React.FC = () => {
               </Text>
               <InputGroup>
                 <InputLeftElement>
-                  <Image src={dateIcon} />
+                  <CalendarIcon />
                 </InputLeftElement>
                 <InputLeftElement ml={'8.125rem'}>
                   <Box w={'0.125rem'} h={'2.125rem'} bgColor={'#D9D9D9'} />
@@ -191,7 +195,7 @@ const SearchTabPanel: React.FC = () => {
                   boxShadow={'0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25)'}
                 />
                 <InputRightElement>
-                  <Image src={dateIcon} />
+                  <CalendarIcon />
                 </InputRightElement>
               </InputGroup>
             </Box>
@@ -201,8 +205,8 @@ const SearchTabPanel: React.FC = () => {
                 Passengers
               </Text>
               <InputGroup w="12.5rem">
-                <InputRightElement right="-0.375rem" mt={'0.5rem'}>
-                  <Image src={arrowDownSvg} />
+                <InputRightElement right="-0.375rem">
+                  <ArrowDownIcon />
                 </InputRightElement>
                 <Input
                   boxShadow={'0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25)'}
@@ -221,15 +225,19 @@ const SearchTabPanel: React.FC = () => {
               <Flex
                 ml="1.375rem"
                 mt="4.1875rem"
+                align="center"
                 _hover={{ cursor: 'pointer' }}
                 onClick={onReset}
               >
-                <Image src={resetIcon} />
+                <Box fill="#0A66C2" ml="0.25rem" fontSize="0.6875rem">
+                  <ResetIcon />
+                </Box>
                 <Text ml="0.25rem" fontSize="0.6875rem" color="#0A66C2">
                   Reset
                 </Text>
               </Flex>
             </Flex>
+
             <Button
               disabled={submitDisabled}
               type="submit"

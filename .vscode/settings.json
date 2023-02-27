@@ -9,5 +9,8 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "scm.alwaysShowActions": true,
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "cSpell.words": [
+    "uniqid"
+  ]
 }
