@@ -1,6 +1,5 @@
 import {
   Box,
-  Image,
   Tab,
   TabList,
   TabPanel,
@@ -9,12 +8,12 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-import planeIcon from '@images/svg/plane-tab-icon.svg';
+import { PlaneTabIcon } from '@common/icons';
 import { SearchTabPanel } from '@common/SearchTabPanel';
 import { ISearchPageTab } from '@interfaces/search.interfaces';
 
 const tabs: ISearchPageTab[] = [
-  { label: 'flights', icon: planeIcon },
+  { label: 'flights', icon: 'PlaneTabIcon' },
   { label: 'check-in' },
   { label: 'manage booking' },
 ];
@@ -40,16 +39,18 @@ const SearchPageTabs: React.FC = () => {
             borderRadius="0.375rem 0.375rem 0rem 0rem"
             fontWeight="600"
             justifyContent="flex-start"
-            _selected={{ color: '#0A66C2', outline: 'none', fontWeight: '700' }}
+            _selected={{
+              color: '#0A66C2',
+              outline: 'none',
+              fontWeight: '700',
+              fill: '#0A66C2',
+            }}
           >
             <Text casing={'uppercase'}>{tab.label}</Text>
             {tab.icon && (
-              <Image
-                src={planeIcon}
-                w={'1.625rem'}
-                h={'1.625rem'}
-                ml={'0.3125rem'}
-              />
+              <Box w="1.625rem" h="1.625rem" ml="0.3125rem" mb="0.2rem">
+                <PlaneTabIcon />
+              </Box>
             )}
           </Tab>
         ))}

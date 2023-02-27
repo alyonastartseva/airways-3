@@ -5,12 +5,11 @@ import {
   CardHeader,
   Flex,
   Heading,
-  Image,
   Link,
   Text,
 } from '@chakra-ui/react';
 
-import arrowLeftIcon from '@assets/images/svg/arrowLeft.svg';
+import { ArrowRightIcon } from '@common/icons';
 
 const CovidCard = () => {
   return (
@@ -30,7 +29,9 @@ const CovidCard = () => {
               Travel Regulations
             </Text>
           </Heading>
-          <Image src={arrowLeftIcon} mr="0.8125rem" mt="0.25rem" />
+          <Box mr=".5rem">
+            <ArrowRightIcon />
+          </Box>
         </Flex>
         <Box mt="0.125rem" h="0.0625rem" w="29.25rem" bgColor="#D9D9D9" />
       </CardHeader>

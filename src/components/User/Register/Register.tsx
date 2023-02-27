@@ -8,16 +8,14 @@ import {
   Flex,
   Grid,
   Heading,
-  Image,
   Link,
   SlideFade,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
 
+import { ChevronIcon, PenIcon } from '@common/icons';
 import { RegisterForm } from '@components/User/RegisterForm';
-import chevronIcon from '@images/svg/chevron.svg';
-import penIcon from '@images/svg/pen.svg';
 import { IFormValuesRegisterUser } from '@interfaces/form-values-register-user.interfaces';
 import AviasalesService from '@services/flights-service';
 import { prepareFormData } from '@utils/form-data.utils';
@@ -37,11 +35,11 @@ function Register() {
 
   return (
     <Box>
-      <Grid my={5} gridTemplateColumns="7fr 6fr">
+      <Grid my="5" gridTemplateColumns="7fr 6fr">
         <Box>
-          <Box mx={10}>
+          <Box mx="2.5rem">
             {isVisible && (
-              <SlideFade in={isVisible} offsetY="20px">
+              <SlideFade in={isVisible} offsetY="1rem">
                 <Alert status="success" background="none">
                   <AlertIcon />
                   <Box w="100%">
@@ -53,8 +51,8 @@ function Register() {
                   <CloseButton
                     alignSelf="flex-start"
                     position="relative"
-                    right={-1}
-                    top={-1}
+                    right="-1"
+                    top="-1"
                     onClick={onClose}
                   />
                 </Alert>
@@ -64,8 +62,10 @@ function Register() {
               Member Profile Details
             </Heading>
             <Box>
-              <Flex justify="flex-end">
-                <Image src={penIcon} />
+              <Flex justify="flex-end" align="end">
+                <Box textAlign="end" fill="#0A66C2">
+                  <PenIcon />
+                </Box>
                 <Text fontSize="sm" textAlign="end" color="#0A66C2">
                   Edit
                 </Text>
@@ -81,16 +81,16 @@ function Register() {
               fontFamily="Open Sans"
               fontStyle="normal"
               fontWeight="400"
-              fontSize="24px"
-              lineHeight="33px"
-              mb={12}
+              fontSize="1.5rem"
+              lineHeight="2rem"
+              mb="3rem"
             >
               Enjoy your Benefits with your UX AIR account.
             </Heading>
           </Flex>
-          <Flex mb={10} columnGap={5} align="flex-start">
-            <Image w={10} src={chevronIcon} />
-            <Flex flexDirection="column" rowGap={6}>
+          <Flex mb="10" columnGap="5" align="flex-start">
+            <ChevronIcon />
+            <Flex flexDirection="column" rowGap="6">
               <Text fontSize="md">
                 Create Your Account <b>free of charge</b>
               </Text>
