@@ -36,12 +36,6 @@ const Destinations = () => {
     pageSize: 10,
   });
 
-  // стейт и индекс изменяемой строки
-  const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
-  const [editableRowState, setEditableRowState] = useState<IDestination | null>(
-    null
-  );
-
   // получение данных
   const { data: destinations, isLoading } = useQuery(
     'destination list',
@@ -57,6 +51,12 @@ const Destinations = () => {
   const { mutate: deleteDestination } = useMutation(
     'destination delete',
     searchService.deleteDestination
+  );
+
+  // стейт и индекс изменяемой строки
+  const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
+  const [editableRowState, setEditableRowState] = useState<IDestination | null>(
+    null
   );
 
   // установка редактируемой строки
@@ -75,13 +75,6 @@ const Destinations = () => {
   const handleUpdateRow = (id: string, value: string) => {
     if (editableRowState)
       setEditableRowState({ ...editableRowState, [id]: value });
-  };
-
-  const tableData = (data?: IDestination[]) => {
-    if (Array.isArray(data) && data.length) {
-      return sortDestinations(data);
-    }
-    return [];
   };
 
   // создание столбцов таблицы
@@ -197,6 +190,14 @@ const Destinations = () => {
     }),
   ];
 
+  // сортировка получаемых данных. ВРЕМЕННО, ПОКА ДАННЫЕ С СЕРВЕРА ПРИХОДЯТ БЕЗ СОРТИРОВКИ
+  const tableData = (data?: IDestination[]) => {
+    if (Array.isArray(data) && data.length) {
+      return sortDestinations(data);
+    }
+    return [];
+  };
+
   // создание таблицы
   const table = useReactTable({
     data: tableData(destinations?.data).slice(
@@ -208,7 +209,7 @@ const Destinations = () => {
     manualPagination: true,
   });
 
-  //функция для обновления пагинации. НЕ РАБОТАЕТ
+  //функция для обновления пагинациb
   const setPaginationData = (pageNumber: number) => {
     if (destinations?.data.length) {
       const destinationsLength = destinations?.data.length;
