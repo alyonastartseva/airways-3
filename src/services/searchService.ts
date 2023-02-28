@@ -1,6 +1,9 @@
-// eslint-disable-next-line import/no-named-as-default
-import axiosInstance from '@services/axios';
-import { IDestination, ISearchQuery } from '@interfaces/search.interfaces';
+import { axiosInstance } from '@services/axios';
+import {
+  IDestination,
+  ISearchQuery,
+  IDestinationPost,
+} from '@interfaces/search.interfaces';
 import { ILoginRequest } from '@interfaces/login.interfaces';
 import ERoutes from '@services/endpoints';
 
@@ -32,6 +35,34 @@ class searchService {
   getDestinations = async () => {
     return await axiosInstance.get<IDestination[]>(
       ERoutes.DESTINATION,
+      await this.getHeaders()
+    );
+  };
+
+  patchDestinations = async (data: IDestination | null) => {
+    if (data) {
+      const { id, ...rest } = data;
+      return await axiosInstance.patch<IDestination>(
+        ERoutes.DESTINATION + id,
+        rest,
+        await this.getHeaders()
+      );
+    }
+  };
+
+  deleteDestination = async (id: number | undefined) => {
+    if (id) {
+      return await axiosInstance.delete<IDestination>(
+        ERoutes.DESTINATION + id,
+        await this.getHeaders()
+      );
+    }
+  };
+
+  postDestinations = async (data: IDestinationPost) => {
+    return await axiosInstance.post<IDestinationPost>(
+      ERoutes.DESTINATION,
+      data,
       await this.getHeaders()
     );
   };

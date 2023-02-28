@@ -5,6 +5,7 @@ import { describe, vi } from 'vitest';
 import { days, months, years } from '@utils/form-data.utils';
 
 import SelectField from './SelectField';
+
 const monthsOptions = months.map((i) => (
   <option data-testid="select-option" value={i + 1} key={i + 1}>
     {new Date(0, i + 1, 0).toLocaleDateString('en', { month: 'long' })}

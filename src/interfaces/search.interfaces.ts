@@ -14,7 +14,15 @@ export interface ISearchPageTab {
 }
 
 export interface IDestination {
-  id?: number;
+  id: number;
+  airportCode?: string;
+  airportName?: string;
+  cityName?: string;
+  timezone?: string;
+  countryName?: string;
+}
+
+export interface IDestinationPost {
   airportCode?: string;
   airportName?: string;
   cityName?: string;
