@@ -28,6 +28,7 @@ describe('Destinations', () => {
     data.useMutation = vi.fn().mockReturnValue({});
 
     render(<Destinations />);
+    expect(data.useQuery).toBeCalledTimes(1);
     expect(screen.getByText('VVO')).toBeInTheDocument();
     expect(screen.getByText('Кневичи')).toBeInTheDocument();
     expect(screen.getByText('Россия')).toBeInTheDocument();
@@ -40,6 +41,7 @@ describe('Destinations', () => {
     data.useMutation = vi.fn().mockReturnValue({});
 
     render(<Destinations />);
+    expect(data.useQuery).toBeCalledTimes(1);
     expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
@@ -49,6 +51,7 @@ describe('Destinations', () => {
     data.useMutation = vi.fn().mockReturnValue({});
 
     render(<Destinations />);
+    expect(data.useQuery).toBeCalledTimes(1);
     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
   });
 });
