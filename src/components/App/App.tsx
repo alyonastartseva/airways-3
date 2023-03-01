@@ -8,6 +8,7 @@ import { UsersPage } from '@pages/Admin/Users';
 import { RegisterPage } from '@pages/User/RegisterPage';
 import { SearchPage } from '@pages/User/SearchPage';
 import { DestinationsPage } from '@pages/Admin/DestinationsPage';
+import { PageNotFound } from '@/common/PageNotFound';
 
 const queryClient = new QueryClient({});
 
@@ -20,12 +21,14 @@ const App = () => {
           <Route path="search" element={<SearchPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="admin" element={<UsersPage />} />
+          <Route path="*" element={<PageNotFound />} />
         </Route>
         <Route path="/admin" element={<Layout />}>
           <Route index element={<LoginAdminForm />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="airplanes" element={<AirplanesPage />} />
           <Route path="destinations" element={<DestinationsPage />} />
+          <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>
     </QueryClientProvider>
