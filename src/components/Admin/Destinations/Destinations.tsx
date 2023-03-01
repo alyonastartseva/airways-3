@@ -184,7 +184,7 @@ const Destinations = () => {
           index={info.row.index}
           id={info.row.original.id}
           handleEditRow={handleEditRow}
-          deleteDestination={deleteDestination}
+          deleteRow={deleteDestination}
         />
       ),
     }),

@@ -4,6 +4,7 @@ import {
   ISearchQuery,
   IDestinationPost,
 } from '@interfaces/search.interfaces';
+import { IAirplane, IAirplanePost } from '@interfaces/plane.interfaces';
 import { ILoginRequest } from '@interfaces/login.interfaces';
 import ERoutes from '@services/endpoints';
 
@@ -65,6 +66,41 @@ class searchService {
       data,
       await this.getHeaders()
     );
+  };
+
+  getAircrafts = async () => {
+    return await axiosInstance.get<IAirplane[]>(
+      ERoutes.AIRCRAFT,
+      await this.getHeaders()
+    );
+  };
+
+  postAircraft = async (data: IAirplanePost) => {
+    return await axiosInstance.post<IAirplanePost>(
+      ERoutes.AIRCRAFT,
+      data,
+      await this.getHeaders()
+    );
+  };
+
+  deleteAircraft = async (id: number | undefined) => {
+    if (id) {
+      return await axiosInstance.delete<IAirplane>(
+        ERoutes.AIRCRAFT + id,
+        await this.getHeaders()
+      );
+    }
+  };
+
+  patchAircraft = async (data: IAirplane | null) => {
+    if (data) {
+      const { id, ...rest } = data;
+      return await axiosInstance.patch<IAirplane>(
+        ERoutes.AIRCRAFT + id,
+        rest,
+        await this.getHeaders()
+      );
+    }
   };
 
   getSearchId = async (searchQuery: ISearchQuery) => {

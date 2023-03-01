@@ -17,7 +17,7 @@ const PopoverTable = <Data,>({
   index,
   id,
   handleEditRow,
-  deleteDestination,
+  deleteRow,
 }: IPopoverTable<Data>) => (
   <Popover placement="left-start" arrowSize={10}>
     <PopoverTrigger>
@@ -82,7 +82,7 @@ const PopoverTable = <Data,>({
             backgroundColor: '#C5E3F6',
           }}
           bgColor="#E2F3F5"
-          onClick={() => deleteDestination(id)}
+          onClick={() => deleteRow(id)}
         >
           Удалить
         </Button>

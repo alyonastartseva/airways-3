@@ -61,7 +61,7 @@ const ModalDestinations = ({ name }: IModalFormPage) => {
           <ModalOverlay />
           <ModalContent>
             <ModalHeader py={6} px={7}>
-              <HeadingAdmin name="Добавление пункта назначения" />
+              <HeadingAdmin name="Добавить пункт назначения" />
             </ModalHeader>
             <ModalCloseButton m={3} bg="transparent" border="none" />
             <ModalBody pt={0} px={7}>

@@ -1,198 +1,286 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverTrigger,
-  Spinner,
+  TableContainer,
   Table,
   Tbody,
-  Td,
-  Th,
   Thead,
+  Td,
   Tr,
+  Th,
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
-  flexRender,
   getCoreRowModel,
   useReactTable,
+  flexRender,
 } from '@tanstack/react-table';
+import { useMutation, useQuery } from 'react-query';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
 
-import AviasalesService from '@services/flights-service';
-import { TPlane } from '@interfaces/plane.interfaces';
-import { Pagination } from '@components/Pagination';
+import searchService from '@services/searchService';
+import { IAirplane } from '@/interfaces/plane.interfaces';
+import { EditableCell } from '@common/EditableCell';
+import { FlexCell } from '@common/FlexCell';
+import { PopoverTable } from '@common/PopoverTable';
+import { AlertMessage } from '@common/AlertMessage';
+import { SpinnerBlock } from '@common/SpinnerBlock';
+import { HeaderAdmin } from '@common/HeaderAdmin';
+import { FooterTable } from '@common/FooterTable';
+import { ModalAirplanes } from '@common/ModalAirplanes';
+import { isRowEditing } from '@utils/table.utils';
+import { sortAirplanes } from '@utils/sort.utils';
 
-const Airplanes = () => {
-  const columnHelper = createColumnHelper<TPlane>();
-  const columns = [
-    columnHelper.accessor('id', {
-      cell: (info) => info.getValue(),
-      header: 'ID',
-    }),
-    columnHelper.accessor('aircraftNumber', {
-      cell: (info) => info.getValue(),
-      header: 'Номер',
-    }),
-    columnHelper.accessor('model', {
-      header: 'Модель',
-      cell: (info) => info.getValue<string>(),
-    }),
-    columnHelper.accessor('modelYear', {
-      header: 'Год модели',
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor('flightRange', {
-      header: 'Дальность полета',
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.display({
-      id: 'actions',
-      // eslint-disable-next-line react/no-unstable-nested-components
-      cell: () => (
-        <Popover>
-          <PopoverTrigger>
-            <Box
-              w="15px"
-              h="15px"
-              cursor="pointer"
-              _after={{ content: '"\\2807"' }}
-            />
-          </PopoverTrigger>
-          <PopoverContent>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            <PopoverBody>
-              <Flex flexDirection="column">
-                <Button size="sm" my={1} variant="solid">
-                  Редактировать
-                </Button>
-                <Button size="sm" colorScheme="red">
-                  Удалить
-                </Button>
-              </Flex>
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
-      ),
-    }),
-  ];
+const Destinations = () => {
+  // индекс и размер пагинации
   const [{ pageIndex, pageSize }, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
   });
-  const avia = new AviasalesService();
-  const { isLoading, data } = useQuery('planes', () => avia.getPlanes());
 
+  // получение данных
+  const { data: airplanes, isLoading } = useQuery(
+    'aircraft list',
+    searchService.getAircrafts
+  );
+
+  // изменение данных
+  const { mutate: patchAircraft } = useMutation('aircraft patch', () =>
+    searchService.patchAircraft(editableRowState)
+  );
+
+  // удаление данных
+  const { mutate: deleteAircraft } = useMutation(
+    'aircraft delete',
+    searchService.deleteAircraft
+  );
+
+  // стейт и индекс изменяемой строки
+  const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
+  const [editableRowState, setEditableRowState] = useState<IAirplane | null>(
+    null
+  );
+
+  // установка редактируемой строки
+  const handleEditRow = (row: IAirplane, index: number) => {
+    setEditableRowState(row);
+    setEditableRowIndex(index);
+  };
+
+  // сброс редактируемой строки
+  const cancelEditing = () => {
+    setEditableRowIndex(null);
+    setEditableRowState(null);
+  };
+
+  // обновление редактируемой строки
+  const handleUpdateRow = (id: string, value: string) => {
+    if (editableRowState)
+      setEditableRowState({ ...editableRowState, [id]: value });
+  };
+
+  // создание столбцов таблицы
+  const columnHelper = createColumnHelper<IAirplane>();
+  const columns = [
+    columnHelper.accessor('id', {
+      header: 'ID',
+      cell: (info) => <FlexCell padding={24} value={info.getValue()} />,
+      size: 41,
+    }),
+    columnHelper.accessor('model', {
+      header: 'Модель',
+      cell: (info) => (
+        <EditableCell
+          value={isRowEditing(
+            info.row.index,
+            info.column.id,
+            info.getValue(),
+            editableRowState,
+            editableRowIndex
+          )}
+          index={info.row.index}
+          id={info.column.id}
+          editableRowIndex={editableRowIndex}
+          updateData={handleUpdateRow}
+        />
+      ),
+      size: 250,
+    }),
+    columnHelper.accessor('aircraftNumber', {
+      header: 'Номер',
+      cell: (info) => (
+        <EditableCell
+          value={isRowEditing(
+            info.row.index,
+            info.column.id,
+            String(info.getValue()),
+            editableRowState,
+            editableRowIndex
+          )}
+          index={info.row.index}
+          id={info.column.id}
+          editableRowIndex={editableRowIndex}
+          updateData={handleUpdateRow}
+        />
+      ),
+    }),
+    columnHelper.accessor('modelYear', {
+      header: 'Год выпуска',
+      cell: (info) => (
+        <EditableCell
+          value={isRowEditing(
+            info.row.index,
+            info.column.id,
+            String(info.getValue()),
+            editableRowState,
+            editableRowIndex
+          )}
+          index={info.row.index}
+          id={info.column.id}
+          editableRowIndex={editableRowIndex}
+          updateData={handleUpdateRow}
+        />
+      ),
+    }),
+    columnHelper.accessor('flightRange', {
+      header: 'Дальность полёта (км)',
+      cell: (info) => (
+        <EditableCell
+          value={isRowEditing(
+            info.row.index,
+            info.column.id,
+            String(info.getValue()),
+            editableRowState,
+            editableRowIndex
+          )}
+          index={info.row.index}
+          id={info.column.id}
+          editableRowIndex={editableRowIndex}
+          updateData={handleUpdateRow}
+        />
+      ),
+    }),
+    columnHelper.display({
+      id: 'actions',
+      size: 41,
+      cell: (info) => (
+        <PopoverTable<IAirplane>
+          row={info.row.original}
+          index={info.row.index}
+          id={info.row.original.id}
+          handleEditRow={handleEditRow}
+          deleteRow={deleteAircraft}
+        />
+      ),
+    }),
+  ];
+
+  // сортировка получаемых данных. ВРЕМЕННО, ПОКА ДАННЫЕ С СЕРВЕРА ПРИХОДЯТ БЕЗ СОРТИРОВКИ
+  const tableData = (data?: IAirplane[]) => {
+    if (Array.isArray(data) && data.length) {
+      return sortAirplanes(data);
+    }
+    return [];
+  };
+
+  // создание таблицы
   const table = useReactTable({
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    data:
-      data && Array.isArray(data)
-        ? data.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize)
-        : [],
+    data: tableData(airplanes?.data).slice(
+      pageIndex * pageSize,
+      pageIndex * pageSize + pageSize
+    ),
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
   });
 
-  if (data && Array.isArray(data)) {
-    const setPaginationData = (pageNumber: number) => {
-      if (pageNumber >= 0 && pageNumber < data.length / pageSize) {
+  //функция для обновления пагинациb
+  const setPaginationData = (pageNumber: number) => {
+    if (airplanes?.data.length) {
+      const airplanesLength = airplanes?.data.length;
+      if (pageNumber >= 0 && pageNumber < airplanesLength / pageSize) {
         setPagination((prev) => ({
           ...prev,
-          pageNumber,
+          pageIndex: pageNumber,
         }));
       }
-    };
+    }
+  };
 
-    return (
-      <Box my={10} mx={10}>
-        <Flex my={5} align="center" justify="space-between" w="100%">
-          <Box>
-            <Heading color="rgba(47,79,79)" as="h4" size="md">
-              Самолеты
-            </Heading>
-          </Box>
-          <Box>
-            <Button border="1px solid rgba(247, 79, 79, .2)">
-              Добавить самолет +
-            </Button>
-          </Box>
-        </Flex>
-        <Box ml={5}>
-          <Table>
-            <Thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <Tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <Th
-                      border="1px solid rgba(247, 79, 79, .2)"
-                      color="#28282B"
-                      key={header.id}
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </Th>
-                  ))}
-                </Tr>
-              ))}
-            </Thead>
-            <Tbody>
-              {table.getRowModel().rows.map((row) => (
-                <Tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <Td border="1px solid rgba(247, 79, 79, .2)" key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Td>
-                  ))}
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-          <Pagination
-            data={data}
-            pageIndex={pageIndex}
-            pageSize={pageSize}
-            setPaginationData={setPaginationData}
-          />
-        </Box>
-      </Box>
-    );
-  }
+  // спиннер при загрузке
   if (isLoading) {
+    return <SpinnerBlock />;
+  }
+
+  // если полученные данные в порядке выводим таблицу
+  if (Array.isArray(airplanes?.data) && airplanes?.data.length) {
     return (
-      <Flex position="absolute" left="50%" my="10%" justify="center">
-        <Spinner size="xl" />
-      </Flex>
+      <TableContainer my={10} mx={14}>
+        <HeaderAdmin
+          heading="Самолеты"
+          modal={<ModalAirplanes name="Добавить самолет" />}
+        />
+        <Table>
+          <Thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <Tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <Th
+                    border="1px solid #DEDEDE"
+                    color="#000000"
+                    key={header.id}
+                    fontSize="14px"
+                    lineHeight="18px"
+                    textTransform="none"
+                    fontWeight="semibold"
+                    width={header.getSize()}
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </Th>
+                ))}
+              </Tr>
+            ))}
+          </Thead>
+          <Tbody>
+            {table.getRowModel().rows.map((row) => (
+              <Tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <Td
+                    border="1px solid #DEDEDE"
+                    color="#393939"
+                    fontSize="14px"
+                    lineHeight="18px"
+                    key={cell.id}
+                    textTransform="none"
+                    fontWeight="normal"
+                    paddingX="4px"
+                    paddingY="2px"
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Td>
+                ))}
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+        <FooterTable
+          data={tableData(airplanes?.data)}
+          pageIndex={pageIndex}
+          pageSize={pageSize}
+          setPaginationData={setPaginationData}
+          cancelEditing={cancelEditing}
+          patchDestination={patchAircraft}
+          editableRowIndex={editableRowIndex}
+        />
+      </TableContainer>
     );
   }
-  return (
-    <Flex position="absolute" left="50%" my="10%" justify="center">
-      <Alert status="error">
-        <AlertIcon />
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription>Something went wrong</AlertDescription>
-      </Alert>
-    </Flex>
-  );
+
+  // алерт при ошбике
+  return <AlertMessage />;
 };
 
-export default Airplanes;
+export default Destinations;

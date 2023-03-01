@@ -1,34 +1,32 @@
-import '@testing-library/jest-dom';
-import { cleanup, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, vi } from 'vitest';
 
-import { Airplanes } from './index';
-
-afterEach(cleanup);
+import Airplanes from './Airplanes';
 
 describe('Airplanes', () => {
-  it('Test component info rendered to the page', () => {
-    const { container } = render(<Airplanes />);
-    expect(container.querySelector('h4')).toBeInTheDocument();
-    expect(container.querySelector('h4')).toHaveTextContent('Самолеты');
-  });
-
-  it('Test component table with data rendered to the page', () => {
-    vi.mock('react-query', () => {
-      const testData = [
-        {
-          model: 'testName',
-          aircraftNumber: 1234,
-          id: 3,
-        },
-      ];
+  it('Airplanes render table data', () => {
+    vi.mock('react-query', async () => {
+      const testData = {
+        data: [
+          {
+            id: 1,
+            model: 'Superjet 100',
+            aircraftNumber: '1337',
+            modelYear: '2000',
+            flightRange: '3804',
+          },
+        ],
+      };
       return {
         useQuery: vi.fn().mockReturnValue({ data: testData }),
+        useMutation: vi.fn().mockReturnValue({}),
       };
     });
 
-    const { container } = render(<Airplanes />);
-    expect(container.querySelector('table')).toBeInTheDocument();
-    expect(screen.getByText('testName')).toBeInTheDocument();
+    render(<Airplanes />);
+    expect(screen.getByText('Superjet 100')).toBeInTheDocument();
+    expect(screen.getByText('1337')).toBeInTheDocument();
+    expect(screen.getByText('2000')).toBeInTheDocument();
+    expect(screen.getByText('3804')).toBeInTheDocument();
   });
 });

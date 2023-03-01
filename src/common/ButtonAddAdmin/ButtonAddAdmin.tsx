@@ -17,6 +17,7 @@ const ButtonAddAdmin = ({ name, onClick }: IButtonAddAdmin) => (
       color: '#FFFFFF',
     }}
     onClick={onClick}
+    minWidth="15rem"
   >
     {name}
   </Button>
