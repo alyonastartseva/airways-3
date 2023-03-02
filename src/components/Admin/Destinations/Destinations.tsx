@@ -215,7 +215,7 @@ const Destinations = () => {
 
   // создание таблицы
   const table = useReactTable({
-    data: tableData(destinations?.data).slice(
+    data: tableData(destinations).slice(
       pageIndex * pageSize,
       pageIndex * pageSize + pageSize
     ),
@@ -226,8 +226,8 @@ const Destinations = () => {
 
   //функция для обновления пагинациb
   const setPaginationData = (pageNumber: number) => {
-    if (destinations?.data.length) {
-      const destinationsLength = destinations?.data.length;
+    if (destinations?.length) {
+      const destinationsLength = destinations?.length;
       if (pageNumber >= 0 && pageNumber < destinationsLength / pageSize) {
         setPagination((prev) => ({
           ...prev,
@@ -243,7 +243,7 @@ const Destinations = () => {
   }
 
   // если полученные данные в порядке выводим таблицу
-  if (Array.isArray(destinations?.data) && destinations?.data.length) {
+  if (Array.isArray(destinations) && destinations?.length) {
     return (
       <TableContainer my={10} mx={14}>
         <HeaderAdmin
@@ -299,7 +299,7 @@ const Destinations = () => {
           </Tbody>
         </Table>
         <FooterTable
-          data={tableData(destinations?.data)}
+          data={tableData(destinations)}
           pageIndex={pageIndex}
           pageSize={pageSize}
           setPaginationData={setPaginationData}

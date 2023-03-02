@@ -12,17 +12,15 @@ describe('Destinations', () => {
   });
 
   it('Destinations render table data', async () => {
-    const testData = {
-      data: [
-        {
-          id: 1,
-          airportCode: 'VVO',
-          airportName: 'Кневичи',
-          countryName: 'Россия',
-          timezone: 'GMT +10',
-        },
-      ],
-    };
+    const testData = [
+      {
+        id: 1,
+        airportCode: 'VVO',
+        airportName: 'Кневичи',
+        countryName: 'Россия',
+        timezone: 'GMT +10',
+      },
+    ];
     const data = await import('react-query');
     data.useQuery = vi.fn().mockReturnValue({ data: testData });
     data.useMutation = vi.fn().mockReturnValue({});
@@ -42,7 +40,7 @@ describe('Destinations', () => {
 
     render(<Destinations />);
     expect(data.useQuery).toBeCalledTimes(1);
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
+    expect(screen.getAllByText('Loading...')).toHaveLength(2);
   });
 
   it('Destinations render alert', async () => {

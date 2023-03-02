@@ -34,7 +34,9 @@ class searchService {
   // };
 
   getDestinations = async () => {
-    return await axiosInstance.get<IDestination[]>(ERoutes.DESTINATION);
+    return await axiosInstance
+      .get<IDestination[]>(ERoutes.DESTINATION)
+      .then((response) => response.data);
   };
 
   patchDestinations = async (data: IDestination | null) => {
@@ -61,7 +63,9 @@ class searchService {
   };
 
   getAircrafts = async () => {
-    return await axiosInstance.get<IAirplane[]>(ERoutes.AIRCRAFT);
+    return await axiosInstance
+      .get<IAirplane[]>(ERoutes.AIRCRAFT)
+      .then((response) => response.data);
   };
 
   postAircraft = async (data: IAirplanePost) => {

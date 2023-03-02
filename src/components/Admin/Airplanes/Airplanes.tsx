@@ -198,7 +198,7 @@ const Airplanes = () => {
 
   // создание таблицы
   const table = useReactTable({
-    data: tableData(airplanes?.data).slice(
+    data: tableData(airplanes).slice(
       pageIndex * pageSize,
       pageIndex * pageSize + pageSize
     ),
@@ -209,8 +209,8 @@ const Airplanes = () => {
 
   //функция для обновления пагинациb
   const setPaginationData = (pageNumber: number) => {
-    if (airplanes?.data.length) {
-      const airplanesLength = airplanes?.data.length;
+    if (airplanes?.length) {
+      const airplanesLength = airplanes?.length;
       if (pageNumber >= 0 && pageNumber < airplanesLength / pageSize) {
         setPagination((prev) => ({
           ...prev,
@@ -226,71 +226,76 @@ const Airplanes = () => {
   }
 
   // если полученные данные в порядке выводим таблицу
-  if (Array.isArray(airplanes?.data) && airplanes?.data.length) {
+  if (Array.isArray(airplanes) && airplanes?.length) {
     return (
-      <TableContainer my={10} mx={14}>
-        <HeaderAdmin
-          heading="Самолеты"
-          modal={<ModalAirplanes name="Добавить самолет" />}
-        />
-        <Table>
-          <Thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <Tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <Th
-                    border="1px solid #DEDEDE"
-                    color="#000000"
-                    key={header.id}
-                    fontSize="14px"
-                    lineHeight="18px"
-                    textTransform="none"
-                    fontWeight="semibold"
-                    width={header.getSize()}
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </Th>
-                ))}
-              </Tr>
-            ))}
-          </Thead>
-          <Tbody>
-            {table.getRowModel().rows.map((row) => (
-              <Tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <Td
-                    border="1px solid #DEDEDE"
-                    color="#393939"
-                    fontSize="14px"
-                    lineHeight="18px"
-                    key={cell.id}
-                    textTransform="none"
-                    fontWeight="normal"
-                    paddingX="4px"
-                    paddingY="2px"
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Td>
-                ))}
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-        <FooterTable
-          data={tableData(airplanes?.data)}
-          pageIndex={pageIndex}
-          pageSize={pageSize}
-          setPaginationData={setPaginationData}
-          cancelEditing={cancelEditing}
-          patchRow={patchRow}
-          editableRowIndex={editableRowIndex}
-        />
-      </TableContainer>
+      airplanes && (
+        <TableContainer my={10} mx={14}>
+          <HeaderAdmin
+            heading="Самолеты"
+            modal={<ModalAirplanes name="Добавить самолет" />}
+          />
+          <Table>
+            <Thead>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <Tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <Th
+                      border="1px solid #DEDEDE"
+                      color="#000000"
+                      key={header.id}
+                      fontSize="14px"
+                      lineHeight="18px"
+                      textTransform="none"
+                      fontWeight="semibold"
+                      width={header.getSize()}
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </Th>
+                  ))}
+                </Tr>
+              ))}
+            </Thead>
+            <Tbody>
+              {table.getRowModel().rows.map((row) => (
+                <Tr key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <Td
+                      border="1px solid #DEDEDE"
+                      color="#393939"
+                      fontSize="14px"
+                      lineHeight="18px"
+                      key={cell.id}
+                      textTransform="none"
+                      fontWeight="normal"
+                      paddingX="4px"
+                      paddingY="2px"
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </Td>
+                  ))}
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+          <FooterTable
+            data={tableData(airplanes)}
+            pageIndex={pageIndex}
+            pageSize={pageSize}
+            setPaginationData={setPaginationData}
+            cancelEditing={cancelEditing}
+            patchRow={patchRow}
+            editableRowIndex={editableRowIndex}
+          />
+        </TableContainer>
+      )
     );
   }
 
