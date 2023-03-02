@@ -7,9 +7,7 @@ describe('ButtonGroupAdmin test', () => {
   it('ButtonGroupAdmin renders', () => {
     const onPatch = vi.fn();
     const onCancel = vi.fn();
-    render(
-      <ButtonGroupAdmin patchDestination={onPatch} cancelEditing={onCancel} />
-    );
+    render(<ButtonGroupAdmin patchRow={onPatch} cancelEditing={onCancel} />);
     expect(screen.getByText('Отменить')).toBeInTheDocument();
     expect(screen.getByText('Сохранить')).toBeInTheDocument();
   });
@@ -17,9 +15,7 @@ describe('ButtonGroupAdmin test', () => {
   it('ButtonGroupAdmin save click', () => {
     const onPatch = vi.fn();
     const onCancel = vi.fn();
-    render(
-      <ButtonGroupAdmin patchDestination={onPatch} cancelEditing={onCancel} />
-    );
+    render(<ButtonGroupAdmin patchRow={onPatch} cancelEditing={onCancel} />);
     const saveButton = screen.getByText('Сохранить');
     fireEvent.click(saveButton);
     expect(onPatch).toHaveBeenCalled();
@@ -28,9 +24,7 @@ describe('ButtonGroupAdmin test', () => {
   it('ButtonGroupAdmin cancel click', () => {
     const onPatch = vi.fn();
     const onCancel = vi.fn();
-    render(
-      <ButtonGroupAdmin patchDestination={onPatch} cancelEditing={onCancel} />
-    );
+    render(<ButtonGroupAdmin patchRow={onPatch} cancelEditing={onCancel} />);
     const cancelButton = screen.getByText('Отменить');
     fireEvent.click(cancelButton);
     expect(onCancel).toHaveBeenCalled();

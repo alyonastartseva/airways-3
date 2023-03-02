@@ -13,7 +13,7 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useState } from 'react';
 
 import searchService from '@services/searchService';
@@ -29,7 +29,9 @@ import { ModalAirplanes } from '@common/ModalAirplanes';
 import { isRowEditing } from '@utils/table.utils';
 import { sortAirplanes } from '@utils/sort.utils';
 
-const Destinations = () => {
+const Airplanes = () => {
+  const queryClient = useQueryClient();
+
   // индекс и размер пагинации
   const [{ pageIndex, pageSize }, setPagination] = useState({
     pageIndex: 0,
@@ -38,19 +40,26 @@ const Destinations = () => {
 
   // получение данных
   const { data: airplanes, isLoading } = useQuery(
-    'aircraft list',
+    'aircrafts',
     searchService.getAircrafts
   );
 
   // изменение данных
-  const { mutate: patchAircraft } = useMutation('aircraft patch', () =>
-    searchService.patchAircraft(editableRowState)
+  const { mutate: patchAircraft } = useMutation(
+    'aircrafts',
+    () => searchService.patchAircraft(editableRowState),
+    {
+      onSuccess: () => queryClient.invalidateQueries('aircrafts'),
+    }
   );
 
   // удаление данных
   const { mutate: deleteAircraft } = useMutation(
-    'aircraft delete',
-    searchService.deleteAircraft
+    'aircrafts',
+    searchService.deleteAircraft,
+    {
+      onSuccess: () => queryClient.invalidateQueries('aircrafts'),
+    }
   );
 
   // стейт и индекс изменяемой строки
@@ -75,6 +84,12 @@ const Destinations = () => {
   const handleUpdateRow = (id: string, value: string) => {
     if (editableRowState)
       setEditableRowState({ ...editableRowState, [id]: value });
+  };
+
+  // патч данных
+  const patchRow = () => {
+    patchAircraft();
+    cancelEditing();
   };
 
   // создание столбцов таблицы
@@ -272,7 +287,7 @@ const Destinations = () => {
           pageSize={pageSize}
           setPaginationData={setPaginationData}
           cancelEditing={cancelEditing}
-          patchDestination={patchAircraft}
+          patchRow={patchRow}
           editableRowIndex={editableRowIndex}
         />
       </TableContainer>
@@ -283,4 +298,4 @@ const Destinations = () => {
   return <AlertMessage />;
 };
 
-export default Destinations;
+export default Airplanes;

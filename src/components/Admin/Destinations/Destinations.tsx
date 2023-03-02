@@ -13,7 +13,7 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useState } from 'react';
 
 import searchService from '@services/searchService';
@@ -30,6 +30,8 @@ import { isRowEditing } from '@utils/table.utils';
 import { sortDestinations } from '@utils/sort.utils';
 
 const Destinations = () => {
+  const queryClient = useQueryClient();
+
   // индекс и размер пагинации
   const [{ pageIndex, pageSize }, setPagination] = useState({
     pageIndex: 0,
@@ -38,19 +40,26 @@ const Destinations = () => {
 
   // получение данных
   const { data: destinations, isLoading } = useQuery(
-    'destination list',
+    'destinations',
     searchService.getDestinations
   );
 
   // изменение данных
-  const { mutate: patchDestination } = useMutation('destination patch', () =>
-    searchService.patchDestinations(editableRowState)
+  const { mutate: patchDestination } = useMutation(
+    'destinations',
+    () => searchService.patchDestinations(editableRowState),
+    {
+      onSuccess: () => queryClient.invalidateQueries('destinations'),
+    }
   );
 
   // удаление данных
   const { mutate: deleteDestination } = useMutation(
-    'destination delete',
-    searchService.deleteDestination
+    'destinations',
+    searchService.deleteDestination,
+    {
+      onSuccess: () => queryClient.invalidateQueries('destinations'),
+    }
   );
 
   // стейт и индекс изменяемой строки
@@ -75,6 +84,12 @@ const Destinations = () => {
   const handleUpdateRow = (id: string, value: string) => {
     if (editableRowState)
       setEditableRowState({ ...editableRowState, [id]: value });
+  };
+
+  // патч данных
+  const patchRow = () => {
+    patchDestination();
+    cancelEditing();
   };
 
   // создание столбцов таблицы
@@ -289,7 +304,7 @@ const Destinations = () => {
           pageSize={pageSize}
           setPaginationData={setPaginationData}
           cancelEditing={cancelEditing}
-          patchDestination={patchDestination}
+          patchRow={patchRow}
           editableRowIndex={editableRowIndex}
         />
       </TableContainer>

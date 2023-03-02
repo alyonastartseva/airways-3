@@ -51,7 +51,7 @@ export interface IButtonAddAdmin {
 
 export interface IButtonGroupAdmin {
   cancelEditing(): void;
-  patchDestination(): void;
+  patchRow(): void;
 }
 
 export interface IHeaderAdmin {
@@ -65,7 +65,7 @@ export interface IFooterTable<Data> {
   pageIndex: number;
   pageSize: number;
   cancelEditing(): void;
-  patchDestination(): void;
+  patchRow(): void;
   setPaginationData(pageNumber: number): void;
 }
 

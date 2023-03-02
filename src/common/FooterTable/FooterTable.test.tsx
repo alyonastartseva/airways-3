@@ -17,7 +17,7 @@ describe('FooterTable test', () => {
         editableRowIndex={editableRowIndex}
         pageSize={pageSize}
         pageIndex={pageIndex}
-        patchDestination={onPatch}
+        patchRow={onPatch}
         cancelEditing={onCancel}
         setPaginationData={setPaginationData}
       />
@@ -41,7 +41,7 @@ describe('FooterTable test', () => {
         editableRowIndex={editableRowIndex}
         pageSize={pageSize}
         pageIndex={pageIndex}
-        patchDestination={onPatch}
+        patchRow={onPatch}
         cancelEditing={onCancel}
         setPaginationData={setPaginationData}
       />
@@ -65,7 +65,7 @@ describe('FooterTable test', () => {
         editableRowIndex={editableRowIndex}
         pageSize={pageSize}
         pageIndex={pageIndex}
-        patchDestination={onPatch}
+        patchRow={onPatch}
         cancelEditing={onCancel}
         setPaginationData={setPaginationData}
       />
