@@ -17,16 +17,12 @@ const DestinationInput: React.FC<IDestProps> = (props: IDestProps) => {
   const [destinationList, setDestinationList] = useState<IDestination[]>([]);
 
   //eslint-disable-next-line no-empty-pattern
-  const {} = useQuery(
-    'destination list',
-    () => searchService.getDestinations(),
-    {
-      onSuccess: (res) => {
-        setDestinationList(res.data);
-      },
-      onError: (err) => console.error(err),
-    }
-  );
+  const {} = useQuery('destinations', () => searchService.getDestinations(), {
+    onSuccess: (res) => {
+      setDestinationList(res);
+    },
+    onError: (err) => console.error(err),
+  });
 
   const [destInputFocus, setDestInputFocus] = useState(false);
 
