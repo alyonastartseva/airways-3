@@ -1,4 +1,4 @@
-import { IAirplane } from '@/interfaces/plane.interfaces';
+import { IAirplane } from '@interfaces/plane.interfaces';
 import { IDestination } from '@interfaces/search.interfaces';
 
 export const sortDestinations = (

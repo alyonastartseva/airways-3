@@ -17,7 +17,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useState } from 'react';
 
 import searchService from '@services/searchService';
-import { IAirplane } from '@/interfaces/plane.interfaces';
+import { IAirplane } from '@interfaces/plane.interfaces';
 import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';

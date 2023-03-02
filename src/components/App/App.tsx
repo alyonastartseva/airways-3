@@ -8,7 +8,7 @@ import { UsersPage } from '@pages/Admin/Users';
 import { RegisterPage } from '@pages/User/RegisterPage';
 import { SearchPage } from '@pages/User/SearchPage';
 import { DestinationsPage } from '@pages/Admin/DestinationsPage';
-import { PageNotFound } from '@/common/PageNotFound';
+import { PageNotFound } from '@common/PageNotFound';
 
 const queryClient = new QueryClient({});
 
