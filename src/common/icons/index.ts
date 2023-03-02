@@ -6,3 +6,4 @@ export { default as ChevronIcon } from './Chevron';
 export { default as PenIcon } from './Pen';
 export { default as PlaneTabIcon } from './PlaneTabIcon';
 export { default as ResetIcon } from './Reset';
+export { default as Logo } from './Logo';
