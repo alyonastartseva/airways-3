@@ -27,8 +27,8 @@ import { ModalDestinations } from '@common/ModalDestinations';
 import { isRowEditing } from '@utils/table.utils';
 import { sortDestinations } from '@utils/sort.utils';
 import { useDestinationQuery } from '@hooks/useDestinationQuery';
-import { useDestinationPatch } from '@/hooks/useDestinationPatch';
-import { useDestinationDelete } from '@/hooks/useDestinationDelete';
+import { useDestinationPatch } from '@hooks/useDestinationPatch';
+import { useDestinationDelete } from '@hooks/useDestinationDelete';
 
 const Destinations = () => {
   // индекс и размер пагинации

@@ -13,10 +13,8 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { useMutation, useQueryClient } from 'react-query';
 import { useState } from 'react';
 
-import searchService from '@services/searchService';
 import { IAirplane } from '@interfaces/plane.interfaces';
 import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
@@ -29,12 +27,10 @@ import { ModalAirplanes } from '@common/ModalAirplanes';
 import { isRowEditing } from '@utils/table.utils';
 import { sortAirplanes } from '@utils/sort.utils';
 import { useAirplanesQuery } from '@hooks/useAirplanesQuery';
-import { useAirplanePatch } from '@/hooks/useAirplanePatch';
-import { useAirplaneDelete } from '@/hooks/useAirplaneDelete';
+import { useAirplanePatch } from '@hooks/useAirplanePatch';
+import { useAirplaneDelete } from '@hooks/useAirplaneDelete';
 
 const Airplanes = () => {
-  const queryClient = useQueryClient();
-
   // индекс и размер пагинации
   const [{ pageIndex, pageSize }, setPagination] = useState({
     pageIndex: 0,
