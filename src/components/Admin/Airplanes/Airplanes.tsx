@@ -13,7 +13,7 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { useState } from 'react';
 
 import searchService from '@services/searchService';
@@ -28,6 +28,9 @@ import { FooterTable } from '@common/FooterTable';
 import { ModalAirplanes } from '@common/ModalAirplanes';
 import { isRowEditing } from '@utils/table.utils';
 import { sortAirplanes } from '@utils/sort.utils';
+import { useAirplanesQuery } from '@hooks/useAirplanesQuery';
+import { useAirplanePatch } from '@/hooks/useAirplanePatch';
+import { useAirplaneDelete } from '@/hooks/useAirplaneDelete';
 
 const Airplanes = () => {
   const queryClient = useQueryClient();
@@ -37,30 +40,6 @@ const Airplanes = () => {
     pageIndex: 0,
     pageSize: 10,
   });
-
-  // получение данных
-  const { data: airplanes, isLoading } = useQuery(
-    'aircrafts',
-    searchService.getAircrafts
-  );
-
-  // изменение данных
-  const { mutate: patchAircraft } = useMutation(
-    'aircrafts',
-    () => searchService.patchAircraft(editableRowState),
-    {
-      onSuccess: () => queryClient.invalidateQueries('aircrafts'),
-    }
-  );
-
-  // удаление данных
-  const { mutate: deleteAircraft } = useMutation(
-    'aircrafts',
-    searchService.deleteAircraft,
-    {
-      onSuccess: () => queryClient.invalidateQueries('aircrafts'),
-    }
-  );
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -91,6 +70,15 @@ const Airplanes = () => {
     patchAircraft();
     cancelEditing();
   };
+
+  // получение данных
+  const { data: airplanes, isLoading } = useAirplanesQuery();
+
+  // изменение данных
+  const { mutate: patchAircraft } = useAirplanePatch(editableRowState);
+
+  // удаление данных
+  const { mutate: deleteAircraft } = useAirplaneDelete();
 
   // создание столбцов таблицы
   const columnHelper = createColumnHelper<IAirplane>();

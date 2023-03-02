@@ -1,5 +1,4 @@
 import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
-import { useMutation } from 'react-query';
 import {
   useDisclosure,
   Modal,
@@ -11,11 +10,11 @@ import {
   ModalBody,
 } from '@chakra-ui/react';
 
-import searchService from '@services/searchService';
 import { ModalInput } from '@common/ModalInput';
 import { ButtonSubmitAdmin } from '@common/ButtonSubmitAdmin';
 import { HeadingAdmin } from '@common/HeadingAdmin';
 import { IModalFormPage } from '@interfaces/table.interfaces';
+import { useAirplanePost } from '@hooks/useAirplanePost';
 
 import { ButtonAddAdmin } from '../ButtonAddAdmin';
 
@@ -26,25 +25,25 @@ interface IAirplanesForm extends FieldValues {
   flightRange: number;
 }
 
-const ModalDestinations = ({ name }: IModalFormPage) => {
+const ModalAirplanes = ({ name }: IModalFormPage) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<IAirplanesForm>({ mode: 'onBlur' });
 
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const { mutate: createAircraft } = useMutation(
-    'create aircraft',
-    searchService.postAircraft,
-    {
-      onSuccess: () => onClose(),
-    }
-  );
+  const { mutateAsync: createAircraft } = useAirplanePost();
 
-  const onSubmit: SubmitHandler<IAirplanesForm> = (data) => {
-    createAircraft(data);
+  const onSubmit: SubmitHandler<IAirplanesForm> = async (data) => {
+    await createAircraft(data).then((response) => {
+      if (response.status < 400) {
+        reset();
+        onClose();
+      }
+    });
   };
 
   return (
@@ -141,4 +140,4 @@ const ModalDestinations = ({ name }: IModalFormPage) => {
   );
 };
 
-export default ModalDestinations;
+export default ModalAirplanes;

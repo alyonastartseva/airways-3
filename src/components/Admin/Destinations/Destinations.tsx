@@ -13,10 +13,8 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useState } from 'react';
 
-import searchService from '@services/searchService';
 import { IDestination } from '@interfaces/search.interfaces';
 import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
@@ -28,39 +26,16 @@ import { FooterTable } from '@common/FooterTable';
 import { ModalDestinations } from '@common/ModalDestinations';
 import { isRowEditing } from '@utils/table.utils';
 import { sortDestinations } from '@utils/sort.utils';
+import { useDestinationQuery } from '@hooks/useDestinationQuery';
+import { useDestinationPatch } from '@/hooks/useDestinationPatch';
+import { useDestinationDelete } from '@/hooks/useDestinationDelete';
 
 const Destinations = () => {
-  const queryClient = useQueryClient();
-
   // индекс и размер пагинации
   const [{ pageIndex, pageSize }, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
   });
-
-  // получение данных
-  const { data: destinations, isLoading } = useQuery(
-    'destinations',
-    searchService.getDestinations
-  );
-
-  // изменение данных
-  const { mutate: patchDestination } = useMutation(
-    'destinations',
-    () => searchService.patchDestinations(editableRowState),
-    {
-      onSuccess: () => queryClient.invalidateQueries('destinations'),
-    }
-  );
-
-  // удаление данных
-  const { mutate: deleteDestination } = useMutation(
-    'destinations',
-    searchService.deleteDestination,
-    {
-      onSuccess: () => queryClient.invalidateQueries('destinations'),
-    }
-  );
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -91,6 +66,15 @@ const Destinations = () => {
     patchDestination();
     cancelEditing();
   };
+
+  // получение данных
+  const { data: destinations, isLoading } = useDestinationQuery();
+
+  // изменение данных
+  const { mutate: patchDestination } = useDestinationPatch(editableRowState);
+
+  // удаление данных
+  const { mutate: deleteDestination } = useDestinationDelete();
 
   // создание столбцов таблицы
   const columnHelper = createColumnHelper<IDestination>();

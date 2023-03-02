@@ -19,6 +19,7 @@ vi.mock('react-query', () => {
   ];
   return {
     useMutation: vi.fn().mockReturnValue({ data: testData, isSuccess: true }),
+    useQueryClient: vi.fn().mockReturnValue({}),
   };
 });
 

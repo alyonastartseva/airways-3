@@ -1,5 +1,4 @@
 import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
-import { useMutation } from 'react-query';
 import {
   useDisclosure,
   Modal,
@@ -11,11 +10,11 @@ import {
   ModalBody,
 } from '@chakra-ui/react';
 
-import searchService from '@services/searchService';
 import { ModalInput } from '@common/ModalInput';
 import { ButtonSubmitAdmin } from '@common/ButtonSubmitAdmin';
 import { HeadingAdmin } from '@common/HeadingAdmin';
 import { IModalFormPage } from '@interfaces/table.interfaces';
+import { useDestinationPost } from '@hooks/useDestinationPost';
 
 import { ButtonAddAdmin } from '../ButtonAddAdmin';
 
@@ -31,20 +30,20 @@ const ModalDestinations = ({ name }: IModalFormPage) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<IDestinationForm>({ mode: 'onBlur' });
 
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const { mutate: createDestination } = useMutation(
-    'create destination',
-    searchService.postDestinations,
-    {
-      onSuccess: () => onClose(),
-    }
-  );
+  const { mutateAsync: createDestination } = useDestinationPost();
 
-  const onSubmit: SubmitHandler<IDestinationForm> = (data) => {
-    createDestination(data);
+  const onSubmit: SubmitHandler<IDestinationForm> = async (data) => {
+    await createDestination(data).then((response) => {
+      if (response.status < 400) {
+        reset();
+        onClose();
+      }
+    });
   };
 
   return (
