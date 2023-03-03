@@ -7,12 +7,12 @@ import {
   YouTubeIcon,
   FacebookIcon,
 } from '@common/icons/social';
-import aSImage from '@assets/images/articles/ASImage.png';
-import bestOffersImage from '@assets/images/articles/BestOffersImage.png';
-import discoverImage from '@assets/images/articles/discoverImage.png';
-import holidayImage from '@assets/images/articles/holidayImage.png';
+import aSImage from '@assets/images/articles/ASImage.webp';
+import bestOffersImage from '@assets/images/articles/BestOffersImage.webp';
+import discoverImage from '@assets/images/articles/discoverImage.webp';
+import holidayImage from '@assets/images/articles/holidayImage.webp';
 import { SearchPageTabs } from '@common/SearchPageTabs';
-import background from '@images/search-page-bg.png';
+import background from '@images/search-page-bg.webp';
 import { IArticle } from '@interfaces/search.interfaces';
 import { ArticleCard } from '@common/ArticleCard';
 import { CovidCard } from '@common/CovidCard';
