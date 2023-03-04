@@ -2,10 +2,7 @@ import { ButtonGroup, Button } from '@chakra-ui/react';
 
 import { IButtonGroupAdmin } from '@/interfaces/table.interfaces';
 
-const ButtonGroupAdmin = ({
-  cancelEditing,
-  patchDestination,
-}: IButtonGroupAdmin) => (
+const ButtonGroupAdmin = ({ cancelEditing, patchRow }: IButtonGroupAdmin) => (
   <ButtonGroup>
     <Button
       width="12rem"
@@ -35,7 +32,7 @@ const ButtonGroupAdmin = ({
         borderColor: '#398AEA',
         color: '#FFFFFF',
       }}
-      onClick={patchDestination}
+      onClick={patchRow}
     >
       Сохранить
     </Button>

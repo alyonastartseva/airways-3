@@ -1,9 +1,8 @@
-import { Table } from '@tanstack/react-table';
 import { AxiosResponse } from 'axios';
 import { UseMutateFunction } from 'react-query';
 
 import { TPerson } from './person.interfaces';
-import { TPlane } from './plane.interfaces';
+import { IAirplane } from './plane.interfaces';
 import { IDestination } from './search.interfaces';
 
 export interface IEditableCell {
@@ -37,7 +36,7 @@ export interface IPopoverTable<Data> {
   index: number;
   id: number | undefined;
   handleEditRow(row: Data, index: number): void;
-  deleteDestination: UseMutateFunction<
+  deleteRow: UseMutateFunction<
     AxiosResponse<Data, any> | undefined,
     unknown,
     number | undefined,
@@ -52,7 +51,7 @@ export interface IButtonAddAdmin {
 
 export interface IButtonGroupAdmin {
   cancelEditing(): void;
-  patchDestination(): void;
+  patchRow(): void;
 }
 
 export interface IHeaderAdmin {
@@ -66,7 +65,7 @@ export interface IFooterTable<Data> {
   pageIndex: number;
   pageSize: number;
   cancelEditing(): void;
-  patchDestination(): void;
+  patchRow(): void;
   setPaginationData(pageNumber: number): void;
 }
 
@@ -80,4 +79,4 @@ export interface IModalForm {
 
 // самолеты, места назначения, пассажиры: done
 // часовые пояса и рейсы: to do
-export type TTableData = TPerson | IDestination | TPlane;
+export type TTableData = TPerson | IDestination | IAirplane;

@@ -1,9 +1,8 @@
-import { Box, Flex, Image, Link, Text } from '@chakra-ui/react';
+import { Box, Flex, Link, Text } from '@chakra-ui/react';
 import { FC } from 'react';
 
+import { AppStore, PlayStore } from '@common/icons';
 import Full from '@common/Full/Full';
-import appstore from '@images/app-store.png';
-import googleplay from '@images/google-play.png';
 import {
   IDeparture,
   ITickerReturn,
@@ -19,7 +18,7 @@ interface IFooterProps {
 const Footer: FC<IFooterProps> = ({ departure, return: ret, additional }) => (
   <Flex
     justifyContent="space-between"
-    alignItems="start"
+    alignItems="center"
     bg="#04396D"
     color="#fff"
     p="1.125rem 1.5rem"
@@ -45,10 +44,10 @@ const Footer: FC<IFooterProps> = ({ departure, return: ret, additional }) => (
           <Text fontWeight="700">UX AIR APP</Text>
           <Flex columnGap="1.25rem">
             <Link href="https://www.apple.com/" target="_blank">
-              <Image src={appstore} />
+              <AppStore />
             </Link>
             <Link href="https://play.google.com/" target="_blank">
-              <Image src={googleplay} />
+              <PlayStore />
             </Link>
           </Flex>
         </Flex>

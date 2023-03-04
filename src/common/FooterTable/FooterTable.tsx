@@ -11,7 +11,7 @@ const FooterTable = <Data,>({
   setPaginationData,
   editableRowIndex,
   cancelEditing,
-  patchDestination,
+  patchRow,
 }: IFooterTable<Data>) => (
   <Flex justify="space-between" alignItems="center">
     <Pagination
@@ -21,10 +21,7 @@ const FooterTable = <Data,>({
       setPaginationData={setPaginationData}
     />
     {data && editableRowIndex !== null && (
-      <ButtonGroupAdmin
-        cancelEditing={cancelEditing}
-        patchDestination={patchDestination}
-      />
+      <ButtonGroupAdmin cancelEditing={cancelEditing} patchRow={patchRow} />
     )}
   </Flex>
 );

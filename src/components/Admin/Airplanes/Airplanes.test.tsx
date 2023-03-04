@@ -1,34 +1,55 @@
-import '@testing-library/jest-dom';
-import { cleanup, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, vi } from 'vitest';
 
-import { Airplanes } from './index';
+import Airplanes from './Airplanes';
 
-afterEach(cleanup);
+vi.mock('react-query');
 
 describe('Airplanes', () => {
-  it('Test component info rendered to the page', () => {
-    const { container } = render(<Airplanes />);
-    expect(container.querySelector('h4')).toBeInTheDocument();
-    expect(container.querySelector('h4')).toHaveTextContent('Самолеты');
+  afterEach(() => {
+    vi.clearAllMocks();
+    vi.resetAllMocks();
   });
 
-  it('Test component table with data rendered to the page', () => {
-    vi.mock('react-query', () => {
-      const testData = [
-        {
-          model: 'testName',
-          aircraftNumber: 1234,
-          id: 3,
-        },
-      ];
-      return {
-        useQuery: vi.fn().mockReturnValue({ data: testData }),
-      };
-    });
+  it('Airplanes render table data', async () => {
+    const testData = [
+      {
+        id: 1,
+        model: 'Superjet 100',
+        aircraftNumber: '1337',
+        modelYear: '2000',
+        flightRange: '3804',
+      },
+    ];
+    const data = await import('react-query');
+    data.useQuery = vi.fn().mockReturnValue({ data: testData });
+    data.useMutation = vi.fn().mockReturnValue({});
 
-    const { container } = render(<Airplanes />);
-    expect(container.querySelector('table')).toBeInTheDocument();
-    expect(screen.getByText('testName')).toBeInTheDocument();
+    render(<Airplanes />);
+    expect(data.useQuery).toBeCalledTimes(1);
+    expect(screen.getByText('Superjet 100')).toBeInTheDocument();
+    expect(screen.getByText('1337')).toBeInTheDocument();
+    expect(screen.getByText('2000')).toBeInTheDocument();
+    expect(screen.getByText('3804')).toBeInTheDocument();
+  });
+
+  it('Airplanes render spinner', async () => {
+    const data = await import('react-query');
+    data.useQuery = vi.fn().mockReturnValue({ isLoading: true });
+    data.useMutation = vi.fn().mockReturnValue({});
+
+    render(<Airplanes />);
+    expect(data.useQuery).toBeCalledTimes(1);
+    expect(screen.getAllByText('Loading...')).toHaveLength(2);
+  });
+
+  it('Airplanes render alert', async () => {
+    const data = await import('react-query');
+    data.useQuery = vi.fn().mockReturnValue({});
+    data.useMutation = vi.fn().mockReturnValue({});
+
+    render(<Airplanes />);
+    expect(data.useQuery).toBeCalledTimes(1);
+    expect(screen.getByText('Something went wrong')).toBeInTheDocument();
   });
 });

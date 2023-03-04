@@ -13,10 +13,8 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { useMutation, useQuery } from 'react-query';
 import { useState } from 'react';
 
-import searchService from '@services/searchService';
 import { IDestination } from '@interfaces/search.interfaces';
 import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
@@ -28,6 +26,9 @@ import { FooterTable } from '@common/FooterTable';
 import { ModalDestinations } from '@common/ModalDestinations';
 import { isRowEditing } from '@utils/table.utils';
 import { sortDestinations } from '@utils/sort.utils';
+import { useDestinationQuery } from '@hooks/useDestinationQuery';
+import { useDestinationPatch } from '@hooks/useDestinationPatch';
+import { useDestinationDelete } from '@hooks/useDestinationDelete';
 
 const Destinations = () => {
   // индекс и размер пагинации
@@ -35,23 +36,6 @@ const Destinations = () => {
     pageIndex: 0,
     pageSize: 10,
   });
-
-  // получение данных
-  const { data: destinations, isLoading } = useQuery(
-    'destination list',
-    searchService.getDestinations
-  );
-
-  // изменение данных
-  const { mutate: patchDestination } = useMutation('destination patch', () =>
-    searchService.patchDestinations(editableRowState)
-  );
-
-  // удаление данных
-  const { mutate: deleteDestination } = useMutation(
-    'destination delete',
-    searchService.deleteDestination
-  );
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -76,6 +60,21 @@ const Destinations = () => {
     if (editableRowState)
       setEditableRowState({ ...editableRowState, [id]: value });
   };
+
+  // патч данных
+  const patchRow = () => {
+    patchDestination();
+    cancelEditing();
+  };
+
+  // получение данных
+  const { data: destinations, isLoading } = useDestinationQuery();
+
+  // изменение данных
+  const { mutate: patchDestination } = useDestinationPatch(editableRowState);
+
+  // удаление данных
+  const { mutate: deleteDestination } = useDestinationDelete();
 
   // создание столбцов таблицы
   const columnHelper = createColumnHelper<IDestination>();
@@ -184,7 +183,7 @@ const Destinations = () => {
           index={info.row.index}
           id={info.row.original.id}
           handleEditRow={handleEditRow}
-          deleteDestination={deleteDestination}
+          deleteRow={deleteDestination}
         />
       ),
     }),
@@ -200,7 +199,7 @@ const Destinations = () => {
 
   // создание таблицы
   const table = useReactTable({
-    data: tableData(destinations?.data).slice(
+    data: tableData(destinations).slice(
       pageIndex * pageSize,
       pageIndex * pageSize + pageSize
     ),
@@ -211,8 +210,8 @@ const Destinations = () => {
 
   //функция для обновления пагинациb
   const setPaginationData = (pageNumber: number) => {
-    if (destinations?.data.length) {
-      const destinationsLength = destinations?.data.length;
+    if (destinations?.length) {
+      const destinationsLength = destinations?.length;
       if (pageNumber >= 0 && pageNumber < destinationsLength / pageSize) {
         setPagination((prev) => ({
           ...prev,
@@ -228,7 +227,7 @@ const Destinations = () => {
   }
 
   // если полученные данные в порядке выводим таблицу
-  if (Array.isArray(destinations?.data) && destinations?.data.length) {
+  if (Array.isArray(destinations) && destinations?.length) {
     return (
       <TableContainer my={10} mx={14}>
         <HeaderAdmin
@@ -284,12 +283,12 @@ const Destinations = () => {
           </Tbody>
         </Table>
         <FooterTable
-          data={tableData(destinations?.data)}
+          data={tableData(destinations)}
           pageIndex={pageIndex}
           pageSize={pageSize}
           setPaginationData={setPaginationData}
           cancelEditing={cancelEditing}
-          patchDestination={patchDestination}
+          patchRow={patchRow}
           editableRowIndex={editableRowIndex}
         />
       </TableContainer>

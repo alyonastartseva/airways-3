@@ -1,6 +1,7 @@
-import { Box, Image, Text, Button } from '@chakra-ui/react';
+import { Box, Text, Button } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
-import headerLogo from '../../assets/images/logo.png';
+import { Logo } from '@common/icons';
 
 const Header = () => (
   <Box
@@ -11,29 +12,26 @@ const Header = () => (
     alignItems="center"
   >
     <Box position="relative">
-      <Image
-        width="5.3em"
-        display="inline"
-        height="3.8em"
-        mt="1em"
-        ml="1em"
-        src={headerLogo}
-      />
+      <Logo />
       <Text
         className="name"
         position="absolute"
         alignSelf="end"
         color="white"
         fontWeight="600"
-        right="-1.7em"
-        bottom="0.3em"
+        right="-1.8em"
+        bottom="0.25em"
+        fontSize="1.125rem"
+        lineHeight="1.125rem"
       >
         UX AIR
       </Text>
     </Box>
-    <Button mr="1em" justifySelf="flex-end" fontSize="lx">
-      Главная страница
-    </Button>
+    <Link to="/">
+      <Button mr="1em" justifySelf="flex-end" fontSize="lx">
+        Главная страница
+      </Button>
+    </Link>
   </Box>
 );
 export default Header;

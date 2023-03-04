@@ -7,8 +7,8 @@ import {
 } from '@chakra-ui/react';
 
 const AlertMessage = () => (
-  <Flex position="absolute" left="40%" my="10%" justify="center">
-    <Alert status="error">
+  <Flex minHeight="81vh" justifyContent="center" alignItems="center">
+    <Alert status="error" justifyContent="center" width="20rem" height="6rem">
       <AlertIcon />
       <AlertTitle>Error</AlertTitle>
       <AlertDescription>Something went wrong</AlertDescription>

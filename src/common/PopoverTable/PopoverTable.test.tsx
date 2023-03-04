@@ -13,7 +13,7 @@ describe('PopoverTable test', () => {
     render(
       <PopoverTable
         handleEditRow={editRow}
-        deleteDestination={deleteRow}
+        deleteRow={deleteRow}
         id={id}
         index={index}
         row={row}
@@ -32,7 +32,7 @@ describe('PopoverTable test', () => {
     render(
       <PopoverTable
         handleEditRow={editRow}
-        deleteDestination={deleteRow}
+        deleteRow={deleteRow}
         id={id}
         index={index}
         row={row}
@@ -52,7 +52,7 @@ describe('PopoverTable test', () => {
     render(
       <PopoverTable
         handleEditRow={editRow}
-        deleteDestination={deleteRow}
+        deleteRow={deleteRow}
         id={id}
         index={index}
         row={row}

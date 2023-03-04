@@ -84,51 +84,6 @@ class AviasalesService {
       return Promise.reject(error);
     }
   };
-
-  //Planes
-
-  getPlanes = async () => {
-    if (!localStorage.getItem('token')) {
-      await this.getAuthorizationToken();
-    }
-    const token: string | null = localStorage.getItem('token');
-    try {
-      const response = await axios.get('http://localhost:8080/api/aircraft', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      const planesInfo = response.data;
-      const planes = planesInfo.map(
-        ({
-          id,
-          aircraftNumber,
-          model,
-          modelYear,
-          flightRange,
-        }: Record<
-          string,
-          {
-            id: number;
-            aircraftNumber: number;
-            model: string;
-            modelYear: number;
-            flightRange: number;
-          }
-        >) => ({
-          id,
-          aircraftNumber,
-          model,
-          modelYear,
-          flightRange,
-        })
-      );
-      return planes;
-    } catch (error) {
-      return error;
-    }
-  };
 }
 
 export default AviasalesService;
