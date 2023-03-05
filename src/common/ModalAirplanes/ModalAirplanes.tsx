@@ -1,4 +1,4 @@
-import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import {
   useDisclosure,
   Modal,
@@ -14,16 +14,10 @@ import { ModalInput } from '@common/ModalInput';
 import { ButtonSubmitAdmin } from '@common/ButtonSubmitAdmin';
 import { HeadingAdmin } from '@common/HeadingAdmin';
 import { IModalFormPage } from '@interfaces/table.interfaces';
-import { useAirplanePost } from '@hooks/useAirplanePost';
+import { IAircraftPost } from '@interfaces/aircraft.interfaces';
+import { useAircraftPost } from '@hooks/useAircraftPost';
 
 import { ButtonAddAdmin } from '../ButtonAddAdmin';
-
-interface IAirplanesForm extends FieldValues {
-  model: string;
-  aircraftNumber: number;
-  modelYear: number;
-  flightRange: number;
-}
 
 const ModalAirplanes = ({ name }: IModalFormPage) => {
   const {
@@ -31,13 +25,13 @@ const ModalAirplanes = ({ name }: IModalFormPage) => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<IAirplanesForm>({ mode: 'onBlur' });
+  } = useForm<IAircraftPost>({ mode: 'onBlur' });
 
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const { mutateAsync: createAircraft } = useAirplanePost();
+  const { mutateAsync: createAircraft } = useAircraftPost();
 
-  const onSubmit: SubmitHandler<IAirplanesForm> = async (data) => {
+  const onSubmit: SubmitHandler<IAircraftPost> = async (data) => {
     await createAircraft(data).then((response) => {
       if (response.status < 400) {
         reset();
@@ -64,7 +58,7 @@ const ModalAirplanes = ({ name }: IModalFormPage) => {
             </ModalHeader>
             <ModalCloseButton m={3} bg="transparent" border="none" />
             <ModalBody pt={0} px={7}>
-              <ModalInput<IAirplanesForm>
+              <ModalInput<IAircraftPost>
                 register={register}
                 fieldName="model"
                 label="Модель"
@@ -81,7 +75,7 @@ const ModalAirplanes = ({ name }: IModalFormPage) => {
                   },
                 }}
               />
-              <ModalInput<IAirplanesForm>
+              <ModalInput<IAircraftPost>
                 register={register}
                 fieldName="aircraftNumber"
                 label="Номер самолёта"
@@ -93,7 +87,7 @@ const ModalAirplanes = ({ name }: IModalFormPage) => {
                   maxLength: { value: 30, message: 'Максимум 30 символов' },
                 }}
               />
-              <ModalInput<IAirplanesForm>
+              <ModalInput<IAircraftPost>
                 register={register}
                 fieldName="modelYear"
                 label="Год выпуска"
@@ -111,7 +105,7 @@ const ModalAirplanes = ({ name }: IModalFormPage) => {
                   },
                 }}
               />
-              <ModalInput<IAirplanesForm>
+              <ModalInput<IAircraftPost>
                 register={register}
                 fieldName="flightRange"
                 label="Дальность полёта (км)"

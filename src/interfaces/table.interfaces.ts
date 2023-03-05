@@ -2,8 +2,8 @@ import { AxiosResponse } from 'axios';
 import { UseMutateFunction } from 'react-query';
 
 import { TPerson } from './person.interfaces';
-import { IAirplane } from './plane.interfaces';
-import { IDestination } from './search.interfaces';
+import { IAircraft } from './aircraft.interfaces';
+import { IDestination } from './destination.interfaces';
 
 export interface IEditableCell {
   value: string | number | undefined;
@@ -12,6 +12,7 @@ export interface IEditableCell {
   editableRowIndex: number | null;
   updateData(id: string, value: string): void;
 }
+
 export interface IsRowEditing<Data> {
   (
     index: number,
@@ -79,4 +80,4 @@ export interface IModalForm {
 
 // самолеты, места назначения, пассажиры: done
 // часовые пояса и рейсы: to do
-export type TTableData = TPerson | IDestination | IAirplane;
+export type TTableData = TPerson | IDestination | IAircraft;

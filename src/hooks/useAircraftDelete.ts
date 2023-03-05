@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import searchService from '@services/searchService';
+import { deleteAircraft } from '@services/aircrafts.service';
 
-const useAirplaneDelete = () => {
+const useAircraftDelete = () => {
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  return useMutation(searchService.deleteAircraft, {
+  return useMutation(deleteAircraft, {
     onSuccess: () => queryClient.invalidateQueries('aircrafts'),
     onError: (error) => {
       if (error instanceof Error) {
@@ -21,4 +21,4 @@ const useAirplaneDelete = () => {
   });
 };
 
-export { useAirplaneDelete };
+export { useAircraftDelete };

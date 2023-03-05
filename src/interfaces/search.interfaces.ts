@@ -1,3 +1,5 @@
+import { IDestination } from '@interfaces/destination.interfaces';
+
 export interface IArticle {
   title: string;
   header: string;
@@ -11,23 +13,6 @@ export interface IArticle {
 export interface ISearchPageTab {
   label: string;
   icon?: string;
-}
-
-export interface IDestination {
-  id: number;
-  airportCode?: string;
-  airportName?: string;
-  cityName?: string;
-  timezone?: string;
-  countryName?: string;
-}
-
-export interface IDestinationPost {
-  airportCode?: string;
-  airportName?: string;
-  cityName?: string;
-  timezone?: string;
-  countryName?: string;
 }
 
 export type TDestQuery = Omit<IDestination, 'id'>;

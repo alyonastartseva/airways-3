@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import searchService from '@services/searchService';
+import { deleteDestination } from '@services/destinations.service';
 
 const useDestinationDelete = () => {
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  return useMutation(searchService.deleteDestination, {
+  return useMutation(deleteDestination, {
     onSuccess: () => queryClient.invalidateQueries('destinations'),
     onError: (error) => {
       if (error instanceof Error) {

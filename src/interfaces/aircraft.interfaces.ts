@@ -1,4 +1,4 @@
-export interface IAirplane {
+export interface IAircraft {
   id: number;
   aircraftNumber: number;
   model: string;
@@ -6,9 +6,9 @@ export interface IAirplane {
   flightRange: number;
 }
 
-export interface IAirplanePost {
+export type IAircraftPost = {
   aircraftNumber: number;
   model: string;
   modelYear: number;
   flightRange: number;
-}
+};

@@ -1,5 +1,5 @@
-import { IAirplane } from '@interfaces/plane.interfaces';
-import { IDestination } from '@interfaces/search.interfaces';
+import { IAircraft } from '@interfaces/aircraft.interfaces';
+import { IDestination } from '@interfaces/destination.interfaces';
 
 export const sortDestinations = (
   destinations: IDestination[]
@@ -7,6 +7,6 @@ export const sortDestinations = (
   return destinations.sort((a, b) => a.id - b.id);
 };
 
-export const sortAirplanes = (airplanes: IAirplane[]): IAirplane[] => {
+export const sortAirplanes = (airplanes: IAircraft[]): IAircraft[] => {
   return airplanes.sort((a, b) => a.id - b.id);
 };

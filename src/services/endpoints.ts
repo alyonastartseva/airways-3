@@ -1,7 +1,7 @@
 enum ERoutes {
   LOGIN_ADMIN = '/auth/login',
-  DESTINATION = '/destination/',
-  AIRCRAFT = '/aircraft/',
+  DESTINATION = '/destinations/',
+  AIRCRAFT = '/aircrafts/',
 }
 
 export default ERoutes;

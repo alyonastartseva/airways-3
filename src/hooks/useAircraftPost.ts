@@ -1,15 +1,15 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import searchService from '@services/searchService';
+import { postAircraft } from '@services/aircrafts.service';
 
-const useDestinationPost = () => {
+const useAircraftPost = () => {
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  return useMutation(searchService.postDestinations, {
+  return useMutation(postAircraft, {
     onSuccess: () => {
-      queryClient.invalidateQueries('destinations');
+      queryClient.invalidateQueries('aircrafts');
       toast({
         status: 'success',
         title: 'Пункт назначения успешно добавлен',
@@ -28,4 +28,4 @@ const useDestinationPost = () => {
   });
 };
 
-export { useDestinationPost };
+export { useAircraftPost };

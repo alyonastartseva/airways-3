@@ -1,4 +1,4 @@
-import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import {
   useDisclosure,
   Modal,
@@ -14,30 +14,24 @@ import { ModalInput } from '@common/ModalInput';
 import { ButtonSubmitAdmin } from '@common/ButtonSubmitAdmin';
 import { HeadingAdmin } from '@common/HeadingAdmin';
 import { IModalFormPage } from '@interfaces/table.interfaces';
+import { IDestinationPost } from '@interfaces/destination.interfaces';
 import { useDestinationPost } from '@hooks/useDestinationPost';
 
 import { ButtonAddAdmin } from '../ButtonAddAdmin';
 
-interface IDestinationForm extends FieldValues {
-  countryName: string;
-  cityName: string;
-  airportName: string;
-  airportCode: string;
-  timezone: string;
-}
 const ModalDestinations = ({ name }: IModalFormPage) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<IDestinationForm>({ mode: 'onBlur' });
+  } = useForm<IDestinationPost>({ mode: 'onBlur' });
 
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const { mutateAsync: createDestination } = useDestinationPost();
 
-  const onSubmit: SubmitHandler<IDestinationForm> = async (data) => {
+  const onSubmit: SubmitHandler<IDestinationPost> = async (data) => {
     await createDestination(data).then((response) => {
       if (response.status < 400) {
         reset();
@@ -64,7 +58,7 @@ const ModalDestinations = ({ name }: IModalFormPage) => {
             </ModalHeader>
             <ModalCloseButton m={3} bg="transparent" border="none" />
             <ModalBody pt={0} px={7}>
-              <ModalInput<IDestinationForm>
+              <ModalInput<IDestinationPost>
                 register={register}
                 fieldName="countryName"
                 label="Страна"
@@ -75,7 +69,7 @@ const ModalDestinations = ({ name }: IModalFormPage) => {
                   maxLength: { value: 58, message: 'Максимум 58 символов' },
                 }}
               />
-              <ModalInput<IDestinationForm>
+              <ModalInput<IDestinationPost>
                 register={register}
                 fieldName="cityName"
                 label="Город"
@@ -87,7 +81,7 @@ const ModalDestinations = ({ name }: IModalFormPage) => {
                   maxLength: { value: 21, message: 'Максимум 21 символ' },
                 }}
               />
-              <ModalInput<IDestinationForm>
+              <ModalInput<IDestinationPost>
                 register={register}
                 fieldName="airportName"
                 label="Название аэропорта"
@@ -97,7 +91,7 @@ const ModalDestinations = ({ name }: IModalFormPage) => {
                   required: 'Введите название аэропорта',
                 }}
               />
-              <ModalInput<IDestinationForm>
+              <ModalInput<IDestinationPost>
                 register={register}
                 fieldName="airportCode"
                 label="Код аэропорта"
@@ -115,7 +109,7 @@ const ModalDestinations = ({ name }: IModalFormPage) => {
                   },
                 }}
               />
-              <ModalInput<IDestinationForm>
+              <ModalInput<IDestinationPost>
                 register={register}
                 fieldName="timezone"
                 label="Часовой пояс"
