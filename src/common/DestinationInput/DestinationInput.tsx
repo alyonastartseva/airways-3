@@ -2,12 +2,9 @@ import { Box, Flex, Input, Text, InputGroup } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 
-import searchService from '@services/searchService';
-import {
-  IDestination,
-  IDestProps,
-  TDestQuery,
-} from '@interfaces/search.interfaces';
+import { getDestinations } from '@services/destinations.service';
+import { IDestProps, TDestQuery } from '@interfaces/search.interfaces';
+import { IDestination } from '@interfaces/destination.interfaces';
 
 const DestinationInput: React.FC<IDestProps> = (props: IDestProps) => {
   const { fromOrTo, onSetDestination, fromTo } = props;
@@ -17,7 +14,7 @@ const DestinationInput: React.FC<IDestProps> = (props: IDestProps) => {
   const [destinationList, setDestinationList] = useState<IDestination[]>([]);
 
   //eslint-disable-next-line no-empty-pattern
-  const {} = useQuery('destinations', () => searchService.getDestinations(), {
+  const {} = useQuery('destinations', getDestinations, {
     onSuccess: (res) => {
       setDestinationList(res);
     },

@@ -3,7 +3,7 @@ import { ButtonGroup, Button } from '@chakra-ui/react';
 import { IButtonGroupAdmin } from '@/interfaces/table.interfaces';
 
 const ButtonGroupAdmin = ({ cancelEditing, patchRow }: IButtonGroupAdmin) => (
-  <ButtonGroup>
+  <ButtonGroup my={8}>
     <Button
       width="12rem"
       border="1px solid #DEDEDE"

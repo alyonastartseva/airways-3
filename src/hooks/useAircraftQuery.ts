@@ -1,12 +1,12 @@
 import { useQuery } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import searchService from '@services/searchService';
+import { getAircrafts } from '@services/aircrafts.service';
 
-const useDestinationQuery = () => {
+const useAircraftQuery = () => {
   const toast = useToast();
 
-  return useQuery('destinations', searchService.getDestinations, {
+  return useQuery('aircrafts', getAircrafts, {
     onError: (error) => {
       if (error instanceof Error) {
         toast({
@@ -19,4 +19,4 @@ const useDestinationQuery = () => {
   });
 };
 
-export { useDestinationQuery };
+export { useAircraftQuery };

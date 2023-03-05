@@ -6,6 +6,7 @@ import {
   Td,
   Tr,
   Th,
+  Box,
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
@@ -13,9 +14,9 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
-import { IAirplane } from '@interfaces/plane.interfaces';
+import { IAircraft } from '@interfaces/aircraft.interfaces';
 import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
@@ -26,154 +27,167 @@ import { FooterTable } from '@common/FooterTable';
 import { ModalAirplanes } from '@common/ModalAirplanes';
 import { isRowEditing } from '@utils/table.utils';
 import { sortAirplanes } from '@utils/sort.utils';
-import { useAirplanesQuery } from '@hooks/useAirplanesQuery';
-import { useAirplanePatch } from '@hooks/useAirplanePatch';
-import { useAirplaneDelete } from '@hooks/useAirplaneDelete';
+import { useAircraftQuery } from '@hooks/useAircraftQuery';
+import { useAircraftPatch } from '@hooks/useAircraftPatch';
+import { useAircraftDelete } from '@hooks/useAircraftDelete';
 
 const Airplanes = () => {
   // индекс и размер пагинации
   const [{ pageIndex, pageSize }, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: 4,
   });
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
-  const [editableRowState, setEditableRowState] = useState<IAirplane | null>(
+  const [editableRowState, setEditableRowState] = useState<IAircraft | null>(
     null
   );
 
   // установка редактируемой строки
-  const handleEditRow = (row: IAirplane, index: number) => {
+  const handleEditRow = useCallback((row: IAircraft, index: number) => {
     setEditableRowState(row);
     setEditableRowIndex(index);
-  };
+  }, []);
 
   // сброс редактируемой строки
-  const cancelEditing = () => {
+  const cancelEditing = useCallback(() => {
     setEditableRowIndex(null);
     setEditableRowState(null);
-  };
+  }, []);
 
   // обновление редактируемой строки
-  const handleUpdateRow = (id: string, value: string) => {
-    if (editableRowState)
-      setEditableRowState({ ...editableRowState, [id]: value });
-  };
-
-  // патч данных
-  const patchRow = () => {
-    patchAircraft();
-    cancelEditing();
-  };
+  const handleUpdateRow = useCallback(
+    (id: string, value: string) => {
+      if (editableRowState)
+        setEditableRowState({ ...editableRowState, [id]: value });
+    },
+    [editableRowState]
+  );
 
   // получение данных
-  const { data: airplanes, isLoading } = useAirplanesQuery();
+  const { data: airplanes, isLoading } = useAircraftQuery();
 
   // изменение данных
-  const { mutate: patchAircraft } = useAirplanePatch(editableRowState);
+  const { mutate: patchAircraft } = useAircraftPatch();
 
   // удаление данных
-  const { mutate: deleteAircraft } = useAirplaneDelete();
+  const { mutate: deleteAircraft } = useAircraftDelete();
+
+  // патч данных
+  const patchRow = useCallback(() => {
+    patchAircraft(editableRowState);
+    cancelEditing();
+  }, [patchAircraft, cancelEditing, editableRowState]);
 
   // создание столбцов таблицы
-  const columnHelper = createColumnHelper<IAirplane>();
-  const columns = [
-    columnHelper.accessor('id', {
-      header: 'ID',
-      cell: (info) => <FlexCell padding={24} value={info.getValue()} />,
-      size: 41,
-    }),
-    columnHelper.accessor('model', {
-      header: 'Модель',
-      cell: (info) => (
-        <EditableCell
-          value={isRowEditing(
-            info.row.index,
-            info.column.id,
-            info.getValue(),
-            editableRowState,
-            editableRowIndex
-          )}
-          index={info.row.index}
-          id={info.column.id}
-          editableRowIndex={editableRowIndex}
-          updateData={handleUpdateRow}
-        />
-      ),
-      size: 250,
-    }),
-    columnHelper.accessor('aircraftNumber', {
-      header: 'Номер',
-      cell: (info) => (
-        <EditableCell
-          value={isRowEditing(
-            info.row.index,
-            info.column.id,
-            String(info.getValue()),
-            editableRowState,
-            editableRowIndex
-          )}
-          index={info.row.index}
-          id={info.column.id}
-          editableRowIndex={editableRowIndex}
-          updateData={handleUpdateRow}
-        />
-      ),
-    }),
-    columnHelper.accessor('modelYear', {
-      header: 'Год выпуска',
-      cell: (info) => (
-        <EditableCell
-          value={isRowEditing(
-            info.row.index,
-            info.column.id,
-            String(info.getValue()),
-            editableRowState,
-            editableRowIndex
-          )}
-          index={info.row.index}
-          id={info.column.id}
-          editableRowIndex={editableRowIndex}
-          updateData={handleUpdateRow}
-        />
-      ),
-    }),
-    columnHelper.accessor('flightRange', {
-      header: 'Дальность полёта (км)',
-      cell: (info) => (
-        <EditableCell
-          value={isRowEditing(
-            info.row.index,
-            info.column.id,
-            String(info.getValue()),
-            editableRowState,
-            editableRowIndex
-          )}
-          index={info.row.index}
-          id={info.column.id}
-          editableRowIndex={editableRowIndex}
-          updateData={handleUpdateRow}
-        />
-      ),
-    }),
-    columnHelper.display({
-      id: 'actions',
-      size: 41,
-      cell: (info) => (
-        <PopoverTable<IAirplane>
-          row={info.row.original}
-          index={info.row.index}
-          id={info.row.original.id}
-          handleEditRow={handleEditRow}
-          deleteRow={deleteAircraft}
-        />
-      ),
-    }),
-  ];
+  const columnHelper = createColumnHelper<IAircraft>();
+  const columns = useMemo(
+    () => [
+      columnHelper.accessor('id', {
+        header: 'ID',
+        cell: (info) => <FlexCell padding={24} value={info.getValue()} />,
+        size: 41,
+      }),
+      columnHelper.accessor('model', {
+        header: 'Модель',
+        cell: (info) => (
+          <EditableCell
+            value={isRowEditing(
+              info.row.index,
+              info.column.id,
+              info.getValue(),
+              editableRowState,
+              editableRowIndex
+            )}
+            index={info.row.index}
+            id={info.column.id}
+            editableRowIndex={editableRowIndex}
+            updateData={handleUpdateRow}
+          />
+        ),
+        size: 250,
+      }),
+      columnHelper.accessor('aircraftNumber', {
+        header: 'Номер',
+        cell: (info) => (
+          <EditableCell
+            value={isRowEditing(
+              info.row.index,
+              info.column.id,
+              String(info.getValue()),
+              editableRowState,
+              editableRowIndex
+            )}
+            index={info.row.index}
+            id={info.column.id}
+            editableRowIndex={editableRowIndex}
+            updateData={handleUpdateRow}
+          />
+        ),
+      }),
+      columnHelper.accessor('modelYear', {
+        header: 'Год выпуска',
+        cell: (info) => (
+          <EditableCell
+            value={isRowEditing(
+              info.row.index,
+              info.column.id,
+              String(info.getValue()),
+              editableRowState,
+              editableRowIndex
+            )}
+            index={info.row.index}
+            id={info.column.id}
+            editableRowIndex={editableRowIndex}
+            updateData={handleUpdateRow}
+          />
+        ),
+      }),
+      columnHelper.accessor('flightRange', {
+        header: 'Дальность полёта (км)',
+        cell: (info) => (
+          <EditableCell
+            value={isRowEditing(
+              info.row.index,
+              info.column.id,
+              String(info.getValue()),
+              editableRowState,
+              editableRowIndex
+            )}
+            index={info.row.index}
+            id={info.column.id}
+            editableRowIndex={editableRowIndex}
+            updateData={handleUpdateRow}
+          />
+        ),
+      }),
+      columnHelper.display({
+        id: 'actions',
+        size: 41,
+        cell: (info) => (
+          <PopoverTable
+            row={info.row.original}
+            index={info.row.index}
+            id={info.row.original.id}
+            handleEditRow={handleEditRow}
+            deleteRow={deleteAircraft}
+          />
+        ),
+      }),
+    ],
+    [
+      columnHelper,
+      deleteAircraft,
+      editableRowState,
+      editableRowIndex,
+      handleEditRow,
+      handleUpdateRow,
+    ]
+  );
 
   // сортировка получаемых данных. ВРЕМЕННО, ПОКА ДАННЫЕ С СЕРВЕРА ПРИХОДЯТ БЕЗ СОРТИРОВКИ
-  const tableData = (data?: IAirplane[]) => {
+  const tableData = (data?: IAircraft[]) => {
     if (Array.isArray(data) && data.length) {
       return sortAirplanes(data);
     }
@@ -192,17 +206,20 @@ const Airplanes = () => {
   });
 
   //функция для обновления пагинациb
-  const setPaginationData = (pageNumber: number) => {
-    if (airplanes?.length) {
-      const airplanesLength = airplanes?.length;
-      if (pageNumber >= 0 && pageNumber < airplanesLength / pageSize) {
-        setPagination((prev) => ({
-          ...prev,
-          pageIndex: pageNumber,
-        }));
+  const setPaginationData = useCallback(
+    (pageNumber: number) => {
+      if (airplanes?.length) {
+        const airplanesLength = airplanes?.length;
+        if (pageNumber >= 0 && pageNumber < airplanesLength / pageSize) {
+          setPagination((prev) => ({
+            ...prev,
+            pageIndex: pageNumber,
+          }));
+        }
       }
-    }
-  };
+    },
+    [airplanes?.length, pageSize]
+  );
 
   // спиннер при загрузке
   if (isLoading) {
@@ -212,8 +229,15 @@ const Airplanes = () => {
   // если полученные данные в порядке выводим таблицу
   if (Array.isArray(airplanes) && airplanes?.length) {
     return (
-      airplanes && (
-        <TableContainer my={10} mx={14}>
+      <TableContainer
+        my={10}
+        mx={14}
+        minHeight="70.9vh"
+        display="flex"
+        flexDirection="column"
+        justifyContent="space-between"
+      >
+        <Box>
           <HeaderAdmin
             heading="Самолеты"
             modal={<ModalAirplanes name="Добавить самолет" />}
@@ -269,17 +293,17 @@ const Airplanes = () => {
               ))}
             </Tbody>
           </Table>
-          <FooterTable
-            data={tableData(airplanes)}
-            pageIndex={pageIndex}
-            pageSize={pageSize}
-            setPaginationData={setPaginationData}
-            cancelEditing={cancelEditing}
-            patchRow={patchRow}
-            editableRowIndex={editableRowIndex}
-          />
-        </TableContainer>
-      )
+        </Box>
+        <FooterTable
+          data={tableData(airplanes)}
+          pageIndex={pageIndex}
+          pageSize={pageSize}
+          setPaginationData={setPaginationData}
+          cancelEditing={cancelEditing}
+          patchRow={patchRow}
+          editableRowIndex={editableRowIndex}
+        />
+      </TableContainer>
     );
   }
 

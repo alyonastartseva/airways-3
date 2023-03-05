@@ -1,15 +1,14 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import searchService from '@services/searchService';
-import { IAirplane } from '@interfaces/plane.interfaces';
+import { patchDestinations } from '@services/destinations.service';
 
-const useAirplanePatch = (editableRowState: IAirplane | null) => {
+const useDestinationPatch = () => {
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  return useMutation(() => searchService.patchAircraft(editableRowState), {
-    onSuccess: () => queryClient.invalidateQueries('aircrafts'),
+  return useMutation(patchDestinations, {
+    onSuccess: () => queryClient.invalidateQueries('destinations'),
     onError: (error) => {
       if (error instanceof Error) {
         toast({
@@ -22,4 +21,4 @@ const useAirplanePatch = (editableRowState: IAirplane | null) => {
   });
 };
 
-export { useAirplanePatch };
+export { useDestinationPatch };
