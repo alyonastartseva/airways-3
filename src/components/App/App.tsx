@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { Route, Routes } from 'react-router-dom';
 
 import { Layout } from '@/layout';
+import { AdminLayout } from '@/layout/AdminLayout';
 import { LoginAdminForm } from '@components/LoginAdminForm';
 import { AirplanesPage } from '@pages/Admin/Airplane';
 import { UsersPage } from '@pages/Admin/Users';
@@ -23,7 +24,7 @@ const App = () => {
           <Route path="admin" element={<UsersPage />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
-        <Route path="/admin" element={<Layout />}>
+        <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<LoginAdminForm />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="airplanes" element={<AirplanesPage />} />
