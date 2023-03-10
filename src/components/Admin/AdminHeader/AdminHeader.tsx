@@ -8,7 +8,7 @@ const AdminHeader: FC = () => {
   const activeStyle = {
     textDecoration: 'underline',
     textDecorationThickness: '0.25rem',
-    textUnderlineOffset: '1.5625rem',
+    textUnderlineOffset: '1.875rem',
   };
   const checkActive = ({ isActive }: { isActive: boolean }) =>
     isActive ? activeStyle : undefined;
