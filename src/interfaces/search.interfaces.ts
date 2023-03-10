@@ -9,7 +9,33 @@ export interface IArticle {
     alt: string;
   };
 }
-
+export interface FormPassengers {
+  id: number;
+  middleName?: string;
+  lastName?: string;
+  firstName?: string;
+  passport?: {
+    gender: string;
+    serialNumberPassport: string;
+    passportIssuingCountry: string;
+    passportIssuingDate: string;
+  };
+  phoneNumber: string;
+  birthDate: string;
+}
+export interface FormPassengersPost {
+  middleName?: string;
+  lastName?: string;
+  firstName?: string;
+  passport?: {
+    gender: string;
+    serialNumberPassport: string;
+    passportIssuingCountry: string;
+    passportIssuingDate: string;
+  };
+  phoneNumber: string;
+  birthDate: string;
+}
 export interface ISearchPageTab {
   label: string;
   icon?: string;
