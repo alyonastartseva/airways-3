@@ -2,23 +2,23 @@ import { FC } from 'react';
 import { Box, Text, Flex, Button, Spacer } from '@chakra-ui/react';
 import { Link, NavLink } from 'react-router-dom';
 
-import { Logo } from '@common/icons';
+import HeaderLogo from '@common/icons/Logo';
 
 const AdminHeader: FC = () => {
   const activeStyle = {
     textDecoration: 'underline',
     textDecorationThickness: '0.25rem',
-    textUnderlineOffset: '1.5625rem',
+    textUnderlineOffset: '1.875rem',
   };
   const checkActive = ({ isActive }: { isActive: boolean }) =>
     isActive ? activeStyle : undefined;
 
   return (
-    <Box bg="#04396D" width="full">
-      <Flex position="relative" alignItems="center">
-        <Flex position="relative" alignItems="flex-end" p="0.125rem">
-          <Logo />
-          <Text color="#fff" position="absolute" left="20" whiteSpace="nowrap">
+    <Box bg="#04396D" width="full" p="2">
+      <Flex justifyContent="space-between" alignItems="center">
+        <Flex position="relative" alignItems="flex-end">
+          <HeaderLogo />
+          <Text color="#fff" position="absolute" left="16" whiteSpace="nowrap">
             UX AIR
           </Text>
         </Flex>
