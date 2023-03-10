@@ -49,7 +49,7 @@ const AdminHeader: FC = () => {
         <Spacer />
         <Link to="/search">
           <Button bg="#fff" borderRadius="5" mr="1.25rem">
-            Выход
+            Выход!
           </Button>
         </Link>
       </Flex>
