@@ -10,6 +10,7 @@ import { RegisterPage } from '@pages/User/RegisterPage';
 import { SearchPage } from '@pages/User/SearchPage';
 import { DestinationsPage } from '@pages/Admin/DestinationsPage';
 import { PageNotFound } from '@common/PageNotFound';
+import { PassengersPage } from '@pages/Passengers';
 
 const queryClient = new QueryClient({});
 
@@ -28,6 +29,7 @@ const App = () => {
           <Route index element={<LoginAdminForm />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="airplanes" element={<AirplanesPage />} />
+          <Route path="passengers" element={<PassengersPage />} />
           <Route path="destinations" element={<DestinationsPage />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>

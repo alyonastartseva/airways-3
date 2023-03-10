@@ -8,6 +8,7 @@ export type TPerson = {
   phoneNumber?: string;
   roles: { id: number; name: string }[];
   passport?: {
+    gender?: string;
     passportIssuingCountry?: string;
     passportIssuingDate?: string;
     serialNumberPassport?: string;

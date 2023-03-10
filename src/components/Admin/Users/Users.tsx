@@ -41,7 +41,7 @@ import { useForm } from 'react-hook-form';
 
 import AviasalesService from '@services/flights-service';
 import { TPerson } from '@interfaces/person.interfaces';
-import { IFormPassanger } from '@interfaces/form-passanger.interfaces';
+import { IFormPassenger } from '@interfaces/form-passenger.interfaces';
 import { Pagination } from '@components/Pagination';
 
 import { UserInput } from '../UserInput';
@@ -50,7 +50,7 @@ const Users = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { handleSubmit, register } = useForm();
-  function onSubmit(values: IFormPassanger) {
+  function onSubmit(values: IFormPassenger) {
     const avia = new AviasalesService();
     avia.createUserAsPassenger(values);
     onClose();
@@ -77,7 +77,7 @@ const Users = () => {
           .map((role) => role.name)
           .join(' '),
     }),
-    columnHelper.accessor('gender', {
+    columnHelper.accessor((row) => row.passport?.gender, {
       header: 'Пол',
       cell: (info) => info.getValue<string>(),
     }),
@@ -122,7 +122,7 @@ const Users = () => {
   ];
   const [{ pageIndex, pageSize }, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 4,
+    pageSize: 10,
   });
   const avia = new AviasalesService();
   const { isLoading, data } = useQuery('users', () => avia.getUsers());
@@ -142,7 +142,7 @@ const Users = () => {
       if (pageNumber >= 0 && pageNumber < data.length / pageSize) {
         setPagination((prev) => ({
           ...prev,
-          pageNumber,
+          pageIndex: pageNumber,
         }));
       }
     };
