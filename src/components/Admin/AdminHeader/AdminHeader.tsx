@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Box, Image, Text, Flex } from '@chakra-ui/react';
+import { Box, Text, Flex } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 import HeaderLogo from '@common/icons/Logo';

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { IFormPassanger } from '@interfaces/form-passanger.interfaces';
+import { IFormPassenger } from '@interfaces/form-passenger.interfaces';
 class AviasalesService {
   async getAuthorizationToken(): Promise<string> {
     try {
@@ -69,7 +69,7 @@ class AviasalesService {
     }
   };
 
-  createUserAsPassenger = async (user: IFormPassanger) => {
+  createUserAsPassenger = async (user: IFormPassenger) => {
     try {
       const response = await axios.post('http://localhost:8080/api/user', {
         ...user,
