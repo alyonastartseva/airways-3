@@ -136,9 +136,9 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
             Country of Residence
           </FormLabel>
           <Select
-            border="1px solid #D9D9D9"
-            boxShadow="0px 2px 2px rgba(0, 0, 0, 0.25)"
-            borderRadius="4px"
+            border="0.0625rem solid #D9D9D9"
+            boxShadow="0rem 0.125rem 0.125rem rgba(0, 0, 0, 0.25)"
+            borderRadius="0.25rem"
             id="country"
             aria-label="country"
             {...methods.register('country')}
@@ -151,7 +151,7 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
               aria-label=""
               color="#E32E22"
               fontWeight="400"
-              fontSize="12px"
+              fontSize="0.75rem"
             >
               {methods.formState.errors.country.message}
             </Text>
@@ -183,9 +183,9 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
                 Code
               </FormLabel>
               <Select
-                border="1px solid #D9D9D9"
-                boxShadow="0px 2px 2px rgba(0, 0, 0, 0.25)"
-                borderRadius="4px 0px 0px 4px"
+                border="0.0625rem solid #D9D9D9"
+                boxShadow="0rem 0.125rem 0.125rem rgba(0, 0, 0, 0.25)"
+                borderRadius="0.25rem 0rem 0rem 0.25rem"
                 width="40%"
                 aria-label="telCode"
                 id="telCode"
@@ -201,9 +201,9 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
                   )}
               </Select>
               <Input
-                border="1px solid #D9D9D9"
-                boxShadow="0px 2px 2px rgba(0, 0, 0, 0.25)"
-                borderRadius="0px 4px 4px 0px"
+                border="0.0625rem solid #D9D9D9"
+                boxShadow="0rem 0.125rem 0.125rem rgba(0, 0, 0, 0.25)"
+                borderRadius="0rem 0.25rem 0.25rem 0rem"
                 id="tel"
                 type="tel"
                 placeholder="(xxx) XXX XX  XX"
@@ -237,9 +237,9 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
             <InputGroup size="md">
               <Input
                 position="relative"
-                border="1px solid #D9D9D9"
-                boxShadow="0px 2px 2px rgba(0, 0, 0, 0.25)"
-                borderRadius="4px"
+                border="0.0625rem solid #D9D9D9"
+                boxShadow="0rem 0.125rem 0.125rem rgba(0, 0, 0, 0.25)"
+                borderRadius="0.25rem"
                 id="password"
                 aria-label="password"
                 type={show ? 'text' : 'password'}
@@ -273,8 +273,8 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
             <InputGroup size="md">
               <Input
                 position="relative"
-                border="1px solid #D9D9D9"
-                boxShadow="0px 2px 2px rgba(0, 0, 0, 0.25)"
+                border="0.0625rem solid #D9D9D9"
+                boxShadow="0rem 0.125rem 0.125rem rgba(0, 0, 0, 0.25)"
                 borderRadius="0.25rem"
                 aria-label="repeatPassword"
                 id="repeatPassword"
@@ -311,9 +311,9 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
               Security question
             </FormLabel>
             <Select
-              border="1px solid #D9D9D9"
-              boxShadow="0px 2px 2px rgba(0, 0, 0, 0.25)"
-              borderRadius="4px"
+              border="0.0625rem solid #D9D9D9"
+              boxShadow="0rem 0.125rem 0.125rem rgba(0, 0, 0, 0.25)"
+              borderRadius="0.25rem"
               id="question"
               aria-label="question"
               {...methods.register('question')}
@@ -340,7 +340,7 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
             type="submit"
             id="submit"
             background="#E32E22"
-            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+            boxShadow="0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25)"
           >
             Create Account
           </Button>

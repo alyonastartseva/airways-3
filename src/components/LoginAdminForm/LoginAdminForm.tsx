@@ -49,7 +49,7 @@ const LoginAdminForm = () => {
         <Box
           w="25rem"
           m="0 auto"
-          border="1px solid"
+          border="0.0625rem solid"
           py="1rem"
           px="3rem"
           borderColor="#D9D9D9"
@@ -77,7 +77,7 @@ const LoginAdminForm = () => {
                 <FormLabel
                   htmlFor="username"
                   mb="0"
-                  fontSize="12px"
+                  fontSize="0.75rem"
                   color="rgba(78, 76, 76, 0.71);"
                 >
                   Email address
@@ -91,7 +91,7 @@ const LoginAdminForm = () => {
                 />
               </FormControl>
               <FormControl w="100%" mt="1em">
-                <FormLabel htmlFor="password" mb="0" fontSize="12px">
+                <FormLabel htmlFor="password" mb="0" fontSize="0.75rem">
                   Password
                 </FormLabel>
                 <InputGroup size="md">
@@ -113,14 +113,14 @@ const LoginAdminForm = () => {
                 mb="2rem"
                 w="100%"
                 justifyContent="space-between"
-                fontSize="12px"
+                fontSize="0.75rem"
               >
-                <FormLabel fontSize="12px" htmlFor="checkbox">
+                <FormLabel fontSize="0.75rem" htmlFor="checkbox">
                   <Checkbox id="checkbox" {...register('checkbox')}>
                     <FormLabel
                       htmlFor="checkbox"
                       mb="0"
-                      fontSize="12px"
+                      fontSize="0.75rem"
                       cursor="pointer"
                     >
                       Remember me

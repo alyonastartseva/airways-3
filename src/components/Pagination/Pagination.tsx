@@ -12,8 +12,8 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
         me={2}
         className="border rounded p-1"
         onClick={() => setPaginationData(0)}
-        borderRadius="2px"
-        border="1px solid #DEDEDE"
+        borderRadius="0.125rem"
+        border="0.0625rem solid #DEDEDE"
         bgColor="rgba(217, 217, 217, 0.15)"
         color="#393939"
         _hover={{
@@ -33,8 +33,8 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
         me={5}
         className="border rounded p-1"
         onClick={() => setPaginationData(pageIndex - 1)}
-        borderRadius="2px"
-        border="1px solid #DEDEDE"
+        borderRadius="0.125rem"
+        border="0.0625rem solid #DEDEDE"
         bgColor="rgba(217, 217, 217, 0.15)"
         color="#393939"
         _hover={{
@@ -56,8 +56,8 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
             <Button
               key={`page-${Date.now()}}+${index}`}
               onClick={() => setPaginationData(page - 1)}
-              borderRadius="2px"
-              border="1px solid #DEDEDE"
+              borderRadius="0.125rem"
+              border="0.0625rem solid #DEDEDE"
               bgColor={
                 page === pageIndex + 1 ? '#398AEA' : 'rgba(217, 217, 217, 0.15)'
               }
@@ -82,8 +82,8 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
         ms={5}
         className="border rounded p-1"
         onClick={() => setPaginationData(pageIndex + 1)}
-        borderRadius="2px"
-        border="1px solid #DEDEDE"
+        borderRadius="0.125rem"
+        border="0.0625rem solid #DEDEDE"
         bgColor="rgba(217, 217, 217, 0.15)"
         color="#393939"
         _hover={{
@@ -105,8 +105,8 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
         onClick={() => {
           setPaginationData(Math.ceil(data.length / pageSize - 1));
         }}
-        borderRadius="2px"
-        border="1px solid #DEDEDE"
+        borderRadius="0.125rem"
+        border="0.0625rem solid #DEDEDE"
         bgColor="rgba(217, 217, 217, 0.15)"
         color="#393939"
         _hover={{

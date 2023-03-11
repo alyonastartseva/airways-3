@@ -265,11 +265,11 @@ const Destinations = () => {
                 <Tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <Th
-                      border="1px solid #DEDEDE"
+                      border="1.125rem solid #DEDEDE"
                       color="#000000"
                       key={header.id}
-                      fontSize="14px"
-                      lineHeight="18px"
+                      fontSize="0.875rem"
+                      lineHeight="1.125rem"
                       textTransform="none"
                       fontWeight="semibold"
                       width={header.getSize()}
@@ -290,15 +290,15 @@ const Destinations = () => {
                 <Tr key={row.id}>
                   {row.getVisibleCells().map((cell) => (
                     <Td
-                      border="1px solid #DEDEDE"
+                      border="0.0625rem solid #DEDEDE"
                       color="#393939"
-                      fontSize="14px"
-                      lineHeight="18px"
+                      fontSize="0.875rem"
+                      lineHeight="1.125rem"
                       key={cell.id}
                       textTransform="none"
                       fontWeight="normal"
-                      paddingX="4px"
-                      paddingY="2px"
+                      paddingX="0.25rem"
+                      paddingY="0.125rem"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
