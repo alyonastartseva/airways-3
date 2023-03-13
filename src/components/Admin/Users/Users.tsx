@@ -96,8 +96,8 @@ const Users = () => {
         <Popover>
           <PopoverTrigger>
             <Box
-              w="15px"
-              h="15px"
+              w="0.9375rem"
+              h="0.9375rem"
               cursor="pointer"
               _after={{ content: '"\\2807"' }}
             />
@@ -214,7 +214,7 @@ const Users = () => {
               onClick={() => {
                 onOpen();
               }}
-              border="1px solid rgba(247, 79, 79, .2)"
+              border="0.0625rem solid rgba(247, 79, 79, .2)"
             >
               Добавить пользователя
             </Button>
@@ -227,7 +227,7 @@ const Users = () => {
                 <Tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <Th
-                      border="1px solid rgba(247, 79, 79, .2)"
+                      border="0.0625rem solid rgba(247, 79, 79, .2)"
                       color="#28282B"
                       key={header.id}
                     >
@@ -246,7 +246,10 @@ const Users = () => {
               {table.getRowModel().rows.map((row) => (
                 <Tr key={row.id}>
                   {row.getVisibleCells().map((cell) => (
-                    <Td border="1px solid rgba(247, 79, 79, .2)" key={cell.id}>
+                    <Td
+                      border="0.0625rem solid rgba(247, 79, 79, .2)"
+                      key={cell.id}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

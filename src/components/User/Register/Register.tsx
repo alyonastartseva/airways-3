@@ -58,7 +58,7 @@ function Register() {
                 </Alert>
               </SlideFade>
             )}
-            <Heading fontWeight="400" fontSize="24px" color="#0A66C2">
+            <Heading fontWeight="400" fontSize="1.5rem" color="#0A66C2">
               Member Profile Details
             </Heading>
             <Box>
