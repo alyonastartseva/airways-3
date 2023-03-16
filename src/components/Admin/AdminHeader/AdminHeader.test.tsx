@@ -1,34 +1,37 @@
-import * as React from 'react';
-import { vi, describe } from 'vitest';
+import { describe, it } from 'vitest';
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { Router } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
+import { createMemoryHistory } from 'history';
 
 import { AdminHeader } from './index';
 
-vi.mock('@chakra-ui/react', () => ({
-  Box: ({ children }: React.PropsWithChildren) => (
-    <div>{children} Box Component</div>
-  ),
-  Flex: ({ children }: React.PropsWithChildren) => (
-    <div>{children} Flex Component</div>
-  ),
-  Image: () => <div>Image Component</div>,
-  Text: () => <p>Text Component</p>,
-}));
-
-vi.mock('react-router-dom', () => ({
-  Link: ({ children }: React.PropsWithChildren) => (
-    <a href=".">{children}Link Component</a>
-  ),
-}));
-
 describe('AdminHeader', () => {
-  it('AdminHeader', () => {
-    const screen = render(<AdminHeader />);
-    expect(screen.getAllByText('Box Component')).toBeDefined();
-    expect(screen.getAllByText('Flex Component')).toHaveLength(2);
-    expect(screen.getByText('Image Component')).toBeDefined();
-    expect(screen.getByText('Text Component')).toBeDefined();
-    expect(screen.getByText('Link Component')).toBeDefined();
+  it('AdminHeader renders correctly', () => {
+    const history = createMemoryHistory();
+    render(
+      <Router location={history.location} navigator={history}>
+        <AdminHeader />
+      </Router>
+    );
+    const exitBtn = screen.getByText('Выход');
+    const logoText = screen.getByText('UX AIR');
+    const paxTab = screen.getByText('Пассажиры');
+    expect(exitBtn).toBeInTheDocument();
+    expect(logoText).toBeInTheDocument();
+    expect(paxTab).toBeInTheDocument();
+  });
+  it('exit button returns to search page', async () => {
+    const history = createMemoryHistory();
+
+    render(
+      <Router location={history.location} navigator={history}>
+        <AdminHeader />
+      </Router>
+    );
+
+    await userEvent.click(screen.getByText(/Выход/i));
+    expect(history.location.pathname).toBe('/search');
   });
 });

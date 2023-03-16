@@ -42,7 +42,7 @@ const LoginAdminForm = () => {
     e?.preventDefault();
     mutation.mutate({ username, password });
   };
-  !mutation.isLoading && !mutation.isError ? navigate('users') : null;
+  !mutation.isLoading && !mutation.isError ? navigate('passengers') : null;
   return (
     <>
       <Box mt="12.05rem" mb="12.05rem">
