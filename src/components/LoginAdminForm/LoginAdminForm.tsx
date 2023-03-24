@@ -15,9 +15,10 @@ import {
 import { CloseIcon, ViewOffIcon, ViewIcon } from '@chakra-ui/icons';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import { useAuthAdmin } from '@services/auth';
+import ELinks from '@services/adminRouterLinks.service';
 
 interface IUserForm {
   username: string;
@@ -42,7 +43,14 @@ const LoginAdminForm = () => {
     e?.preventDefault();
     mutation.mutate({ username, password });
   };
-  !mutation.isLoading && !mutation.isError ? navigate('passengers') : null;
+
+  // если есть токен авторизации => переводим на страницу пассажиров, иначе будем выводить форму авторизации
+  if (localStorage.getItem('adminToken'))
+    return <Navigate to={ELinks.ADMIN_PASSENGERS} />;
+
+  !mutation.isLoading && !mutation.isError
+    ? navigate(ELinks.ADMIN_PASSENGERS)
+    : null;
   return (
     <>
       <Box mt="12.05rem" mb="12.05rem">

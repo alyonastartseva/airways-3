@@ -14,6 +14,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useCallback, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
 import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
@@ -28,6 +29,7 @@ import { usePassengersDelete } from '@hooks/usePassengersDelete';
 import { usePassengersPatch } from '@hooks/usePassengersPatch';
 import { usePassengersQuery } from '@hooks/usePassengersQuery';
 import { ModalPassengers } from '@common/ModalPassengers';
+import ELinks from '@services/adminRouterLinks.service';
 
 const Passengers = () => {
   // индекс и размер пагинации
@@ -260,6 +262,9 @@ const Passengers = () => {
   if (isLoading) {
     return <SpinnerBlock />;
   }
+  // если нет токена авторизации, перебрасываем на форму логина
+  if (!localStorage.getItem('adminToken'))
+    return <Navigate to={ELinks.ADMIN_LOGIN} />;
 
   // если полученные данные в порядке выводим таблицу
   if (Array.isArray(passengers) && passengers?.length) {
