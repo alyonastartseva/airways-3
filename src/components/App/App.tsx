@@ -22,11 +22,10 @@ const App = () => {
           <Route index element={<SearchPage />} />
           <Route path="search" element={<SearchPage />} />
           <Route path="register" element={<RegisterPage />} />
-          <Route path="admin" element={<UsersPage />} />
+          <Route path="admin" element={<LoginAdminForm />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<LoginAdminForm />} />
+        <Route element={<AdminLayout />}>
           <Route path="users" element={<UsersPage />} />
           <Route path="airplanes" element={<AirplanesPage />} />
           <Route path="passengers" element={<PassengersPage />} />

@@ -15,6 +15,7 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 import { useCallback, useMemo, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
 import { IDestination } from '@interfaces/destination.interfaces';
 import { EditableCell } from '@common/EditableCell';
@@ -30,6 +31,7 @@ import { sortDestinations } from '@utils/sort.utils';
 import { useDestinationQuery } from '@hooks/useDestinationQuery';
 import { useDestinationPatch } from '@hooks/useDestinationPatch';
 import { useDestinationDelete } from '@hooks/useDestinationDelete';
+import ELinks from '@services/adminRouterLinks.service';
 
 const Destinations = () => {
   // индекс и размер пагинации
@@ -242,6 +244,9 @@ const Destinations = () => {
   if (isLoading) {
     return <SpinnerBlock />;
   }
+  // если нет токена авторизации, перебрасываем на форму логина
+  if (!localStorage.getItem('adminToken'))
+    return <Navigate to={ELinks.ADMIN_LOGIN} />;
 
   // если полученные данные в порядке выводим таблицу
   if (Array.isArray(destinations) && destinations?.length) {

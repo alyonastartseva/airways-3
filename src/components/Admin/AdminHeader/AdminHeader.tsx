@@ -3,6 +3,7 @@ import { Box, Text, Flex, Button, Spacer } from '@chakra-ui/react';
 import { Link, NavLink } from 'react-router-dom';
 
 import HeaderLogo from '@common/icons/Logo';
+import ELinks from '@services/adminRouterLinks.service';
 
 const AdminHeader: FC = () => {
   const activeStyle = {
@@ -10,8 +11,14 @@ const AdminHeader: FC = () => {
     textDecorationThickness: '0.25rem',
     textUnderlineOffset: '1.875rem',
   };
+  // проверяем активность ссылки, если активна, добавляем стили выше для активной кнопки
   const checkActive = ({ isActive }: { isActive: boolean }) =>
     isActive ? activeStyle : undefined;
+
+  // удаление токена авторизации при нажатии на кнопку выхода
+  const handleClick = () => {
+    localStorage.removeItem('adminToken');
+  };
 
   return (
     <Box bg="#04396D" width="full" p="2">
@@ -30,13 +37,13 @@ const AdminHeader: FC = () => {
           position="absolute"
           h="100%"
         >
-          <NavLink to="passengers" style={checkActive}>
+          <NavLink to={ELinks.ADMIN_PASSENGERS} style={checkActive}>
             Пассажиры
           </NavLink>
-          <NavLink to="airplanes" style={checkActive}>
+          <NavLink to={ELinks.ADMIN_AIRPLANES} style={checkActive}>
             Самолёты
           </NavLink>
-          <NavLink to="destinations" style={checkActive}>
+          <NavLink to={ELinks.ADMIN_DESTINATIONS} style={checkActive}>
             Место назначения
           </NavLink>
           <NavLink to="hours" style={checkActive}>
@@ -48,7 +55,7 @@ const AdminHeader: FC = () => {
         </Flex>
         <Spacer />
         <Link to="/search">
-          <Button bg="#fff" borderRadius="5" mr="1.25rem">
+          <Button onClick={handleClick} bg="#fff" borderRadius="5" mr="1.25rem">
             Выход
           </Button>
         </Link>

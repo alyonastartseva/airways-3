@@ -10,7 +10,7 @@ export const useAuthAdmin = () => {
         axiosInstance.defaults.headers.common[
           'Authorization'
         ] = `Bearer ${response.data.accessToken}`;
-        localStorage.setItem('token', response.data.accessToken);
+        localStorage.setItem('adminToken', response.data.accessToken);
       });
 
   return {

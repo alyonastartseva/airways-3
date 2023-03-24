@@ -1,4 +1,5 @@
-import { Box, Text, Button } from '@chakra-ui/react';
+import { Box, Text, Button, Spacer } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 import { Logo } from '@common/icons';
 
@@ -26,6 +27,12 @@ const Header = () => (
         UX AIR
       </Text>
     </Box>
+    <Spacer />
+    <Link to="/admin">
+      <Button mr="1em" justifySelf="flex-end" fontSize="lx">
+        Вход в админку
+      </Button>
+    </Link>
     <Button mr="1em" justifySelf="flex-end" fontSize="lx">
       Главная страница
     </Button>
