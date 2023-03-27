@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import InputField from '@common/Form/Input';
+import InputField from '@common/InputField/InputField';
 import SelectField from '@common/SelectField/SelectField';
 import { ICountry } from '@interfaces/country.interfaces';
 import { IFormValuesRegisterUser } from '@interfaces/form-values-register-user.interfaces';

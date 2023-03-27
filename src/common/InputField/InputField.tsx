@@ -25,8 +25,8 @@ function InputField({ name, label, typeField = '' }: IInputFieldProps) {
         {label}
       </FormLabel>
       <Input
-        border="1px solid #D9D9D9"
-        boxShadow="0px 2px 2px rgba(0, 0, 0, 0.25)"
+        border="0.0625rem solid #D9D9D9"
+        boxShadow="0rem 0.125rem 0.125rem rgba(0, 0, 0, 0.25)"
         borderRadius="4px"
         id={name}
         type={typeField}
