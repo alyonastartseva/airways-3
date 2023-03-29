@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import { cleanup, render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
 import { afterEach, describe, expect, vi } from 'vitest';
 
 import { Users } from './index';
@@ -8,7 +9,11 @@ afterEach(cleanup);
 
 describe('Users', () => {
   it('Test component info rendered to the page', () => {
-    const { container } = render(<Users />);
+    const { container } = render(
+      <BrowserRouter>
+        <Users />
+      </BrowserRouter>
+    );
     expect(container.querySelector('h4')).toBeInTheDocument();
     expect(container.querySelector('h4')).toHaveTextContent('Пользователи');
   });
@@ -27,7 +32,11 @@ describe('Users', () => {
       };
     });
 
-    const { container } = render(<Users />);
+    const { container } = render(
+      <BrowserRouter>
+        <Users />
+      </BrowserRouter>
+    );
     expect(container.querySelector('table')).toBeInTheDocument();
     expect(screen.getByText('testName')).toBeInTheDocument();
   });

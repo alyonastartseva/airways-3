@@ -1,4 +1,4 @@
-import { axiosInstance } from '@services/axios';
+import { adminInstance } from '@/services/axios.service';
 import { ISearchQuery } from '@interfaces/search.interfaces';
 // import { ILoginRequest } from '@interfaces/login.interfaces';
 
@@ -28,12 +28,12 @@ class searchService {
   // };
 
   getSearchId = async (searchQuery: ISearchQuery) => {
-    return axiosInstance.post<number>('/search', { ...searchQuery });
+    return adminInstance.post<number>('/search', { ...searchQuery });
   };
 
   getSearchResult = async (searchQuery: ISearchQuery) => {
     const { data } = await this.getSearchId(searchQuery);
-    return axiosInstance.get(`/search/${data}`);
+    return adminInstance.get(`/search/${data}`);
   };
 }
 

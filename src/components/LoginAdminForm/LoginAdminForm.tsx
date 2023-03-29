@@ -17,7 +17,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-import { useAuthAdmin } from '@services/auth';
+import { useAuthAdmin } from '@services/auth.service';
 import ELinks from '@services/adminRouterLinks.service';
 
 interface IUserForm {

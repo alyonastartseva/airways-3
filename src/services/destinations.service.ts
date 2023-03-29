@@ -1,5 +1,5 @@
-import { axiosInstance } from '@services/axios';
-import ERoutes from '@services/endpoints';
+import { adminInstance } from '@/services/axios.service';
+import ERoutes from '@/services/endpoints.service';
 import {
   IDestination,
   IDestinationPost,
@@ -7,7 +7,7 @@ import {
 
 const destinationsAPI = {
   getDestinations: async () => {
-    return await axiosInstance
+    return await adminInstance
       .get<IDestination[]>(ERoutes.DESTINATION)
       .then((response) => response.data);
   },
@@ -15,7 +15,7 @@ const destinationsAPI = {
   patchDestinations: async (data: IDestination | null) => {
     if (data) {
       const { id, ...rest } = data;
-      return await axiosInstance.patch<IDestination>(
+      return await adminInstance.patch<IDestination>(
         ERoutes.DESTINATION + id,
         rest
       );
@@ -24,12 +24,12 @@ const destinationsAPI = {
 
   deleteDestination: async (id: number | undefined) => {
     if (id) {
-      return await axiosInstance.delete<IDestination>(ERoutes.DESTINATION + id);
+      return await adminInstance.delete<IDestination>(ERoutes.DESTINATION + id);
     }
   },
 
   postDestinations: async (data: IDestinationPost) => {
-    return await axiosInstance.post<IDestinationPost>(
+    return await adminInstance.post<IDestinationPost>(
       ERoutes.DESTINATION,
       data
     );

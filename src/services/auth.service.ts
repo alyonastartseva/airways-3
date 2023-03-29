@@ -1,13 +1,13 @@
 import { ILoginRequest, ILoginResponse } from '@interfaces/login.interfaces';
-import { axiosInstance } from '@services/axios';
-import ERoutes from '@services/endpoints';
+import { adminInstance } from '@/services/axios.service';
+import ERoutes from '@/services/endpoints.service';
 
 export const useAuthAdmin = () => {
   const loginAdmin = (params: ILoginRequest) =>
-    axiosInstance
+    adminInstance
       .post<ILoginResponse>(ERoutes.LOGIN_ADMIN, params)
       .then((response) => {
-        axiosInstance.defaults.headers.common[
+        adminInstance.defaults.headers.common[
           'Authorization'
         ] = `Bearer ${response.data.accessToken}`;
         localStorage.setItem('adminToken', response.data.accessToken);
