@@ -22,7 +22,7 @@ import {
   CalendarIcon,
 } from '@common/icons';
 import { DestinationInput } from '@common/DestinationInput';
-import searchService from '@services/searchService';
+import searchService from '@/services/search.service';
 import {
   IFromTo,
   TDestQuery,

@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const baseURL = 'http://localhost:8080/api';
 
+// пока нигде не используется
 export const axiosInstance = axios.create({
   baseURL,
   headers: {
@@ -9,9 +10,17 @@ export const axiosInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.request.use(
+// инстанс для админских грязных дел
+export const adminInstance = axios.create({
+  baseURL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+adminInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('adminToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -20,11 +29,12 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-axiosInstance.interceptors.response.use(
+adminInstance.interceptors.response.use(
   (response) => response,
   (error) => Promise.reject(error)
 );
 
+// клиентский инстанс, пока нигде не используется
 export const clientInstance = axios.create({
   baseURL,
   headers: {
@@ -48,4 +58,4 @@ clientInstance.interceptors.response.use(
   (error) => Promise.reject(error)
 );
 
-export default axiosInstance;
+export default adminInstance;

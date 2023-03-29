@@ -1,5 +1,5 @@
-import { axiosInstance } from '@services/axios';
-import ERoutes from '@services/endpoints';
+import { adminInstance } from '@/services/axios.service';
+import ERoutes from '@/services/endpoints.service';
 import {
   FormPassengers,
   FormPassengersPost,
@@ -7,18 +7,18 @@ import {
 
 const passengersAPI = {
   getPassengers: async () => {
-    return await axiosInstance
+    return await adminInstance
       .get<FormPassengers[]>(ERoutes.PASSENGERS)
       .then((response) => response.data);
   },
 
   postPassengers: async (data: FormPassengersPost) => {
-    return await axiosInstance.post<FormPassengers>(ERoutes.PASSENGERS, data);
+    return await adminInstance.post<FormPassengers>(ERoutes.PASSENGERS, data);
   },
 
   deletePassengers: async (id: number | undefined) => {
     if (id) {
-      return await axiosInstance.delete<FormPassengers>(
+      return await adminInstance.delete<FormPassengers>(
         ERoutes.PASSENGERS + id
       );
     }
@@ -26,7 +26,7 @@ const passengersAPI = {
   patchPassengers: async (data: FormPassengers | null) => {
     if (data) {
       const { id, ...rest } = data;
-      return await axiosInstance.patch<FormPassengers>(
+      return await adminInstance.patch<FormPassengers>(
         ERoutes.PASSENGERS + id,
         rest
       );
