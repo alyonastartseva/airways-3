@@ -9,7 +9,7 @@ import {
   TAdditionalServices,
 } from '@interfaces/footer.interfaces';
 
-interface IFooterProps {
+export interface IFooterProps {
   departure?: IDeparture;
   return?: ITickerReturn;
   additional?: TAdditionalServices;
@@ -43,10 +43,18 @@ const Footer: FC<IFooterProps> = ({ departure, return: ret, additional }) => (
         <Flex alignItems="center" columnGap="3.875rem">
           <Text fontWeight="700">UX AIR APP</Text>
           <Flex columnGap="1.25rem">
-            <Link href="https://www.apple.com/" target="_blank">
+            <Link
+              data-testId="app-store-link"
+              href="https://www.apple.com/"
+              target="_blank"
+            >
               <AppStore />
             </Link>
-            <Link href="https://play.google.com/" target="_blank">
+            <Link
+              data-testId="play-store-link"
+              href="https://play.google.com/"
+              target="_blank"
+            >
               <PlayStore />
             </Link>
           </Flex>
