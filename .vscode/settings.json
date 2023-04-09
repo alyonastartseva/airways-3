@@ -11,6 +11,9 @@
   "scm.alwaysShowActions": true,
   "editor.formatOnSave": true,
   "cSpell.words": [
-    "uniqid"
-  ]
+	"chakra",
+	"formated",
+	"uniqid"
+],
+"typescript.tsdk": "node_modules/typescript/lib"
 }
