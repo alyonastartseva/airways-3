@@ -51,6 +51,11 @@ export interface ISearchQuery {
   to: TDestQuery;
 }
 
+export interface ITravelDates {
+  departureDate: Date | null;
+  returnDate: Date | null;
+}
+
 export interface IFromTo {
   from: TDestQuery;
   to: TDestQuery;

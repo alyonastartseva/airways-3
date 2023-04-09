@@ -5,15 +5,18 @@ import {
   Flex,
   Input,
   InputGroup,
-  InputLeftElement,
   InputRightElement,
+  InputLeftElement,
   Radio,
   RadioGroup,
   Stack,
   TabPanel,
   Text,
+  Divider,
+  Center,
 } from '@chakra-ui/react';
 import { useQuery } from 'react-query';
+import { formatISO, format, isPast, isToday, compareDesc } from 'date-fns';
 
 import {
   ArrowDownIcon,
@@ -29,12 +32,16 @@ import {
   ISearchQuery,
 } from '@interfaces/search.interfaces';
 
+import CalendarPopover from '../CalendarPopover';
+
 const SearchTabPanel: React.FC = () => {
+  const today = formatISO(new Date());
+
   const initialSearchQuery: ISearchQuery = {
-    departureDate: '2023-01-22',
+    departureDate: today,
     from: {},
     numberOfPassengers: 0,
-    returnDate: '2023-01-22',
+    returnDate: today,
     to: {},
   };
 
@@ -82,6 +89,30 @@ const SearchTabPanel: React.FC = () => {
       ...params,
       from: newFrom,
       to: newTo,
+    });
+  };
+
+  const onSetTravelDates = (day: Date) => {
+    setSearchParams((prev) => {
+      const newDate = formatISO(day, {
+        representation: 'date',
+      });
+
+      if (isPast(day) && !isToday(day)) {
+        return prev;
+      }
+      if (!prev.departureDate && !prev.returnDate) {
+        return { ...prev, departureDate: newDate };
+      }
+
+      if (
+        prev.departureDate &&
+        !prev.returnDate &&
+        (day > new Date(prev.departureDate) ||
+          !compareDesc(day.setHours(0, 0, 0, 0), new Date(prev.departureDate)))
+      ) {
+        return { ...prev, returnDate: newDate };
+      } else return { ...prev, departureDate: newDate, returnDate: '' };
     });
   };
 
@@ -178,26 +209,81 @@ const SearchTabPanel: React.FC = () => {
               />
             </Flex>
             {/*///////////////////TRAVEL DATES//////////////////*/}
-            <Box>
+
+            <CalendarPopover
+              select={(day: Date) => onSetTravelDates(day)}
+              startDate={
+                searchParams.departureDate
+                  ? new Date(searchParams.departureDate)
+                  : null
+              }
+              endDate={
+                searchParams.returnDate
+                  ? new Date(searchParams.returnDate)
+                  : null
+              }
+            >
               <Text fontSize={'0.6875rem'} fontWeight={'400'}>
                 Travel Dates
               </Text>
-              <InputGroup>
-                <InputLeftElement>
-                  <CalendarIcon />
-                </InputLeftElement>
-                <InputLeftElement ml={'8.125rem'}>
-                  <Box w={'0.125rem'} h={'2.125rem'} bgColor={'#D9D9D9'} />
-                </InputLeftElement>
-                <Input
-                  w={'18.75rem'}
-                  boxShadow={'0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25)'}
-                />
-                <InputRightElement>
-                  <CalendarIcon />
-                </InputRightElement>
-              </InputGroup>
-            </Box>
+              <Flex
+                boxShadow={'0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25)'}
+                outline={'solid 1px rgb(227, 232, 239)'}
+                outlineOffset="-1px"
+                w={'19rem'}
+                rounded="md"
+                borderColor="grey.100"
+              >
+                <InputGroup>
+                  <InputLeftElement>
+                    <CalendarIcon />
+                  </InputLeftElement>
+                  <Input
+                    fontSize="sm"
+                    borderRightRadius="0"
+                    border="none"
+                    readOnly
+                    cursor="pointer"
+                    value={
+                      searchParams.departureDate
+                        ? format(
+                            new Date(searchParams.departureDate),
+                            'dd MMM, EEE'
+                          )
+                        : ''
+                    }
+                  />
+                </InputGroup>
+                <Center height="7" alignSelf="center" pl="2px" pr="2px">
+                  <Divider
+                    orientation="vertical"
+                    border="1px"
+                    borderColor="gray.300"
+                  />
+                </Center>
+                <InputGroup>
+                  <InputRightElement>
+                    <CalendarIcon />
+                  </InputRightElement>
+                  <Input
+                    borderLeftRadius="0"
+                    border="none"
+                    fontSize="sm"
+                    readOnly
+                    cursor="pointer"
+                    value={
+                      searchParams.returnDate
+                        ? format(
+                            new Date(searchParams.returnDate),
+                            'dd MMM, EEE'
+                          )
+                        : ''
+                    }
+                  />
+                </InputGroup>
+              </Flex>
+            </CalendarPopover>
+
             {/*///////////////////PASSENGERS//////////////////*/}
             <Box>
               <Text fontSize={'0.6875rem'} fontWeight={'400'}>
