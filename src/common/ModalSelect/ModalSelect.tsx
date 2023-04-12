@@ -1,4 +1,5 @@
-import { FormLabel, Input, Text } from '@chakra-ui/react';
+import { ReactNode } from 'react';
+import { FormLabel, Select, Text } from '@chakra-ui/react';
 import {
   UseFormRegister,
   FieldValues,
@@ -7,29 +8,28 @@ import {
 } from 'react-hook-form';
 
 // provide your FormValues interface which you are using in useForm<FormValue> with your form fields.
-export type FormInputProps<TFormValues extends FieldValues> = {
+export type FormSelectProps<TFormValues extends FieldValues> = {
   label: string;
-  typeInput?: 'text' | 'number' | 'date' | 'tel';
+  children: ReactNode;
   fieldName: Path<TFormValues>;
   errorMessage?: string;
   rules: RegisterOptions;
   register: UseFormRegister<TFormValues>;
 };
 
-const ModalInput = <TFormValues extends Record<string, unknown>>({
+const ModalSelect = <TFormValues extends Record<string, unknown>>({
   label,
   register,
   fieldName,
   rules,
   errorMessage,
-  typeInput = 'text',
-}: FormInputProps<TFormValues>): JSX.Element => {
+  children,
+}: FormSelectProps<TFormValues>): JSX.Element => {
   return (
     <>
       <FormLabel fontSize={14} w="100%" mb={5} color="#393939" fontWeight="400">
         {label}
-        <Input
-          type={typeInput}
+        <Select
           bgColor="#F9F9F9"
           border={`1px solid ${errorMessage ? '#F56565' : '#DEDEDE'}`}
           borderRadius={2}
@@ -38,7 +38,9 @@ const ModalInput = <TFormValues extends Record<string, unknown>>({
           mt={2}
           mb={1}
           {...register(fieldName, rules)}
-        />
+        >
+          {children}
+        </Select>
         {errorMessage && (
           <Text color="#F56565" role="alert">
             {errorMessage}
@@ -49,4 +51,4 @@ const ModalInput = <TFormValues extends Record<string, unknown>>({
   );
 };
 
-export default ModalInput;
+export default ModalSelect;

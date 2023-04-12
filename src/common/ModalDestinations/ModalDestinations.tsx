@@ -73,7 +73,7 @@ const ModalDestinations = ({ name }: IModalFormPage) => {
                 register={register}
                 fieldName="cityName"
                 label="Город"
-                type="text"
+                typeInput="text"
                 errorMessage={errors.cityName?.message}
                 rules={{
                   required: 'Введите название города',
@@ -85,7 +85,7 @@ const ModalDestinations = ({ name }: IModalFormPage) => {
                 register={register}
                 fieldName="airportName"
                 label="Название аэропорта"
-                type="text"
+                typeInput="text"
                 errorMessage={errors.airportName?.message}
                 rules={{
                   required: 'Введите название аэропорта',
@@ -95,7 +95,7 @@ const ModalDestinations = ({ name }: IModalFormPage) => {
                 register={register}
                 fieldName="airportCode"
                 label="Код аэропорта"
-                type="text"
+                typeInput="text"
                 errorMessage={errors.airportCode?.message}
                 rules={{
                   required: 'Введите код аэропорта',
@@ -113,7 +113,7 @@ const ModalDestinations = ({ name }: IModalFormPage) => {
                 register={register}
                 fieldName="timezone"
                 label="Часовой пояс"
-                type="text"
+                typeInput="text"
                 errorMessage={errors.timezone?.message}
                 rules={{
                   required: 'Введите часовой пояс',
