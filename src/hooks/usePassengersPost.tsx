@@ -12,7 +12,7 @@ const usePassengersPost = () => {
       queryClient.invalidateQueries('passengers');
       toast({
         status: 'success',
-        title: 'Пункт назначения успешно добавлен',
+        title: 'Пассажир успешно добавлен',
         position: 'top',
       });
     },

@@ -79,7 +79,7 @@ const ModalAirplanes = ({ name }: IModalFormPage) => {
                 register={register}
                 fieldName="aircraftNumber"
                 label="Номер самолёта"
-                type="number"
+                typeInput="number"
                 errorMessage={errors.aircraftNumber?.message}
                 rules={{
                   required: 'Введите модель самолёта',
@@ -91,7 +91,7 @@ const ModalAirplanes = ({ name }: IModalFormPage) => {
                 register={register}
                 fieldName="modelYear"
                 label="Год выпуска"
-                type="number"
+                typeInput="number"
                 errorMessage={errors.modelYear?.message}
                 rules={{
                   required: 'Введите год выпуска самолёта',
@@ -109,7 +109,7 @@ const ModalAirplanes = ({ name }: IModalFormPage) => {
                 register={register}
                 fieldName="flightRange"
                 label="Дальность полёта (км)"
-                type="number"
+                typeInput="number"
                 errorMessage={errors.flightRange?.message}
                 rules={{
                   required: 'Введите длину полёта',
