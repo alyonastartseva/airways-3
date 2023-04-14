@@ -13,6 +13,11 @@ export interface IEditableCell {
   updateData(id: string, value: string): void;
 }
 
+export interface IEditableSelectCell extends IEditableCell {
+  selectOptions: string[];
+  getRenderValue(value: string): string;
+}
+
 export interface IsRowEditing<Data> {
   (
     index: number,

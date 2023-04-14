@@ -11,10 +11,11 @@ export interface IArticle {
 }
 export interface FormPassengers {
   id: number;
-  middleName?: string;
   lastName?: string;
   firstName?: string;
+  middleName?: string;
   passport?: {
+    middleName?: string;
     gender: string;
     serialNumberPassport: string;
     passportIssuingCountry: string;

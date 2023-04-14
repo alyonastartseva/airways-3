@@ -26,7 +26,7 @@ const passengersAPI = {
   patchPassengers: async (data: FormPassengers | null) => {
     if (data) {
       const { id, ...rest } = data;
-      return await adminInstance.patch<FormPassengers>(
+      return await adminInstance.put<FormPassengers>(
         ERoutes.PASSENGERS + id,
         rest
       );
