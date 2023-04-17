@@ -3,6 +3,7 @@ enum ERoutes {
   DESTINATION = '/destinations/',
   AIRCRAFT = '/aircrafts/',
   PASSENGERS = '/passengers/',
+  FLIGHTS = '/flights/',
 }
 
 export default ERoutes;

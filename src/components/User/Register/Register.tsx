@@ -17,7 +17,7 @@ import {
 import { ChevronIcon, PenIcon } from '@common/icons';
 import { RegisterForm } from '@components/User/RegisterForm';
 import { IFormValuesRegisterUser } from '@interfaces/form-values-register-user.interfaces';
-import AviasalesService from '@/services/flights.service';
+import AviasalesService from '@/services/aviasales.service';
 import { prepareFormData } from '@utils/form-data.utils';
 
 function Register() {

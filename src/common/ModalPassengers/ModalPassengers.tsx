@@ -177,7 +177,7 @@ const ModalPassengers = ({ name }: IModalFormPage) => {
                 register={register}
                 fieldName="passport.serialNumberPassport"
                 label="Серийный номер"
-                typeInput="text"
+                typeInput="number"
                 rules={{
                   required: 'Введите серийный номер',
                   min: {
