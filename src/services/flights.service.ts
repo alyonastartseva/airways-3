@@ -1,89 +1,96 @@
-import axios from 'axios';
+import format from 'date-fns/format';
+import { AxiosResponse } from 'axios';
 
-import { IFormPassenger } from '@interfaces/form-passenger.interfaces';
-class AviasalesService {
-  async getAuthorizationToken(): Promise<string> {
-    try {
-      const res = await axios.post('http://localhost:8080/api/auth/login', {
-        password: 'admin',
-        username: 'admin@mail.ru',
-      });
-      localStorage.setItem('token', res.data.accessToken as string);
-      return res.data.accessToken;
-    } catch (err) {
-      return Promise.reject(err);
-    }
-  }
+import { adminInstance } from '@/services/axios.service';
+import ERoutes from '@/services/endpoints.service';
+import { IFlights, TFlightsPost } from '@/interfaces/flights.interfaces';
+import { IDestination } from '@/interfaces/destination.interfaces';
+import { IAircraft } from '@/interfaces/aircraft.interfaces';
 
-  getUsers = async () => {
-    await this.getAuthorizationToken();
+import { getAircrafts } from './aircrafts.service';
+import { getDestinations } from './destinations.service';
 
-    const token: string | null = localStorage.getItem('token');
-    try {
-      const response = await axios.get('http://localhost:8080/api/user', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      const usersInfo = response.data;
-      const users = usersInfo.map(
-        ({
-          id,
-          firstName,
-          lastName,
-          middleName,
-          gender,
-          phoneNumber,
-          roles,
-          birthDate,
-          passport,
-        }: Record<
-          string,
-          {
-            id: number;
-            firstName: string;
-            lastName: string;
-            middleName: string;
-            gender: string;
-            phoneNumber: string;
-            roles: { id: number; name: string }[];
-            birthDate: number;
-            passport: string;
-          }
-        >) => ({
-          id,
-          firstName,
-          lastName,
-          middleName,
-          gender,
-          phoneNumber,
-          passport,
-          birthDate,
-          roles,
-        })
-      );
-      return users;
-    } catch (error) {
-      return error;
-    }
-  };
-
-  createUserAsPassenger = async (user: IFormPassenger) => {
-    try {
-      const response = await axios.post('http://localhost:8080/api/user', {
-        ...user,
-        '@type': 'passenger',
-        roles: [{ id: '2', name: 'ROLE_PASSENGER' }],
-      });
-      if (response.statusText === 'Created') {
-        return response;
-      }
-      throw Error;
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  };
+let count = 1;
+interface IFlightsApi {
+  flightsList: Array<IFlights>;
+  aircraftList: IAircraft[];
+  destinationList: Array<IDestination>;
+  getFlights: () => Promise<IFlights[] | undefined>;
+  postFlight: (data: TFlightsPost) => Promise<AxiosResponse<IFlights, Error>>;
 }
 
-export default AviasalesService;
+const getAircraftModel = (aircraft: IAircraft[], id: number) => {
+  const aircraftInfo = aircraft.find((el) => el.id === id);
+  if (aircraftInfo) {
+    return aircraftInfo.model;
+  } else return id;
+};
+const dateFormat = 'd.MM.yyyy HH:mm';
+
+const formatDate = (date: string): string => {
+  return format(new Date(date), dateFormat);
+};
+
+// переписать, когда появится endpoint для получения всех рейсов сразу
+
+const flightsAPI: IFlightsApi = {
+  flightsList: [],
+  aircraftList: [],
+  destinationList: [],
+
+  getFlights: async () => {
+    try {
+      if (!flightsAPI.destinationList[0]) {
+        const destinations = await getDestinations();
+        flightsAPI.destinationList.push(...destinations);
+      }
+
+      if (!flightsAPI.aircraftList[0]) {
+        const aircraft = await getAircrafts();
+        flightsAPI.aircraftList.push(...aircraft);
+      }
+
+      const { data, status } = await adminInstance.get<IFlights>(
+        ERoutes.FLIGHTS + count
+      );
+
+      if (status !== 200 && !data.aircraftId) {
+        return flightsAPI.flightsList;
+      } else {
+        const modifiedData = {
+          ...data,
+          departureDateTime: formatDate(data.arrivalDateTime),
+          arrivalDateTime: formatDate(data.arrivalDateTime),
+          aircraftId: getAircraftModel(
+            flightsAPI.aircraftList,
+            Number(data.aircraftId)
+          ),
+        };
+        count += 1;
+        flightsAPI.flightsList.push(modifiedData);
+        return flightsAPI.getFlights();
+      }
+    } catch {
+      return flightsAPI.flightsList;
+    }
+  },
+
+  postFlight: async (data: TFlightsPost) => {
+    const { from, to } = data;
+    const fromData = flightsAPI.destinationList.find(
+      (el) => el.cityName === from.cityName
+    );
+    const toData = flightsAPI.destinationList.find(
+      (el) => el.cityName === to.cityName
+    );
+    const fetchedData: Partial<TFlightsPost> = {
+      ...data,
+      aircraftId: Number(data.aircraftId),
+      from: fromData,
+      to: toData,
+    };
+    return await adminInstance.post<IFlights>(ERoutes.FLIGHTS, fetchedData);
+  },
+};
+
+export const { getFlights, flightsList, aircraftList, postFlight } = flightsAPI;

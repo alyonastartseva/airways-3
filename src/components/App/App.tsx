@@ -11,6 +11,7 @@ import { SearchPage } from '@pages/User/SearchPage';
 import { DestinationsPage } from '@pages/Admin/DestinationsPage';
 import { PageNotFound } from '@common/PageNotFound';
 import { PassengersPage } from '@pages/Passengers';
+import { FlightsPage } from '@/pages/Admin/FlightsPage';
 
 const queryClient = new QueryClient({});
 
@@ -30,6 +31,8 @@ const App = () => {
           <Route path="airplanes" element={<AirplanesPage />} />
           <Route path="passengers" element={<PassengersPage />} />
           <Route path="destinations" element={<DestinationsPage />} />
+          <Route path="flights" element={<FlightsPage />} />
+
           <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>

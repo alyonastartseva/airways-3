@@ -40,7 +40,7 @@ import { useQuery } from 'react-query';
 import { useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
 
-import AviasalesService from '@/services/flights.service';
+import AviasalesService from '@/services/aviasales.service';
 import { TPerson } from '@interfaces/person.interfaces';
 import { IFormPassenger } from '@interfaces/form-passenger.interfaces';
 import { Pagination } from '@components/Pagination';
