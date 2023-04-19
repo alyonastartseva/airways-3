@@ -64,7 +64,7 @@ const Flights = () => {
   );
 
   // получение данных
-  const { data: flights, isLoading } = useFlightsQuery();
+  const { data: flights, isLoading, isError } = useFlightsQuery();
 
   const patchRow = () => console.log();
 
@@ -96,6 +96,7 @@ const Flights = () => {
         ),
       }),
       columnHelper.accessor((row) => `${row.from.cityName}`, {
+        id: 'cityName',
         header: 'Город откуда',
         cell: (info) => (
           <EditableCell
@@ -261,23 +262,14 @@ const Flights = () => {
     [flights?.length, pageSize]
   );
 
-  // если нет токена авторизации, перебрасываем на форму логина
-  if (!localStorage.getItem('adminToken'))
-    return <Navigate to={ELinks.ADMIN_LOGIN} />;
-
-  // спиннер при загрузке
   if (isLoading) {
     return <SpinnerBlock />;
   }
 
-  // если полученные данные в порядке выводим таблицу
-  if (Array.isArray(flights) && flights?.length) {
+  if (Array.isArray(flights) && flights?.length && !isError) {
     return (
       <TableContainer my={10} mx={9}>
-        <HeaderAdmin
-          heading="Рейсы"
-          modal={<ModalFlights name="Добавить рейс" />}
-        />
+        <HeaderAdmin heading="Рейсы" modal={<div></div>} />
         <Table>
           <Thead>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -312,15 +304,15 @@ const Flights = () => {
               >
                 {row.getVisibleCells().map((cell) => (
                   <Td
-                    border="1px solid #DEDEDE"
+                    border="0.0625rem solid #DEDEDE"
                     color="#393939"
-                    fontSize="14px"
-                    lineHeight="18px"
+                    fontSize="0.875rem"
+                    lineHeight="1.125rem"
                     key={cell.id}
                     textTransform="none"
                     fontWeight="normal"
-                    paddingX="4px"
-                    paddingY="2px"
+                    paddingX="0.25rem"
+                    paddingY="0.125rem"
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Td>
@@ -340,10 +332,7 @@ const Flights = () => {
         />
       </TableContainer>
     );
-  }
-
-  // алерт при ошибке
-  return <AlertMessage />;
+  } else return <AlertMessage />;
 };
 
 export default Flights;

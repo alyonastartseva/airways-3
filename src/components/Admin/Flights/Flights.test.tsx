@@ -1,17 +1,26 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, vi } from 'vitest';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { QueryClientProvider, QueryClient } from 'react-query';
 
+import useFlightsQuery from '@/hooks/useFlightsQuery';
 import { IFlights } from '@/interfaces/flights.interfaces';
 
 import Flights from './Flights';
-
-vi.mock('react-query');
 
 describe('Flights', () => {
   afterEach(() => {
     vi.clearAllMocks();
     vi.resetAllMocks();
+  });
+
+  it('useFlightsQuery should work correct', async () => {
+    const queryClient = new QueryClient();
+    const wrapper = ({ children }: any) => (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    );
+    const { result } = renderHook(() => useFlightsQuery(), { wrapper });
+    await waitFor(() => expect(result.current.isSuccess).toBe(true));
+    expect(result.current.data).toBeDefined();
   });
 
   it('Flights render table data', async () => {
@@ -45,11 +54,7 @@ describe('Flights', () => {
     data.useQuery = vi.fn().mockReturnValue({ data: testData });
     data.useMutation = vi.fn().mockReturnValue({});
 
-    render(
-      <Router>
-        <Flights />
-      </Router>
-    );
+    render(<Flights />);
     expect(data.useQuery).toBeCalledTimes(1);
     expect(screen.getByText('ID')).toBeInTheDocument();
     expect(screen.getByText('Код(Рейс)')).toBeInTheDocument();
@@ -66,11 +71,7 @@ describe('Flights', () => {
     data.useQuery = vi.fn().mockReturnValue({ isLoading: true });
     data.useMutation = vi.fn().mockReturnValue({});
 
-    render(
-      <Router>
-        <Flights />
-      </Router>
-    );
+    render(<Flights />);
     expect(data.useQuery).toBeCalledTimes(1);
     expect(screen.getAllByText('Loading...')).toHaveLength(2);
   });
@@ -80,11 +81,7 @@ describe('Flights', () => {
     data.useQuery = vi.fn().mockReturnValue({});
     data.useMutation = vi.fn().mockReturnValue({});
 
-    render(
-      <Router>
-        <Flights />
-      </Router>
-    );
+    render(<Flights />);
     expect(data.useQuery).toBeCalledTimes(1);
     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
   });
