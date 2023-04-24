@@ -3,6 +3,7 @@ enum ERoutes {
   DESTINATION = '/destinations/',
   AIRCRAFT = '/aircrafts/',
   PASSENGERS = '/passengers/',
+  GET_FLIGHTS = '/flights/all',
   FLIGHTS = '/flights/',
 }
 

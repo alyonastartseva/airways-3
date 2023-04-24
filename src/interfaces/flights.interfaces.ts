@@ -1,6 +1,6 @@
 import { IDestination } from './destination.interfaces';
 
-type TFlightsStatus =
+export type TFlightsStatus =
   | 'DELAYED'
   | 'DEPARTED'
   | 'CANCELED'
@@ -8,15 +8,16 @@ type TFlightsStatus =
   | 'ARRIVED'
   | 'ON_TIME';
 
-export interface IFlights {
-  aircraftId: number | string;
-  arrivalDateTime: string; // 2023-04-10T12:50:09.491Z
+export type IFlightsPost = {
   code: string;
-  departureDateTime: string;
-  flightStatus: TFlightsStatus;
-  id: number;
   from: IDestination;
   to: IDestination;
-}
+  departureDateTime: string;
+  arrivalDateTime: string;
+  aircraftId: number;
+  flightStatus: TFlightsStatus;
+};
 
-export type TFlightsPost = Omit<IFlights, 'id'>;
+export interface IFlights extends IFlightsPost {
+  id: number;
+}

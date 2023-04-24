@@ -14,20 +14,23 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useCallback, useState, useMemo } from 'react';
-import { Navigate } from 'react-router-dom';
+import dayjs from 'dayjs';
 
-import useFlightsQuery from '@/hooks/useFlightsQuery';
+import { IAircraft } from '@/interfaces/aircraft.interfaces';
+import { useAircraftQuery } from '@/hooks/useAircraftQuery';
+import { useFlightsQuery } from '@/hooks/useFlightsQuery';
+import { useFlightsDelete } from '@/hooks/useFlightsDelete';
 import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { EditableCell } from '@common/EditableCell';
+import { EditableSelectCell } from '@/common/EditableSelectCell';
 import { isRowEditing } from '@utils/table.utils';
 import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
 import { HeaderAdmin } from '@common/HeaderAdmin';
 import { FooterTable } from '@common/FooterTable';
-import ELinks from '@services/adminRouterLinks.service';
-import { IFlights } from '@/interfaces/flights.interfaces';
-import { ModalFlights } from '@/common/ModalFlights';
+import { IFlights, TFlightsStatus } from '@/interfaces/flights.interfaces';
+import { flightStatuses } from '@/constants/constants';
 
 const Flights = () => {
   // индекс и размер пагинации
@@ -57,16 +60,89 @@ const Flights = () => {
   // обновление редактируемой строки
   const handleUpdateRow = useCallback(
     (id: string, value: string) => {
-      if (editableRowState)
-        setEditableRowState({ ...editableRowState, [id]: value });
+      if (editableRowState) {
+        // если id ссылается на свойство вложенного объекта
+        if (id.indexOf('_') !== -1) {
+          const key1 = id.slice(0, id.indexOf('_'));
+          const key2 = id.slice(id.indexOf('_') + 1);
+          const nestedObject = editableRowState[key1 as keyof IFlights];
+
+          if (nestedObject && typeof nestedObject === 'object') {
+            setEditableRowState({
+              ...editableRowState,
+              [key1 as keyof IFlights]: {
+                ...nestedObject,
+                [key2 as keyof typeof nestedObject]: value,
+              },
+            });
+          }
+        } else {
+          setEditableRowState({
+            ...editableRowState,
+            [id as keyof IFlights]: value,
+          });
+        }
+      }
     },
     [editableRowState]
   );
 
   // получение данных
+  const { data: airplanes, isLoading: isAircraftLoading } = useAircraftQuery();
+
   const { data: flights, isLoading, isError } = useFlightsQuery();
 
+  const { mutate: deleteFlight } = useFlightsDelete();
+
   const patchRow = () => console.log();
+
+  // форматирование даты
+  const formatDate = (date: string): string => {
+    const dateFormat = 'DD.MM.YYYY HH:mm';
+    return dayjs(date).format(dateFormat);
+  };
+
+  // получение модели самолета по id
+  const getAircraftModel = useCallback(
+    (id: string) => {
+      if (airplanes) {
+        const aircraftInfo = airplanes.find((el) => el.id.toString() === id);
+        if (aircraftInfo) {
+          return aircraftInfo.model;
+        } else return id.toString();
+      }
+      return '';
+    },
+    [airplanes]
+  );
+
+  // option для поля "модель самолета"
+  const getAircraftSelectOptions = (aircrafts: IAircraft[] | undefined) => {
+    if (aircrafts) {
+      return aircrafts.map((airplane) => airplane.id.toString());
+    }
+    return [];
+  };
+
+  // получение названия статуса по value
+  const getStatusName = (status: TFlightsStatus): string => {
+    switch (status) {
+      case 'DELAYED':
+        return 'Отложен';
+      case 'DEPARTED':
+        return 'Отправлен';
+      case 'CANCELED':
+        return 'Отменен';
+      case 'COMPLETED':
+        return 'Завершенный';
+      case 'ARRIVED':
+        return 'Прибыл';
+      case 'ON_TIME':
+        return 'В срок';
+      default:
+        return '';
+    }
+  };
 
   // создание столбцов таблицы
   const columnHelper = createColumnHelper<IFlights>();
@@ -95,8 +171,7 @@ const Flights = () => {
           />
         ),
       }),
-      columnHelper.accessor((row) => `${row.from.cityName}`, {
-        id: 'cityName',
+      columnHelper.accessor('from.cityName', {
         header: 'Город откуда',
         cell: (info) => (
           <EditableCell
@@ -114,7 +189,7 @@ const Flights = () => {
           />
         ),
       }),
-      columnHelper.accessor((row) => row.to.cityName, {
+      columnHelper.accessor('to.cityName', {
         header: 'Город куда',
         cell: (info) => (
           <EditableCell
@@ -139,7 +214,7 @@ const Flights = () => {
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              info.getValue(),
+              formatDate(info.getValue()),
               editableRowState,
               editableRowIndex
             )}
@@ -157,7 +232,7 @@ const Flights = () => {
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              info.getValue(),
+              formatDate(info.getValue()),
               editableRowState,
               editableRowIndex
             )}
@@ -171,7 +246,7 @@ const Flights = () => {
       columnHelper.accessor('aircraftId', {
         header: 'Модель самолета',
         cell: (info) => (
-          <EditableCell
+          <EditableSelectCell
             value={isRowEditing(
               info.row.index,
               info.column.id,
@@ -183,13 +258,15 @@ const Flights = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            selectOptions={getAircraftSelectOptions(airplanes)}
+            getRenderValue={getAircraftModel}
           />
         ),
       }),
       columnHelper.accessor('flightStatus', {
         header: 'Статус',
         cell: (info) => (
-          <EditableCell
+          <EditableSelectCell
             value={isRowEditing(
               info.row.index,
               info.column.id,
@@ -201,6 +278,8 @@ const Flights = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            selectOptions={flightStatuses}
+            getRenderValue={getStatusName}
           />
         ),
       }),
@@ -213,7 +292,7 @@ const Flights = () => {
             index={info.row.index}
             id={info.row.original.id}
             handleEditRow={handleEditRow}
-            deleteRow={() => console.log()}
+            deleteRow={deleteFlight}
           />
         ),
       }),
@@ -224,13 +303,16 @@ const Flights = () => {
       editableRowState,
       handleUpdateRow,
       handleEditRow,
+      deleteFlight,
+      airplanes,
+      getAircraftModel,
     ]
   );
 
   // сортировка получаемых данных. ВРЕМЕННО, ПОКА ДАННЫЕ С СЕРВЕРА ПРИХОДЯТ БЕЗ СОРТИРОВКИ
   const tableData = (data?: IFlights[]) => {
     if (Array.isArray(data) && data.length) {
-      return data;
+      return data.sort((a, b) => a.id - b.id);
     }
     return [];
   };
@@ -262,7 +344,8 @@ const Flights = () => {
     [flights?.length, pageSize]
   );
 
-  if (isLoading) {
+  // спиннер при загрузке
+  if (isLoading || isAircraftLoading) {
     return <SpinnerBlock />;
   }
 
