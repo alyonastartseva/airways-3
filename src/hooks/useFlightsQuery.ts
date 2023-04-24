@@ -18,4 +18,4 @@ const useFlightsQuery = () => {
     },
   });
 };
-export default useFlightsQuery;
+export { useFlightsQuery };
