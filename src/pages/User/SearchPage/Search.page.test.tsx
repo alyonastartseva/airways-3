@@ -1,44 +1,57 @@
+import { afterEach, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { describe, it } from 'vitest';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-import SearchPage from './Search.page';
+import { Layout } from '@/layout';
+import { SearchPage } from '@pages/User/SearchPage/index';
+import { PageNotFound } from '@common/PageNotFound';
 
-describe('Search component', () => {
-  it('renders without crashing', () => {
-    render(<SearchPage />);
+describe('SearchPage renders', () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+    vi.resetAllMocks();
   });
+  it('renders SearchPage if no URL', async () => {
+    const queryClient = new QueryClient();
 
-  it('renders all the elements', () => {
-    render(<SearchPage />);
+    const data = await import('react-query');
+    data.useQuery = vi.fn().mockReturnValue({});
 
-    // Check if the background image is present
-    expect(
-      screen.getByRole('img', { name: /search-page-bg/i })
-    ).toBeInTheDocument();
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter initialEntries={['', '/']}>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<SearchPage />} />
+            </Route>
+          </Routes>
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+    expect(screen.getByText('UX AIR')).toBeInTheDocument();
+    expect(screen.getByText('flights')).toBeInTheDocument();
+    expect(screen.getByText('Search Flights')).toBeInTheDocument();
+  });
+  it('renders not SearchPage if not empty URL', async () => {
+    const queryClient = new QueryClient();
 
-    // Check if the search page tabs are present
-    expect(screen.getByText(/Flights/i)).toBeInTheDocument();
-    expect(screen.getByText(/Hotels/i)).toBeInTheDocument();
+    const data = await import('react-query');
+    data.useQuery = vi.fn().mockReturnValue({});
 
-    // Check if the COVID card is present
-    expect(screen.getByText(/COVID-19/i)).toBeInTheDocument();
-
-    // Check if the article cards are present
-    expect(screen.getByText(/Discover/i)).toBeInTheDocument();
-    expect(screen.getByText(/Holiday destinations/i)).toBeInTheDocument();
-    expect(screen.getByText(/Our best offers/i)).toBeInTheDocument();
-    expect(screen.getByText(/Additional services/i)).toBeInTheDocument();
-
-    // Check if the social icons are present
-    expect(screen.getByRole('img', { name: /facebook/i })).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: /twitter/i })).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: /linkedin/i })).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: /instagram/i })).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: /youtube/i })).toBeInTheDocument();
-
-    // Check if the feedback button is present
-    expect(
-      screen.getByRole('button', { name: /feedback/i })
-    ).toBeInTheDocument();
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter initialEntries={['/sdfg']}>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<SearchPage />} />
+              <Route path="*" element={<PageNotFound />} />
+            </Route>
+          </Routes>
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+    expect(screen.getByText('UX AIR')).toBeInTheDocument();
+    expect(screen.getByText('PAGE NOT FOUND')).toBeInTheDocument();
   });
 });
