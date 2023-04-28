@@ -6,7 +6,6 @@ import { deleteAircraft } from '@services/aircrafts.service';
 const useAircraftDelete = () => {
   const queryClient = useQueryClient();
   const toast = useToast();
-
   return useMutation(deleteAircraft, {
     onSuccess: () => queryClient.invalidateQueries('aircrafts'),
     onError: (error) => {
