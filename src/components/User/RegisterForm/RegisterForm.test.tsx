@@ -1,57 +1,270 @@
 import '@testing-library/jest-dom';
-import { cleanup, fireEvent, render, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { afterEach, describe, expect, vi } from 'vitest';
+import { waitFor, renderHook, render, screen } from '@testing-library/react';
+import { describe, expect, vi, test } from 'vitest';
+import { QueryClientProvider, QueryClient } from 'react-query';
+import { FC, PropsWithChildren } from 'react';
 
-import { RegisterForm } from './index';
+import useCountryQuery from '@/hooks/useCountryQuery';
+import { ICountry } from '@/interfaces/country.interfaces';
 
-afterEach(cleanup);
+import RegisterForm from './RegisterForm';
 
-describe('RegisterForm', () => {
-  it('valid data can be loaded and can be sended', async () => {
-    const user = userEvent.setup();
-    const mockSubmit = vi.fn();
+export type TGetRenderElementsByAttrName = (
+  container: HTMLElement,
+  attrName: string
+) => IRenderElements;
+
+export interface IRenderElements {
+  [key: string]: number;
+}
+
+export type TSelectOrInput = HTMLInputElement | HTMLSelectElement;
+
+const testData: ICountry[] = [
+  {
+    name: 'Afghanistan',
+    topLevelDomain: ['.af'],
+    alpha2Code: 'AF',
+    alpha3Code: 'AFG',
+    callingCodes: ['93'],
+    capital: 'Kabul',
+    altSpellings: ['AF', 'Afġānistān'],
+    subregion: 'Southern Asia',
+    region: 'Asia',
+    population: 40218234,
+    latlng: [33.0, 65.0],
+    demonym: 'Afghan',
+    area: 652230.0,
+    timezones: ['UTC+04:30'],
+    borders: ['IRN', 'PAK', 'TKM', 'UZB', 'TJK', 'CHN'],
+    nativeName: 'افغانستان',
+    numericCode: '004',
+    currencies: [{ code: 'AFN', name: 'Afghan afghani', symbol: '؋' }],
+    languages: [
+      {
+        iso639_1: 'ps',
+        iso639_2: 'pus',
+        name: 'Pashto',
+        nativeName: 'پښتو',
+      },
+      {
+        iso639_1: 'uz',
+        iso639_2: 'uzb',
+        name: 'Uzbek',
+        nativeName: 'Oʻzbek',
+      },
+      {
+        iso639_1: 'tk',
+        iso639_2: 'tuk',
+        name: 'Turkmen',
+        nativeName: 'Türkmen',
+      },
+    ],
+    translations: {
+      br: 'Afghanistan',
+      pt: 'Afeganistão',
+      nl: 'Afghanistan',
+      hr: 'Afganistan',
+      fa: 'افغانستان',
+      de: 'Afghanistan',
+      es: 'Afganistán',
+      fr: 'Afghanistan',
+      ja: 'アフガニスタン',
+      it: 'Afghanistan',
+      hu: 'Afganisztán',
+    },
+    gini: 33.2,
+    flag: 'https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_the_Taliban.svg',
+    regionalBlocs: [
+      {
+        acronym: 'SAARC',
+        name: 'South Asian Association for Regional Cooperation',
+        otherAcronyms: ['EAEU'],
+        otherNames: [
+          'Comunidad del Caribe',
+          'Communauté Caribéenne',
+          'Caribische Gemeenschap',
+        ],
+      },
+    ],
+    cioc: 'AFG',
+  },
+];
+
+// search function for elements and their number ("input" or "select")
+const getRenderElementsByAttrName: TGetRenderElementsByAttrName = (
+  container,
+  attrName
+) => {
+  const renderElements: IRenderElements = {};
+
+  container.querySelectorAll(attrName).forEach((renderElement) => {
+    const elementName = (renderElement as TSelectOrInput).name;
+    let newCount = 1;
+
+    if (Object.prototype.hasOwnProperty.call(renderElements, elementName)) {
+      newCount = renderElements[elementName] + 1;
+    }
+
+    renderElements[elementName] = newCount;
+  });
+
+  return renderElements;
+};
+
+const mockSubmit = vi.fn();
+
+describe('testing react-query should work correct', () => {
+  test('test work "useCountryQuery"', async () => {
+    const queryClient = new QueryClient();
+    const wrapper: FC<PropsWithChildren> = ({ children }) => (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    );
+
+    const { result } = renderHook(() => useCountryQuery(), { wrapper });
+    await waitFor(
+      () => {
+        expect(result.current.isSuccess).toBe(true);
+      },
+      {
+        timeout: 10000,
+      }
+    );
+  });
+
+  test('Flights render spinner', async () => {
+    const data = await import('react-query');
+    data.useQuery = vi.fn().mockReturnValue({ isLoading: true });
+    data.useMutation = vi.fn().mockReturnValue({});
+
+    render(<RegisterForm onSubmit={mockSubmit} />);
+    expect(data.useQuery).toBeCalledTimes(1);
+    expect(screen.getAllByText('Loading...')).toHaveLength(2);
+  });
+
+  test('Flights render alert', async () => {
+    const data = await import('react-query');
+    data.useQuery = vi.fn().mockReturnValue({});
+    data.useMutation = vi.fn().mockReturnValue({});
+
+    render(<RegisterForm onSubmit={mockSubmit} />);
+    expect(data.useQuery).toBeCalledTimes(1);
+    expect(screen.getByText('Something went wrong')).toBeInTheDocument();
+  });
+});
+
+describe('testing renders', async () => {
+  test('test render "RegisterForm" component', async () => {
+    const data = await import('react-query');
+    data.useQuery = vi.fn().mockReturnValue({ data: testData });
+    data.useMutation = vi.fn().mockReturnValue({});
+
+    render(<RegisterForm onSubmit={mockSubmit} />);
+    expect(data.useQuery).toBeCalledTimes(1);
+    const registerFormComponent = screen.getByTestId('register-form');
+    expect(registerFormComponent).toBeInTheDocument();
+  });
+
+  test('test render "inputs"', async () => {
+    const data = await import('react-query');
+    data.useQuery = vi.fn().mockReturnValue({ data: testData });
+    data.useMutation = vi.fn().mockReturnValue({});
+
     const { container } = render(<RegisterForm onSubmit={mockSubmit} />);
-    const spyAnchorTag = vi.spyOn(user, 'click');
+    expect(data.useQuery).toBeCalledTimes(1);
 
-    const testPersonData = {
-      firstName: 'testName',
-      lastName: 'testLastName',
-      password: '@1testPassword',
-      repeatPassword: '@1testPassword',
-      yearOfBirth: '2001',
-      monthOfBirth: '2',
-      dayOfBirth: '3',
-      telNumber: '11111111',
-      telCode: '+93',
+    const renderInputElements = getRenderElementsByAttrName(container, 'input');
+
+    const correctRenderInputElements = {
+      firstName: 1,
+      lastName: 1,
+      email: 1,
+      telNumber: 1,
+      password: 1,
+      repeatPassword: 1,
+      answer: 1,
     };
 
-    const promises = [];
-    for (const [key, value] of Object.entries(testPersonData)) {
-      const field = container.querySelector(`[name="${key}"]`);
-      switch (field?.tagName) {
-        case 'INPUT':
-          promises.push(user.type(field, value));
-          break;
-        case 'SELECT':
-          promises.push(
-            waitFor(() => expect(field.childElementCount > 1).toBe(true), {
-              timeout: 10000,
-            }),
-            user.selectOptions(field, value)
-          );
-          break;
-        default:
-          break;
-      }
-    }
-    await Promise.all(promises);
-    const submitButton = container.querySelector('[type="submit"]');
-    const form = container.querySelector('form');
-    submitButton && user.click(submitButton);
-    form && fireEvent.submit(form);
-
-    expect(form).toHaveFormValues(testPersonData);
-    expect(spyAnchorTag).toHaveBeenCalled();
+    expect(renderInputElements).toEqual(correctRenderInputElements);
   });
+
+  test('test render "selects"', async () => {
+    const data = await import('react-query');
+    data.useQuery = vi.fn().mockReturnValue({ data: testData });
+    data.useMutation = vi.fn().mockReturnValue({});
+
+    const { container } = render(<RegisterForm onSubmit={mockSubmit} />);
+    expect(data.useQuery).toBeCalledTimes(1);
+
+    const renderSelectElements = getRenderElementsByAttrName(
+      container,
+      'select'
+    );
+
+    const correctRenderSelectElements = {
+      dayOfBirth: 1,
+      monthOfBirth: 1,
+      yearOfBirth: 1,
+      country: 1,
+      telCode: 1,
+      question: 1,
+    };
+
+    expect(renderSelectElements).toEqual(correctRenderSelectElements);
+  });
+
+  test('test render "selects data"', async () => {
+    const data = await import('react-query');
+    data.useQuery = vi.fn().mockReturnValue({ data: testData });
+    data.useMutation = vi.fn().mockReturnValue({});
+
+    const { container } = render(<RegisterForm onSubmit={mockSubmit} />);
+    expect(data.useQuery).toBeCalledTimes(1);
+    const namesElements = Object.keys(
+      getRenderElementsByAttrName(container, 'select')
+    );
+    const presentNamesElements: string[] = [];
+
+    namesElements.forEach((nameElement) => {
+      const element = container.querySelector(
+        `[name="${nameElement}"]`
+      ) as HTMLElement;
+      if (element.childElementCount > 0) {
+        (presentNamesElements as string[]).push(nameElement!);
+      }
+    });
+    expect(namesElements).toEqual(presentNamesElements);
+  });
+
+  test('test render "agree"', async () => {
+    const data = await import('react-query');
+    data.useQuery = vi.fn().mockReturnValue({ data: testData });
+    data.useMutation = vi.fn().mockReturnValue({});
+
+    render(<RegisterForm onSubmit={mockSubmit} />);
+    expect(data.useQuery).toBeCalledTimes(1);
+
+    const registerAgree = screen.getByTestId('register-agree');
+    expect(registerAgree).toBeInTheDocument();
+
+    const registerAgreeLink = screen.getByTestId('register-agree-link');
+    expect(registerAgreeLink).toBeInTheDocument();
+    expect(registerAgreeLink).toHaveAttribute('href', '/terms-and-conditions');
+  });
+
+  test('test render "submit btn"', async () => {
+    const data = await import('react-query');
+    data.useQuery = vi.fn().mockReturnValue({ data: testData });
+    data.useMutation = vi.fn().mockReturnValue({});
+
+    render(<RegisterForm onSubmit={mockSubmit} />);
+    expect(data.useQuery).toBeCalledTimes(1);
+    const registerSubmitBtn = screen.getByTestId('register-submit-btn');
+    expect(registerSubmitBtn).toBeInTheDocument();
+  });
+});
+
+afterAll(() => {
+  vi.clearAllMocks();
+  vi.resetAllMocks();
 });
