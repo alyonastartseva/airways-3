@@ -34,7 +34,7 @@ function Register() {
   };
 
   return (
-    <Box>
+    <Box data-testId="register-component">
       <Grid my="5" gridTemplateColumns="7fr 6fr">
         <Box>
           <Box mx="2.5rem">
@@ -58,7 +58,12 @@ function Register() {
                 </Alert>
               </SlideFade>
             )}
-            <Heading fontWeight="400" fontSize="1.5rem" color="#0A66C2">
+            <Heading
+              data-testId="register-header"
+              fontWeight="400"
+              fontSize="1.5rem"
+              color="#0A66C2"
+            >
               Member Profile Details
             </Heading>
             <Box>
@@ -74,7 +79,7 @@ function Register() {
             <RegisterForm onSubmit={onSubmit} />
           </Box>
         </Box>
-        <Box my="2rem" p="3rem 5rem">
+        <Box data-testId="register-description" my="2rem" p="3rem 5rem">
           <Flex flexDirection="column">
             <Heading
               color="#0A66C2"
@@ -114,7 +119,12 @@ function Register() {
           <Box mt="3rem">
             <Text>
               For more details, please visit:
-              <Link color="#0A66C2" href="#">
+              <Link
+                data-testId="membership-guide-link"
+                color="#0A66C2"
+                href="/membership-guide"
+                target="_blank"
+              >
                 Membership Guide
               </Link>
             </Text>

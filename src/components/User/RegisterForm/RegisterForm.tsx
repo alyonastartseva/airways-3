@@ -8,17 +8,20 @@ import {
   Grid,
   Input,
   InputGroup,
+  Link,
   Select,
   Text,
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
+import useCountryQuery from '@/hooks/useCountryQuery';
+import { AlertMessage } from '@common/AlertMessage';
+import { SpinnerBlock } from '@common/SpinnerBlock';
 import InputField from '@common/InputField/InputField';
 import SelectField from '@common/SelectField/SelectField';
-import { ICountry } from '@interfaces/country.interfaces';
 import { IFormValuesRegisterUser } from '@interfaces/form-values-register-user.interfaces';
 import { months, years, days } from '@utils/form-data.utils';
 
@@ -47,30 +50,10 @@ const yupSchema = yup
   })
   .required();
 
-type TCountryName = {
-  name: string;
-  callingCodes: string[];
-};
-
 const RegisterForm = ({ onSubmit }: IRegisterForm) => {
-  const [countries, setCountries] = useState<TCountryName[]>();
+  const [show, setShow] = useState(false);
 
-  const fetchCountries = () => {
-    fetch('https://restcountries.com/v2/all')
-      .then((response) => response.json())
-      .then((countriesData: ICountry[]) => {
-        const countriesList = countriesData.map((country: ICountry) => ({
-          name: country.name,
-          callingCodes: country.callingCodes,
-        }));
-        setCountries(countriesList);
-      })
-      .catch((err) => console.error(err));
-  };
-
-  useEffect(() => {
-    fetchCountries();
-  }, []);
+  const { data: countries, isLoading, isError } = useCountryQuery();
 
   const methods = useForm<IFormValuesRegisterUser>({
     resolver: yupResolver(yupSchema),
@@ -80,7 +63,7 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
       dayOfBirth: 0,
     },
   });
-  const [show, setShow] = useState(false);
+
   const handleViewClick = () => setShow(!show);
 
   const monthsOptions = months.map((i) => (
@@ -99,6 +82,7 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
       {year}
     </option>
   ));
+
   const daysOptions = days.map((i) => (
     <option
       data-testid="select-option"
@@ -109,9 +93,22 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
       {i + 1}
     </option>
   ));
+
+  if (isLoading) {
+    return <SpinnerBlock />;
+  }
+
+  if (!Array.isArray(countries) || countries.length == 0 || isError) {
+    return <AlertMessage />;
+  }
+
   return (
     <FormProvider {...methods}>
-      <form onSubmit={() => methods.handleSubmit(onSubmit)} name="register">
+      <form
+        data-testId="register-form"
+        onSubmit={() => methods.handleSubmit(onSubmit)}
+        name="register"
+      >
         <Flex columnGap={2}>
           <InputField name="firstName" label="First name" />
           <InputField name="lastName" label="Last name" />
@@ -193,7 +190,7 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
               >
                 {countries &&
                   countries.map(({ callingCodes }) =>
-                    callingCodes.map((code) => (
+                    callingCodes.map((code: string) => (
                       <option value={`+${code}`} key={code}>
                         +{code}
                       </option>
@@ -317,7 +314,16 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
               id="question"
               aria-label="question"
               {...methods.register('question')}
-            />
+            >
+              {/* {countries &&
+                countries.map(({ callingCodes }) =>
+                  callingCodes.map((code) => (
+                    <option value={`+${code}`} key={code}>
+                      +{code}
+                    </option>
+                  ))
+                )} */}
+            </Select>
             {methods.formState.errors?.question && (
               <Text color="#E32E22" fontWeight="400" fontSize="1rem">
                 {methods.formState.errors.question.message}
@@ -329,11 +335,22 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
           </Box>
         </Flex>
         <Flex align="flex-end" flexDirection="column">
-          <Button color="#0A66C2" fontSize="1.2rem">
+          <Button
+            data-testId="register-agree"
+            color="#0A66C2"
+            fontSize="1.2rem"
+          >
             By clicking “Create Account”, I agree to
-            <u>Terms and Conditions.</u>
+            <Link
+              data-testId="register-agree-link"
+              href="/terms-and-conditions"
+              target="_blank"
+            >
+              <u>Terms and Conditions.</u>
+            </Link>
           </Button>
           <Button
+            data-testId="register-submit-btn"
             mt={4}
             colorScheme="teal"
             isLoading={methods.formState.isSubmitting}
