@@ -19,7 +19,7 @@ import { Navigate } from 'react-router-dom';
 
 import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
-import { FormPassengers } from '@interfaces/search.interfaces';
+import { Passenger } from '@interfaces/search.interfaces';
 import { PersonGenders } from '@/interfaces/person.interfaces';
 import { EditableCell } from '@common/EditableCell';
 import { EditableSelectCell } from '@/common/EditableSelectCell';
@@ -43,11 +43,12 @@ const Passengers = () => {
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
-  const [editableRowState, setEditableRowState] =
-    useState<FormPassengers | null>(null);
+  const [editableRowState, setEditableRowState] = useState<Passenger | null>(
+    null
+  );
 
   // установка редактируемой строки
-  const handleEditRow = useCallback((row: FormPassengers, index: number) => {
+  const handleEditRow = useCallback((row: Passenger, index: number) => {
     setEditableRowState(row);
     setEditableRowIndex(index);
   }, []);
@@ -66,12 +67,12 @@ const Passengers = () => {
         if (id.indexOf('_') !== -1) {
           const key1 = id.slice(0, id.indexOf('_'));
           const key2 = id.slice(id.indexOf('_') + 1);
-          const nestedObject = editableRowState[key1 as keyof FormPassengers];
+          const nestedObject = editableRowState[key1 as keyof Passenger];
 
           if (nestedObject && typeof nestedObject === 'object') {
             setEditableRowState({
               ...editableRowState,
-              [key1 as keyof FormPassengers]: {
+              [key1 as keyof Passenger]: {
                 ...nestedObject,
                 [key2 as keyof typeof nestedObject]: value,
               },
@@ -80,7 +81,7 @@ const Passengers = () => {
         } else {
           setEditableRowState({
             ...editableRowState,
-            [id as keyof FormPassengers]: value,
+            [id as keyof Passenger]: value,
           });
         }
       }
@@ -89,7 +90,9 @@ const Passengers = () => {
   );
 
   // получение данных
-  const { data: passengers, isLoading } = usePassengersQuery();
+  const { data: dataQuery, isLoading } = usePassengersQuery();
+  const passengers = dataQuery?.content;
+
   // изменение данных
   const { mutate: patchPassengers } = usePassengersPatch();
 
@@ -115,7 +118,7 @@ const Passengers = () => {
   const genderSelectOptions = Object.values(PersonGenders);
 
   // создание столбцов таблицы
-  const columnHelper = createColumnHelper<FormPassengers>();
+  const columnHelper = createColumnHelper<Passenger>();
   const columns = useMemo(
     () => [
       columnHelper.accessor('id', {
@@ -311,17 +314,17 @@ const Passengers = () => {
     ],
     [
       columnHelper,
-      deletePassengers,
       editableRowState,
       editableRowIndex,
       handleEditRow,
       handleUpdateRow,
+      deletePassengers,
       genderSelectOptions,
     ]
   );
 
   // сортировка получаемых данных. ВРЕМЕННО, ПОКА ДАННЫЕ С СЕРВЕРА ПРИХОДЯТ БЕЗ СОРТИРОВКИ
-  const tableData = (data?: FormPassengers[]) => {
+  const tableData = (data?: Passenger[]) => {
     if (Array.isArray(data) && data.length) {
       return data;
     }
