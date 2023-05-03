@@ -9,10 +9,10 @@ export interface IArticle {
     alt: string;
   };
 }
-export interface FormPassengers {
+export interface Passenger {
   id: number;
-  lastName?: string;
   firstName?: string;
+  lastName?: string;
   middleName?: string;
   passport?: {
     middleName?: string;
@@ -24,10 +24,15 @@ export interface FormPassengers {
   phoneNumber: string;
   birthDate: string;
 }
+
+export interface FormPassengersGet {
+  content: Passenger[];
+}
+
 export interface FormPassengersPost {
-  middleName?: string;
-  lastName?: string;
   firstName?: string;
+  lastName?: string;
+  middleName?: string;
   passport?: {
     gender: string;
     serialNumberPassport: string;
