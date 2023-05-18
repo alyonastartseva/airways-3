@@ -1,3 +1,25 @@
+import { FieldValues } from 'react-hook-form';
+
+import { ERolesPassenger } from '@/interfaces/roles.interfaces';
+
+export interface IFormPassengers extends FieldValues {
+  lastName?: string;
+  firstName?: string;
+  middleName?: string;
+
+  gender?: string;
+  serialNumberPassport?: string;
+  passportIssuingCountry?: string;
+  passportIssuingDate?: string;
+
+  phoneNumber?: string;
+  birthDate?: string;
+  email?: string;
+  securityQuestion?: string;
+  answerQuestion?: string;
+  rolesName?: ERolesPassenger;
+  password?: string;
+}
 export interface IFormPassenger {
   firstName?: string;
   lastName?: string;

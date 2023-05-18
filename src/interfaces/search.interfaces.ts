@@ -1,5 +1,7 @@
 import { IDestination } from '@interfaces/destination.interfaces';
 
+import { ERolesPassenger } from './roles.interfaces';
+
 export interface IArticle {
   title: string;
   header: string;
@@ -9,38 +11,41 @@ export interface IArticle {
     alt: string;
   };
 }
-export interface Passenger {
+export interface IPassenger {
   id: number;
   firstName?: string;
   lastName?: string;
   middleName?: string;
-  passport?: {
-    middleName?: string;
-    gender: string;
-    serialNumberPassport: string;
-    passportIssuingCountry: string;
-    passportIssuingDate: string;
-  };
+  passport?: IPassport;
   phoneNumber: string;
   birthDate: string;
+}
+
+export interface IPassport {
+  middleName?: string;
+  gender?: string;
+  serialNumberPassport?: string;
+  passportIssuingCountry?: string;
+  passportIssuingDate?: string;
 }
 
 export interface FormPassengersGet {
-  content: Passenger[];
+  content: IPassenger[];
 }
 
 export interface FormPassengersPost {
+  answerQuestion?: string;
+  birthDate?: string;
+  email?: string;
   firstName?: string;
   lastName?: string;
-  middleName?: string;
-  passport?: {
-    gender: string;
-    serialNumberPassport: string;
-    passportIssuingCountry: string;
-    passportIssuingDate: string;
-  };
-  phoneNumber: string;
-  birthDate: string;
+  passport?: IPassport;
+  password?: string;
+  phoneNumber?: string;
+  roles?: {
+    name?: ERolesPassenger;
+  }[];
+  securityQuestion?: string;
 }
 export interface ISearchPageTab {
   label: string;

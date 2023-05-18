@@ -19,7 +19,7 @@ import { Navigate } from 'react-router-dom';
 
 import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
-import { Passenger } from '@interfaces/search.interfaces';
+import { IPassenger } from '@interfaces/search.interfaces';
 import { PersonGenders } from '@/interfaces/person.interfaces';
 import { EditableCell } from '@common/EditableCell';
 import { EditableSelectCell } from '@/common/EditableSelectCell';
@@ -31,8 +31,9 @@ import { FooterTable } from '@common/FooterTable';
 import { usePassengersDelete } from '@hooks/usePassengersDelete';
 import { usePassengersPatch } from '@hooks/usePassengersPatch';
 import { usePassengersQuery } from '@hooks/usePassengersQuery';
-import { ModalPassengers } from '@common/ModalPassengers';
 import ELinks from '@services/adminRouterLinks.service';
+import { EModalNames } from '@/constants/modal-constants/modal-names';
+import { IFormPassengers } from '@/interfaces/passenger.interfaces';
 
 const Passengers = () => {
   // индекс и размер пагинации
@@ -43,12 +44,12 @@ const Passengers = () => {
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
-  const [editableRowState, setEditableRowState] = useState<Passenger | null>(
+  const [editableRowState, setEditableRowState] = useState<IPassenger | null>(
     null
   );
 
   // установка редактируемой строки
-  const handleEditRow = useCallback((row: Passenger, index: number) => {
+  const handleEditRow = useCallback((row: IPassenger, index: number) => {
     setEditableRowState(row);
     setEditableRowIndex(index);
   }, []);
@@ -67,12 +68,12 @@ const Passengers = () => {
         if (id.indexOf('_') !== -1) {
           const key1 = id.slice(0, id.indexOf('_'));
           const key2 = id.slice(id.indexOf('_') + 1);
-          const nestedObject = editableRowState[key1 as keyof Passenger];
+          const nestedObject = editableRowState[key1 as keyof IPassenger];
 
           if (nestedObject && typeof nestedObject === 'object') {
             setEditableRowState({
               ...editableRowState,
-              [key1 as keyof Passenger]: {
+              [key1 as keyof IPassenger]: {
                 ...nestedObject,
                 [key2 as keyof typeof nestedObject]: value,
               },
@@ -81,7 +82,7 @@ const Passengers = () => {
         } else {
           setEditableRowState({
             ...editableRowState,
-            [id as keyof Passenger]: value,
+            [id as keyof IPassenger]: value,
           });
         }
       }
@@ -118,7 +119,7 @@ const Passengers = () => {
   const genderSelectOptions = Object.values(PersonGenders);
 
   // создание столбцов таблицы
-  const columnHelper = createColumnHelper<Passenger>();
+  const columnHelper = createColumnHelper<IPassenger>();
   const columns = useMemo(
     () => [
       columnHelper.accessor('id', {
@@ -324,7 +325,7 @@ const Passengers = () => {
   );
 
   // сортировка получаемых данных. ВРЕМЕННО, ПОКА ДАННЫЕ С СЕРВЕРА ПРИХОДЯТ БЕЗ СОРТИРОВКИ
-  const tableData = (data?: Passenger[]) => {
+  const tableData = (data?: IPassenger[]) => {
     if (Array.isArray(data) && data.length) {
       return data;
     }
@@ -367,9 +368,9 @@ const Passengers = () => {
   if (Array.isArray(passengers) && passengers?.length) {
     return (
       <TableContainer my={10} mx={14}>
-        <HeaderAdmin
-          heading="Пассажиры"
-          modal={<ModalPassengers name="Добавить пассажира" />}
+        <HeaderAdmin<IFormPassengers>
+          heading="Самолеты"
+          formName={EModalNames.PASSENGERS}
         />
         <Table>
           <Thead>

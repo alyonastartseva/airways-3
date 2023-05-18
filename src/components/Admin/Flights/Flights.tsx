@@ -29,8 +29,13 @@ import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
 import { HeaderAdmin } from '@common/HeaderAdmin';
 import { FooterTable } from '@common/FooterTable';
-import { IFlights, TFlightsStatus } from '@/interfaces/flights.interfaces';
+import {
+  IFlights,
+  IFlightsPost,
+  TFlightsStatus,
+} from '@/interfaces/flights.interfaces';
 import { flightStatuses } from '@/constants/constants';
+import { EModalNames } from '@/constants/modal-constants/modal-names';
 
 const Flights = () => {
   // индекс и размер пагинации
@@ -352,7 +357,10 @@ const Flights = () => {
   if (Array.isArray(flights) && flights?.length && !isError) {
     return (
       <TableContainer my={10} mx={9}>
-        <HeaderAdmin heading="Рейсы" modal={<div></div>} />
+        <HeaderAdmin<IFlightsPost>
+          heading="Самолеты"
+          formName={EModalNames.FLIGHTS}
+        />
         <Table>
           <Thead>
             {table.getHeaderGroups().map((headerGroup) => (

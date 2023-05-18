@@ -17,7 +17,10 @@ import {
 import { useCallback, useMemo, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { IDestination } from '@interfaces/destination.interfaces';
+import {
+  IDestination,
+  IDestinationPost,
+} from '@interfaces/destination.interfaces';
 import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
@@ -25,13 +28,13 @@ import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { HeaderAdmin } from '@common/HeaderAdmin';
 import { FooterTable } from '@common/FooterTable';
-import { ModalDestinations } from '@common/ModalDestinations';
 import { isRowEditing } from '@utils/table.utils';
 import { sortDestinations } from '@utils/sort.utils';
 import { useDestinationQuery } from '@hooks/useDestinationQuery';
 import { useDestinationPatch } from '@hooks/useDestinationPatch';
 import { useDestinationDelete } from '@hooks/useDestinationDelete';
 import ELinks from '@services/adminRouterLinks.service';
+import { EModalNames } from '@/constants/modal-constants/modal-names';
 
 const Destinations = () => {
   // индекс и размер пагинации
@@ -260,9 +263,9 @@ const Destinations = () => {
         justifyContent="space-between"
       >
         <Box>
-          <HeaderAdmin
-            heading="Место назначения"
-            modal={<ModalDestinations name="Добавить пункт назначения" />}
+          <HeaderAdmin<IDestinationPost>
+            heading="Самолеты"
+            formName={EModalNames.DESTINATIONS}
           />
           <Table>
             <Thead>
