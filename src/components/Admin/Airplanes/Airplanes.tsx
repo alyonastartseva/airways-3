@@ -17,7 +17,7 @@ import {
 import { useCallback, useMemo, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { IAircraft } from '@interfaces/aircraft.interfaces';
+import { IAircraft, IAircraftPost } from '@interfaces/aircraft.interfaces';
 import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
@@ -25,13 +25,13 @@ import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { HeaderAdmin } from '@common/HeaderAdmin';
 import { FooterTable } from '@common/FooterTable';
-import { ModalAirplanes } from '@common/ModalAirplanes';
 import { isRowEditing } from '@utils/table.utils';
 import { sortAirplanes } from '@utils/sort.utils';
 import { useAircraftQuery } from '@hooks/useAircraftQuery';
 import { useAircraftPatch } from '@hooks/useAircraftPatch';
 import { useAircraftDelete } from '@hooks/useAircraftDelete';
 import ELinks from '@services/adminRouterLinks.service';
+import { EModalNames } from '@/constants/modal-constants/modal-names';
 
 const Airplanes = () => {
   // индекс и размер пагинации
@@ -244,9 +244,9 @@ const Airplanes = () => {
         justifyContent="space-between"
       >
         <Box>
-          <HeaderAdmin
+          <HeaderAdmin<IAircraftPost>
             heading="Самолеты"
-            modal={<ModalAirplanes name="Добавить самолет" />}
+            formName={EModalNames.AIRPLANES}
           />
           <Table>
             <Thead>

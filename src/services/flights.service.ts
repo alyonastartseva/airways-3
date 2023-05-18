@@ -2,13 +2,16 @@ import { AxiosResponse } from 'axios';
 
 import { adminInstance } from '@/services/axios.service';
 import ERoutes from '@/services/endpoints.service';
-import { IFlights, IFlightsPost } from '@/interfaces/flights.interfaces';
+import {
+  IFlights,
+  IFlightsForm,
+  IFlightsPost,
+} from '@/interfaces/flights.interfaces';
+import { mapFlightsFormData } from '@/utils/form-flights.utils';
 
 interface IFlightsApi {
   getFlights: () => Promise<IFlights[] | undefined>;
-  postFlight: (
-    data: IFlightsPost
-  ) => Promise<AxiosResponse<IFlightsPost, Error>>;
+  postFlight: (data: IFlightsForm) => Promise<AxiosResponse<IFlights, any>>;
   deleteFlight: (
     id: number | undefined
   ) => Promise<AxiosResponse<IFlights> | undefined>;
@@ -21,8 +24,9 @@ const flightsAPI: IFlightsApi = {
       .then((response) => response.data);
   },
 
-  postFlight: async (data: IFlightsPost) => {
-    return await adminInstance.post<IFlightsPost>(ERoutes.FLIGHTS, data);
+  postFlight: async (data: IFlightsForm) => {
+    const editedData: IFlightsPost = mapFlightsFormData(data);
+    return await adminInstance.post<IFlights>(ERoutes.FLIGHTS, editedData);
   },
 
   deleteFlight: async (id: number | undefined) => {

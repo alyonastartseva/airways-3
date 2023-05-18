@@ -2,9 +2,11 @@ import { adminInstance } from '@/services/axios.service';
 import ERoutes from '@/services/endpoints.service';
 import {
   FormPassengersGet,
-  Passenger,
+  IPassenger,
   FormPassengersPost,
 } from '@/interfaces/search.interfaces';
+import { IFormPassengers } from '@/interfaces/passenger.interfaces';
+import { mapPassengersFormData } from '@/utils/form-passengers.utils';
 
 const passengersAPI = {
   getPassengers: async () => {
@@ -13,19 +15,20 @@ const passengersAPI = {
       .then((response) => response.data);
   },
 
-  postPassengers: async (data: FormPassengersPost) => {
-    return await adminInstance.post<Passenger>(ERoutes.PASSENGERS, data);
+  postPassengers: async (data: IFormPassengers) => {
+    const editedData: FormPassengersPost = mapPassengersFormData(data);
+    return await adminInstance.post<IPassenger>(ERoutes.PASSENGERS, editedData);
   },
 
   deletePassengers: async (id: number | undefined) => {
     if (id) {
-      return await adminInstance.delete<Passenger>(ERoutes.PASSENGERS + id);
+      return await adminInstance.delete<IPassenger>(ERoutes.PASSENGERS + id);
     }
   },
-  patchPassengers: async (data: Passenger | null) => {
+  patchPassengers: async (data: IPassenger | null) => {
     if (data) {
       const { id, ...rest } = data;
-      return await adminInstance.put<Passenger>(ERoutes.PASSENGERS + id, rest);
+      return await adminInstance.put<IPassenger>(ERoutes.PASSENGERS + id, rest);
     }
   },
 };

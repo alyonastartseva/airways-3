@@ -1,3 +1,5 @@
+import { FieldValues } from 'react-hook-form';
+
 import { IDestination } from './destination.interfaces';
 
 export type TFlightsStatus =
@@ -8,16 +10,26 @@ export type TFlightsStatus =
   | 'ARRIVED'
   | 'ON_TIME';
 
-export type IFlightsPost = {
-  code: string;
-  from: IDestination;
-  to: IDestination;
-  departureDateTime: string;
-  arrivalDateTime: string;
-  aircraftId: number;
-  flightStatus: TFlightsStatus;
-};
+export interface IFlightsPost {
+  code?: string;
+  from?: IDestination;
+  to?: IDestination;
+  departureDateTime?: string;
+  arrivalDateTime?: string;
+  aircraftId?: number;
+  flightStatus?: TFlightsStatus;
+}
 
-export interface IFlights extends IFlightsPost {
+export interface IFlights extends Required<IFlightsPost> {
   id: number;
+}
+
+export interface IFlightsForm extends FieldValues {
+  code?: string;
+  fromCityName?: string;
+  toCityName?: string;
+  departureDateTime?: string;
+  arrivalDateTime?: string;
+  aircraftId?: number;
+  flightStatus?: TFlightsStatus;
 }

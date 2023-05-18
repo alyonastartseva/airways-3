@@ -1,6 +1,8 @@
 import { AxiosResponse } from 'axios';
 import { UseMutateFunction } from 'react-query';
 
+import { EModalNames } from '@/constants/modal-constants/modal-names';
+
 import { TPerson } from './person.interfaces';
 import { IAircraft } from './aircraft.interfaces';
 import { IDestination } from './destination.interfaces';
@@ -62,7 +64,7 @@ export interface IButtonGroupAdmin {
 
 export interface IHeaderAdmin {
   heading: string;
-  modal: React.ReactNode;
+  formName: EModalNames;
 }
 
 export interface IFooterTable<Data> {
