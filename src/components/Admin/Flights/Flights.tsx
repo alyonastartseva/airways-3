@@ -358,7 +358,7 @@ const Flights = () => {
     return (
       <TableContainer my={10} mx={9}>
         <HeaderAdmin<IFlightsPost>
-          heading="Самолеты"
+          heading="Рейсы"
           formName={EModalNames.FLIGHTS}
         />
         <Table>
@@ -389,10 +389,7 @@ const Flights = () => {
           </Thead>
           <Tbody>
             {table.getRowModel().rows.map((row) => (
-              <Tr
-                bgColor={row.index % 2 ? 'blackAlpha.50' : 'white'}
-                key={row.id}
-              >
+              <Tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
                   <Td
                     border="0.0625rem solid #DEDEDE"

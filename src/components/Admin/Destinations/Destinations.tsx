@@ -15,7 +15,6 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 import { useCallback, useMemo, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 
 import {
   IDestination,
@@ -33,7 +32,6 @@ import { sortDestinations } from '@utils/sort.utils';
 import { useDestinationQuery } from '@hooks/useDestinationQuery';
 import { useDestinationPatch } from '@hooks/useDestinationPatch';
 import { useDestinationDelete } from '@hooks/useDestinationDelete';
-import ELinks from '@services/adminRouterLinks.service';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 
 const Destinations = () => {
@@ -247,9 +245,6 @@ const Destinations = () => {
   if (isLoading) {
     return <SpinnerBlock />;
   }
-  // если нет токена авторизации, перебрасываем на форму логина
-  if (!localStorage.getItem('adminToken'))
-    return <Navigate to={ELinks.ADMIN_LOGIN} />;
 
   // если полученные данные в порядке выводим таблицу
   if (Array.isArray(destinations) && destinations?.length) {
@@ -264,7 +259,7 @@ const Destinations = () => {
       >
         <Box>
           <HeaderAdmin<IDestinationPost>
-            heading="Самолеты"
+            heading="Места назначения"
             formName={EModalNames.DESTINATIONS}
           />
           <Table>
@@ -273,7 +268,7 @@ const Destinations = () => {
                 <Tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <Th
-                      border="1.125rem solid #DEDEDE"
+                      border="0.0625rem solid #DEDEDE"
                       color="#000000"
                       key={header.id}
                       fontSize="0.875rem"

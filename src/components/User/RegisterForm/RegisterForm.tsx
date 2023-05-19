@@ -67,29 +67,19 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
   const handleViewClick = () => setShow(!show);
 
   const monthsOptions = months.map((i) => (
-    <option data-testid="select-option" value={i + 1} key={i + 1}>
+    <option value={i + 1} key={i + 1}>
       {new Date(0, i + 1, 0).toLocaleDateString('en', { month: 'long' })}
     </option>
   ));
 
   const yearsOptions = years.map((year) => (
-    <option
-      data-testid="select-option"
-      style={{ marginLeft: '2rem' }}
-      key={year}
-      value={year}
-    >
+    <option style={{ marginLeft: '2rem' }} key={year} value={year}>
       {year}
     </option>
   ));
 
   const daysOptions = days.map((i) => (
-    <option
-      data-testid="select-option"
-      style={{ marginLeft: '2rem' }}
-      key={i}
-      value={i + 1}
-    >
+    <option style={{ marginLeft: '2rem' }} key={i} value={i + 1}>
       {i + 1}
     </option>
   ));
@@ -104,11 +94,7 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
 
   return (
     <FormProvider {...methods}>
-      <form
-        data-testId="register-form"
-        onSubmit={() => methods.handleSubmit(onSubmit)}
-        name="register"
-      >
+      <form onSubmit={() => methods.handleSubmit(onSubmit)} name="register">
         <Flex columnGap={2}>
           <InputField name="firstName" label="First name" />
           <InputField name="lastName" label="Last name" />
@@ -335,22 +321,13 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
           </Box>
         </Flex>
         <Flex align="flex-end" flexDirection="column">
-          <Button
-            data-testId="register-agree"
-            color="#0A66C2"
-            fontSize="1.2rem"
-          >
+          <Button color="#0A66C2" fontSize="1.2rem">
             By clicking “Create Account”, I agree to
-            <Link
-              data-testId="register-agree-link"
-              href="/terms-and-conditions"
-              target="_blank"
-            >
+            <Link href="/terms-and-conditions" target="_blank">
               <u>Terms and Conditions.</u>
             </Link>
           </Button>
           <Button
-            data-testId="register-submit-btn"
             mt={4}
             colorScheme="teal"
             isLoading={methods.formState.isSubmitting}

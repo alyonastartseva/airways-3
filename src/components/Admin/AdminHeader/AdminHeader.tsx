@@ -1,11 +1,14 @@
 import { FC } from 'react';
 import { Box, Text, Flex, Button, Spacer } from '@chakra-ui/react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 import HeaderLogo from '@common/icons/Logo';
 import ELinks from '@services/adminRouterLinks.service';
+import { useAuth } from '@/hooks/useAuth';
 
 const AdminHeader: FC = () => {
+  const { setIsAdmin } = useAuth();
+  const navigate = useNavigate();
   const activeStyle = {
     textDecoration: 'underline',
     textDecorationThickness: '0.25rem',
@@ -18,6 +21,8 @@ const AdminHeader: FC = () => {
   // удаление токена авторизации при нажатии на кнопку выхода
   const handleClick = () => {
     localStorage.removeItem('adminToken');
+    setIsAdmin(false);
+    navigate('/', { replace: true });
   };
 
   return (
@@ -44,7 +49,7 @@ const AdminHeader: FC = () => {
             Самолёты
           </NavLink>
           <NavLink to={ELinks.ADMIN_DESTINATIONS} style={checkActive}>
-            Место назначения
+            Места назначения
           </NavLink>
           <NavLink to="hours" style={checkActive}>
             Часовые пояса

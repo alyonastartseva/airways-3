@@ -18,7 +18,9 @@ import { useMutation } from 'react-query';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 import { useAuthAdmin } from '@services/auth.service';
+import { useAuth } from '@/hooks/useAuth';
 import ELinks from '@services/adminRouterLinks.service';
+import { SpinnerBlock } from '@/common/SpinnerBlock';
 
 interface IUserForm {
   username: string;
@@ -28,8 +30,11 @@ interface IUserForm {
 
 const LoginAdminForm = () => {
   const { loginAdmin } = useAuthAdmin();
+  const { isAdmin, setIsAdmin } = useAuth();
   const navigate = useNavigate();
+
   const mutation = useMutation(['login'], loginAdmin);
+
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
@@ -37,20 +42,23 @@ const LoginAdminForm = () => {
     mode: 'onBlur',
   });
 
-  const handleFormSubmit: SubmitHandler<IUserForm> = (data, e) => {
+  if (mutation.isLoading) return <SpinnerBlock />;
+
+  const handleFormSubmit: SubmitHandler<IUserForm> = (data) => {
+    // e?.preventDefault();
     reset();
+
     const { username, password } = data;
-    e?.preventDefault();
     mutation.mutate({ username, password });
+
+    if (!mutation.isError) {
+      navigate(ELinks.ADMIN_PASSENGERS, { replace: true });
+      setIsAdmin(true);
+    }
   };
 
-  // если есть токен авторизации => переводим на страницу пассажиров, иначе будем выводить форму авторизации
-  if (localStorage.getItem('adminToken'))
-    return <Navigate to={ELinks.ADMIN_PASSENGERS} />;
+  if (isAdmin) return <Navigate to={ELinks.ADMIN_PASSENGERS} />;
 
-  !mutation.isLoading && !mutation.isError
-    ? navigate(ELinks.ADMIN_PASSENGERS)
-    : null;
   return (
     <>
       <Box mt="12.05rem" mb="12.05rem">
