@@ -15,7 +15,6 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useCallback, useState, useMemo } from 'react';
-import { Navigate } from 'react-router-dom';
 
 import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
@@ -31,7 +30,6 @@ import { FooterTable } from '@common/FooterTable';
 import { usePassengersDelete } from '@hooks/usePassengersDelete';
 import { usePassengersPatch } from '@hooks/usePassengersPatch';
 import { usePassengersQuery } from '@hooks/usePassengersQuery';
-import ELinks from '@services/adminRouterLinks.service';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { IFormPassengers } from '@/interfaces/passenger.interfaces';
 
@@ -360,16 +358,13 @@ const Passengers = () => {
   if (isLoading) {
     return <SpinnerBlock />;
   }
-  // если нет токена авторизации, перебрасываем на форму логина
-  if (!localStorage.getItem('adminToken'))
-    return <Navigate to={ELinks.ADMIN_LOGIN} />;
 
   // если полученные данные в порядке выводим таблицу
   if (Array.isArray(passengers) && passengers?.length) {
     return (
       <TableContainer my={10} mx={14}>
         <HeaderAdmin<IFormPassengers>
-          heading="Самолеты"
+          heading="Пассажиры"
           formName={EModalNames.PASSENGERS}
         />
         <Table>

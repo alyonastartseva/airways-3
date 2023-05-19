@@ -15,7 +15,6 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 import { useCallback, useMemo, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 
 import { IAircraft, IAircraftPost } from '@interfaces/aircraft.interfaces';
 import { EditableCell } from '@common/EditableCell';
@@ -30,7 +29,6 @@ import { sortAirplanes } from '@utils/sort.utils';
 import { useAircraftQuery } from '@hooks/useAircraftQuery';
 import { useAircraftPatch } from '@hooks/useAircraftPatch';
 import { useAircraftDelete } from '@hooks/useAircraftDelete';
-import ELinks from '@services/adminRouterLinks.service';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 
 const Airplanes = () => {
@@ -227,10 +225,6 @@ const Airplanes = () => {
   if (isLoading) {
     return <SpinnerBlock />;
   }
-
-  // если нет токена авторизации, перебрасываем на форму логина
-  if (!localStorage.getItem('adminToken'))
-    return <Navigate to={ELinks.ADMIN_LOGIN} />;
 
   // если полученные данные в порядке выводим таблицу
   if (Array.isArray(airplanes) && airplanes?.length) {
