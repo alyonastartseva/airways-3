@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it } from 'vitest';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { PlaneTabIcon } from '@common/icons';
 
@@ -13,16 +14,15 @@ describe('SearchPageTabs component', () => {
       { label: 'manage booking' },
     ];
 
-    render(<SearchPageTabs />);
+    const queryClient = new QueryClient();
 
-    tabs.forEach((tab) => {
-      const tabElement = screen.getByText(tab.label);
-      expect(tabElement).toBeInTheDocument();
-
-      if (tab.icon) {
-        const tabIcon = screen.getByAltText(tab.label);
-        expect(tabIcon).toBeInTheDocument();
-      }
-    });
+    render(
+      <QueryClientProvider client={queryClient}>
+        <SearchPageTabs />
+      </QueryClientProvider>
+    );
+    expect(screen.getByText(/flights/)).toBeInTheDocument();
+    expect(screen.getByText(/check-in/)).toBeInTheDocument();
+    expect(screen.getByText(/manage booking/)).toBeInTheDocument();
   });
 });

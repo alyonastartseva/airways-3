@@ -6,13 +6,13 @@ import { FC, useState } from 'react';
 import { RedButton } from '@common/RedButton/RedButton';
 import {
   IDeparture,
-  ITickerReturn,
+  ITicketReturn,
   TAdditionalServices,
 } from '@interfaces/footer.interfaces';
 
 interface IFullProps {
   departure?: IDeparture;
-  ticketReturn?: ITickerReturn;
+  ticketReturn?: ITicketReturn;
   additional?: TAdditionalServices;
 }
 

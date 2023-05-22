@@ -52,6 +52,6 @@ describe('SearchPage renders', () => {
       </QueryClientProvider>
     );
     expect(screen.getByText('UX AIR')).toBeInTheDocument();
-    expect(screen.getByText('PAGE NOT FOUND')).toBeInTheDocument();
+    expect(screen.getByText(/Страница не найдена/)).toBeInTheDocument();
   });
 });

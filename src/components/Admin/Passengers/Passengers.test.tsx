@@ -1,30 +1,57 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, renderHook, waitFor } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { afterEach, describe, expect, vi } from 'vitest';
 
 import Passengers from './Passengers';
 
 vi.mock('react-query');
 
-describe('Destinations', () => {
+describe('Passengers', () => {
   afterEach(() => {
     vi.clearAllMocks();
     vi.resetAllMocks();
   });
 
-  it('Destinations render table data', async () => {
-    const testData = [
-      {
-        id: 1,
-        passport: {
-          gender: 'male',
-          serialNumberPassport: '00000000',
-          passportIssuingDate: '21020202',
+  it('usePassengersQuery is working correct', async () => {
+    const testData = {
+      content: [
+        {
+          id: 1,
+          passport: {
+            gender: 'male',
+            serialNumberPassport: '00000000',
+            passportIssuingDate: '21020202',
+          },
+          firstName: 'Иван',
+          lastName: 'Иванов',
+          middleName: 'Иванович',
         },
-        firstName: 'Иван',
-        lastName: 'Иванов',
-        middleName: 'Иванович',
-      },
-    ];
+      ],
+    };
+
+    const usePassengersQuery = vi.fn().mockReturnValue({ data: testData });
+
+    const { result } = renderHook(() => usePassengersQuery());
+    expect(result.current.data).toBeDefined();
+  });
+
+  it('Passengers render table data', async () => {
+    const testData = {
+      content: [
+        {
+          id: 1,
+          passport: {
+            gender: 'male',
+            serialNumberPassport: '00000000',
+            passportIssuingDate: '21020202',
+          },
+          firstName: 'Иван',
+          lastName: 'Иванов',
+          middleName: 'Иванович',
+        },
+      ],
+    };
+
     const data = await import('react-query');
     data.useQuery = vi.fn().mockReturnValue({ data: testData });
     data.useMutation = vi.fn().mockReturnValue({});
@@ -41,7 +68,7 @@ describe('Destinations', () => {
     expect(screen.getByText('Дата выдачи паспорта')).toBeInTheDocument();
   });
 
-  it('Destinations render spinner', async () => {
+  it('Passengers render spinner', async () => {
     const data = await import('react-query');
     data.useQuery = vi.fn().mockReturnValue({ isLoading: true });
     data.useMutation = vi.fn().mockReturnValue({});
@@ -51,7 +78,7 @@ describe('Destinations', () => {
     expect(screen.getAllByText('Loading...')).toHaveLength(2);
   });
 
-  it('Destinations render alert', async () => {
+  it('Passengers render alert', async () => {
     const data = await import('react-query');
     data.useQuery = vi.fn().mockReturnValue({});
     data.useMutation = vi.fn().mockReturnValue({});

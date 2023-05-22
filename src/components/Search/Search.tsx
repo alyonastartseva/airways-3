@@ -66,19 +66,19 @@ const Search: React.FC = () => {
           {articleCards}
         </Flex>
         <Flex justifyContent="center" gap="0.3125rem" mt="1.5625rem">
-          <Link href="#" target="_blank">
+          <Link data-testid="facebook" href="#" target="_blank">
             <FacebookIcon />
           </Link>
-          <Link href="#" target="_blank">
+          <Link data-testid="twitter" href="#" target="_blank">
             <TwitterIcon />
           </Link>
-          <Link href="#" target="_blank">
+          <Link data-testid="linkedin" href="#" target="_blank">
             <LinkedInIcon />
           </Link>
-          <Link href="#" target="_blank">
+          <Link data-testid="instagram" href="#" target="_blank">
             <InstagramIcon />
           </Link>
-          <Link href="#" target="_blank">
+          <Link data-testid="youtube" href="#" target="_blank">
             <YouTubeIcon />
           </Link>
         </Flex>

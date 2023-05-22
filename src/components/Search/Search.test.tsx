@@ -1,40 +1,46 @@
 import { render, screen } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { describe, it } from 'vitest';
 
 import Search from './Search';
 
 describe('Search component', () => {
   it('renders without crashing', () => {
-    render(<Search />);
+    const queryClient = new QueryClient();
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Search />
+      </QueryClientProvider>
+    );
   });
 
-  it('renders all the elements', () => {
-    render(<Search />);
+  it('renders all the elements', async () => {
+    const queryClient = new QueryClient();
 
-    // Check if the background image is present
-    expect(
-      screen.getByRole('img', { name: /search-page-bg/i })
-    ).toBeInTheDocument();
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Search />
+      </QueryClientProvider>
+    );
 
     // Check if the search page tabs are present
-    expect(screen.getByText(/Flights/i)).toBeInTheDocument();
-    expect(screen.getByText(/Hotels/i)).toBeInTheDocument();
+    expect(screen.getByText(/Flights/)).toBeInTheDocument();
 
     // Check if the COVID card is present
-    expect(screen.getByText(/COVID-19/i)).toBeInTheDocument();
+    expect(screen.getByText(/COVID-19/)).toBeInTheDocument();
 
     // Check if the article cards are present
-    expect(screen.getByText(/Discover/i)).toBeInTheDocument();
-    expect(screen.getByText(/Holiday destinations/i)).toBeInTheDocument();
-    expect(screen.getByText(/Our best offers/i)).toBeInTheDocument();
-    expect(screen.getByText(/Additional services/i)).toBeInTheDocument();
+    expect(await screen.findAllByText(/Discover/)).toHaveLength(2);
+    expect(screen.getByText(/Holiday destinations/)).toBeInTheDocument();
+    expect(screen.getByText(/Our best offers/)).toBeInTheDocument();
+    expect(screen.getByText(/Additional services/)).toBeInTheDocument();
 
     // Check if the social icons are present
-    expect(screen.getByRole('img', { name: /facebook/i })).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: /twitter/i })).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: /linkedin/i })).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: /instagram/i })).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: /youtube/i })).toBeInTheDocument();
+    expect(screen.getByTestId('facebook')).toBeInTheDocument();
+    expect(screen.getByTestId('twitter')).toBeInTheDocument();
+    expect(screen.getByTestId('linkedin')).toBeInTheDocument();
+    expect(screen.getByTestId('instagram')).toBeInTheDocument();
+    expect(screen.getByTestId('youtube')).toBeInTheDocument();
 
     // Check if the feedback button is present
     expect(

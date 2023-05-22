@@ -29,7 +29,7 @@ const PageNotFound = () => {
         >
           <AlertIcon boxSize="40px" mr={0} />
           <AlertTitle mt={4} mb={1} fontSize="lg">
-            Страница не найдена!
+            Страница не найдена!!!
           </AlertTitle>
           <AlertDescription maxWidth="sm" textAlign="center" mt={4} mb={4}>
             Пожалуйста, измените запрос или вернитесь на главную страницу
