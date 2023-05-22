@@ -5,13 +5,13 @@ import { AppStore, PlayStore } from '@common/icons';
 import Full from '@common/Full/Full';
 import {
   IDeparture,
-  ITickerReturn,
+  ITicketReturn,
   TAdditionalServices,
 } from '@interfaces/footer.interfaces';
 
 export interface IFooterProps {
   departure?: IDeparture;
-  return?: ITickerReturn;
+  return?: ITicketReturn;
   additional?: TAdditionalServices;
 }
 
@@ -43,10 +43,18 @@ const Footer: FC<IFooterProps> = ({ departure, return: ret, additional }) => (
         <Flex alignItems="center" columnGap="3.875rem">
           <Text fontWeight="700">UX AIR APP</Text>
           <Flex columnGap="1.25rem">
-            <Link href="https://www.apple.com/" target="_blank">
+            <Link
+              data-testid="app-store-link"
+              href="https://www.apple.com/"
+              target="_blank"
+            >
               <AppStore />
             </Link>
-            <Link href="https://play.google.com/" target="_blank">
+            <Link
+              data-testid="play-store-link"
+              href="https://play.google.com/"
+              target="_blank"
+            >
               <PlayStore />
             </Link>
           </Flex>

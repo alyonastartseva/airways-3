@@ -94,7 +94,11 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={() => methods.handleSubmit(onSubmit)} name="register">
+      <form
+        data-testid="register-form"
+        onSubmit={() => methods.handleSubmit(onSubmit)}
+        name="register"
+      >
         <Flex columnGap={2}>
           <InputField name="firstName" label="First name" />
           <InputField name="lastName" label="Last name" />
@@ -321,13 +325,22 @@ const RegisterForm = ({ onSubmit }: IRegisterForm) => {
           </Box>
         </Flex>
         <Flex align="flex-end" flexDirection="column">
-          <Button color="#0A66C2" fontSize="1.2rem">
+          <Button
+            data-testid="register-agree"
+            color="#0A66C2"
+            fontSize="1.2rem"
+          >
             By clicking “Create Account”, I agree to
-            <Link href="/terms-and-conditions" target="_blank">
+            <Link
+              data-testid="register-agree-link"
+              href="/terms-and-conditions"
+              target="_blank"
+            >
               <u>Terms and Conditions.</u>
             </Link>
           </Button>
           <Button
+            data-testid="register-submit-btn"
             mt={4}
             colorScheme="teal"
             isLoading={methods.formState.isSubmitting}

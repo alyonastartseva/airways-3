@@ -38,13 +38,11 @@ import {
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useForm } from 'react-hook-form';
-import { Navigate } from 'react-router-dom';
 
 import AviasalesService from '@/services/aviasales.service';
 import { TPerson } from '@interfaces/person.interfaces';
 import { IFormPassenger } from '@/interfaces/passenger.interfaces';
 import { Pagination } from '@components/Pagination';
-import ELinks from '@services/adminRouterLinks.service';
 
 import { UserInput } from '../UserInput';
 
@@ -168,9 +166,9 @@ const Users = () => {
       },
     ];
 
-    // если нет токена авторизации, перебрасываем на форму логина
-    if (!localStorage.getItem('adminToken'))
-      return <Navigate to={ELinks.ADMIN_LOGIN} />;
+    // // если нет токена авторизации, перебрасываем на форму логина
+    // if (!localStorage.getItem('adminToken'))
+    //   return <Navigate to={ELinks.ADMIN_LOGIN} />;
 
     return (
       <Box my={10} mx={10}>

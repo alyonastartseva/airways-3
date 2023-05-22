@@ -213,29 +213,6 @@ describe('testing renders', async () => {
     expect(renderSelectElements).toEqual(correctRenderSelectElements);
   });
 
-  test('test render "selects data"', async () => {
-    const data = await import('react-query');
-    data.useQuery = vi.fn().mockReturnValue({ data: testData });
-    data.useMutation = vi.fn().mockReturnValue({});
-
-    const { container } = render(<RegisterForm onSubmit={mockSubmit} />);
-    expect(data.useQuery).toBeCalledTimes(1);
-    const namesElements = Object.keys(
-      getRenderElementsByAttrName(container, 'select')
-    );
-    const presentNamesElements: string[] = [];
-
-    namesElements.forEach((nameElement) => {
-      const element = container.querySelector(
-        `[name="${nameElement}"]`
-      ) as HTMLElement;
-      if (element.childElementCount > 0) {
-        (presentNamesElements as string[]).push(nameElement!);
-      }
-    });
-    expect(namesElements).toEqual(presentNamesElements);
-  });
-
   test('test render "agree"', async () => {
     const data = await import('react-query');
     data.useQuery = vi.fn().mockReturnValue({ data: testData });

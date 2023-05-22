@@ -14,7 +14,7 @@ describe('PageNotFound test', () => {
   it('PageNotFound', () => {
     render(<Page />);
 
-    expect(screen.getByText('Страница не найдена!')).toBeInTheDocument;
+    expect(screen.getByText(/Страница не найдена!/)).toBeInTheDocument;
   });
   it('PageNotFound navigate test', () => {
     vi.mock('@/hooks/useAuth', () => ({

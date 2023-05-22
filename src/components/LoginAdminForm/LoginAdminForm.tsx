@@ -73,15 +73,19 @@ const LoginAdminForm = () => {
           pos="relative"
         >
           <CloseIcon
+            data-testid="modal-close"
             color="blue"
             float="right"
             pos="absolute"
             right="1rem"
             top="1rem"
             cursor="pointer"
+            onClick={() =>
+              !isAdmin && <Navigate to={ELinks.ADMIN_PASSENGERS} />
+            }
           />
           <div>
-            <form onSubmit={handleSubmit(handleFormSubmit)}>
+            <form data-testid="modal" onSubmit={handleSubmit(handleFormSubmit)}>
               <Text fontSize="md" mb="3rem" mt="2rem">
                 Sign in to your account
               </Text>

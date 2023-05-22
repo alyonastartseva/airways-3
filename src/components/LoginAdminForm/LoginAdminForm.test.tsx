@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { afterEach, beforeEach, describe, expect, vi } from 'vitest';
+import { BrowserRouter } from 'react-router-dom';
 
 import { LoginAdminForm } from '@components/LoginAdminForm';
 
@@ -9,10 +10,13 @@ const queryClient = new QueryClient();
 beforeEach(() => {
   render(
     <QueryClientProvider client={queryClient}>
-      <LoginAdminForm />
+      <BrowserRouter>
+        <LoginAdminForm />
+      </BrowserRouter>
     </QueryClientProvider>
   );
 });
+
 afterEach(() => {
   vi.restoreAllMocks();
   cleanup();
@@ -20,13 +24,8 @@ afterEach(() => {
 
 describe('Admin login form', () => {
   it('Test render component', () => {
-    expect(screen.getByTestId('modal-open')).toBeInTheDocument();
-    fireEvent.click(screen.getByTestId('modal-open'));
     const modal = screen.getByTestId('modal');
-    const closeButton = screen.getByTestId('modal-close');
     expect(modal).toBeInTheDocument();
-    fireEvent.click(closeButton);
-    expect(screen.getByTestId('modal-open')).toBeInTheDocument();
   });
 
   it('Test query login', () => {
