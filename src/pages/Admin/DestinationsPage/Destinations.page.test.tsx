@@ -16,15 +16,17 @@ describe('DestinationsPage renders', () => {
 
     const queryClient = new QueryClient();
 
-    const testData = [
-      {
-        id: 1,
-        airportCode: 'VVO',
-        airportName: 'Кневичи',
-        countryName: 'Россия',
-        timezone: 'GMT +10',
-      },
-    ];
+    const testData = {
+      content: [
+        {
+          id: 1,
+          airportCode: 'VVO',
+          airportName: 'Кневичи',
+          countryName: 'Россия',
+          timezone: 'GMT +10',
+        },
+      ],
+    };
     const data = await import('react-query');
     data.useQuery = vi.fn().mockReturnValue({ data: testData });
     data.useMutation = vi.fn().mockReturnValue({});

@@ -9,6 +9,10 @@ export interface IDestination {
   countryName?: string;
 }
 
+export interface IDestinationGet {
+  content: IDestination[];
+}
+
 export interface IDestinationPost extends FieldValues {
   countryName?: string;
   cityName?: string;

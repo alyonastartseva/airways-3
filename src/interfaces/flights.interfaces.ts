@@ -24,6 +24,10 @@ export interface IFlights extends Required<IFlightsPost> {
   id: number;
 }
 
+export interface IFlightsGet {
+  content: IFlights[];
+}
+
 export interface IFlightsForm extends FieldValues {
   code?: string;
   fromCityName?: string;

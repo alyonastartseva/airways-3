@@ -8,6 +8,10 @@ export interface IAircraft {
   flightRange: number;
 }
 
+export interface IAircraftsGet {
+  content: IAircraft[];
+}
+
 export interface IAircraftPost extends FieldValues {
   aircraftNumber?: number;
   model?: string;

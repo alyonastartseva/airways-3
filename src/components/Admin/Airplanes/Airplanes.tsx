@@ -66,7 +66,8 @@ const Airplanes = () => {
   );
 
   // получение данных
-  const { data: airplanes, isLoading } = useAircraftQuery();
+  const { data: airplanesData, isLoading } = useAircraftQuery();
+  const airplanes = airplanesData?.content;
 
   // изменение данных
   const { mutate: patchAircraft } = useAircraftPatch();

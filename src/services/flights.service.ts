@@ -5,12 +5,13 @@ import ERoutes from '@/services/endpoints.service';
 import {
   IFlights,
   IFlightsForm,
+  IFlightsGet,
   IFlightsPost,
 } from '@/interfaces/flights.interfaces';
 import { mapFlightsFormData } from '@/utils/form-flights.utils';
 
 interface IFlightsApi {
-  getFlights: () => Promise<IFlights[] | undefined>;
+  getFlights: () => Promise<IFlightsGet | undefined>;
   postFlight: (data: IFlightsForm) => Promise<AxiosResponse<IFlights, any>>;
   deleteFlight: (
     id: number | undefined
@@ -20,7 +21,7 @@ interface IFlightsApi {
 const flightsAPI: IFlightsApi = {
   getFlights: async () => {
     return await adminInstance
-      .get<IFlights[]>(ERoutes.GET_FLIGHTS)
+      .get<IFlightsGet>(ERoutes.GET_FLIGHTS)
       .then((response) => response.data);
   },
 

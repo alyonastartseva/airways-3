@@ -92,32 +92,35 @@ describe('Flights', () => {
   });
 
   it('Flights render table data', async () => {
-    const testDataRender: IFlights[] = [
-      {
-        id: 1,
-        code: 'VKOOMS',
-        from: {
+    const testDataRender: { content: IFlights[] } = {
+      content: [
+        {
           id: 1,
-          airportCode: 'VKO',
-          airportName: 'Внуково',
-          cityName: 'Москва',
-          timezone: 'Россия',
-          countryName: 'GMT +3',
+          code: 'VKOOMS',
+          from: {
+            id: 1,
+            airportCode: 'VKO',
+            airportName: 'Внуково',
+            cityName: 'Москва',
+            timezone: 'Россия',
+            countryName: 'GMT +3',
+          },
+          to: {
+            id: 4,
+            airportCode: 'OMS',
+            airportName: 'Омск',
+            cityName: 'Омск',
+            timezone: 'Россия',
+            countryName: 'GMT +6',
+          },
+          departureDateTime: '2023-03-29T06:03:26.367205',
+          arrivalDateTime: '2023-03-29T06:03:26.367205',
+          aircraftId: 1,
+          flightStatus: 'ON_TIME',
         },
-        to: {
-          id: 4,
-          airportCode: 'OMS',
-          airportName: 'Омск',
-          cityName: 'Омск',
-          timezone: 'Россия',
-          countryName: 'GMT +6',
-        },
-        departureDateTime: '2023-03-29T06:03:26.367205',
-        arrivalDateTime: '2023-03-29T06:03:26.367205',
-        aircraftId: 1,
-        flightStatus: 'ON_TIME',
-      },
-    ];
+      ],
+    };
+
     const data = await import('react-query');
     data.useQuery = vi.fn().mockReturnValue({ data: testDataRender });
     data.useMutation = vi.fn().mockReturnValue({});
