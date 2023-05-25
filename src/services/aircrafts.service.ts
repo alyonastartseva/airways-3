@@ -1,11 +1,15 @@
 import { adminInstance } from '@/services/axios.service';
 import ERoutes from '@/services/endpoints.service';
-import { IAircraft, IAircraftPost } from '@interfaces/aircraft.interfaces';
+import {
+  IAircraft,
+  IAircraftsGet,
+  IAircraftPost,
+} from '@interfaces/aircraft.interfaces';
 
 const aircraftsAPI = {
   getAircrafts: async () => {
     return await adminInstance
-      .get<IAircraft[]>(ERoutes.AIRCRAFT)
+      .get<IAircraftsGet>(ERoutes.AIRCRAFT)
       .then((response) => response.data);
   },
 

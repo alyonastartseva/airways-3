@@ -17,9 +17,9 @@ import { useCallback, useState, useMemo } from 'react';
 import dayjs from 'dayjs';
 
 import { IAircraft } from '@/interfaces/aircraft.interfaces';
-import { useAircraftQuery } from '@/hooks/useAircraftQuery';
 import { useFlightsQuery } from '@/hooks/useFlightsQuery';
 import { useFlightsDelete } from '@/hooks/useFlightsDelete';
+import { useAircraftQuery } from '@/hooks/useAircraftQuery';
 import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { EditableCell } from '@common/EditableCell';
@@ -93,9 +93,12 @@ const Flights = () => {
   );
 
   // получение данных
-  const { data: airplanes, isLoading: isAircraftLoading } = useAircraftQuery();
+  const { data: airplanesData, isLoading: isAircraftLoading } =
+    useAircraftQuery();
+  const airplanes = airplanesData?.content;
 
-  const { data: flights, isLoading, isError } = useFlightsQuery();
+  const { data: flightsData, isLoading, isError } = useFlightsQuery();
+  const flights = flightsData?.content;
 
   const { mutate: deleteFlight } = useFlightsDelete();
 

@@ -6,15 +6,17 @@ import AirplanesPage from './Airplanes.page';
 vi.mock('react-query');
 
 describe('Airplanes page tests', () => {
-  const testData = [
-    {
-      id: 1,
-      model: 'Superjet 100',
-      aircraftNumber: '1337',
-      modelYear: '2000',
-      flightRange: '3804',
-    },
-  ];
+  const testData = {
+    content: [
+      {
+        id: 1,
+        model: 'Superjet 100',
+        aircraftNumber: '1337',
+        modelYear: '2000',
+        flightRange: '3804',
+      },
+    ],
+  };
 
   it('airplane page renders correctly', async () => {
     const data = await import('react-query');

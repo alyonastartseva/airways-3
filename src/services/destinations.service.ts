@@ -2,13 +2,14 @@ import { adminInstance } from '@/services/axios.service';
 import ERoutes from '@/services/endpoints.service';
 import {
   IDestination,
+  IDestinationGet,
   IDestinationPost,
 } from '@interfaces/destination.interfaces';
 
 const destinationsAPI = {
   getDestinations: async () => {
     return await adminInstance
-      .get<IDestination[]>(ERoutes.DESTINATION)
+      .get<IDestinationGet>(ERoutes.DESTINATION)
       .then((response) => response.data);
   },
 

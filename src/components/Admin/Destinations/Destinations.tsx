@@ -69,7 +69,8 @@ const Destinations = () => {
   );
 
   // получение данных
-  const { data: destinations, isLoading } = useDestinationQuery();
+  const { data: destinationsData, isLoading } = useDestinationQuery();
+  const destinations = destinationsData?.content;
 
   // изменение данных
   const { mutate: patchDestination } = useDestinationPatch();

@@ -16,7 +16,7 @@ const DestinationInput: React.FC<IDestProps> = (props: IDestProps) => {
   //eslint-disable-next-line no-empty-pattern
   const {} = useQuery('destinations', getDestinations, {
     onSuccess: (res) => {
-      setDestinationList(res);
+      setDestinationList(res.content);
     },
     onError: (err) => console.error(err),
   });

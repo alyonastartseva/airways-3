@@ -12,15 +12,18 @@ describe('Airplanes', () => {
   });
 
   it('Airplanes render table data', async () => {
-    const testData = [
-      {
-        id: 1,
-        model: 'Superjet 100',
-        aircraftNumber: '1337',
-        modelYear: '2000',
-        flightRange: '3804',
-      },
-    ];
+    const testData = {
+      content: [
+        {
+          id: 1,
+          model: 'Superjet 100',
+          aircraftNumber: '1337',
+          modelYear: '2000',
+          flightRange: '3804',
+        },
+      ],
+    };
+
     const data = await import('react-query');
     data.useQuery = vi.fn().mockReturnValue({ data: testData });
     data.useMutation = vi.fn().mockReturnValue({});

@@ -16,7 +16,7 @@ const AircraftIdOptions = () => {
   if (aircraftList)
     return (
       <>
-        {aircraftList.map((el) => (
+        {aircraftList.content.map((el) => (
           <option key={el.model} value={el.id}>
             {el.model}
           </option>
@@ -36,7 +36,7 @@ const CityNameOptions = () => {
   if (destinationsList)
     return (
       <>
-        {destinationsList.map((el) => (
+        {destinationsList.content.map((el) => (
           <option key={el.id} value={JSON.stringify(el)}>
             {`${el.airportName}, ${el.airportCode}`}
           </option>
