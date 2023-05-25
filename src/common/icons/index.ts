@@ -9,3 +9,6 @@ export { default as ResetIcon } from './Reset';
 export { default as Logo } from './Logo';
 export { default as AppStore } from './AppStore';
 export { default as PlayStore } from './PlayStore';
+export { default as ProfileIcon } from './ProfileIcon';
+export { default as SearchIcon } from './SearchIcon';
+export { default as PlanetIcon } from './PlanetIcon';
