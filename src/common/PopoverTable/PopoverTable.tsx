@@ -11,6 +11,7 @@ import {
 import { EditIcon, CloseIcon } from '@chakra-ui/icons';
 
 import { IPopoverTable } from '@interfaces/table.interfaces';
+import { Details } from '@common/icons';
 
 const PopoverTable = <Data,>({
   row,
@@ -31,12 +32,32 @@ const PopoverTable = <Data,>({
     </PopoverTrigger>
     <PopoverContent
       color="#0E153A"
-      border="1px solid #2B2B2B"
-      borderRadius="6px"
+      border="0.1rem solid #2B2B2B"
+      borderRadius="0.4rem"
       width="13rem"
-      height="6.25rem"
+      height="9.3rem"
     >
       <PopoverArrow border="1px solid #2B2B2B" bgColor="#E2F3F5" />
+      <PopoverHeader border="none" borderBottom="1px solid #2B2B2B" p={0}>
+        <Button
+          leftIcon={<Details />}
+          border="none"
+          height="3rem"
+          width="100%"
+          borderRadius="none"
+          borderTopLeftRadius="0.4rem"
+          borderTopRightRadius="0.4rem"
+          fontSize="0.9rem"
+          fontWeight="medium"
+          justifyContent="flex-start"
+          _hover={{
+            backgroundColor: '#C5E3F6',
+          }}
+          bgColor="#E2F3F5"
+        >
+          Подробности
+        </Button>
+      </PopoverHeader>
       <PopoverHeader border="none" borderBottom="1px solid #2B2B2B" p={0}>
         <Button
           leftIcon={<EditIcon height="0.67rem" width="0.67rem" />}
