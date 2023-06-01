@@ -12,3 +12,4 @@ export { default as PlayStore } from './PlayStore';
 export { default as ProfileIcon } from './ProfileIcon';
 export { default as SearchIcon } from './SearchIcon';
 export { default as PlanetIcon } from './PlanetIcon';
+export { default as Details } from './Details';
