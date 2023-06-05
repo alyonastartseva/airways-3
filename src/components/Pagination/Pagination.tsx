@@ -6,12 +6,31 @@ import { getVisiblePages } from '@utils/pagination.utils';
 const Pagination = <Data,>(props: IPagination<Data>) => {
   const { data, setPaginationData, pageIndex, pageSize } = props;
 
+  const handleToFirstPage = (currentPage: number): void => {
+    if (currentPage !== 0) {
+      setPaginationData(0);
+    }
+  };
+
+  const handleToLastPage = (currentPage: number, pageCount: number): void => {
+    if (pageCount !== currentPage) {
+      setPaginationData(pageCount);
+    }
+  };
+
+  const handleToPressedPage = (currentPage: number, page: number): void => {
+    if (page - 1 !== currentPage) {
+      setPaginationData(page - 1);
+    }
+  };
+
   return data ? (
     <Flex my={8}>
       <Button
         me={2}
-        className="border rounded p-1"
-        onClick={() => setPaginationData(0)}
+        onClick={() => {
+          handleToFirstPage(pageIndex);
+        }}
         borderRadius="0.125rem"
         border="0.0625rem solid #DEDEDE"
         bgColor="rgba(217, 217, 217, 0.15)"
@@ -55,7 +74,9 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
           (page, index) => (
             <Button
               key={`page-${Date.now()}}+${index}`}
-              onClick={() => setPaginationData(page - 1)}
+              onClick={() => {
+                handleToPressedPage(pageIndex, page);
+              }}
               borderRadius="0.125rem"
               border="0.0625rem solid #DEDEDE"
               bgColor={
@@ -103,7 +124,8 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
         ms={2}
         className="border rounded p-1"
         onClick={() => {
-          setPaginationData(Math.ceil(data.length / pageSize - 1));
+          const pageCount = Math.ceil(data.length / pageSize - 1);
+          handleToLastPage(pageIndex, pageCount);
         }}
         borderRadius="0.125rem"
         border="0.0625rem solid #DEDEDE"
