@@ -21,6 +21,7 @@ describe('PopoverTable test', () => {
     );
     expect(screen.getByText('Редактировать')).toBeInTheDocument();
     expect(screen.getByText('Удалить')).toBeInTheDocument();
+    expect(screen.getByText('Подробности')).toBeInTheDocument();
   });
 
   it('PopoverTable edit button click', () => {
