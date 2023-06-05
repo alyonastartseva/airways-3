@@ -16,6 +16,7 @@ const useDestinationQuery = () => {
         });
       }
     },
+    refetchOnWindowFocus: false,
   });
 };
 

@@ -16,6 +16,7 @@ const useFlightsQuery = () => {
         });
       }
     },
+    refetchOnWindowFocus: false,
   });
 };
 export { useFlightsQuery };

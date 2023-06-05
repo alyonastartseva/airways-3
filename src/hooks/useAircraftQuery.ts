@@ -16,6 +16,7 @@ const useAircraftQuery = () => {
         });
       }
     },
+    refetchOnWindowFocus: false,
   });
 };
 
