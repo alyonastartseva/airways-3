@@ -35,11 +35,10 @@ const AdminHeader: FC = () => {
           </Text>
         </Flex>
         <Flex
-          ml="11.25rem"
+          ml="4.25rem"
           gap="1.875rem"
           color="white"
           alignItems="center"
-          position="absolute"
           h="100%"
         >
           <NavLink to={ELinks.ADMIN_PASSENGERS} style={checkActive}>
