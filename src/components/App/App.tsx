@@ -10,6 +10,7 @@ import { DestinationsPage } from '@pages/Admin/DestinationsPage';
 import { PageNotFound } from '@common/PageNotFound';
 import { PassengersPage } from '@/pages/Passengers';
 import { FlightsPage } from '@/pages/Admin/FlightsPage';
+import { AirplaneMorePage } from '@/pages/Admin/AirplaneMorePage';
 import { PrivateRoute } from '@/layout/PrivateRoute';
 
 const App = () => {
@@ -28,10 +29,13 @@ const App = () => {
           <Route path="destinations" element={<DestinationsPage />} />
           <Route path="flights" element={<FlightsPage />} />
         </Route>
+        {/* вернуть внутрь после связики страницы с кнопоко подбронее */}
+        <Route path="airplane-more" element={<AirplaneMorePage />} />
 
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
+    // </QueryClientProvider>
   );
 };
 

@@ -12,6 +12,7 @@ import { IFormPassengers } from './passenger.interfaces';
 import { IAircraftPost } from './aircraft.interfaces';
 import { IFlightsForm } from './flights.interfaces';
 import { IDestinationPost } from './destination.interfaces';
+import { ISeatForm } from './seat.interfaces';
 
 export interface IModalProps {
   formName: EModalNames;
@@ -21,8 +22,7 @@ export interface IModalProps {
 export interface IModalSetting<T extends FieldValues> {
   formName: EModalNames;
   fields: FormInputProps<T>[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  hook: () => UseMutationResult<AxiosResponse<T, any>, unknown, T, unknown>;
+  hook: () => UseMutationResult<AxiosResponse<T, unknown>, unknown, T, unknown>;
   name: EModalButtonTexts;
 }
 
@@ -30,5 +30,6 @@ export type TSettings = [
   IModalSetting<IDestinationPost>,
   IModalSetting<IAircraftPost>,
   IModalSetting<IFlightsForm>,
-  IModalSetting<IFormPassengers>
+  IModalSetting<IFormPassengers>,
+  IModalSetting<ISeatForm>
 ];

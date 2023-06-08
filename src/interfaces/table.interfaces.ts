@@ -65,6 +65,9 @@ export interface IButtonGroupAdmin {
 export interface IHeaderAdmin {
   heading: string;
   formName: EModalNames;
+  select?: boolean;
+  selectedValue?: string;
+  handleSelectChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 export interface IFooterTable<Data> {
