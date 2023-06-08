@@ -44,6 +44,14 @@ const Flights = () => {
     pageSize: 10,
   });
 
+  // изменение пагинации
+  const setPaginationData = (pageNumber: number) => {
+    setPagination((prev) => ({
+      ...prev,
+      pageIndex: pageNumber,
+    }));
+  };
+
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IFlights | null>(
@@ -335,22 +343,6 @@ const Flights = () => {
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
   });
-
-  //функция для обновления пагинации
-  const setPaginationData = useCallback(
-    (pageNumber: number) => {
-      if (flights?.length) {
-        const flightsLength = flights?.length;
-        if (pageNumber >= 0 && pageNumber < flightsLength / pageSize) {
-          setPagination((prev) => ({
-            ...prev,
-            pageIndex: pageNumber,
-          }));
-        }
-      }
-    },
-    [flights?.length, pageSize]
-  );
 
   // спиннер при загрузке
   if (isLoading || isAircraftLoading) {
