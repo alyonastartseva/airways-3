@@ -41,6 +41,14 @@ const Destinations = () => {
     pageSize: 10,
   });
 
+  // изменение пагинации
+  const setPaginationData = (pageNumber: number) => {
+    setPagination((prev) => ({
+      ...prev,
+      pageIndex: pageNumber,
+    }));
+  };
+
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IDestination | null>(
@@ -225,22 +233,6 @@ const Destinations = () => {
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
   });
-
-  //функция для обновления пагинациb
-  const setPaginationData = useCallback(
-    (pageNumber: number) => {
-      if (destinations?.length) {
-        const destinationsLength = destinations?.length;
-        if (pageNumber >= 0 && pageNumber < destinationsLength / pageSize) {
-          setPagination((prev) => ({
-            ...prev,
-            pageIndex: pageNumber,
-          }));
-        }
-      }
-    },
-    [destinations?.length, pageSize]
-  );
 
   // спиннер при загрузке
   if (isLoading) {

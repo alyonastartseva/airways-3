@@ -40,6 +40,14 @@ const Passengers = () => {
     pageSize: 10,
   });
 
+  // изменение пагинации
+  const setPaginationData = (pageNumber: number) => {
+    setPagination((prev) => ({
+      ...prev,
+      pageIndex: pageNumber,
+    }));
+  };
+
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IPassenger | null>(
@@ -340,19 +348,6 @@ const Passengers = () => {
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
   });
-
-  //функция для обновления пагинации
-  const setPaginationData = (pageNumber: number) => {
-    if (passengers?.length) {
-      const destinationsLength = passengers?.length;
-      if (pageNumber >= 0 && pageNumber < destinationsLength / pageSize) {
-        setPagination((prev) => ({
-          ...prev,
-          pageIndex: pageNumber,
-        }));
-      }
-    }
-  };
 
   // спиннер при загрузке
   if (isLoading) {

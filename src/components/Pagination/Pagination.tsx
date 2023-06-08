@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { Button, ButtonGroup, Flex } from '@chakra-ui/react';
 
 import { IPagination } from '@interfaces/pagination.interfaces';
@@ -6,21 +7,33 @@ import { getVisiblePages } from '@utils/pagination.utils';
 const Pagination = <Data,>(props: IPagination<Data>) => {
   const { data, setPaginationData, pageIndex, pageSize } = props;
 
+  const setPagination = useCallback(
+    (pageNumber: number) => {
+      if (data?.length) {
+        const airplanesLength = data.length;
+        if (pageNumber >= 0 && pageNumber < airplanesLength / pageSize) {
+          setPaginationData(pageNumber);
+        }
+      }
+    },
+    [data?.length, pageSize]
+  );
+
   const handleToFirstPage = (currentPage: number): void => {
     if (currentPage !== 0) {
-      setPaginationData(0);
+      setPagination(0);
     }
   };
 
   const handleToLastPage = (currentPage: number, pageCount: number): void => {
     if (pageCount !== currentPage) {
-      setPaginationData(pageCount);
+      setPagination(pageCount);
     }
   };
 
   const handleToPressedPage = (currentPage: number, page: number): void => {
     if (page - 1 !== currentPage) {
-      setPaginationData(page - 1);
+      setPagination(page - 1);
     }
   };
 
@@ -51,7 +64,7 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
       <Button
         me={5}
         className="border rounded p-1"
-        onClick={() => setPaginationData(pageIndex - 1)}
+        onClick={() => setPagination(pageIndex - 1)}
         borderRadius="0.125rem"
         border="0.0625rem solid #DEDEDE"
         bgColor="rgba(217, 217, 217, 0.15)"
@@ -102,7 +115,7 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
       <Button
         ms={5}
         className="border rounded p-1"
-        onClick={() => setPaginationData(pageIndex + 1)}
+        onClick={() => setPagination(pageIndex + 1)}
         borderRadius="0.125rem"
         border="0.0625rem solid #DEDEDE"
         bgColor="rgba(217, 217, 217, 0.15)"
