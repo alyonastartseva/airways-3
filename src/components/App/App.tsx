@@ -12,6 +12,7 @@ import { PassengersPage } from '@/pages/Passengers';
 import { FlightsPage } from '@/pages/Admin/FlightsPage';
 import { AirplaneMorePage } from '@/pages/Admin/AirplaneMorePage';
 import { PrivateRoute } from '@/layout/PrivateRoute';
+import { SignUpPage } from '@/pages/User/SignUpPage';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="search" element={<SearchPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="admin" element={<LoginAdminForm />} />
+        <Route path="sign-up" element={<SignUpPage />} />
 
         <Route element={<PrivateRoute />}>
           <Route path="users" element={<UsersPage />} />
