@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import CalendarMain, { PropsCalendar } from './CalendarMain';
+import CalendarTickets, { PropsCalendar } from './CalendarTickets';
 
 const defaultProps: PropsCalendar = {
   startDate: null,
@@ -12,14 +12,14 @@ const defaultProps: PropsCalendar = {
 
 describe('CalendarMain', () => {
   it('should render without errors', () => {
-    const { container } = render(<CalendarMain {...defaultProps} />);
+    const { container } = render(<CalendarTickets {...defaultProps} />);
 
     expect(container).toBeTruthy();
   });
 
   it('should open popover when input is clicked', () => {
     const { getByPlaceholderText, getByTestId } = render(
-      <CalendarMain {...defaultProps} />
+      <CalendarTickets {...defaultProps} />
     );
 
     const input = getByPlaceholderText('Дата поездки');
@@ -33,7 +33,7 @@ describe('CalendarMain', () => {
     const selectMock = vi.fn();
 
     const { getByPlaceholderText, getByText } = render(
-      <CalendarMain {...defaultProps} select={selectMock} />
+      <CalendarTickets {...defaultProps} select={selectMock} />
     );
 
     const input = getByPlaceholderText('Дата поездки');
@@ -50,7 +50,7 @@ describe('CalendarMain', () => {
 
   it('should disable previous month button when current date is in the past', () => {
     const { getByPlaceholderText, getByLabelText } = render(
-      <CalendarMain {...defaultProps} />
+      <CalendarTickets {...defaultProps} />
     );
 
     const input = getByPlaceholderText('Дата поездки');
@@ -62,7 +62,7 @@ describe('CalendarMain', () => {
 
   it('should navigate to the next month when next month button is clicked', () => {
     const { getByPlaceholderText, getByLabelText, getByTestId } = render(
-      <CalendarMain {...defaultProps} />
+      <CalendarTickets {...defaultProps} />
     );
 
     const input = getByPlaceholderText('Дата поездки');

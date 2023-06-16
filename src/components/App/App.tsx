@@ -13,12 +13,13 @@ import { FlightsPage } from '@/pages/Admin/FlightsPage';
 import { AirplaneMorePage } from '@/pages/Admin/AirplaneMorePage';
 import { PrivateRoute } from '@/layout/PrivateRoute';
 import { SignUpPage } from '@/pages/User/SignUpPage';
+import { SearchTicketsPage } from '@/pages/User/SearchTicketsPage';
 
 const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<SearchPage />} />
+        <Route index element={<SearchTicketsPage />} />
         <Route path="search" element={<SearchPage />} />
         <Route path="register" element={<RegisterPage />} />
         <Route path="admin" element={<LoginAdminForm />} />

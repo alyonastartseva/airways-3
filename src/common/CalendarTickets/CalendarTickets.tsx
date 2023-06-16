@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ru, {
+import {
   addDays,
   addMonths,
   compareDesc,
@@ -35,7 +35,8 @@ import {
 } from '@chakra-ui/react';
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from '@chakra-ui/icons';
 
-import { ITravelDates } from '@/interfaces/search.interfaces';
+import { IDates } from '@/interfaces/search-tickets.interfaces';
+import monthNames from '@data/month.data.json';
 
 export interface PropsCalendar {
   startDate: Date | null;
@@ -44,7 +45,7 @@ export interface PropsCalendar {
   calendarFormat: number;
 }
 
-const CalendarMain = ({
+const CalendarTickets = ({
   startDate,
   endDate,
   select,
@@ -53,12 +54,10 @@ const CalendarMain = ({
   const [showDate, setShowDate] = useState(
     startDate ? startDate : new Date().setHours(0, 0, 0, 0)
   );
-  const [selectedDates, setSelectedDates] = useState<ITravelDates>({
+  const [selectedDates, setSelectedDates] = useState<IDates>({
     departureDate: startDate,
     returnDate: endDate,
   });
-
-  const calendarHeadFormat = 'LLLL yyyy';
 
   const weekDays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
@@ -120,7 +119,7 @@ const CalendarMain = ({
 
   const calendar = createCalendarsAmount();
 
-  const getColorOnHover = (dates: ITravelDates, day: Date) => {
+  const getColorOnHover = (dates: IDates, day: Date) => {
     if (isPast(day) && !isToday(day)) {
       return '#FFFFFF';
     }
@@ -134,7 +133,7 @@ const CalendarMain = ({
     } else return '#E2E8F0';
   };
 
-  const getTextColor = (dates: ITravelDates, day: Date) => {
+  const getTextColor = (dates: IDates, day: Date) => {
     if (isPast(day) && !isToday(day)) {
       return '#868484';
     }
@@ -149,7 +148,7 @@ const CalendarMain = ({
     } else return '#000000';
   };
 
-  const getCellBgColor = (dates: ITravelDates, day: Date) => {
+  const getCellBgColor = (dates: IDates, day: Date) => {
     if (
       (dates.departureDate &&
         !compareDesc(dates.departureDate.setHours(0, 0, 0, 0), day)) ||
@@ -274,11 +273,11 @@ const CalendarMain = ({
                       pb="5"
                     >
                       {capitalize(
-                        format(
-                          addMonths(new Date(showDate), ind),
-                          calendarHeadFormat,
-                          { locale: ru }
-                        )
+                        `${
+                          monthNames[
+                            addMonths(new Date(showDate), ind).getMonth()
+                          ]
+                        } ${addMonths(new Date(showDate), ind).getFullYear()}`
                       )}
                     </Heading>
                     <TableContainer>
@@ -368,4 +367,4 @@ const CalendarMain = ({
   );
 };
 
-export default CalendarMain;
+export default CalendarTickets;
