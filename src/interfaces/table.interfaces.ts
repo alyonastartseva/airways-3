@@ -75,6 +75,7 @@ export interface IFooterTable<Data> {
   editableRowIndex: number | null;
   pageIndex: number;
   pageSize: number;
+  totalPages?: number;
   cancelEditing(): void;
   patchRow(): void;
   setPaginationData(pageNumber: number): void;

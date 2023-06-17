@@ -8,6 +8,7 @@ const FooterTable = <Data,>({
   data,
   pageIndex,
   pageSize,
+  totalPages,
   setPaginationData,
   editableRowIndex,
   cancelEditing,
@@ -18,6 +19,7 @@ const FooterTable = <Data,>({
       data={data}
       pageIndex={pageIndex}
       pageSize={pageSize}
+      totalPages={totalPages}
       setPaginationData={setPaginationData}
     />
     {data && editableRowIndex !== null && (

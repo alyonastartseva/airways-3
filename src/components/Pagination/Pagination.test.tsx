@@ -53,6 +53,7 @@ describe('Pagination tests', () => {
         pageIndex={testIndex}
         pageSize={testSize}
         setPaginationData={setPaginationData}
+        totalPages={testData.length / testSize}
       />
     );
     //ищем данные на экране
