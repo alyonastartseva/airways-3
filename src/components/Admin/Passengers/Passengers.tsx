@@ -14,7 +14,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useCallback, useState, useMemo } from 'react';
+import { useCallback, useState, useMemo, useEffect, memo } from 'react';
 
 import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
@@ -97,8 +97,15 @@ const Passengers = () => {
   );
 
   // получение данных
-  const { data: dataQuery, isLoading } = usePassengersQuery();
+  const { data: dataQuery, isLoading } = usePassengersQuery(pageIndex);
   const passengers = dataQuery?.content;
+
+  if (!isLoading) {
+    localStorage.setItem(
+      'PAGE_PASS_COUNT',
+      JSON.stringify(dataQuery?.totalPages || 0)
+    );
+  }
 
   // изменение данных
   const { mutate: patchPassengers } = usePassengersPatch();
@@ -340,10 +347,7 @@ const Passengers = () => {
 
   // создание таблицы
   const table = useReactTable({
-    data: tableData(passengers).slice(
-      pageIndex * pageSize,
-      pageIndex * pageSize + pageSize
-    ),
+    data: tableData(passengers).slice(0, pageSize),
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
@@ -427,4 +431,5 @@ const Passengers = () => {
   return <AlertMessage />;
 };
 
-export default Passengers;
+const memorizedPassengers = memo(Passengers);
+export default memorizedPassengers;

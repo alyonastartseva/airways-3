@@ -31,6 +31,7 @@ export interface IPassport {
 
 export interface FormPassengersGet {
   content: IPassenger[];
+  totalPages: number;
 }
 
 export interface FormPassengersPost {

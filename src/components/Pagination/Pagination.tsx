@@ -7,6 +7,15 @@ import { getVisiblePages } from '@utils/pagination.utils';
 const Pagination = <Data,>(props: IPagination<Data>) => {
   const { data, setPaginationData, pageIndex, pageSize } = props;
 
+  const countPages = localStorage.getItem('PAGE_PASS_COUNT');
+  // totalPages - кол-во всех страниц данного типа (самолетов и тд.), если нет значения в localStorage, высчитываем ее самостоятельно (второй вариант только для самолетов)
+  const totalPages =
+    countPages !== null
+      ? JSON.parse(countPages)
+      : data
+      ? data.length / pageSize
+      : 1;
+
   const setPagination = useCallback(
     (pageNumber: number) => {
       if (data?.length) {
@@ -83,34 +92,30 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
         {'<'}
       </Button>
       <ButtonGroup spacing={2}>
-        {getVisiblePages(pageIndex, Math.ceil(data?.length / pageSize)).map(
-          (page, index) => (
-            <Button
-              key={`page-${Date.now()}}+${index}`}
-              onClick={() => {
-                handleToPressedPage(pageIndex, page);
-              }}
-              borderRadius="0.125rem"
-              border="0.0625rem solid #DEDEDE"
-              bgColor={
-                page === pageIndex + 1 ? '#398AEA' : 'rgba(217, 217, 217, 0.15)'
-              }
-              color={page === pageIndex + 1 ? '#FFFFFF' : '#393939'}
-              _hover={{
-                backgroundColor: '#398AEA',
-                borderColor: '#398AEA',
-                color: '#ffffff',
-              }}
-              _active={{
-                backgroundColor: '#398AEA',
-                borderColor: '#398AEA',
-                color: '#ffffff',
-              }}
-            >
-              {page}
-            </Button>
-          )
-        )}
+        {getVisiblePages(pageIndex, totalPages).map((page, index) => (
+          <Button
+            key={`page-${Date.now()}}+${index}`}
+            onClick={() => handleToPressedPage(pageIndex, page)}
+            borderRadius="0.125rem"
+            border="0.0625rem solid #DEDEDE"
+            bgColor={
+              page === pageIndex + 1 ? '#398AEA' : 'rgba(217, 217, 217, 0.15)'
+            }
+            color={page === pageIndex + 1 ? '#FFFFFF' : '#393939'}
+            _hover={{
+              backgroundColor: '#398AEA',
+              borderColor: '#398AEA',
+              color: '#ffffff',
+            }}
+            _active={{
+              backgroundColor: '#398AEA',
+              borderColor: '#398AEA',
+              color: '#ffffff',
+            }}
+          >
+            {page}
+          </Button>
+        ))}
       </ButtonGroup>
       <Button
         ms={5}
