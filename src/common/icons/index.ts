@@ -10,6 +10,7 @@ export { default as Logo } from './Logo';
 export { default as AppStore } from './AppStore';
 export { default as PlayStore } from './PlayStore';
 export { default as ProfileIcon } from './ProfileIcon';
+export { default as HumburgerIcon } from './HumburgerIcon';
 export { default as SearchIcon } from './SearchIcon';
 export { default as PlanetIcon } from './PlanetIcon';
 export { default as Details } from './Details';

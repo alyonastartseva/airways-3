@@ -1,86 +1,34 @@
 import { Icon } from '@chakra-ui/react';
 
-const Logo = () => (
+const Logo = (props: { width: number; height: number }) => (
   <Icon
     xmlns="http://www.w3.org/2000/svg"
-    width="88"
-    height="62"
     fill="none"
-    viewBox="0 0 88 62"
-    ml="0.6rem"
+    viewBox="0 0 43 50"
+    width={`${props.width}px`}
+    height={`${props.height}px`}
+    data-testid="logoImage"
   >
-    <g filter="url(#filter0_b_25_704)">
-      <g filter="url(#filter1_b_25_704)">
-        <circle cx="31" cy="31" r="29" fill="#FEFEFE"></circle>
-        <circle
-          cx="31"
-          cy="31"
-          r="30"
-          stroke="#04396D"
-          strokeWidth="2"
-        ></circle>
-      </g>
-      <path
-        fill="#0A66C2"
-        d="M3.934 17.467L18.24 32.934l13.147 12.373 26.68-27.84-29 37.12-25.133-37.12z"
-      ></path>
-      <path
-        fill="#BD0909"
-        d="M13.987 32.934l19.417 5.156 17.841 4.124 36.209-9.28-39.357 12.373-34.11-12.373z"
-      ></path>
-    </g>
-    <defs>
-      <filter
-        id="filter0_b_25_704"
-        width="101.454"
-        height="76"
-        x="-7"
-        y="-7"
-        colorInterpolationFilters="sRGB"
-        filterUnits="userSpaceOnUse"
-      >
-        <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-        <feGaussianBlur
-          in="BackgroundImageFix"
-          stdDeviation="3.5"
-        ></feGaussianBlur>
-        <feComposite
-          in2="SourceAlpha"
-          operator="in"
-          result="effect1_backgroundBlur_25_704"
-        ></feComposite>
-        <feBlend
-          in="SourceGraphic"
-          in2="effect1_backgroundBlur_25_704"
-          result="shape"
-        ></feBlend>
-      </filter>
-      <filter
-        id="filter1_b_25_704"
-        width="70"
-        height="70"
-        x="-4"
-        y="-4"
-        colorInterpolationFilters="sRGB"
-        filterUnits="userSpaceOnUse"
-      >
-        <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-        <feGaussianBlur
-          in="BackgroundImageFix"
-          stdDeviation="2"
-        ></feGaussianBlur>
-        <feComposite
-          in2="SourceAlpha"
-          operator="in"
-          result="effect1_backgroundBlur_25_704"
-        ></feComposite>
-        <feBlend
-          in="SourceGraphic"
-          in2="effect1_backgroundBlur_25_704"
-          result="shape"
-        ></feBlend>
-      </filter>
-    </defs>
+    <path
+      fill="#fff"
+      fillRule="evenodd"
+      d="M2.1 5.278C.77 7.044 0 9.14 0 11.388v27.223C0 44.901 6.025 50 13.458 50h16.084C36.975 50 43 44.901 43 38.611V11.39c0-2.249-.77-4.345-2.1-6.111-.382.508-.811.989-1.281 1.438.9 1.387 1.412 2.98 1.412 4.673V38.61c0 5.37-5.144 9.722-11.489 9.722H13.458c-6.345 0-11.489-4.352-11.489-9.722V11.39c0-1.694.512-3.286 1.412-4.673-.47-.45-.899-.93-1.281-1.438Zm36.378 0c-2.107-2.203-5.327-3.611-8.936-3.611H13.458c-3.61 0-6.83 1.408-8.936 3.61a9.813 9.813 0 0 1-1.14-1.437C5.846 1.485 9.447 0 13.457 0h16.084c4.01 0 7.611 1.485 10.077 3.84-.33.508-.713.99-1.141 1.438Z"
+      clipRule="evenodd"
+    />
+    <path
+      fill="#fff"
+      d="M21.664 19a10.99 10.99 0 0 0-7.653 3.104 10.472 10.472 0 0 0-3.179 7.471c0 2.644 1.422 6.07 3.791 9.143 2.37 3.074 5.021 4.957 7.041 4.957 2.02 0 4.649-1.85 7.04-4.957 2.393-3.106 3.792-6.5 3.792-9.143a10.472 10.472 0 0 0-3.18-7.471A10.99 10.99 0 0 0 21.665 19Zm-7.221 11.016v-.44c0-.351.142-.688.396-.936a1.37 1.37 0 0 1 .958-.387c1.077 0 2.11.418 2.872 1.162a3.918 3.918 0 0 1 1.19 2.804v.44c0 .351-.143.687-.397.935a1.371 1.371 0 0 1-.957.387 4.112 4.112 0 0 1-2.872-1.161 3.919 3.919 0 0 1-1.19-2.804Zm9.026 9.253h-3.61a.913.913 0 0 1-.639-.258.87.87 0 0 1-.264-.623.87.87 0 0 1 .265-.623.913.913 0 0 1 .638-.258h3.61c.24 0 .47.092.639.258a.87.87 0 0 1 .264.623.87.87 0 0 1-.264.623.914.914 0 0 1-.639.258Zm5.416-9.253c0 .52-.105 1.036-.309 1.517a3.962 3.962 0 0 1-.88 1.287 4.07 4.07 0 0 1-1.318.86c-.493.199-1.021.301-1.555.301-.359 0-.703-.139-.957-.387a1.306 1.306 0 0 1-.397-.934v-.441c0-1.052.428-2.06 1.19-2.804a4.113 4.113 0 0 1 2.873-1.162c.359 0 .703.14.957.387.254.248.396.585.396.935v.44Z"
+    />
+    <path
+      fill="#fff"
+      fillRule="evenodd"
+      d="M3.61 11.85c0-5.827 5.098-8.928 11.386-8.928h13.336c6.288 0 11.386 3.101 11.386 8.929v2.11H3.61v-2.11Zm13.338-1.205c-.54 0-.976.405-.976.904 0 .5.437.905.976.905h9.433c.539 0 .976-.405.976-.905s-.437-.904-.976-.904h-9.433Z"
+      clipRule="evenodd"
+    />
+    <path
+      fill="#fff"
+      d="M35.006 16.119c.04-.159.273-.159.31 0l.474 2.02a.157.157 0 0 0 .168.117l2.142-.176c.167-.014.238.2.093.284l-1.846 1.072a.152.152 0 0 0-.066.19l.824 1.911c.064.15-.125.282-.252.176l-1.615-1.358a.164.164 0 0 0-.209 0l-1.632 1.358c-.128.106-.317-.026-.25-.176l.848-1.91a.15.15 0 0 0-.063-.191l-1.833-1.072c-.143-.084-.07-.298.098-.284l2.14.177a.16.16 0 0 0 .169-.119l.5-2.02Z"
+    />
   </Icon>
 );
 export default Logo;

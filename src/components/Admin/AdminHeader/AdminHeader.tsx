@@ -1,14 +1,37 @@
 import { FC } from 'react';
-import { Box, Text, Flex, Button, Spacer } from '@chakra-ui/react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Flex, Button } from '@chakra-ui/react';
+import { NavLink, useNavigate } from 'react-router-dom';
 
-import HeaderLogo from '@common/icons/Logo';
-import ELinks from '@services/adminRouterLinks.service';
+import ELinks from '@services/admin-router-links.service';
 import { useAuth } from '@/hooks/useAuth';
 
 const AdminHeader: FC = () => {
   const { setIsAdmin } = useAuth();
   const navigate = useNavigate();
+
+  const tabs = [
+    {
+      tabName: 'Пассажиры',
+      tabPath: ELinks.ADMIN_PASSENGERS,
+    },
+    {
+      tabName: 'Самолёты',
+      tabPath: ELinks.ADMIN_AIRPLANES,
+    },
+    {
+      tabName: 'Места назначения',
+      tabPath: ELinks.ADMIN_DESTINATIONS,
+    },
+    {
+      tabName: 'Часовые пояса',
+      tabPath: ELinks.ADMIN_HOURS,
+    },
+    {
+      tabName: 'Рейсы',
+      tabPath: ELinks.ADMIN_FLIGHTS,
+    },
+  ];
+
   const activeStyle = {
     textDecoration: 'underline',
     textDecorationThickness: '0.25rem',
@@ -26,45 +49,28 @@ const AdminHeader: FC = () => {
   };
 
   return (
-    <Box bg="#04396D" width="full" p="2">
-      <Flex justifyContent="space-between" alignItems="center">
-        <Flex position="relative" alignItems="flex-end">
-          <HeaderLogo />
-          <Text color="#fff" position="absolute" left="16" whiteSpace="nowrap">
-            UX AIR
-          </Text>
-        </Flex>
-        <Flex
-          ml="4.25rem"
-          gap="1.875rem"
-          color="white"
-          alignItems="center"
-          h="100%"
-        >
-          <NavLink to={ELinks.ADMIN_PASSENGERS} style={checkActive}>
-            Пассажиры
-          </NavLink>
-          <NavLink to={ELinks.ADMIN_AIRPLANES} style={checkActive}>
-            Самолёты
-          </NavLink>
-          <NavLink to={ELinks.ADMIN_DESTINATIONS} style={checkActive}>
-            Места назначения
-          </NavLink>
-          <NavLink to="hours" style={checkActive}>
-            Часовые пояса
-          </NavLink>
-          <NavLink to="flights" style={checkActive}>
-            Рейсы
-          </NavLink>
-        </Flex>
-        <Spacer />
-        <Link to="/search">
-          <Button onClick={handleClick} bg="#fff" borderRadius="5" mr="1.25rem">
-            Выход
-          </Button>
-        </Link>
-      </Flex>
-    </Box>
+    <Flex
+      justifyContent="space-between"
+      alignItems="center"
+      gap="1.2rem"
+      color="white"
+      data-testid="adminHeader"
+    >
+      {tabs.map(tab => {
+        return (<NavLink key={tab.tabPath} to={tab.tabPath} style={checkActive}>
+        {tab.tabName}
+      </NavLink>);
+      })}
+      <Button
+        onClick={handleClick}
+        bg="#fff"
+        borderRadius="5"
+        color="black"
+        mr="1.25rem"
+      >
+        Выход
+      </Button>
+    </Flex>
   );
 };
 

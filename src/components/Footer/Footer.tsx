@@ -1,67 +1,39 @@
-import { Box, Flex, Link, Text } from '@chakra-ui/react';
-import { FC } from 'react';
+import { Box, Flex, Link, Spacer } from '@chakra-ui/react';
+import { Link as routerLink } from 'react-router-dom';
 
-import { AppStore, PlayStore } from '@common/icons';
-import Full from '@common/Full/Full';
-import {
-  IDeparture,
-  ITicketReturn,
-  TAdditionalServices,
-} from '@interfaces/footer.interfaces';
+import { WebsiteLogo } from '@common/WebsiteLogo';
 
-export interface IFooterProps {
-  departure?: IDeparture;
-  return?: ITicketReturn;
-  additional?: TAdditionalServices;
-}
-
-const Footer: FC<IFooterProps> = ({ departure, return: ret, additional }) => (
-  <Flex
-    justifyContent="space-between"
-    alignItems="center"
-    bg="#04396D"
-    color="#fff"
-    p="1.125rem 1.5rem"
-  >
-    {departure ? (
-      <Full departure={departure} ticketReturn={ret} additional={additional} />
-    ) : (
-      <>
-        <Box display="flex" columnGap="1.25rem" fontSize=".875rem">
-          <Link href="/about-us" target="_blank">
-            About us
-          </Link>
-          I
-          <Link href="/terms-and-conditions" target="_blank">
-            Terms and Conditions
-          </Link>
-          I
-          <Link href="/contact-us" target="_blank">
-            Contact Us
-          </Link>
-        </Box>
-        <Flex alignItems="center" columnGap="3.875rem">
-          <Text fontWeight="700">UX AIR APP</Text>
-          <Flex columnGap="1.25rem">
-            <Link
-              data-testid="app-store-link"
-              href="https://www.apple.com/"
-              target="_blank"
-            >
-              <AppStore />
-            </Link>
-            <Link
-              data-testid="play-store-link"
-              href="https://play.google.com/"
-              target="_blank"
-            >
-              <PlayStore />
-            </Link>
-          </Flex>
-        </Flex>
-      </>
-    )}
-  </Flex>
-);
+const Footer = () => {
+  const hoverStyles = {
+    color: 'white',
+    opacity: '0.8',
+    textDecoration: 'underline',
+  };
+  return (
+    <Box
+      h="80px"
+      display="flex"
+      bg="#445EBD"
+      pr="30px"
+      pl="30px"
+      justifyContent="space-between"
+      alignItems="center"
+    >
+      <Flex gap="1rem" color="white" fontSize="0.9rem" alignItems="center">
+        <Link as={routerLink} _hover={hoverStyles} to="/">
+          О нас
+        </Link>
+        <Link as={routerLink} _hover={hoverStyles} to="/">
+          Политика конфиденциальности
+        </Link>
+        <Link as={routerLink} _hover={hoverStyles} to="/">
+          Связаться с нами
+        </Link>
+      </Flex>
+      <Spacer />
+      <WebsiteLogo isFooter={true} />
+    </Box>
+  );
+};
 
 export default Footer;
