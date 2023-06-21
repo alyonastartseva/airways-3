@@ -31,7 +31,7 @@ import { useSeatGet } from '@hooks/useSeatGet';
 import { useSeatPost } from '@hooks/useSeatPost';
 import { useSeatDelete } from '@hooks/useSeatDelete';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
-import ELinks from '@services/adminRouterLinks.service';
+import ELinks from '@services/admin-router-links.service';
 
 const Airplane = () => {
   // индекс и размер пагинации
