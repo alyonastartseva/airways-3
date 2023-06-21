@@ -6,7 +6,11 @@
     "node": true,
     "jest": true
   },
-  "ignorePatterns": ["node_modules", "dist", "build"],
+  "ignorePatterns": [
+    "node_modules",
+    "dist",
+    "build"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
@@ -17,6 +21,7 @@
     "plugin:import/warnings",
     "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended",
+    "plugin:commitlint/recommended",
     "eslint-config-prettier"
   ],
   "parser": "@typescript-eslint/parser",
@@ -26,9 +31,16 @@
     },
     "ecmaVersion": 13,
     "sourceType": "module",
-    "project": ["./tsconfig.json"]
+    "project": [
+      "./tsconfig.json"
+    ]
   },
-  "plugins": ["react", "@typescript-eslint", "import"],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "import",
+    "commitlint"
+  ],
   "settings": {
     "react": {
       "version": "detect"
@@ -36,26 +48,40 @@
     "import/resolver": {
       "typescript": {},
       "node": {
-        "paths": ["src"],
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "paths": [
+          "src"
+        ],
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
       }
     }
   },
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx"],
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ],
       "extends": [
         "plugin:@typescript-eslint/recommended"
       ],
       "parserOptions": {
-        "project": ["./tsconfig.eslint.json"],
+        "project": [
+          "./tsconfig.eslint.json"
+        ],
         "tsconfigRootDir": "./"
       }
     }
   ],
   "rules": {
     "no-shadow": "off",
-    "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/no-shadow": [
+      "error"
+    ],
     "consistent-return": "off",
     "react/require-default-props": "off",
     "no-empty-function": "off",
@@ -63,7 +89,14 @@
     "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
     "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/restrict-template-expressions": "off",
-    "@typescript-eslint/no-empty-function": ["error", { "allow": ["arrowFunctions"] }],
+    "@typescript-eslint/no-empty-function": [
+      "error",
+      {
+        "allow": [
+          "arrowFunctions"
+        ]
+      }
+    ],
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -80,9 +113,18 @@
     ],
     "import/prefer-default-export": "off",
     "import/extensions": "off",
-    "linebreak-style": [0, "unix"],
-    "quotes": ["error", "single"],
-    "semi": ["error", "always"],
+    "linebreak-style": [
+      0,
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
     "default-param-last": "off",
     "@typescript-eslint/default-param-last": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
@@ -90,14 +132,33 @@
       "error",
       {
         "props": true,
-        "ignorePropertyModificationsFor": ["state", "config"]
+        "ignorePropertyModificationsFor": [
+          "state",
+          "config"
+        ]
       }
     ],
-    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
     "no-unused-expressions": 0,
     "no-nested-ternary": "off",
-    "no-restricted-syntax": [1, "always"],
-    "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }],
+    "no-restricted-syntax": [
+      1,
+      "always"
+    ],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".jsx",
+          ".tsx"
+        ]
+      }
+    ],
     "react/jsx-props-no-spreading": "off",
     "react/function-component-definition": "off",
     "react/react-in-jsx-scope": "off",
