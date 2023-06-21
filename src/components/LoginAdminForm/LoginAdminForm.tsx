@@ -19,7 +19,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 
 import { useAuthAdmin } from '@services/auth.service';
 import { useAuth } from '@/hooks/useAuth';
-import ELinks from '@services/adminRouterLinks.service';
+import ELinks from '@services/admin-router-links.service';
 import { SpinnerBlock } from '@/common/SpinnerBlock';
 
 interface IUserForm {

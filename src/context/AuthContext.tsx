@@ -11,9 +11,7 @@ export const AuthContext = createContext<TAuthContextType>({
 });
 
 export const AuthProvider = ({ children }: { children: JSX.Element }) => {
-  // когда будет использоваться токен для автоматической авторизации при наличии токена,
-  // можно будет с false поменять на Boolean(localStorage.getItem('adminToken')) и потом где-то с этим что-то делать (слать запросы и т.д.)
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(Boolean(localStorage.getItem('adminToken')));
 
   return (
     <AuthContext.Provider value={{ isAdmin, setIsAdmin }}>
