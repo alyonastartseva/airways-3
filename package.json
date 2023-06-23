@@ -23,8 +23,7 @@
   "lint-staged": {
     "*.(ts|tsx)": [
       "yarn lint:fix",
-      "yarn format",
-      "yarn commit"
+      "yarn format"
     ]
   },
   "config": {
@@ -65,7 +64,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.1",
     "react-query": "^3.39.2",
-    "react-router-dom": "^6.11.2",
+    "react-router-dom": "^6.13.0",
     "yup": "^1.2.0"
   },
   "devDependencies": {
