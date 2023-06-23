@@ -2,11 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": false,
@@ -21,54 +17,23 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@assets/*": [
-        "src/assets/*"
-      ],
-      "@data/*": [
-        "src/data/*"
-      ],
-      "@common/*": [
-        "src/common/*"
-      ],
-      "@components/*": [
-        "src/components/*"
-      ],
-      "@icons/*": [
-        "src/common/icons/*"
-      ],
-      "@images/*": [
-        "src/assets/images/*"
-      ],
-      "@interfaces/*": [
-        "src/interfaces/*"
-      ],
-      "@layout/*": [
-        "src/layout/*"
-      ],
-      "@hooks/*": [
-        "src/hooks/*"
-      ],
-      "@pages/*": [
-        "src/pages/*"
-      ],
-      "@services/*": [
-        "src/services/*"
-      ],
-      "@store/*": [
-        "src/store/*"
-      ],
-      "@utils/*": [
-        "src/utils/*"
-      ]
+      "@/*": ["src/*"],
+      "@assets/*": ["src/assets/*"],
+      "@data/*": ["src/data/*"],
+      "@common/*": ["src/common/*"],
+      "@components/*": ["src/components/*"],
+      "@icons/*": ["src/common/icons/*"],
+      "@images/*": ["src/assets/images/*"],
+      "@interfaces/*": ["src/interfaces/*"],
+      "@layout/*": ["src/layout/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@pages/*": ["src/pages/*"],
+      "@services/*": ["src/services/*"],
+      "@store/*": ["src/store/*"],
+      "@utils/*": ["src/utils/*"]
     }
   },
-  "include": [
-    "src",
-    "types"
-  ],
+  "include": ["src", "types"],
   "references": [
     {
       "path": "./tsconfig.node.json"
