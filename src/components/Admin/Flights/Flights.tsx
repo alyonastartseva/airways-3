@@ -1,11 +1,11 @@
 import {
   Table,
-  Thead,
-  Tr,
-  Th,
+  TableContainer,
   Tbody,
   Td,
-  TableContainer,
+  Th,
+  Thead,
+  Tr,
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
@@ -13,29 +13,30 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useCallback, useState, useMemo } from 'react';
 import dayjs from 'dayjs';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { IAircraft } from '@/interfaces/aircraft.interfaces';
-import { useFlightsQuery } from '@/hooks/useFlightsQuery';
-import { useFlightsDelete } from '@/hooks/useFlightsDelete';
-import { useAircraftQuery } from '@/hooks/useAircraftQuery';
-import { AlertMessage } from '@common/AlertMessage';
-import { SpinnerBlock } from '@common/SpinnerBlock';
-import { EditableCell } from '@common/EditableCell';
 import { EditableSelectCell } from '@/common/EditableSelectCell';
-import { isRowEditing } from '@utils/table.utils';
-import { FlexCell } from '@common/FlexCell';
-import { PopoverTable } from '@common/PopoverTable';
-import { HeaderAdmin } from '@common/HeaderAdmin';
-import { FooterTable } from '@common/FooterTable';
+import { flightStatuses } from '@/constants/constants';
+import { EModalNames } from '@/constants/modal-constants/modal-names';
+import { useAircraftQuery } from '@/hooks/useAircraftQuery';
+import { useFlightsDelete } from '@/hooks/useFlightsDelete';
+import { useFlightsQuery } from '@/hooks/useFlightsQuery';
+import { IAircraft } from '@/interfaces/aircraft.interfaces';
 import {
   IFlights,
   IFlightsPost,
   TFlightsStatus,
 } from '@/interfaces/flights.interfaces';
-import { flightStatuses } from '@/constants/constants';
-import { EModalNames } from '@/constants/modal-constants/modal-names';
+import { AlertMessage } from '@common/AlertMessage';
+import { EditableCell } from '@common/EditableCell';
+import { FlexCell } from '@common/FlexCell';
+import { FooterTable } from '@common/FooterTable';
+import { HeaderAdmin } from '@common/HeaderAdmin';
+import { PopoverTable } from '@common/PopoverTable';
+import { SpinnerBlock } from '@common/SpinnerBlock';
+import { isRowEditing } from '@utils/table.utils';
+import { useFlightsPatch } from '@/hooks/useFlightsPatch';
 
 const Flights = () => {
   // индекс и размер пагинации
@@ -109,8 +110,12 @@ const Flights = () => {
   const flights = flightsData?.content;
 
   const { mutate: deleteFlight } = useFlightsDelete();
+  const { mutate: patchFlights } = useFlightsPatch();
 
-  const patchRow = () => console.log();
+  const patchRow = useCallback(() => {
+    patchFlights(editableRowState);
+    cancelEditing();
+  }, [patchFlights, editableRowState, cancelEditing]);
 
   // форматирование даты
   const formatDate = (date: string): string => {
