@@ -7,6 +7,7 @@ import {
   IFlightsForm,
   IFlightsGet,
   IFlightsPost,
+  IFlightsUpdate,
 } from '@/interfaces/flights.interfaces';
 import { mapFlightsFormData } from '@/utils/form-flights.utils';
 
@@ -15,6 +16,9 @@ interface IFlightsApi {
   postFlight: (data: IFlightsForm) => Promise<AxiosResponse<IFlights, any>>;
   deleteFlight: (
     id: number | undefined
+  ) => Promise<AxiosResponse<IFlights> | undefined>;
+  updateFlight: (
+    data: IFlightsUpdate | null
   ) => Promise<AxiosResponse<IFlights> | undefined>;
 }
 
@@ -35,6 +39,12 @@ const flightsAPI: IFlightsApi = {
       return await adminInstance.delete<IFlights>(ERoutes.FLIGHTS + id);
     }
   },
+  updateFlight: async (data) => {
+    if (!data) return;
+    const { id, ...body } = data;
+    return await adminInstance.patch<IFlights>(ERoutes.FLIGHTS + id, body);
+  },
 };
 
-export const { getFlights, postFlight, deleteFlight } = flightsAPI;
+export const { getFlights, postFlight, deleteFlight, updateFlight } =
+  flightsAPI;

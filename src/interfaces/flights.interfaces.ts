@@ -37,3 +37,7 @@ export interface IFlightsForm extends FieldValues {
   aircraftId?: number;
   flightStatus?: TFlightsStatus;
 }
+
+export interface IFlightsUpdate extends Partial<IFlightsPost> {
+  id: number;
+}
