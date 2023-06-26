@@ -3,20 +3,23 @@ import { AxiosResponse } from 'axios';
 import { adminInstance } from '@/services/axios.service';
 import ERoutes from '@/services/endpoints.service';
 import {
+  IFlightPresentation,
   IFlights,
   IFlightsForm,
-  IFlightsGet,
   IFlightsPost,
   IFlightsUpdate,
 } from '@/interfaces/flights.interfaces';
 import { mapFlightsFormData } from '@/utils/form-flights.utils';
+import { IListResponse } from '@/interfaces/response.intefaces';
 
 interface IFlightsApi {
-  getFlights: () => Promise<IFlightsGet | undefined>;
+  getFlights: () => Promise<
+    IListResponse<Required<IFlightPresentation>> | undefined
+  >;
   postFlight: (data: IFlightsForm) => Promise<AxiosResponse<IFlights, any>>;
   deleteFlight: (
     id: number | undefined
-  ) => Promise<AxiosResponse<IFlights> | undefined>;
+  ) => Promise<AxiosResponse<IFlightPresentation> | undefined>;
   updateFlight: (
     data: IFlightsUpdate | null
   ) => Promise<AxiosResponse<IFlights> | undefined>;
@@ -25,7 +28,7 @@ interface IFlightsApi {
 const flightsAPI: IFlightsApi = {
   getFlights: async () => {
     return await adminInstance
-      .get<IFlightsGet>(ERoutes.GET_FLIGHTS)
+      .get<IListResponse<Required<IFlightPresentation>>>(ERoutes.GET_FLIGHTS)
       .then((response) => response.data);
   },
 

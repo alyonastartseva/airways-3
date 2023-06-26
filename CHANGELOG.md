@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 2.0.0 (2023-06-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* **admin:** remove IFlightsGet, add IFlightPresentation, add IFlight, change corresponding
+types in service
+
+### Features
+
+* add readme file ([aa3335d](https://gitlab.com/levotarayan98/airways/commit/aa3335dee94fc97a422e12419bac5da6a82d0407))
+* add user header ([896623a](https://gitlab.com/levotarayan98/airways/commit/896623afd283f800e75052c6a5b25dfb900c00d9))
+* **Admin:** add flights update logic ([0c82cf2](https://gitlab.com/levotarayan98/airways/commit/0c82cf21b33a0e4c22715480921447011bbf2fd0))
+* **Admin:** add hook for patching flights ([20077ad](https://gitlab.com/levotarayan98/airways/commit/20077ad5850b6cf912cb394e8ae0bed4a694aad8))
+* **hooks:** add hook for displaying errors on sending request ([8995641](https://gitlab.com/levotarayan98/airways/commit/8995641d961c2aeb850d6b229dd496c3d9d64c60))
+* make test for Header and add Header to pages ([0709f02](https://gitlab.com/levotarayan98/airways/commit/0709f029549cd7cdc73052bf894175212694767f))
+
+
+### Bug Fixes
+
+* **admin:** add correct types in service ([fca05eb](https://gitlab.com/levotarayan98/airways/commit/fca05ebab802282f2dce20e62cdd3ba78aa7da1d)), closes [#143](https://gitlab.com/levotarayan98/airways/issues/143)
+* **admin:** change flights table view ([9b265a5](https://gitlab.com/levotarayan98/airways/commit/9b265a5a687a17359715538b4fa36c42e318655c)), closes [#123](https://gitlab.com/levotarayan98/airways/issues/123)
+* **Admin:** fix module path in test ([f1a9b87](https://gitlab.com/levotarayan98/airways/commit/f1a9b87277ff47b5a63404d4d23e7a2cff5d9290))
+* breaking changelog configuration ([b8dd4b2](https://gitlab.com/levotarayan98/airways/commit/b8dd4b24ded5fb511d935cbc6ecd8628ed2ae88e))
+* fix admin queries ([6b997fe](https://gitlab.com/levotarayan98/airways/commit/6b997fe3d4f17f2dbc0eed7469ee7b064f3d3d13))
+* husky ([2f5b476](https://gitlab.com/levotarayan98/airways/commit/2f5b476cadf119fc525850abe28322e98d4349dd))
+
 ## 1.2.0 (2023-06-23)
 
 
