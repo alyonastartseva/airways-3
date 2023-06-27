@@ -1,14 +1,14 @@
 import { IDestination } from '@/interfaces/destination.interfaces';
-import { IFlightsForm, IFlightsPost } from '@/interfaces/flights.interfaces';
+import {
+  IFlightPost,
+  IFlightPostFormFields,
+} from '@/interfaces/flights.interfaces';
 
-export const mapFlightsFormData = (data: IFlightsForm): IFlightsPost => {
-  const { fromCityName, toCityName, ...dataRest } = data;
-
-  const fromInfo: IDestination = JSON.parse(`${fromCityName}`);
-  const toInfo: IDestination = JSON.parse(`${toCityName}`);
-
-  const from = { from: fromInfo };
-  const to = { to: toInfo };
-
-  return Object.assign({}, from, to, dataRest);
+export const mapFlightFormToRequestData = (
+  formData: IFlightPostFormFields
+): IFlightPost => {
+  const airportFrom = (JSON.parse(formData.from || '') as IDestination)
+    .airportCode;
+  const airportTo = (JSON.parse(formData.to || '') as IDestination).airportCode;
+  return { airportFrom, airportTo, ...formData } as IFlightPost;
 };
