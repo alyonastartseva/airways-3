@@ -11,34 +11,6 @@ export type TFlightsStatus =
   | 'ARRIVED'
   | 'ON_TIME';
 
-export interface IFlightsPost {
-  code?: string;
-  from?: IDestination;
-  to?: IDestination;
-  departureDateTime?: string;
-  arrivalDateTime?: string;
-  aircraftId?: number;
-  flightStatus?: TFlightsStatus;
-}
-
-export interface IFlights extends Required<IFlightsPost> {
-  id: number;
-}
-
-export interface IFlightsForm extends FieldValues {
-  code?: string;
-  fromCityName?: string;
-  toCityName?: string;
-  departureDateTime?: string;
-  arrivalDateTime?: string;
-  aircraftId?: number;
-  flightStatus?: TFlightsStatus;
-}
-
-export interface IFlightsUpdate extends Partial<IFlightsPost> {
-  id: number;
-}
-
 export interface IFlight {
   aircraft: IAircraft;
   arrivalDateTime: string;
@@ -65,4 +37,16 @@ export interface IFlightPresentation {
   departureDateTime?: string;
   flightStatus?: TFlightsStatus;
   id: number;
+}
+
+export interface IFlightsUpdate extends Partial<IFlightPresentation> {
+  id: number;
+}
+export interface IFlightPost extends Omit<IFlightPresentation, 'id'> {}
+
+export interface IFlightPostFormFields
+  extends FieldValues,
+    Omit<IFlightPost, 'airportFrom' | 'airportTo'> {
+  from?: string; // stringyfied IDestination
+  to?: string; // stringyfied IDestination
 }
