@@ -10,27 +10,39 @@ import {
 
 import { IFormPassengers } from './passenger.interfaces';
 import { IAircraftPost } from './aircraft.interfaces';
-import { IFlightsForm } from './flights.interfaces';
 import { IDestinationPost } from './destination.interfaces';
 import { ISeatForm } from './seat.interfaces';
 import { ITickets } from './tickets.interface';
+
+import {
+  IFlight,
+  IFlightPost,
+  IFlightPostFormFields,
+} from './flights.interfaces';
+
 
 export interface IModalProps {
   formName: EModalNames;
 }
 
 // AxiosResponse<T, any> - требуемый тип в библиотеке
-export interface IModalSetting<T extends FieldValues> {
+export interface IModalSetting<T extends FieldValues, Req = T, Q = T> {
   formName: EModalNames;
   fields: FormInputProps<T>[];
-  hook: () => UseMutationResult<AxiosResponse<T, unknown>, unknown, T, unknown>;
+  hook: () => UseMutationResult<
+    AxiosResponse<Req, unknown>,
+    unknown,
+    Q,
+    unknown
+  >;
   name: EModalButtonTexts;
+  mapFieldValuesToRequestData?: (formData: T) => Q;
 }
 
 export type TSettings = [
   IModalSetting<IDestinationPost>,
   IModalSetting<IAircraftPost>,
-  IModalSetting<IFlightsForm>,
+  IModalSetting<IFlightPostFormFields, IFlight, IFlightPost>,
   IModalSetting<IFormPassengers>,
   IModalSetting<ISeatForm>,
   IModalSetting<ITickets>

@@ -1,5 +1,8 @@
 import { FormInputProps } from '@/common/ModalElements/ModalInput/ModalInput';
-import { IFlightsForm } from '@/interfaces/flights.interfaces';
+import {
+  IFlightPost,
+  IFlightPostFormFields,
+} from '@/interfaces/flights.interfaces';
 import { SpinnerBlock } from '@/common/SpinnerBlock';
 import { useAircraftQuery } from '@/hooks/useAircraftQuery';
 import { useDestinationQuery } from '@/hooks/useDestinationQuery';
@@ -53,7 +56,7 @@ const flightStatusesOptions = flightStatuses.map((el) => (
   </option>
 ));
 
-export const modalFlightsFields: FormInputProps<IFlightsForm>[] = [
+export const modalFlightsFields: FormInputProps<IFlightPostFormFields>[] = [
   {
     fieldName: 'code',
     label: 'Код (Рейс)',
@@ -71,7 +74,7 @@ export const modalFlightsFields: FormInputProps<IFlightsForm>[] = [
   },
   {
     select: true,
-    fieldName: 'fromCityName',
+    fieldName: 'from',
     label: 'Город откуда',
     typeInput: 'text',
     rules: {
@@ -81,7 +84,7 @@ export const modalFlightsFields: FormInputProps<IFlightsForm>[] = [
   },
   {
     select: true,
-    fieldName: 'toCityName',
+    fieldName: 'to',
     label: 'Город куда',
     typeInput: 'text',
     rules: {

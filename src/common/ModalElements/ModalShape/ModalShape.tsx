@@ -28,7 +28,7 @@ const ModalShape = <T extends FieldValues>({ formName }: IModalProps) => {
   const [currentModal] = modalSettings.filter(
     (item) => item.formName === formName
   );
-  const { fields, hook, name } = currentModal;
+  const { fields, hook, name, mapFieldValuesToRequestData } = currentModal;
 
   const methods = useForm<T>({
     mode: 'onBlur',
@@ -39,7 +39,10 @@ const ModalShape = <T extends FieldValues>({ formName }: IModalProps) => {
   const { mutateAsync } = hook();
 
   const onSubmit: SubmitHandler<T> = async (data) => {
-    await mutateAsync(data).then((response: { status: number }) => {
+    const requestData = mapFieldValuesToRequestData
+      ? mapFieldValuesToRequestData?.(data)
+      : data;
+    await mutateAsync(requestData).then((response: { status: number }) => {
       if (response.status < 400) {
         methods.reset();
         onClose();

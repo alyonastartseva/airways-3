@@ -24,9 +24,9 @@ import { useFlightsDelete } from '@/hooks/useFlightsDelete';
 import { useFlightsQuery } from '@/hooks/useFlightsQuery';
 import { IAircraft } from '@/interfaces/aircraft.interfaces';
 import {
+  IFlightPost,
+  IFlightPostFormFields,
   IFlightPresentation,
-  IFlights,
-  IFlightsPost,
   TFlightsStatus,
 } from '@/interfaces/flights.interfaces';
 import { AlertMessage } from '@common/AlertMessage';
@@ -81,7 +81,7 @@ const Flights = () => {
 
       setEditableRowState({
         ...editableRowState,
-        [id as keyof IFlights]: value,
+        [id as keyof IFlightPresentation]: value,
       });
     },
     [editableRowState]
@@ -343,7 +343,7 @@ const Flights = () => {
   if (Array.isArray(flights) && flights?.length && !isError) {
     return (
       <TableContainer my={10} mx={9}>
-        <HeaderAdmin<IFlightsPost>
+        <HeaderAdmin<IFlightPostFormFields>
           heading="Рейсы"
           formName={EModalNames.FLIGHTS}
         />
