@@ -4,8 +4,11 @@ import {
   ITicketsGet,
   ITicketsPost,
 } from '@interfaces/tickets.interface';
+import { IFlight, IFlightPost } from '@/interfaces/flights.interfaces';
 
 import ERoutes from './endpoints.service';
+
+
 
 const ticketsAPI = {
   getTickets: async () => {
@@ -26,6 +29,10 @@ const ticketsAPI = {
       return await adminInstance.put<ITickets>(ERoutes.TICKETS + id, rest);
     }
   },
+
+  postTickets: async (data: ITicketsPost) => {
+    return await adminInstance.post<ITickets>(ERoutes.TICKETS, data);
+  },
 };
 
-export const { getTickets, deleteTicket, patchTickets } = ticketsAPI;
+export const { getTickets, deleteTicket, patchTickets, postTickets } = ticketsAPI;

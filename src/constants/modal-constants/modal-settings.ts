@@ -6,7 +6,7 @@ import { useDestinationPost } from '@/hooks/useDestinationPost';
 import { useFlightsPost } from '@/hooks/useFlightsPost';
 import { usePassengersPost } from '@/hooks/usePassengersPost';
 import { useSeatPost } from '@/hooks/useSeatPost';
-import { useTickets } from '@/hooks/useTickets';
+import { useTicketsPost } from '@/hooks/useTicketPost';
 import { TSettings } from '@/interfaces/modal-shape.interfaces';
 import { ISeatForm } from '@/interfaces/seat.interfaces';
 import { mapFlightFormToRequestData } from '@/utils/form-flights.utils';
@@ -59,7 +59,7 @@ export const modalSettings: TSettings = [
   {
     formName: EModalNames.TICKETS,
     fields: modalTicketsFields,
-    hook: useTickets,
+    hook: useTicketsPost,
     name: EModalButtonTexts.TICKETS
   },
 ];

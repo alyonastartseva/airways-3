@@ -1,13 +1,21 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import { deleteSeat } from '@services/seat.service';
+import { postTickets } from '@/services/tickets.service';
 
-const useTickets = () => {
+const useTicketsPost = () => {
   const queryClient = useQueryClient();
   const toast = useToast();
-  return useMutation(deleteSeat, {
-    onSuccess: () => queryClient.invalidateQueries('seats'),
+
+  return useMutation(postTickets, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('flights');
+      toast({
+        status: 'success',
+        title: 'Билет успешно добавлен',
+        position: 'top',
+      });
+    },
     onError: (error) => {
       if (error instanceof Error) {
         toast({
@@ -20,4 +28,4 @@ const useTickets = () => {
   });
 };
 
-export { useTickets };
+export { useTicketsPost };

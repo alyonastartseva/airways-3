@@ -16,17 +16,24 @@ export interface ITicketsGet {
 }
 
 export interface ITicketsPost extends FieldValues {
-  id?: number;
-  ticketNumber?: string;
-  passengerId?: number;
   firstName?: string;
-  lastName?: string;
-  flightId?: number;
-  code?: string;
-  from?: string;
-  to?: string;
-  departureDateTime: string;
-  arrivalDateTime?: string;
-  flightSeatId?: number;
-  seatNumber: string;
+  lastName?: string; 
+  // id?: number;
+  // ticketNumber?: string;
+  // passengerId?: number;
+  // firstName?: string;
+  // lastName?: string;
+  // flightId?: number;
+  // code?: string;
+  // from?: string;
+  // to?: string;
+  // departureDateTime: string;
+  // arrivalDateTime?: string;
+  // flightSeatId?: number;
+  // seatNumber: string;
+}
+
+export interface ITicketsForm extends FieldValues {
+  firstName?: string;
+  lastName?: string;  
 }
