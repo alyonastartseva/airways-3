@@ -1,13 +1,14 @@
 import { FieldValues } from 'react-hook-form';
 
 export interface ITickets {
-  id?: number;
+  id: number;
   ticketNumber?: string;
   firstName?: string;
   lastName?: string;
   code?: string;
-  departureDateTime?: string;
-  arrivalDateTime?: string;
+  departureDateTime: string;
+  arrivalDateTime: string;
+  flightId: string; 
 }
 
 export interface ITicketsGet {

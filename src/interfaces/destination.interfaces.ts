@@ -2,7 +2,7 @@ import { FieldValues } from 'react-hook-form';
 
 export interface IDestination {
   id: number;
-  airportCode?: string;
+  airportCode?: string; 
   airportName?: string;
   cityName?: string;
   timezone?: string;

@@ -13,6 +13,7 @@ import { IAircraftPost } from './aircraft.interfaces';
 import { IFlightsForm } from './flights.interfaces';
 import { IDestinationPost } from './destination.interfaces';
 import { ISeatForm } from './seat.interfaces';
+import { ITickets } from './tickets.interface';
 
 export interface IModalProps {
   formName: EModalNames;
@@ -31,5 +32,6 @@ export type TSettings = [
   IModalSetting<IAircraftPost>,
   IModalSetting<IFlightsForm>,
   IModalSetting<IFormPassengers>,
-  IModalSetting<ISeatForm>
+  IModalSetting<ISeatForm>,
+  IModalSetting<ITickets>
 ];

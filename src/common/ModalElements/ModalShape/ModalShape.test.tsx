@@ -2,6 +2,7 @@ import { describe, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import { IAircraftPost } from '@/interfaces/aircraft.interfaces';
+import { ITickets } from '@/interfaces/tickets.interface';
 import {
   EModalButtonTexts,
   EModalNames,
@@ -39,4 +40,6 @@ describe('ModalShape test', () => {
 
     expect(screen.getAllByLabelText('modal-input')).toHaveLength(4);
   });
+
+  
 });

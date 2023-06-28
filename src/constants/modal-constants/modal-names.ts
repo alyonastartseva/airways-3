@@ -4,7 +4,9 @@ export enum EModalNames {
   PASSENGERS = 'passengers',
   FLIGHTS = 'flights',
   SEAT = 'seats',
+  TICKETS = 'tickets',
   TEST = 'test',
+  
 }
 
 export enum EModalButtonTexts {
@@ -13,5 +15,6 @@ export enum EModalButtonTexts {
   PASSENGERS = 'Добавить пассажира',
   FLIGHTS = 'Добавить рейс',
   SEAT = 'Добавить сиденье',
+  TICKETS = 'Добавить билет',
   TEST = 'test',
 }

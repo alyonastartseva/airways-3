@@ -13,6 +13,19 @@ const ticketsAPI = {
       .get<ITicketsGet>(ERoutes.TICKETS)
       .then((response) => response.data);
   },
+
+  deleteTicket: async (id: number | undefined) => {
+    if (id) {
+      return await adminInstance.delete<ITickets>(ERoutes.TICKETS + id);
+    }
+  },
+
+  patchTickets: async(data: ITickets | null) => {
+    if(data){
+      const {id, ...rest} = data;
+      return await adminInstance.put<ITickets>(ERoutes.TICKETS + id, rest);
+    }
+  },
 };
 
-export const { getTickets } = ticketsAPI;
+export const { getTickets, deleteTicket, patchTickets } = ticketsAPI;

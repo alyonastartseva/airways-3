@@ -30,6 +30,10 @@ const AdminHeader: FC = () => {
       tabName: 'Рейсы',
       tabPath: ELinks.ADMIN_FLIGHTS,
     },
+    {
+      tabName: 'Билеты',
+      tabPath: ELinks.ADMIN_TICKETS,
+    }
   ];
 
   const activeStyle = {

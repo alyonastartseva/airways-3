@@ -6,6 +6,7 @@ import { useDestinationPost } from '@/hooks/useDestinationPost';
 import { useFlightsPost } from '@/hooks/useFlightsPost';
 import { usePassengersPost } from '@/hooks/usePassengersPost';
 import { useSeatPost } from '@/hooks/useSeatPost';
+import { useTickets } from '@/hooks/useTickets';
 import { TSettings } from '@/interfaces/modal-shape.interfaces';
 import { ISeatForm } from '@/interfaces/seat.interfaces';
 
@@ -15,6 +16,7 @@ import { modalDestinationsFields } from './modal-destinations-fields';
 import { modalFlightsFields } from './modal-flights-fields';
 import { modalPassengersFields } from './modal-passengers-fields';
 import { modalSeatFields } from './modal-seat-fields';
+import { modalTicketsFields } from './modal-tickets-fields';
 
 export const modalSettings: TSettings = [
   {
@@ -51,5 +53,11 @@ export const modalSettings: TSettings = [
       unknown
     >,
     name: EModalButtonTexts.SEAT,
+  },
+  {
+    formName: EModalNames.TICKETS,
+    fields: modalTicketsFields,
+    hook: useTickets,
+    name: EModalButtonTexts.TICKETS
   },
 ];
