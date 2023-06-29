@@ -61,14 +61,16 @@ const LoginAdminForm = () => {
 
   return (
     <>
-      <Box mt="12.05rem" mb="12.05rem">
+      <Box mt="5.05rem" mb="8.05rem">
         <Box
-          w="25rem"
+          w="27rem"
           m="0 auto"
           border="0.0625rem solid"
-          py="1rem"
+          py="3rem"
           px="3rem"
           borderColor="#D9D9D9"
+          borderRadius={2}
+          boxShadow='lg'
           color="rgba(78, 76, 76, 0.71);"
           pos="relative"
         >
@@ -87,7 +89,7 @@ const LoginAdminForm = () => {
           <div>
             <form data-testid="modal" onSubmit={handleSubmit(handleFormSubmit)}>
               <Text fontSize="md" mb="3rem" mt="2rem">
-                Sign in to your account
+                Зайти как админ
               </Text>
               <Text fontSize="md" color="red">
                 {mutation.isError ? 'Ошибка при Авторизации' : null}
@@ -104,6 +106,7 @@ const LoginAdminForm = () => {
                 </FormLabel>
                 <Input
                   borderColor={mutation.isError ? 'red' : 'inherit'}
+                  boxShadow='md'
                   size="md"
                   type="email"
                   id="username"
@@ -112,11 +115,12 @@ const LoginAdminForm = () => {
               </FormControl>
               <FormControl w="100%" mt="1em">
                 <FormLabel htmlFor="password" mb="0" fontSize="0.75rem">
-                  Password
+                  Пароль
                 </FormLabel>
                 <InputGroup size="md">
                   <Input
                     borderColor={mutation.isError ? 'red' : 'inherit'}
+                    boxShadow='md'
                     type={show ? 'text' : 'password'}
                     id="password"
                     {...register('password', { required: true })}
@@ -136,26 +140,26 @@ const LoginAdminForm = () => {
                 fontSize="0.75rem"
               >
                 <FormLabel fontSize="0.75rem" htmlFor="checkbox">
-                  <Checkbox id="checkbox" {...register('checkbox')}>
+                  <Checkbox borderColor='#7F82C9' id="checkbox" {...register('checkbox')}>
                     <FormLabel
                       htmlFor="checkbox"
                       mb="0"
                       fontSize="0.75rem"
                       cursor="pointer"
                     >
-                      Remember me
+                      Запомни меня таким какой я есть 
                     </FormLabel>
                   </Checkbox>
                 </FormLabel>
                 <Box w="fit-content">
                   <Link color="red" whiteSpace="nowrap">
-                    Forgot password?
+                    Забыл меня?
                   </Link>
                 </Box>
               </Flex>
               <Flex justifyContent="flex-end">
-                <Button color="white" mt="1.5em" type="submit" bg="red">
-                  Sign in
+                <Button boxShadow='md' color="white" mt="1.5em" type="submit" bg="red" w="7rem">
+                  Войти
                 </Button>
               </Flex>
             </form>
