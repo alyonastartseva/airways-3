@@ -8,7 +8,7 @@ export interface ITickets {
   code?: string;
   departureDateTime: string;
   arrivalDateTime: string;
-  flightId: string; 
+  flightId: string;
 }
 
 export interface ITicketsGet {
@@ -16,24 +16,27 @@ export interface ITicketsGet {
 }
 
 export interface ITicketsPost extends FieldValues {
+  id?: number;
+  ticketNumber?: string;
+  passengerId?: number;
   firstName?: string;
-  lastName?: string; 
-  // id?: number;
-  // ticketNumber?: string;
-  // passengerId?: number;
-  // firstName?: string;
-  // lastName?: string;
-  // flightId?: number;
-  // code?: string;
-  // from?: string;
-  // to?: string;
-  // departureDateTime: string;
-  // arrivalDateTime?: string;
-  // flightSeatId?: number;
-  // seatNumber: string;
+  lastName?: string;
+  flightId?: number;
+  code?: string;
+  from?: string;
+  to?: string;
+  departureDateTime?: string;
+  arrivalDateTime?: string;
+  flightSeatId?: number;
+  seatNumber?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ITicketsForm extends FieldValues {
   firstName?: string;
-  lastName?: string;  
+  lastName?: string;
+  code?: string;
+  departureDateTime?: string;
+  arrivalDateTime?: string;
+  seatNumber?: string;
 }

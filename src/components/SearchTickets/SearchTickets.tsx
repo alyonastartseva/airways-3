@@ -29,7 +29,7 @@ import {
 } from '@/interfaces/search-tickets.interfaces';
 import { getDestinations } from '@services/destinations.service';
 import { getFlights } from '@services/flights.service';
-import { IFlights } from '@/interfaces/flights.interfaces';
+import { IFlightPresentation } from '@/interfaces/flights.interfaces';
 
 interface Props {
   startDate: Date | null;
@@ -119,8 +119,8 @@ const MainSearch = ({ startDate, endDate }: Props) => {
 
       const flights = await getFlights();
       if (flights) {
-        const departFlight: IFlights[] = [];
-        const returnFlight: IFlights[] = [];
+        const departFlight: IFlightPresentation[] = [];
+        const returnFlight: IFlightPresentation[] = [];
 
         if (directFlightsOnly) {
           const directFlightCode = fromAirportCode + toAirportCode;

@@ -4,7 +4,7 @@ import {
   ITicketsGet,
   ITicketsPost,
 } from '@interfaces/tickets.interface';
-import { IFlight, IFlightPost } from '@/interfaces/flights.interfaces';
+import { IFlights, IFlightPost } from '@/interfaces/flights.interfaces';
 
 import ERoutes from './endpoints.service';
 

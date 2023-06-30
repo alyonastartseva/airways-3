@@ -85,8 +85,7 @@ const Tickets = () => {
     },
     [editableRowState]
   );
-
-  console.log(editableRowState);
+  
   // получение данных
   const { data: ticketsData, isLoading } = useTicketsQuery();
   const tickets = ticketsData?.content;
