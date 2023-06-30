@@ -370,7 +370,8 @@ const Tickets = () => {
         </Box>
       </TableContainer>
     );
-  } else return <AlertMessage />;
+  }
+  if(!Array.isArray(tickets)) return <AlertMessage />;
 };
 
 export default Tickets;
