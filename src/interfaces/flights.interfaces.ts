@@ -11,7 +11,7 @@ export type TFlightsStatus =
   | 'ARRIVED'
   | 'ON_TIME';
 
-export interface IFlight {
+export interface IFlights {
   aircraft: IAircraft;
   arrivalDateTime: string;
   code: string;
@@ -42,6 +42,7 @@ export interface IFlightPresentation {
 export interface IFlightsUpdate extends Partial<IFlightPresentation> {
   id: number;
 }
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IFlightPost extends Omit<IFlightPresentation, 'id'> {}
 
 export interface IFlightPostFormFields

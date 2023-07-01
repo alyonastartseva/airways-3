@@ -1,6 +1,6 @@
 import { IDestination } from '@interfaces/destination.interfaces';
 
-import { IFlights } from './flights.interfaces';
+import { IFlightPresentation } from './flights.interfaces';
 
 export type TDestQuery = Omit<IDestination, 'id'>;
 
@@ -18,6 +18,6 @@ export interface IDates {
 }
 
 export interface ISearchRadioData {
-  departFlight: IFlights[];
-  returnFlight?: IFlights[];
+  departFlight: IFlightPresentation[];
+  returnFlight?: IFlightPresentation[];
 }

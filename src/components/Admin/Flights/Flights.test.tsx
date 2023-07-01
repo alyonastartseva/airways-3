@@ -2,7 +2,7 @@ import { render, screen, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, vi } from 'vitest';
 import { QueryClientProvider, QueryClient } from 'react-query';
 
-import { IFlights } from '@/interfaces/flights.interfaces';
+import { IFlight } from '@/interfaces/flights.interfaces';
 
 import Flights from './Flights';
 
@@ -52,7 +52,7 @@ describe('Flights', () => {
   it('useFlightsQuery should work correct', async () => {
     const queryClient = new QueryClient();
 
-    const testData: IFlights[] = [
+    const testData: IFlight[] = [
       {
         id: 1,
         code: 'VKOOMS',
