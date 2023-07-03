@@ -6,7 +6,7 @@ enum ERoutes {
   GET_FLIGHTS = '/flights/all',
   FLIGHTS = '/flights/',
   SEAT = '/seats/',
-  TICKETS = '/tickets'
+  TICKETS = '/tickets/'
 }
 
 export default ERoutes;
