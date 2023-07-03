@@ -4,11 +4,8 @@ import {
   ITicketsGet,
   ITicketsPost,
 } from '@interfaces/tickets.interface';
-import { IFlights, IFlightPost } from '@/interfaces/flights.interfaces';
 
 import ERoutes from './endpoints.service';
-
-
 
 const ticketsAPI = {
   getTickets: async () => {
