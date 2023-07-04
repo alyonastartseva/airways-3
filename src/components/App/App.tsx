@@ -25,10 +25,18 @@ const App = () => {
         <Route path="register" element={<RegisterPage />} />
         <Route path="admin" element={<LoginAdminForm />} />
         <Route path="sign-up" element={<SignUpPage />} />
-
         <Route element={<PrivateRoute />}>
           <Route path="users" element={<UsersPage />} />
           <Route path="airplanes" element={<AirplanesPage />} />
+          <Route
+            path="airplanes/airplane-more"
+            element={<AirplaneMorePage />}
+          />
+
+          <Route
+            path="airplanes/airplane-more/:airplane"
+            element={<AirplaneMorePage />}
+          />
           <Route path="passengers" element={<PassengersPage />} />
           <Route path="destinations" element={<DestinationsPage />} />
           <Route path="flights" element={<FlightsPage />} />
