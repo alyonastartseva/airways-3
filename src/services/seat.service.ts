@@ -14,10 +14,12 @@ interface ISeatApi {
 }
 
 const seatAPI: ISeatApi = {
-  getSeat: async () => {
-    return await adminInstance
-      .get<ISeat[]>(ERoutes.SEAT)
-      .then((response) => response.data);
+  getSeat: async (id?: number) => {
+    if (id > 0 && id <= 10) {
+      return await adminInstance
+        .get<ISeat[]>(`${ERoutes.SEAT}aircraft/${id}`)
+        .then((response) => response.data);
+    }
   },
 
   postSeat: async (data: ISeatForm) => {

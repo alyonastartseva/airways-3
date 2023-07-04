@@ -9,9 +9,12 @@ import {
   Box,
 } from '@chakra-ui/react';
 import { EditIcon, CloseIcon } from '@chakra-ui/icons';
+import { Link } from 'react-router-dom';
 
 import { IPopoverTable } from '@interfaces/table.interfaces';
 import { Details } from '@common/icons';
+import ELinks from '@services/admin-router-links.service';
+import { mapRoutesFormData } from '@utils/form-routes.utils';
 
 const PopoverTable = <Data,>({
   row,
@@ -39,24 +42,35 @@ const PopoverTable = <Data,>({
     >
       <PopoverArrow border="1px solid #2B2B2B" bgColor="#E2F3F5" />
       <PopoverHeader border="none" borderBottom="1px solid #2B2B2B" p={0}>
-        <Button
-          leftIcon={<Details />}
-          border="none"
-          height="3rem"
-          width="100%"
-          borderRadius="none"
-          borderTopLeftRadius="0.4rem"
-          borderTopRightRadius="0.4rem"
-          fontSize="0.9rem"
-          fontWeight="medium"
-          justifyContent="flex-start"
-          _hover={{
-            backgroundColor: '#C5E3F6',
-          }}
-          bgColor="#E2F3F5"
+        <Link
+          to={
+            // Условие для самолетов, когда будут другие страницы, можно расширить / убрать
+            row?.model
+              ? `${ELinks.ADMIN_AIRPLANES}${
+                  ELinks.ADMIN_SEAT
+                }/${mapRoutesFormData(row)}`
+              : null
+          }
         >
-          Подробности
-        </Button>
+          <Button
+            leftIcon={<Details />}
+            border="none"
+            height="3rem"
+            width="100%"
+            borderRadius="none"
+            borderTopLeftRadius="0.4rem"
+            borderTopRightRadius="0.4rem"
+            fontSize="0.9rem"
+            fontWeight="medium"
+            justifyContent="flex-start"
+            _hover={{
+              backgroundColor: '#C5E3F6',
+            }}
+            bgColor="#E2F3F5"
+          >
+            Подробности
+          </Button>
+        </Link>
       </PopoverHeader>
       <PopoverHeader border="none" borderBottom="1px solid #2B2B2B" p={0}>
         <Button

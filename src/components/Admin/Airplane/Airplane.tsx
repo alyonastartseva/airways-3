@@ -15,7 +15,7 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 import { useCallback, useMemo, useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
 import { ISeat, ISeatForm } from '@/interfaces/seat.interfaces';
 import { EditableCell } from '@common/EditableCell';
@@ -34,6 +34,9 @@ import { EModalNames } from '@/constants/modal-constants/modal-names';
 import ELinks from '@services/admin-router-links.service';
 
 const Airplane = () => {
+  // получение параметра ID из роута
+  const param = useParams();
+
   // индекс и размер пагинации
   const [{ pageIndex, pageSize }, setPagination] = useState({
     pageIndex: 0,
@@ -66,7 +69,10 @@ const Airplane = () => {
   );
 
   // получение данных
-  const { data: seat, isLoading } = useSeatGet();
+  const airplaneId = param.airplane;
+
+  const { data: dataSeat, isLoading } = useSeatGet(airplaneId);
+  const seat = dataSeat?.content;
 
   // изменение данных
   const { mutate: postSeat } = useSeatPost();
@@ -84,7 +90,6 @@ const Airplane = () => {
 
   // Состояние для хранения выбранного класса для фильтра
   const [selectedValue, setSelectedValue] = useState('');
-
   // Обновляем выбранное значение и фильтруем данные
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -160,7 +165,7 @@ const Airplane = () => {
         ),
       }),
       columnHelper.accessor('isLockedBack', {
-        header: 'Неподвижное сидень',
+        header: 'Неподвижное сиденье',
         cell: (info) => (
           <EditableCell
             value={
