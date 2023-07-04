@@ -27,7 +27,7 @@ import { HeaderAdmin } from '@common/HeaderAdmin';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortSeat } from '@utils/sort.utils';
-import { useSeatGet } from '@hooks/useSeatGet';
+import { useSeatQuery } from '@hooks/useSeatQuery';
 import { useSeatPost } from '@hooks/useSeatPost';
 import { useSeatDelete } from '@hooks/useSeatDelete';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
@@ -71,7 +71,7 @@ const Airplane = () => {
   // получение данных
   const airplaneId = param.airplane;
 
-  const { data: dataSeat, isLoading } = useSeatGet(airplaneId);
+  const { data: dataSeat, isLoading } = useSeatQuery(Number(airplaneId));
   const seat = dataSeat?.content;
 
   // изменение данных
@@ -105,7 +105,7 @@ const Airplane = () => {
       if (seat) {
         const filteredData =
           selectedValue !== ''
-            ? seat.filter((item) => item.category.categoryType === value)
+            ? seat.filter((item: ISeat) => item.category.categoryType === value)
             : seat;
         setFilteredSeat(filteredData);
       }

@@ -34,3 +34,7 @@ export interface ISeatForm extends FieldValues {
   isNearEmergencyExit?: boolean;
   seatNumber?: string;
 }
+
+export interface ISeatContent {
+  content: ISeat[];
+}

@@ -3,7 +3,7 @@ import { useToast } from '@chakra-ui/react';
 
 import { getSeat } from '@/services/seat.service';
 
-const useSeatGet = (id: number) => {
+const useSeatQuery = (id: number) => {
   const toast = useToast();
   return useQuery(['seats', id], () => getSeat(id), {
     onError: (error) => {
@@ -18,4 +18,4 @@ const useSeatGet = (id: number) => {
   });
 };
 
-export { useSeatGet };
+export { useSeatQuery };

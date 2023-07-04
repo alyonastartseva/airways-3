@@ -43,14 +43,10 @@ const PopoverTable = <Data,>({
       <PopoverArrow border="1px solid #2B2B2B" bgColor="#E2F3F5" />
       <PopoverHeader border="none" borderBottom="1px solid #2B2B2B" p={0}>
         <Link
-          to={
-            // Условие для самолетов, когда будут другие страницы, можно расширить / убрать
-            row?.model
-              ? `${ELinks.ADMIN_AIRPLANES}${
-                  ELinks.ADMIN_SEAT
-                }/${mapRoutesFormData(row)}`
-              : null
-          }
+          // Условие для самолетов, когда будут другие страницы, можно расширить / убрать
+          to={`${ELinks.ADMIN_AIRPLANES}${
+            ELinks.ADMIN_SEAT
+          }/${mapRoutesFormData(row)}`}
         >
           <Button
             leftIcon={<Details />}
