@@ -9,7 +9,7 @@ const useTicketsPost = () => {
 
   return useMutation(postTickets, {
     onSuccess: () => {
-      queryClient.invalidateQueries('flights');
+      queryClient.invalidateQueries('tickets');
       toast({
         status: 'success',
         title: 'Билет успешно добавлен',

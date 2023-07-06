@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.1](https://gitlab.com/levotarayan98/airways/compare/v1.6.0...v1.6.1) (2023-07-06)
+
+## 1.6.0 (2023-07-04)
+
+
+### Features
+
+* add readme file ([aa3335d](https://gitlab.com/levotarayan98/airways/commit/aa3335dee94fc97a422e12419bac5da6a82d0407))
+* add Ticket Page ([67fc9aa](https://gitlab.com/levotarayan98/airways/commit/67fc9aaa74970176e0a269631191d1c5876667f7))
+* add tickets page, second try ([09af1fb](https://gitlab.com/levotarayan98/airways/commit/09af1fbb13baf8fabd340f19ce3a1b56ff586752))
+* add user header ([896623a](https://gitlab.com/levotarayan98/airways/commit/896623afd283f800e75052c6a5b25dfb900c00d9))
+* make test for Header and add Header to pages ([0709f02](https://gitlab.com/levotarayan98/airways/commit/0709f029549cd7cdc73052bf894175212694767f))
+* modal add new ticket ([770d318](https://gitlab.com/levotarayan98/airways/commit/770d318feb029e73861b63631aafe189c97ab928))
+* ticket form ([3923d91](https://gitlab.com/levotarayan98/airways/commit/3923d91b7a0ca29682bc9d2fbf3f67e5fe6a8526))
+* tickets page ([fc83b75](https://gitlab.com/levotarayan98/airways/commit/fc83b751c3079138d0fbaa122d8c0cd50ad406ed))
+
+
+### Bug Fixes
+
+* **Admin:** fix module path in test ([f1a9b87](https://gitlab.com/levotarayan98/airways/commit/f1a9b87277ff47b5a63404d4d23e7a2cff5d9290))
+* breaking changelog configuration ([b8dd4b2](https://gitlab.com/levotarayan98/airways/commit/b8dd4b24ded5fb511d935cbc6ecd8628ed2ae88e))
+* fix admin queries ([6b997fe](https://gitlab.com/levotarayan98/airways/commit/6b997fe3d4f17f2dbc0eed7469ee7b064f3d3d13))
+* fix remove tickets ([6215668](https://gitlab.com/levotarayan98/airways/commit/621566830e702ee6c64cdf8be5a96b474bc9cea8))
+* husky ([2f5b476](https://gitlab.com/levotarayan98/airways/commit/2f5b476cadf119fc525850abe28322e98d4349dd))
+
 ## 1.5.0 (2023-07-03)
 
 ### Features
