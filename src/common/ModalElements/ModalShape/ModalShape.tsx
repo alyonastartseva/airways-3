@@ -38,7 +38,7 @@ const ModalShape = <T extends FieldValues>({ formName }: IModalProps) => {
 
   const { mutateAsync } = hook();
 
-  const onSubmit: SubmitHandler<T> = async (data) => {
+  const onSubmit: SubmitHandler<T> = async (data) => {   
     const requestData = mapFieldValuesToRequestData
       ? mapFieldValuesToRequestData?.(data)
       : data;
@@ -51,7 +51,7 @@ const ModalShape = <T extends FieldValues>({ formName }: IModalProps) => {
   };
 
   return (
-    <div>
+    <>
       <ButtonAddAdmin name={name} onClick={onOpen} />
       <Modal
         isOpen={isOpen}
@@ -72,6 +72,7 @@ const ModalShape = <T extends FieldValues>({ formName }: IModalProps) => {
               <ModalBody mt={0} px={7}>
                 {fields.map((field) => {
                   const { fieldName, ...fieldRest } = field;
+                  
                   return (
                     <ModalInput<T>
                       key={fieldName}
@@ -90,7 +91,7 @@ const ModalShape = <T extends FieldValues>({ formName }: IModalProps) => {
           </form>
         </FormProvider>
       </Modal>
-    </div>
+    </>
   );
 };
 

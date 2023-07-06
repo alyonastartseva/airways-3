@@ -28,7 +28,7 @@ const ticketsAPI = {
   },
 
   postTickets: async (data: ITicketsPost) => {
-    return await adminInstance.post<ITickets>(ERoutes.TICKETS, data);
+    return await adminInstance.post<ITicketsPost>(ERoutes.TICKETS, data);
   },
 };
 
