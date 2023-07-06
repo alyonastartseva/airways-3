@@ -2,11 +2,16 @@ import { AxiosResponse } from 'axios';
 
 import { adminInstance } from '@/services/axios.service';
 import ERoutes from '@/services/endpoints.service';
-import { ISeat, ISeatPost, ISeatForm } from '@/interfaces/seat.interfaces';
+import {
+  ISeat,
+  ISeatPost,
+  ISeatForm,
+  ISeatContent,
+} from '@/interfaces/seat.interfaces';
 import { mapSeatFormData } from '@/utils/form-seat.utils';
 
 interface ISeatApi {
-  getSeat: () => Promise<ISeat[] | undefined>;
+  getSeat: (id: number) => Promise<ISeatContent | undefined>;
   postSeat: (data: ISeatPost) => Promise<AxiosResponse<ISeatPost, Error>>;
   deleteSeat: (
     id: number | undefined
@@ -14,10 +19,10 @@ interface ISeatApi {
 }
 
 const seatAPI: ISeatApi = {
-  getSeat: async (id?: number) => {
+  getSeat: async (id: number) => {
     if (id > 0 && id <= 10) {
       return await adminInstance
-        .get<ISeat[]>(`${ERoutes.SEAT}aircraft/${id}`)
+        .get<ISeatContent>(`${ERoutes.SEAT}aircraft/${id}`)
         .then((response) => response.data);
     }
   },
