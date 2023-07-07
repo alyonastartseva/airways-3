@@ -35,7 +35,7 @@ const Airplanes = () => {
   // индекс и размер пагинации
   const [{ pageIndex, pageSize }, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 4,
+    pageSize: 10,
   });
 
   // изменение пагинации
@@ -76,6 +76,7 @@ const Airplanes = () => {
   // получение данных
   const { data: airplanesData, isLoading } = useAircraftQuery();
   const airplanes = airplanesData?.content;
+  const totalPages = airplanesData?.totalPages;
 
   // изменение данных
   const { mutate: patchAircraft } = useAircraftPatch();
@@ -295,6 +296,7 @@ const Airplanes = () => {
           cancelEditing={cancelEditing}
           patchRow={patchRow}
           editableRowIndex={editableRowIndex}
+          totalPages={totalPages}
         />
       </TableContainer>
     );

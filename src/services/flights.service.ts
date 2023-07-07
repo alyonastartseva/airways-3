@@ -11,9 +11,9 @@ import {
 import { IListResponse } from '@/interfaces/response.intefaces';
 
 interface IFlightsApi {
-  getFlights: () => Promise<
-    IListResponse<Required<IFlightPresentation>> | undefined
-  >;
+  getFlights: (
+    pageIndex?: number
+  ) => Promise<IListResponse<Required<IFlightPresentation>> | undefined>;
   postFlight: (data: IFlightPost) => Promise<AxiosResponse<IFlight, any>>;
   deleteFlight: (
     id: number | undefined
@@ -24,9 +24,11 @@ interface IFlightsApi {
 }
 
 const flightsAPI: IFlightsApi = {
-  getFlights: async () => {
+  getFlights: async (pageIndex?: number) => {
     return await adminInstance
-      .get<IListResponse<Required<IFlightPresentation>>>(ERoutes.GET_FLIGHTS)
+      .get<IListResponse<Required<IFlightPresentation>>>(
+        ERoutes.GET_FLIGHTS + `?pageNumber=${String(pageIndex)}&pageSize=10`
+      )
       .then((response) => response.data);
   },
 

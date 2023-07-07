@@ -3,10 +3,10 @@ import { useToast } from '@chakra-ui/react';
 
 import { getFlights } from '@/services/flights.service';
 
-const useFlightsQuery = () => {
+const useFlightsQuery = (pageIndex: number) => {
   const toast = useToast();
 
-  return useQuery('flights', getFlights, {
+  return useQuery(['flights', pageIndex], () => getFlights(pageIndex), {
     onError: (error) => {
       if (error instanceof Error) {
         toast({

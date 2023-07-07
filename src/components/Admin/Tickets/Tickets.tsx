@@ -9,7 +9,7 @@ import {
   Tbody,
   Td,
 } from '@chakra-ui/react';
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import {
   createColumnHelper,
   useReactTable,
@@ -17,6 +17,7 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 import dayjs from 'dayjs';
+import { useQueryClient } from 'react-query';
 
 import { HeaderAdmin } from '@common/HeaderAdmin';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
@@ -34,6 +35,9 @@ import { FooterTable } from '@/common/FooterTable';
 import { AlertMessage } from '@/common/AlertMessage';
 
 const Tickets = () => {
+
+  const queryClient = useQueryClient();
+
   // индекс и размер пагинации
   const [{ pageIndex, pageSize }, setPagination] = useState({
     pageIndex: 0,
@@ -46,7 +50,23 @@ const Tickets = () => {
       ...prev,
       pageIndex: pageNumber,
     }));
+    localStorage.setItem('TICKETS_CURR_PAGE', String(pageNumber));
   };
+
+  // сбрасываем список билетов после смены страницы
+  useEffect(()=> {
+    queryClient.invalidateQueries('tickets');
+  }, [pageIndex, queryClient]);
+
+  useEffect(()=> {
+    const currPage = Number(localStorage.getItem('TICKETS_CURR_PAGE'));
+    if (currPage > 0) setPaginationData(currPage);
+  }, []);
+
+  useEffect(()=> {
+    const currPage = Number(localStorage.getItem('TICKETS_CURR_PAGE'));
+    if (currPage > 0) setPaginationData(currPage);
+  }, []);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -87,9 +107,10 @@ const Tickets = () => {
   );
   
   // получение данных
-  const { data: ticketsData, isLoading } = useTicketsQuery();
+  const { data: ticketsData, isLoading } = useTicketsQuery(pageIndex);
   const tickets = ticketsData?.content;
-
+  const totalPages = ticketsData?.totalPages;
+  
   // изменение данных
   const { mutate: patchTickets } = useTicketsPatch();
 
@@ -366,6 +387,7 @@ const Tickets = () => {
             cancelEditing={cancelEditing}
             patchRow={patchRow}
             editableRowIndex={editableRowIndex}
+            totalPages={totalPages}
           />
         </Box>
       </TableContainer>

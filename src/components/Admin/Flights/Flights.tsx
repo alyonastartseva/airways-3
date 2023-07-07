@@ -15,6 +15,7 @@ import {
 } from '@tanstack/react-table';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useQueryClient } from 'react-query';
 
 import { EditableSelectCell } from '@/common/EditableSelectCell';
 import { flightStatuses } from '@/constants/constants';
@@ -40,6 +41,9 @@ import { isRowEditing } from '@utils/table.utils';
 import { useFlightsPatch } from '@/hooks/useFlightsPatch';
 
 const Flights = () => {
+
+  const queryClient = useQueryClient();
+
   // индекс и размер пагинации
   const [{ pageIndex, pageSize }, setPagination] = useState({
     pageIndex: 0,
@@ -53,6 +57,10 @@ const Flights = () => {
       pageIndex: pageNumber,
     }));
   };
+
+  useEffect(()=> {
+    queryClient.invalidateQueries('flights');
+  }, [pageIndex]);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -92,8 +100,9 @@ const Flights = () => {
     useAircraftQuery();
   const airplanes = airplanesData?.content;
 
-  const { data: flightsData, isLoading, isError } = useFlightsQuery();
+  const { data: flightsData, isLoading, isError } = useFlightsQuery(pageIndex);
   const flights = flightsData?.content;
+  const totalPages = flightsData?.totalPages;
 
   const { mutate: deleteFlight } = useFlightsDelete();
   const { mutate: patchFlights } = useFlightsPatch();
@@ -403,6 +412,7 @@ const Flights = () => {
           cancelEditing={cancelEditing}
           patchRow={patchRow}
           editableRowIndex={editableRowIndex}
+          totalPages={totalPages}
         />
       </TableContainer>
     );
