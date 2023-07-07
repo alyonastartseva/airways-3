@@ -10,6 +10,7 @@ export interface IAircraft {
 
 export interface IAircraftsGet {
   content: IAircraft[];
+  totalPages: number;
 }
 
 export interface IAircraftPost extends FieldValues {

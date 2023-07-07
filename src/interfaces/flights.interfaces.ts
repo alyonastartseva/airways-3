@@ -11,7 +11,7 @@ export type TFlightsStatus =
   | 'ARRIVED'
   | 'ON_TIME';
 
-export interface IFlights {
+export interface IFlight {
   aircraft: IAircraft;
   arrivalDateTime: string;
   code: string;

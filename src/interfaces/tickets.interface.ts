@@ -13,6 +13,7 @@ export interface ITickets {
 
 export interface ITicketsGet {
   content: ITickets[];
+  totalPages?: number;
 }
 
 export interface ITicketsPost extends FieldValues {

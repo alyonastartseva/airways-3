@@ -46,7 +46,13 @@ const Passengers = () => {
       ...prev,
       pageIndex: pageNumber,
     }));
+    localStorage.setItem('PASS_CURR_PAGE', String(pageNumber));
   };
+
+  useEffect(()=> {
+    const currPage = Number(localStorage.getItem('PASS_CURR_PAGE'));
+    if (currPage > 0) setPaginationData(currPage);
+  }, []);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -99,6 +105,7 @@ const Passengers = () => {
   // получение данных
   const { data: dataQuery, isLoading } = usePassengersQuery(pageIndex);
   const passengers = dataQuery?.content;
+  const totalPages = dataQuery?.totalPages;
 
   if (!isLoading) {
     localStorage.setItem(
@@ -422,6 +429,7 @@ const Passengers = () => {
           cancelEditing={cancelEditing}
           patchRow={patchRow}
           editableRowIndex={editableRowIndex}
+          totalPages={totalPages}
         />
       </TableContainer>
     );

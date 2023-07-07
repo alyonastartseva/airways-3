@@ -8,9 +8,9 @@ import {
 import ERoutes from './endpoints.service';
 
 const ticketsAPI = {
-  getTickets: async () => {
+  getTickets: async (pageIndex?: number) => {
     return await adminInstance
-      .get<ITicketsGet>(ERoutes.TICKETS)
+      .get<ITicketsGet>(ERoutes.TICKETS + `?page=${String(pageIndex)}&size=10`)
       .then((response) => response.data);
   },
 
@@ -20,9 +20,9 @@ const ticketsAPI = {
     }
   },
 
-  patchTickets: async(data: ITickets | null) => {
-    if(data){
-      const {id, ...rest} = data;
+  patchTickets: async (data: ITickets | null) => {
+    if (data) {
+      const { id, ...rest } = data;
       return await adminInstance.put<ITickets>(ERoutes.TICKETS + id, rest);
     }
   },
@@ -32,4 +32,5 @@ const ticketsAPI = {
   },
 };
 
-export const { getTickets, deleteTicket, patchTickets, postTickets } = ticketsAPI;
+export const { getTickets, deleteTicket, patchTickets, postTickets } =
+  ticketsAPI;
