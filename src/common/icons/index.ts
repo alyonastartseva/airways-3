@@ -1,5 +1,6 @@
 export { default as ArrowDownIcon } from './ArrowDown';
 export { default as ArrowRightIcon } from './ArrowRight';
+export { default as ArrowLeftIcon } from './ArrowLeft';
 export { default as ArrowsIcon } from './Arrows';
 export { default as CalendarIcon } from './Calendar';
 export { default as ChevronIcon } from './Chevron';

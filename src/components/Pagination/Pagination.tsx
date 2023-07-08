@@ -1,26 +1,19 @@
 import { useCallback } from 'react';
 import { Box, Button, ButtonGroup, Flex } from '@chakra-ui/react';
 
+import { ArrowRightIcon, ArrowLeftIcon } from '@/common/icons/';
 import { IPagination } from '@interfaces/pagination.interfaces';
 import { getVisiblePages } from '@utils/pagination.utils';
 
 const Pagination = <Data,>(props: IPagination<Data>) => {
-  const PaginationStyle = {
-    _borderRadius: '0.4rem',
-    _textColor: '#0052BD',
-    _textColorHover: '#ffffff',
-    _textColorActive: '#ffffff',
-    _bgColor: '#C2DCFF',
-    _bgColorActive: '#398AEA',
-  };
+  enum PaginationStyle {
+    _borderRadius = '0.4rem',
+    _textColor = '#0052BD',
+    _bgColor = '#C2DCFF',
+    _bgColorActive = '#398AEA',
+  }
 
-  const {
-    data,
-    setPaginationData,
-    pageIndex,
-    pageSize,
-    totalPages = 1,
-  } = props;
+  const { data, setPaginationData, pageIndex, totalPages = 1 } = props;
 
   const setPagination = useCallback(
     (pageNumber: number) => {
@@ -40,6 +33,7 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
   return data && totalPages > 1 ? (
     <Flex my={8}>
       <Button
+        leftIcon={<ArrowLeftIcon color="#0052BD" />}
         outline={'none'}
         display={pageIndex == 0 ? 'none' : 'block'}
         ml={0}
@@ -49,6 +43,7 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
         fontWeight={400}
         variant="ghost"
         color={PaginationStyle._textColor}
+        fontSize="1rem"
         // caution: при выставлении outline: 'none' и border: 'none' - верстка прыгает
         // здесь и ниже borderColor выставлен под цвет фона (белый)
         _hover={{
@@ -64,7 +59,7 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
           borderColor: '#FFFFFF',
         }}
       >
-        {'< Предыдущая страница'}
+        {' Предыдущая страница'}
       </Button>
       <ButtonGroup spacing={1}>
         {getVisiblePages(pageIndex, totalPages).map((page, index) => (
@@ -82,7 +77,7 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
             }
             outline={'none'}
             w={10}
-            h={38}
+            h={39}
             _hover={{
               backgroundColor: PaginationStyle._bgColorActive,
               color: '#ffffff',
@@ -140,6 +135,7 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
         </Button>
       </ButtonGroup>
       <Button
+        rightIcon={<ArrowRightIcon color={'#0052BD'} />}
         outline={'none'}
         display={pageIndex + 1 == totalPages ? 'none' : 'block'}
         ms={5}
@@ -161,7 +157,7 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
           borderColor: '#FFFFFF',
         }}
       >
-        {'Следующая страница >'}
+        {'Следующая страница '}
       </Button>
     </Flex>
   ) : null;
