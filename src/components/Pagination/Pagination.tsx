@@ -32,35 +32,64 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
 
   return data && totalPages > 1 ? (
     <Flex my={8}>
-      <Button
-        leftIcon={<ArrowLeftIcon color="#0052BD" />}
-        outline={'none'}
-        display={pageIndex == 0 ? 'none' : 'block'}
-        ml={0}
-        mr={5}
-        className="rounded p-1"
-        onClick={() => setPagination(pageIndex - 1)}
-        fontWeight={400}
-        variant="ghost"
-        color={PaginationStyle._textColor}
-        fontSize="1rem"
-        // caution: при выставлении outline: 'none' и border: 'none' - верстка прыгает
-        // здесь и ниже borderColor выставлен под цвет фона (белый)
-        _hover={{
-          outline: 'none',
-          borderColor: '#FFFFFF',
-        }}
-        _active={{
-          outline: 'none',
-          borderColor: '#FFFFFF',
-        }}
-        _focus={{
-          outline: 'none',
-          borderColor: '#FFFFFF',
-        }}
-      >
-        {' Предыдущая страница'}
-      </Button>
+      <Flex>
+        <Button
+          outline={'none'}
+          display={pageIndex == 0 ? 'none' : 'block'}
+          onClick={() => setPagination(pageIndex - 1)}
+          fontWeight={400}
+          variant="ghost"
+          w="5"
+          color={PaginationStyle._textColor}
+          fontSize="1rem"
+          // caution: при выставлении outline: 'none' и border: 'none' - верстка прыгает
+          // здесь и ниже borderColor выставлен под цвет фона (белый)
+          _hover={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+          _active={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+          _focus={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+        >
+          {<ArrowLeftIcon color="#0052BD" />}
+        </Button>
+        <Button
+          // leftIcon={<ArrowLeftIcon color='#0052BD'/>}
+          outline={'none'}
+          display={pageIndex == 0 ? 'none' : 'block'}
+          ml={0}
+          mr={5}
+          pl={0}
+          className="rounded p-1"
+          onClick={() => setPagination(pageIndex - 1)}
+          fontWeight={400}
+          variant="ghost"
+          color={PaginationStyle._textColor}
+          fontSize="1rem"
+          // caution: при выставлении outline: 'none' и border: 'none' - верстка прыгает
+          // здесь и ниже borderColor выставлен под цвет фона (белый)
+          _hover={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+          _active={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+          _focus={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+        >
+          {' Предыдущая страница'}
+        </Button>
+      </Flex>
       <ButtonGroup spacing={1}>
         {getVisiblePages(pageIndex, totalPages).map((page, index) => (
           <Button
@@ -134,31 +163,57 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
           {totalPages}
         </Button>
       </ButtonGroup>
-      <Button
-        rightIcon={<ArrowRightIcon color={'#0052BD'} />}
-        outline={'none'}
-        display={pageIndex + 1 == totalPages ? 'none' : 'block'}
-        ms={5}
-        className="rounded p-1"
-        onClick={() => setPagination(pageIndex + 1)}
-        fontWeight={400}
-        variant="ghost"
-        color={PaginationStyle._textColor}
-        _hover={{
-          outline: 'none',
-          borderColor: '#FFFFFF',
-        }}
-        _active={{
-          outline: 'none',
-          border: 'none',
-        }}
-        _focus={{
-          outline: 'none',
-          borderColor: '#FFFFFF',
-        }}
-      >
-        {'Следующая страница '}
-      </Button>
+      <Flex>
+        <Button
+          outline={'none'}
+          display={pageIndex + 1 == totalPages ? 'none' : 'block'}
+          ml={5}
+          pr={1}
+          className="rounded p-1"
+          onClick={() => setPagination(pageIndex + 1)}
+          fontWeight={400}
+          variant="ghost"
+          color={PaginationStyle._textColor}
+          _hover={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+          _active={{
+            outline: 'none',
+            border: 'none',
+          }}
+          _focus={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+        >
+          {'Следующая страница '}
+        </Button>
+        <Button
+          outline={'none'}
+          display={pageIndex == 0 ? 'none' : 'block'}
+          onClick={() => setPagination(pageIndex - 1)}
+          variant="ghost"
+          color={PaginationStyle._textColor}
+          pl="0"
+          // caution: при выставлении outline: 'none' и border: 'none' - верстка прыгает
+          // здесь и ниже borderColor выставлен под цвет фона (белый)
+          _hover={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+          _active={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+          _focus={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+        >
+          {<ArrowRightIcon color="#0052BD" />}
+        </Button>
+      </Flex>
     </Flex>
   ) : null;
 };
