@@ -1,9 +1,12 @@
 import { Box, Text } from '@chakra-ui/react';
 
 import { Logo } from '@common/icons';
+import setLogoParams from '@utils/set-logo-params.utils';
 
-const WebsiteLogo = (props: { isFooter: boolean }) => {
-  const { isFooter } = props;
+const WebsiteLogo = (props: { isFooter: boolean; isLogged: boolean }) => {
+  const { isFooter, isLogged } = props;
+  const { width, height, color } = setLogoParams(isFooter, isLogged);
+
   return (
     <Box
       display="flex"
@@ -12,9 +15,9 @@ const WebsiteLogo = (props: { isFooter: boolean }) => {
       height="40px"
       data-testid="websiteLogo"
     >
-      <Logo width={isFooter ? 21.5 : 43} height={isFooter ? 25 : 50} />
+      <Logo width={width} height={height} color={color} />
       <Text
-        color="white"
+        color={color}
         fontWeight="500"
         fontSize={isFooter ? '1rem' : '1.5rem'}
         lineHeight="1.125rem"

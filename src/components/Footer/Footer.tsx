@@ -2,8 +2,11 @@ import { Box, Flex, Link, Spacer } from '@chakra-ui/react';
 import { Link as routerLink } from 'react-router-dom';
 
 import { WebsiteLogo } from '@common/WebsiteLogo';
+import { useAuth } from '@/hooks/useAuth';
 
 const Footer = () => {
+  const { isAdmin: isLogged } = useAuth();
+
   const hoverStyles = {
     color: 'white',
     opacity: '0.8',
@@ -31,7 +34,7 @@ const Footer = () => {
         </Link>
       </Flex>
       <Spacer />
-      <WebsiteLogo isFooter={true} />
+      <WebsiteLogo isFooter={true} isLogged={isLogged} />
     </Box>
   );
 };
