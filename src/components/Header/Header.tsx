@@ -6,24 +6,26 @@ import { WebsiteLogo } from '@common/WebsiteLogo';
 import { useAuth } from '@/hooks/useAuth';
 import UserHeader from '@/components/User/UserHeader/UserHeader';
 import { AdminHeader } from '@/components/Admin/AdminHeader';
+import setHeaderParams from '@utils/set-header-params.utils';
 
 const Header = () => {
-  const { isAdmin } = useAuth();
+  const { isAdmin: isLogged } = useAuth();
+  const { backgroundColor } = setHeaderParams(isLogged);
 
   //Заглушка для авторизации пользователя
-  const isLogged = isAdmin;
 
   return (
     <Box
       h="80px"
       display="flex"
-      bg="#445EBD"
+      bg={backgroundColor}
+      boxShadow="0 1px 15px #A3A3A3"
       pr="25px"
       pl="25px"
       justifyContent="space-between"
       alignItems="center"
     >
-      <WebsiteLogo isFooter={false} />
+      <WebsiteLogo isFooter={false} isLogged={isLogged} />
       <Spacer />
       {!isLogged ? (
         <Flex gap="1rem" color="#006FFF" alignItems="center">
@@ -50,7 +52,7 @@ const Header = () => {
             </Button>
           </Link>
         </Flex>
-      ) : isAdmin ? (
+      ) : isLogged ? (
         <AdminHeader />
       ) : (
         <UserHeader />
