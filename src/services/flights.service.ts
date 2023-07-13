@@ -8,8 +8,8 @@ import {
   IFlightPresentation,
   IFlightsUpdate,
 } from '@/interfaces/flights.interfaces';
-import { IListResponse } from '@/interfaces/response.intefaces';
-
+import { IListResponse } from '@/interfaces/response.interfaces';
+import { ITEMS_PER_PAGE } from '@/constants/constants';
 interface IFlightsApi {
   getFlights: (
     pageIndex?: number
@@ -27,7 +27,8 @@ const flightsAPI: IFlightsApi = {
   getFlights: async (pageIndex?: number) => {
     return await adminInstance
       .get<IListResponse<Required<IFlightPresentation>>>(
-        ERoutes.GET_FLIGHTS + `?pageNumber=${String(pageIndex)}&pageSize=10`
+        ERoutes.GET_FLIGHTS +
+          `?pageNumber=${String(pageIndex)}&pageSize=${ITEMS_PER_PAGE}`
       )
       .then((response) => response.data);
   },

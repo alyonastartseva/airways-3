@@ -125,7 +125,7 @@ const MainSearch = ({ startDate, endDate }: Props) => {
         if (directFlightsOnly) {
           const directFlightCode = fromAirportCode + toAirportCode;
           const directFlight = flights.content.find(
-            (flight) => flight.code === directFlightCode
+            (flight: IFlightPresentation) => flight.code === directFlightCode
           );
 
           if (directFlight) {
@@ -135,11 +135,11 @@ const MainSearch = ({ startDate, endDate }: Props) => {
           const departFlightCode = fromAirportCode + toAirportCode;
           const returnFlightCode = toAirportCode + fromAirportCode;
 
-          const departFlights = flights.content.filter((flight) =>
-            flight.code.includes(departFlightCode)
+          const departFlights: IFlightPresentation[] = flights.content.filter(
+            (flight) => flight.code.includes(departFlightCode)
           );
-          const returnFlights = flights.content.filter((flight) =>
-            flight.code.includes(returnFlightCode)
+          const returnFlights: IFlightPresentation[] = flights.content.filter(
+            (flight) => flight.code.includes(returnFlightCode)
           );
 
           departFlight.push(...departFlights);

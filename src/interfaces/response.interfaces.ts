@@ -2,7 +2,7 @@ export interface IPageable {
   pageable: {
     offset: number;
     pageNumber: number;
-    pageSize: number;
+    // pageSize: number;
     paged: boolean;
     sort: {
       empty: boolean;

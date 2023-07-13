@@ -30,12 +30,12 @@ import { useAircraftQuery } from '@hooks/useAircraftQuery';
 import { useAircraftPatch } from '@hooks/useAircraftPatch';
 import { useAircraftDelete } from '@hooks/useAircraftDelete';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
+import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Airplanes = () => {
   // индекс и размер пагинации
-  const [{ pageIndex, pageSize }, setPagination] = useState({
+  const [{ pageIndex }, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
   });
 
   // изменение пагинации
@@ -207,8 +207,8 @@ const Airplanes = () => {
   // создание таблицы
   const table = useReactTable({
     data: tableData(airplanes).slice(
-      pageIndex * pageSize,
-      pageIndex * pageSize + pageSize
+      pageIndex * ITEMS_PER_PAGE,
+      pageIndex * ITEMS_PER_PAGE + ITEMS_PER_PAGE
     ),
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -291,7 +291,6 @@ const Airplanes = () => {
         <FooterTable
           data={tableData(airplanes)}
           pageIndex={pageIndex}
-          pageSize={pageSize}
           setPaginationData={setPaginationData}
           cancelEditing={cancelEditing}
           patchRow={patchRow}

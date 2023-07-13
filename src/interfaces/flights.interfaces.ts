@@ -12,7 +12,7 @@ export type TFlightsStatus =
   | 'ON_TIME';
 
 export interface IFlight {
-  aircraft: IAircraft;
+  aircraft?: IAircraft;
   arrivalDateTime: string;
   code: string;
   departureDateTime: string;
@@ -20,7 +20,7 @@ export interface IFlight {
   from: IDestination;
   to: IDestination;
   id: number;
-
+  aircraftId?: number;
   //**  TODO: add below fields:
   /* seats: IFlightSeat[]
   /* booking: IBooking[]
@@ -36,7 +36,7 @@ export interface IFlightPresentation {
   code?: string;
   departureDateTime?: string;
   flightStatus?: TFlightsStatus;
-  id: number;
+  id?: number;
 }
 
 export interface IFlightsUpdate extends Partial<IFlightPresentation> {

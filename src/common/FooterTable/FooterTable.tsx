@@ -7,7 +7,6 @@ import { IFooterTable } from '@interfaces/table.interfaces';
 const FooterTable = <Data,>({
   data,
   pageIndex,
-  pageSize,
   totalPages,
   setPaginationData,
   editableRowIndex,
@@ -18,7 +17,6 @@ const FooterTable = <Data,>({
     <Pagination
       data={data}
       pageIndex={pageIndex}
-      pageSize={pageSize}
       totalPages={totalPages}
       setPaginationData={setPaginationData}
     />

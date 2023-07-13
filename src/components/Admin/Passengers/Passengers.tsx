@@ -32,12 +32,12 @@ import { usePassengersPatch } from '@hooks/usePassengersPatch';
 import { usePassengersQuery } from '@hooks/usePassengersQuery';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { IFormPassengers } from '@/interfaces/passenger.interfaces';
+import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Passengers = () => {
   // индекс и размер пагинации
-  const [{ pageIndex, pageSize }, setPagination] = useState({
+  const [{ pageIndex }, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
   });
 
   // изменение пагинации
@@ -49,7 +49,7 @@ const Passengers = () => {
     localStorage.setItem('PASS_CURR_PAGE', String(pageNumber));
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     const currPage = Number(localStorage.getItem('PASS_CURR_PAGE'));
     if (currPage > 0) setPaginationData(currPage);
   }, []);
@@ -354,7 +354,7 @@ const Passengers = () => {
 
   // создание таблицы
   const table = useReactTable({
-    data: tableData(passengers).slice(0, pageSize),
+    data: tableData(passengers).slice(0, ITEMS_PER_PAGE),
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
@@ -424,7 +424,6 @@ const Passengers = () => {
         <FooterTable
           data={tableData(passengers)}
           pageIndex={pageIndex}
-          pageSize={pageSize}
           setPaginationData={setPaginationData}
           cancelEditing={cancelEditing}
           patchRow={patchRow}

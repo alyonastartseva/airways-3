@@ -54,7 +54,7 @@ const SignUp = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<IFormUserCreate>({
+  } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(validationSchema),
   });

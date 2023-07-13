@@ -32,15 +32,15 @@ import { useSeatPost } from '@hooks/useSeatPost';
 import { useSeatDelete } from '@hooks/useSeatDelete';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import ELinks from '@services/admin-router-links.service';
+import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Airplane = () => {
   // получение параметра ID из роута
   const param = useParams();
 
   // индекс и размер пагинации
-  const [{ pageIndex, pageSize }, setPagination] = useState({
+  const [{ pageIndex }, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
   });
 
   // стейт и индекс изменяемой строки
@@ -245,12 +245,12 @@ const Airplane = () => {
     data:
       selectedValue !== ''
         ? tableData(filteredSeat).slice(
-            pageIndex * pageSize,
-            pageIndex * pageSize + pageSize
+            pageIndex * ITEMS_PER_PAGE,
+            pageIndex * ITEMS_PER_PAGE + ITEMS_PER_PAGE
           )
         : tableData(seat).slice(
-            pageIndex * pageSize,
-            pageIndex * pageSize + pageSize
+            pageIndex * ITEMS_PER_PAGE,
+            pageIndex * ITEMS_PER_PAGE + ITEMS_PER_PAGE
           ),
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -262,7 +262,7 @@ const Airplane = () => {
     (pageNumber: number) => {
       if (filteredSeat.length) {
         const seatLength = filteredSeat.length;
-        if (pageNumber >= 0 && pageNumber < seatLength / pageSize) {
+        if (pageNumber >= 0 && pageNumber < seatLength / ITEMS_PER_PAGE) {
           setPagination((prev) => ({
             ...prev,
             pageIndex: pageNumber,
@@ -270,7 +270,7 @@ const Airplane = () => {
         }
       }
     },
-    [filteredSeat.length, pageSize]
+    [filteredSeat.length]
   );
 
   // спиннер при загрузке
@@ -357,7 +357,6 @@ const Airplane = () => {
         <FooterTable
           data={tableData(seat)}
           pageIndex={pageIndex}
-          pageSize={pageSize}
           setPaginationData={setPaginationData}
           cancelEditing={cancelEditing}
           patchRow={postRow}
