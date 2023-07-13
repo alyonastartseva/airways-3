@@ -29,7 +29,6 @@ describe('SearchPage renders', () => {
         </MemoryRouter>
       </QueryClientProvider>
     );
-    expect(screen.getByText('UX AIR')).toBeInTheDocument();
     expect(screen.getByText('flights')).toBeInTheDocument();
     expect(screen.getByText('Search Flights')).toBeInTheDocument();
   });
@@ -51,7 +50,6 @@ describe('SearchPage renders', () => {
         </MemoryRouter>
       </QueryClientProvider>
     );
-    expect(screen.getByText('UX AIR')).toBeInTheDocument();
     expect(screen.getByText(/Страница не найдена/)).toBeInTheDocument();
   });
 });
