@@ -2,9 +2,12 @@ export interface IFormUserCreate {
   answerQuestion: string;
   email: string;
   password: string;
-  securityQuestion: string;
+  securityQuestion?: string;
   repeatPassword: string;
-  checkbox: boolean;
+  checkbox: NonNullable<boolean | undefined>;
+  error?: string;
+}
+
+export interface IFormPost extends IFormUserCreate {
   token: string;
-  error: string;
 }

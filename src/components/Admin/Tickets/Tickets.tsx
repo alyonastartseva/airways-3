@@ -33,15 +33,14 @@ import { useTicketsPatch } from '@hooks/useTicketsPatch';
 import { useTicketDelete } from '@hooks/useTicketDelete';
 import { FooterTable } from '@/common/FooterTable';
 import { AlertMessage } from '@/common/AlertMessage';
+import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Tickets = () => {
-
   const queryClient = useQueryClient();
 
   // индекс и размер пагинации
-  const [{ pageIndex, pageSize }, setPagination] = useState({
+  const [{ pageIndex }, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
   });
 
   // изменение пагинации
@@ -54,16 +53,11 @@ const Tickets = () => {
   };
 
   // сбрасываем список билетов после смены страницы
-  useEffect(()=> {
+  useEffect(() => {
     queryClient.invalidateQueries('tickets');
   }, [pageIndex, queryClient]);
 
-  useEffect(()=> {
-    const currPage = Number(localStorage.getItem('TICKETS_CURR_PAGE'));
-    if (currPage > 0) setPaginationData(currPage);
-  }, []);
-
-  useEffect(()=> {
+  useEffect(() => {
     const currPage = Number(localStorage.getItem('TICKETS_CURR_PAGE'));
     if (currPage > 0) setPaginationData(currPage);
   }, []);
@@ -101,16 +95,15 @@ const Tickets = () => {
         ...editableRowState,
         [id as keyof ITickets]: value,
       });
-      
     },
     [editableRowState]
   );
-  
+
   // получение данных
   const { data: ticketsData, isLoading } = useTicketsQuery(pageIndex);
   const tickets = ticketsData?.content;
   const totalPages = ticketsData?.totalPages;
-  
+
   // изменение данных
   const { mutate: patchTickets } = useTicketsPatch();
 
@@ -282,12 +275,12 @@ const Tickets = () => {
       }),
     ],
     [
-      columnHelper, 
-      editableRowIndex, 
-      editableRowState, 
-      handleUpdateRow, 
-      handleEditRow, 
-      deleteTicket
+      columnHelper,
+      editableRowIndex,
+      editableRowState,
+      handleUpdateRow,
+      handleEditRow,
+      deleteTicket,
     ]
   );
 
@@ -301,7 +294,7 @@ const Tickets = () => {
 
   // создание таблицы
   const table = useReactTable({
-    data: tableData(tickets).slice(0, pageSize),
+    data: tableData(tickets).slice(0, ITEMS_PER_PAGE),
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
@@ -382,7 +375,6 @@ const Tickets = () => {
           <FooterTable
             data={tableData(tickets)}
             pageIndex={pageIndex}
-            pageSize={pageSize}
             setPaginationData={setPaginationData}
             cancelEditing={cancelEditing}
             patchRow={patchRow}
@@ -393,7 +385,8 @@ const Tickets = () => {
       </TableContainer>
     );
   }
-  if(!Array.isArray(tickets)) return <AlertMessage />;
+  if (!Array.isArray(tickets)) return <AlertMessage />;
+  else return null;
 };
 
 export default Tickets;

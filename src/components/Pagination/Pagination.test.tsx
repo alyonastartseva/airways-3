@@ -51,7 +51,7 @@ describe('Pagination tests', () => {
       <Pagination
         data={testData}
         pageIndex={testIndex}
-        pageSize={testSize}
+        // pageSize={testSize}
         setPaginationData={setPaginationData}
         totalPages={testData.length / testSize}
       />
@@ -69,7 +69,7 @@ describe('Pagination tests', () => {
       <Pagination
         data={testData}
         pageIndex={testIndex}
-        pageSize={testSize}
+        // pageSize={testSize}
         setPaginationData={setPaginationData}
       />
     );
@@ -85,7 +85,7 @@ describe('Pagination tests', () => {
         <Pagination
           data={testData}
           pageIndex={1}
-          pageSize={testSize}
+          // pageSize={testSize}
           setPaginationData={setPaginationData}
         />
       );
@@ -99,7 +99,7 @@ describe('Pagination tests', () => {
         <Pagination
           data={testData}
           pageIndex={2}
-          pageSize={testSize}
+          // pageSize={testSize}
           setPaginationData={setPaginationData}
         />
       );
@@ -113,7 +113,7 @@ describe('Pagination tests', () => {
         <Pagination
           data={testData}
           pageIndex={0}
-          pageSize={testSize}
+          // pageSize={testSize}
           setPaginationData={setPaginationData}
         />
       );

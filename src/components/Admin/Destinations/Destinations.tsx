@@ -33,12 +33,12 @@ import { useDestinationQuery } from '@hooks/useDestinationQuery';
 import { useDestinationPatch } from '@hooks/useDestinationPatch';
 import { useDestinationDelete } from '@hooks/useDestinationDelete';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
+import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Destinations = () => {
   // индекс и размер пагинации
-  const [{ pageIndex, pageSize }, setPagination] = useState({
+  const [{ pageIndex }, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
   });
 
   // изменение пагинации
@@ -226,8 +226,8 @@ const Destinations = () => {
   // создание таблицы
   const table = useReactTable({
     data: tableData(destinations).slice(
-      pageIndex * pageSize,
-      pageIndex * pageSize + pageSize
+      pageIndex * ITEMS_PER_PAGE,
+      pageIndex * ITEMS_PER_PAGE + ITEMS_PER_PAGE
     ),
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -310,7 +310,6 @@ const Destinations = () => {
         <FooterTable
           data={tableData(destinations)}
           pageIndex={pageIndex}
-          pageSize={pageSize}
           setPaginationData={setPaginationData}
           cancelEditing={cancelEditing}
           patchRow={patchRow}

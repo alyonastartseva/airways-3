@@ -6,3 +6,5 @@ export const flightStatuses = [
   'ARRIVED',
   'ON_TIME',
 ];
+
+export const ITEMS_PER_PAGE = 10;

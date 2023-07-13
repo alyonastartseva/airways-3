@@ -43,6 +43,7 @@ import AviasalesService from '@/services/aviasales.service';
 import { TPerson } from '@interfaces/person.interfaces';
 import { IFormPassenger } from '@/interfaces/passenger.interfaces';
 import { Pagination } from '@components/Pagination';
+import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 import { UserInput } from '../UserInput';
 
@@ -120,17 +121,20 @@ const Users = () => {
       ),
     }),
   ];
-  const [{ pageIndex, pageSize }, setPagination] = useState({
+  const [{ pageIndex }, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
   });
+
   const avia = new AviasalesService();
   const { isLoading, data } = useQuery('users', () => avia.getUsers());
   const table = useReactTable({
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     data:
       data && Array.isArray(data)
-        ? data.slice(pageIndex * pageSize, pageIndex * pageSize + pageSize)
+        ? data.slice(
+            pageIndex * ITEMS_PER_PAGE,
+            pageIndex * ITEMS_PER_PAGE + ITEMS_PER_PAGE
+          )
         : [],
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -139,7 +143,7 @@ const Users = () => {
 
   if (data && Array.isArray(data)) {
     const setPaginationData = (pageNumber: number) => {
-      if (pageNumber >= 0 && pageNumber < data.length / pageSize) {
+      if (pageNumber >= 0 && pageNumber < data.length / ITEMS_PER_PAGE) {
         setPagination((prev) => ({
           ...prev,
           pageIndex: pageNumber,
@@ -267,7 +271,6 @@ const Users = () => {
           <Pagination
             data={data}
             pageIndex={pageIndex}
-            pageSize={pageSize}
             setPaginationData={setPaginationData}
           />
         </Box>

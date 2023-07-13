@@ -18,14 +18,13 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useQueryClient } from 'react-query';
 
 import { EditableSelectCell } from '@/common/EditableSelectCell';
-import { flightStatuses } from '@/constants/constants';
+import { ITEMS_PER_PAGE, flightStatuses } from '@/constants/constants';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { useAircraftQuery } from '@/hooks/useAircraftQuery';
 import { useFlightsDelete } from '@/hooks/useFlightsDelete';
 import { useFlightsQuery } from '@/hooks/useFlightsQuery';
 import { IAircraft } from '@/interfaces/aircraft.interfaces';
 import {
-  IFlightPost,
   IFlightPostFormFields,
   IFlightPresentation,
   TFlightsStatus,
@@ -41,13 +40,11 @@ import { isRowEditing } from '@utils/table.utils';
 import { useFlightsPatch } from '@/hooks/useFlightsPatch';
 
 const Flights = () => {
-
   const queryClient = useQueryClient();
 
   // индекс и размер пагинации
-  const [{ pageIndex, pageSize }, setPagination] = useState({
+  const [{ pageIndex }, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
   });
 
   // изменение пагинации
@@ -58,9 +55,9 @@ const Flights = () => {
     }));
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     queryClient.invalidateQueries('flights');
-  }, [pageIndex]);
+  }, [pageIndex, queryClient]);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -336,8 +333,8 @@ const Flights = () => {
   // создание таблицы
   const table = useReactTable({
     data: tableData(flights).slice(
-      pageIndex * pageSize,
-      pageIndex * pageSize + pageSize
+      pageIndex * ITEMS_PER_PAGE,
+      pageIndex * ITEMS_PER_PAGE + ITEMS_PER_PAGE
     ),
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -407,7 +404,6 @@ const Flights = () => {
         <FooterTable
           data={tableData(flights)}
           pageIndex={pageIndex}
-          pageSize={pageSize}
           setPaginationData={setPaginationData}
           cancelEditing={cancelEditing}
           patchRow={patchRow}

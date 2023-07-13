@@ -5,24 +5,20 @@ import { IPagination } from '@interfaces/pagination.interfaces';
 import { getVisiblePages } from '@utils/pagination.utils';
 
 const Pagination = <Data,>(props: IPagination<Data>) => {
-  const { data, setPaginationData, pageIndex, pageSize, totalPages = 1 } = props;
+  const { data, setPaginationData, pageIndex, totalPages = 1 } = props;
 
   const setPagination = useCallback(
     (pageNumber: number) => {
       if (data?.length && pageNumber >= 0) {
         setPaginationData(pageNumber);
       }
-    }, [data?.length, setPaginationData]);
+    },
+    [data?.length, setPaginationData]
+  );
 
   const handleToFirstPage = (currentPage: number): void => {
     if (currentPage !== 0) {
       setPagination(0);
-    }
-  };
-
-  const handleToLastPage = (currentPage: number, pageCount: number): void => {
-    if (pageCount !== currentPage) {
-      setPagination(pageCount);
     }
   };
 
@@ -32,7 +28,7 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
     }
   };
 
-  return data && (totalPages>1) ? (
+  return data && totalPages > 1 ? (
     <Flex my={8}>
       <Button
         display={pageIndex == 0 ? 'none' : 'block'}
@@ -86,7 +82,9 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
             onClick={() => handleToPressedPage(pageIndex, page)}
             borderRadius="0.125rem"
             border="0.0625rem solid #DEDEDE"
-            bgColor={page === pageIndex + 1 ? '#398AEA' : 'rgba(217, 217, 217, 0.15)'}
+            bgColor={
+              page === pageIndex + 1 ? '#398AEA' : 'rgba(217, 217, 217, 0.15)'
+            }
             color={page === pageIndex + 1 ? '#FFFFFF' : '#393939'}
             _hover={{
               backgroundColor: '#398AEA',
@@ -102,34 +100,39 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
             {page}
           </Button>
         ))}
-        <Box 
+        <Box
           pe={2}
           ps={2}
           pt={2}
-          display={ totalPages > 5 && pageIndex < totalPages - 2 ? 'block':'none'}>
-            ...
+          display={
+            totalPages > 5 && pageIndex < totalPages - 2 ? 'block' : 'none'
+          }
+        >
+          ...
         </Box>
         <Button
-        display={totalPages > 5 && pageIndex < totalPages - 2 ? 'block' : 'none'}
-        className="border rounded p-1"
-        onClick={() => setPagination(totalPages - 1)}
-        borderRadius="0.125rem"
-        border="0.0625rem solid #DEDEDE"
-        bgColor="rgba(217, 217, 217, 0.15)"
-        color="#393939"
-        _hover={{
-          backgroundColor: '#398AEA',
-          borderColor: '#398AEA',
-          color: '#ffffff',
-        }}
-        _active={{
-          backgroundColor: '#398AEA',
-          borderColor: '#398AEA',
-          color: '#ffffff',
-        }}
-      >
-        {totalPages}
-      </Button>
+          display={
+            totalPages > 5 && pageIndex < totalPages - 2 ? 'block' : 'none'
+          }
+          className="border rounded p-1"
+          onClick={() => setPagination(totalPages - 1)}
+          borderRadius="0.125rem"
+          border="0.0625rem solid #DEDEDE"
+          bgColor="rgba(217, 217, 217, 0.15)"
+          color="#393939"
+          _hover={{
+            backgroundColor: '#398AEA',
+            borderColor: '#398AEA',
+            color: '#ffffff',
+          }}
+          _active={{
+            backgroundColor: '#398AEA',
+            borderColor: '#398AEA',
+            color: '#ffffff',
+          }}
+        >
+          {totalPages}
+        </Button>
       </ButtonGroup>
       <Button
         display={pageIndex + 1 == totalPages ? 'none' : 'block'}
@@ -157,7 +160,7 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
         display={pageIndex + 1 == totalPages ? 'none' : 'block'}
         ms={2}
         className="border rounded p-1"
-        onClick={() => setPagination(totalPages-1)}
+        onClick={() => setPagination(totalPages - 1)}
         borderRadius="0.125rem"
         border="0.0625rem solid #DEDEDE"
         bgColor="rgba(217, 217, 217, 0.15)"

@@ -1,4 +1,4 @@
-import { IFormUserCreate } from '@interfaces/account.interfaces';
+import { IFormPost, IFormUserCreate } from '@interfaces/account.interfaces';
 import { clientInstance } from '@services/axios.service';
 import { ERolesPassenger } from '@interfaces/roles.interfaces';
 
@@ -13,13 +13,14 @@ export const userApi = {
         securityQuestion: data.securityQuestion,
       };
 
-      const response = await clientInstance.post<IFormUserCreate>('/accounts', {
+      const response = await clientInstance.post<IFormPost>('/accounts', {
         requestData,
       });
 
-      const { token } = response.data;
-      localStorage.setItem('token', token);
-
+      const token = response?.data?.token;
+      if (token) {
+        localStorage.setItem('token', token);
+      }
       return response.data;
     } catch (error) {
       return { error: 'Ошибка при регистрации' };

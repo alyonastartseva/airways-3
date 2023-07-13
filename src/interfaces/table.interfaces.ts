@@ -74,7 +74,6 @@ export interface IFooterTable<Data> {
   data: Data[] | undefined;
   editableRowIndex: number | null;
   pageIndex: number;
-  pageSize: number;
   totalPages?: number;
   cancelEditing(): void;
   patchRow(): void;

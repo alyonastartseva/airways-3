@@ -9,7 +9,7 @@ import Flights from './Flights';
 vi.mock('react-query', async () => {
   const actual: object = await vi.importActual('react-query');
 
-  const testData: IFlights[] = [
+  const testData: IFlight[] = [
     {
       id: 1,
       code: 'VKOOMS',
@@ -92,7 +92,7 @@ describe('Flights', () => {
   });
 
   it('Flights render table data', async () => {
-    const testDataRender: { content: IFlights[] } = {
+    const testDataRender: { content: IFlight[] } = {
       content: [
         {
           id: 1,
