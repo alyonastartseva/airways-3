@@ -16,12 +16,12 @@ const Header = () => {
 
   return (
     <Box
-      h="80px"
+      h="4.685rem"
       display="flex"
       bg={backgroundColor}
       boxShadow="0 1px 15px #A3A3A3"
-      pr="25px"
-      pl="25px"
+      pr="1.5rem"
+      pl="1.5rem"
       justifyContent="space-between"
       alignItems="center"
     >

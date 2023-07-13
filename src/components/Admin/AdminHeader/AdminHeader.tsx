@@ -1,11 +1,12 @@
 import { FC } from 'react';
-import { Flex, Button, Spacer } from '@chakra-ui/react';
+import { Flex, Button, Spacer, Text, Box } from '@chakra-ui/react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import ELinks from '@services/admin-router-links.service';
 import { useAuth } from '@/hooks/useAuth';
 import setHeaderParams from '@utils/set-header-params.utils';
 import { PhoneNumber } from '@common/PhoneNumber';
+import { ExitIcon } from '@/common/icons';
 
 const AdminHeader: FC = () => {
   const { isAdmin: isLogged, setIsAdmin } = useAuth();
@@ -45,7 +46,7 @@ const AdminHeader: FC = () => {
     textDecoration: 'underline',
     textDecorationThickness: '0.25rem',
     textDecorationColor: '#4797ff',
-    textUnderlineOffset: '1.875rem',
+    textUnderlineOffset: '1.775rem',
   };
   // проверяем активность ссылки, если активна, добавляем стили выше для активной кнопки
   const checkActive = ({ isActive }: { isActive: boolean }) =>
@@ -66,6 +67,7 @@ const AdminHeader: FC = () => {
       color={color}
       data-testid="adminHeader"
       fontWeight="semibold"
+      fontSize="0.875rem"
     >
       {tabs.map((tab) => {
         return (
@@ -74,11 +76,12 @@ const AdminHeader: FC = () => {
           </NavLink>
         );
       })}
-      <Spacer />
+      <Spacer w="3.5rem" />
 
       <PhoneNumber />
       <Button
-        onClick={handleClick}
+        w="6.25rem"
+        h="2rem"
         bg={buttonBackgroundColor}
         borderRadius="5"
         alignSelf="right"
@@ -92,8 +95,14 @@ const AdminHeader: FC = () => {
           border: { hover },
         }}
         mr="1.25rem"
+        onClick={handleClick}
       >
-        Выход
+        <Flex justifyContent="space-between" alignItems="center" gap="0.725rem">
+          <Text fontSize="0.875rem">Выход</Text>
+          <Box position="relative" top="1px">
+            <ExitIcon w={4} h={5} />
+          </Box>
+        </Flex>
       </Button>
     </Flex>
   );

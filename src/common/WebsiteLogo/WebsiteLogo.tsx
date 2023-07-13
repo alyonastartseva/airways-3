@@ -19,7 +19,7 @@ const WebsiteLogo = (props: { isFooter: boolean; isLogged: boolean }) => {
       <Text
         color={color}
         fontWeight="500"
-        fontSize={isFooter ? '1rem' : '1.5rem'}
+        fontSize={isFooter ? '1rem' : '1.25rem'}
         lineHeight="1.125rem"
         _hover={{ cursor: 'default' }}
       >
