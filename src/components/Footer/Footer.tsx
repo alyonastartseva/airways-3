@@ -16,13 +16,23 @@ const Footer = () => {
     <Box
       h="80px"
       display="flex"
-      bg="#445EBD"
+      bg={isLogged ? '#F5F5F5' : '#445EBD'}
       pr="30px"
       pl="30px"
+      borderTopColor={'#C2C2C2'}
+      borderTopWidth={1}
       justifyContent="space-between"
       alignItems="center"
     >
-      <Flex gap="1rem" color="white" fontSize="0.9rem" alignItems="center">
+      { isLogged 
+      ? 
+      (<Flex gap="1rem" color="#141414" fontSize="0.9rem" alignItems="center">
+        <Link as={routerLink} _hover={hoverStyles} to="/">
+          Air Alien © 2023 
+        </Link>
+      </Flex>) 
+      :
+      (<Flex gap="1rem" color="white" fontSize="0.9rem" alignItems="center">
         <Link as={routerLink} _hover={hoverStyles} to="/">
           О нас
         </Link>
@@ -33,6 +43,7 @@ const Footer = () => {
           Связаться с нами
         </Link>
       </Flex>
+      )}
       <Spacer />
       <WebsiteLogo isFooter={true} isLogged={isLogged} />
     </Box>
