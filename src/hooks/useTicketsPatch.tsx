@@ -11,7 +11,7 @@ const useTicketsPatch = () => {
   const toast = useToast();
 
   return useMutation(patchTickets, {
-    onSuccess: () => queryClient.invalidateQueries('passengers'),
+    onSuccess: () => queryClient.invalidateQueries('tickets'),
     onError: (error) => {
       if (
         axios.isAxiosError<IAxiosErrResponseData, Record<string, unknown>>(
