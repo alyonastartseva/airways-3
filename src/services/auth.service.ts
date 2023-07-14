@@ -11,6 +11,9 @@ export const useAuthAdmin = () => {
           'Authorization'
         ] = `Bearer ${response.data.accessToken}`;
         localStorage.setItem('adminToken', response.data.accessToken);
+      })
+      .catch((err) => {
+        return Promise.reject(err);
       });
 
   return {

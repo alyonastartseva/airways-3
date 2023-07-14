@@ -31,9 +31,19 @@ interface IUserForm {
 const LoginAdminForm = () => {
   const { loginAdmin } = useAuthAdmin();
   const { isAdmin, setIsAdmin } = useAuth();
+
   const navigate = useNavigate();
 
-  const mutation = useMutation(['login'], loginAdmin);
+  const mutation = useMutation(['login'], loginAdmin, {
+    onSuccess: () => {
+      reset();
+      navigate(ELinks.ADMIN_PASSENGERS, { replace: true });
+      setIsAdmin(true);
+    },
+    onError: () => {
+      setIsAdmin(false);
+    },
+  });
 
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
@@ -46,15 +56,8 @@ const LoginAdminForm = () => {
 
   const handleFormSubmit: SubmitHandler<IUserForm> = (data) => {
     // e?.preventDefault();
-    reset();
-
     const { username, password } = data;
     mutation.mutate({ username, password });
-
-    if (!mutation.isError) {
-      navigate(ELinks.ADMIN_PASSENGERS, { replace: true });
-      setIsAdmin(true);
-    }
   };
 
   if (isAdmin) return <Navigate to={ELinks.ADMIN_PASSENGERS} />;
@@ -70,7 +73,7 @@ const LoginAdminForm = () => {
           px="3rem"
           borderColor="#D9D9D9"
           borderRadius={2}
-          boxShadow='lg'
+          boxShadow="lg"
           color="rgba(78, 76, 76, 0.71);"
           pos="relative"
         >
@@ -106,7 +109,7 @@ const LoginAdminForm = () => {
                 </FormLabel>
                 <Input
                   borderColor={mutation.isError ? 'red' : 'inherit'}
-                  boxShadow='md'
+                  boxShadow="md"
                   size="md"
                   type="email"
                   id="username"
@@ -120,7 +123,7 @@ const LoginAdminForm = () => {
                 <InputGroup size="md">
                   <Input
                     borderColor={mutation.isError ? 'red' : 'inherit'}
-                    boxShadow='md'
+                    boxShadow="md"
                     type={show ? 'text' : 'password'}
                     id="password"
                     {...register('password', { required: true })}
@@ -140,14 +143,18 @@ const LoginAdminForm = () => {
                 fontSize="0.75rem"
               >
                 <FormLabel fontSize="0.75rem" htmlFor="checkbox">
-                  <Checkbox borderColor='#7F82C9' id="checkbox" {...register('checkbox')}>
+                  <Checkbox
+                    borderColor="#7F82C9"
+                    id="checkbox"
+                    {...register('checkbox')}
+                  >
                     <FormLabel
                       htmlFor="checkbox"
                       mb="0"
                       fontSize="0.75rem"
                       cursor="pointer"
                     >
-                      Запомни меня таким какой я есть 
+                      Запомни меня таким какой я есть
                     </FormLabel>
                   </Checkbox>
                 </FormLabel>
@@ -158,7 +165,14 @@ const LoginAdminForm = () => {
                 </Box>
               </Flex>
               <Flex justifyContent="flex-end">
-                <Button boxShadow='md' color="white" mt="1.5em" type="submit" bg="red" w="7rem">
+                <Button
+                  boxShadow="md"
+                  color="white"
+                  mt="1.5em"
+                  type="submit"
+                  bg="red"
+                  w="7rem"
+                >
                   Войти
                 </Button>
               </Flex>
