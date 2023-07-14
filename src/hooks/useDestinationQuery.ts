@@ -17,6 +17,7 @@ const useDestinationQuery = () => {
       }
     },
     refetchOnWindowFocus: false,
+    keepPreviousData: true,
   });
 };
 
