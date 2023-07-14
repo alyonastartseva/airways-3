@@ -6,11 +6,12 @@ import { usePassengersQuery } from '@/hooks/usePassengersQuery';
 import { ITicketsForm } from '@/interfaces/tickets.interface';
 
 const PassengerNameOptions = () => {
-  const { data: passengersList, isLoading: isPassengerListLoading} = usePassengersQuery(1);
+  const { data: passengersList, isLoading: isPassengerListLoading } =
+    usePassengersQuery(1);
 
-  if(isPassengerListLoading) return <SpinnerBlock />;
+  if (isPassengerListLoading) return <SpinnerBlock />;
 
-  if(passengersList){
+  if (passengersList) {
     return (
       <>
         {passengersList.content.map((el) => (
@@ -44,7 +45,7 @@ const CityNameOptions = () => {
   return <AlertMessage />;
 };
 
-export const modalTicketsFields: FormInputProps<ITicketsForm>[] = [  
+export const modalTicketsFields: FormInputProps<ITicketsForm>[] = [
   {
     fieldName: 'ticketNumber',
     typeInput: 'text',
@@ -69,7 +70,7 @@ export const modalTicketsFields: FormInputProps<ITicketsForm>[] = [
     rules: {
       required: 'Выберите пассажира',
     },
-    children: <PassengerNameOptions />
+    children: <PassengerNameOptions />,
   },
   {
     fieldName: 'firstName',
@@ -102,7 +103,7 @@ export const modalTicketsFields: FormInputProps<ITicketsForm>[] = [
         message: 'Максимальное количество 16 символов',
       },
     },
-  },  
+  },
   {
     fieldName: 'flightId',
     typeInput: 'number',
@@ -141,9 +142,9 @@ export const modalTicketsFields: FormInputProps<ITicketsForm>[] = [
     typeInput: 'text',
     label: 'Выберите место назначения',
     rules: {
-      required: 'Выберите место назначения', 
+      required: 'Выберите место назначения',
     },
-    children: <CityNameOptions />
+    children: <CityNameOptions />,
   },
   {
     select: true,
@@ -151,19 +152,18 @@ export const modalTicketsFields: FormInputProps<ITicketsForm>[] = [
     typeInput: 'text',
     label: 'Выберите место отправления',
     rules: {
-      required: 'Выберите место отправления',      
+      required: 'Выберите место отправления',
     },
-    children: <CityNameOptions />
+    children: <CityNameOptions />,
   },
   {
     fieldName: 'departureDateTime',
     typeInput: 'datetime-local',
     label: 'Выберите дату и время вылета',
     rules: {
-      required: 'Выберите дату и время вылета',    
-      min: String(new Date().getFullYear()), 
+      required: 'Выберите дату и время вылета',
+      min: String(new Date().getFullYear()),
     },
-
   },
   {
     fieldName: 'arrivalDateTime',
@@ -171,7 +171,7 @@ export const modalTicketsFields: FormInputProps<ITicketsForm>[] = [
     label: 'Введите дату и время время прибытия',
     rules: {
       required: 'Введите дату и время время прибытия',
-      min: String(new Date().getFullYear()),     
+      min: String(new Date().getFullYear()),
     },
   },
   {

@@ -42,18 +42,17 @@ export interface ITicketsForm extends FieldValues {
   seatNumber?: string;
 }
 
-
-export interface FormTicketsPost {  
-  ticketNumber?: string,
-  passengerId?: string,
-  firstName?: string,
-  lastName?: string,
-  flightId?: number,
-  code?: string,
-  from?: string,
-  to?: string,
-  departureDateTime?: string,
-  arrivalDateTime?: string,
-  flightSeatId?: number,
-  seatNumber?: string
+export interface FormTicketsPost {
+  ticketNumber?: string;
+  passengerId?: string;
+  firstName?: string;
+  lastName?: string;
+  flightId?: number;
+  code?: string;
+  from?: string;
+  to?: string;
+  departureDateTime?: string;
+  arrivalDateTime?: string;
+  flightSeatId?: number;
+  seatNumber?: string;
 }

@@ -7,7 +7,7 @@ import { ITickets } from '@/interfaces/tickets.interface';
 import Tickets from './Tickets';
 
 vi.mock('react-query', async () => {
-  const actual: object = await vi.importActual('react-query'); 
+  const actual: object = await vi.importActual('react-query');
 
   const testData: ITickets[] = [
     {
@@ -18,8 +18,8 @@ vi.mock('react-query', async () => {
       code: 'VKOOMS',
       departureDateTime: '2023-03-29T06:03:26.367205',
       arrivalDateTime: '2023-03-29T06:03:26.367205',
-      flightId: '1'
-    }
+      flightId: '1',
+    },
   ];
 
   return {
@@ -47,7 +47,7 @@ describe('Tickets', () => {
         code: 'VKOOMS',
         departureDateTime: '2023-03-29T06:03:26.367205',
         arrivalDateTime: '2023-03-29T06:03:26.367205',
-        flightId: '1'
+        flightId: '1',
       },
     ];
     const useTicketsQuery = vi
@@ -74,7 +74,7 @@ describe('Tickets', () => {
           code: 'VKOOMS',
           departureDateTime: '2023-03-29T06:03:26.367205',
           arrivalDateTime: '2023-03-29T06:03:26.367205',
-          flightId: '1'
+          flightId: '1',
         },
       ],
     };
@@ -89,9 +89,9 @@ describe('Tickets', () => {
     expect(screen.getByText('Код')).toBeInTheDocument();
     expect(screen.getByText('Отлет')).toBeInTheDocument();
     expect(screen.getByText('Прилет')).toBeInTheDocument();
-    expect(screen.getByText('Номер посадки')).toBeInTheDocument();  
+    expect(screen.getByText('Номер посадки')).toBeInTheDocument();
   });
-  
+
   it('Tickets render spinner', async () => {
     const data = await import('react-query');
     data.useQuery = vi.fn().mockReturnValue({ isLoading: true });
@@ -100,7 +100,7 @@ describe('Tickets', () => {
     render(<Tickets />);
     expect(screen.getAllByText('Loading...')).toHaveLength(2);
   });
-  
+
   it('Tickets render alert', async () => {
     const data = await import('react-query');
     data.useQuery = vi.fn().mockReturnValue({});
@@ -108,5 +108,5 @@ describe('Tickets', () => {
 
     render(<Tickets />);
     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
-  }); 
+  });
 });
