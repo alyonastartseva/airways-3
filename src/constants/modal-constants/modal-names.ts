@@ -6,7 +6,6 @@ export enum EModalNames {
   SEAT = 'seats',
   TICKETS = 'tickets',
   TEST = 'test',
-  
 }
 
 export enum EModalButtonTexts {

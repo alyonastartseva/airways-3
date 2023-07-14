@@ -40,6 +40,4 @@ describe('ModalShape test', () => {
 
     expect(screen.getAllByLabelText('modal-input')).toHaveLength(4);
   });
-
-  
 });

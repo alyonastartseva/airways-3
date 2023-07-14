@@ -19,7 +19,6 @@ import {
   IFlightPostFormFields,
 } from './flights.interfaces';
 
-
 export interface IModalProps {
   formName: EModalNames;
 }

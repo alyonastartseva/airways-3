@@ -11,7 +11,9 @@ export const AuthContext = createContext<TAuthContextType>({
 });
 
 export const AuthProvider = ({ children }: { children: JSX.Element }) => {
-  const [isAdmin, setIsAdmin] = useState<boolean>(Boolean(localStorage.getItem('adminToken')));
+  const [isAdmin, setIsAdmin] = useState<boolean>(
+    Boolean(localStorage.getItem('adminToken'))
+  );
 
   return (
     <AuthContext.Provider value={{ isAdmin, setIsAdmin }}>

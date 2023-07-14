@@ -21,5 +21,3 @@ export interface ISearchRadioData {
   departFlight: IFlightPresentation[];
   returnFlight?: IFlightPresentation[];
 }
-
-
