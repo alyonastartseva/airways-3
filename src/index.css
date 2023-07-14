@@ -1,11 +1,7 @@
-@import '@fontsource/open-sans/latin-400.css';
-@import '@fontsource/open-sans/cyrillic-400.css';
-@import '@fontsource/open-sans/latin-500.css';
-@import '@fontsource/open-sans/cyrillic-500.css';
-@import '@fontsource/open-sans/latin-600.css';
-@import '@fontsource/open-sans/cyrillic-600.css';
-@import '@fontsource/open-sans/latin-700.css';
-@import '@fontsource/open-sans/cyrillic-700.css';
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+@import '@fontsource/roboto/700.css';
+@import "@fontsource/roboto";
 
 @tailwind base;
 @tailwind components;
