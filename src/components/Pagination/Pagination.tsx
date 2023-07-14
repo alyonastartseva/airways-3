@@ -1,10 +1,18 @@
 import { useCallback } from 'react';
 import { Box, Button, ButtonGroup, Flex } from '@chakra-ui/react';
 
+import { ArrowRightIcon, ArrowLeftIcon } from '@/common/icons/';
 import { IPagination } from '@interfaces/pagination.interfaces';
 import { getVisiblePages } from '@utils/pagination.utils';
 
 const Pagination = <Data,>(props: IPagination<Data>) => {
+  enum PaginationStyle {
+    _borderRadius = '0.4rem',
+    _textColor = '#0052BD',
+    _bgColor = '#C2DCFF',
+    _bgColorActive = '#398AEA',
+  }
+
   const { data, setPaginationData, pageIndex, totalPages = 1 } = props;
 
   const setPagination = useCallback(
@@ -16,12 +24,6 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
     [data?.length, setPaginationData]
   );
 
-  const handleToFirstPage = (currentPage: number): void => {
-    if (currentPage !== 0) {
-      setPagination(0);
-    }
-  };
-
   const handleToPressedPage = (currentPage: number, page: number): void => {
     if (page - 1 !== currentPage) {
       setPagination(page - 1);
@@ -30,154 +32,188 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
 
   return data && totalPages > 1 ? (
     <Flex my={8}>
-      <Button
-        display={pageIndex == 0 ? 'none' : 'block'}
-        me={2}
-        onClick={() => {
-          handleToFirstPage(pageIndex);
-        }}
-        borderRadius="0.125rem"
-        border="0.0625rem solid #DEDEDE"
-        bgColor="rgba(217, 217, 217, 0.15)"
-        color="#393939"
-        _hover={{
-          backgroundColor: '#398AEA',
-          borderColor: '#398AEA',
-          color: '#ffffff',
-        }}
-        _active={{
-          backgroundColor: '#398AEA',
-          borderColor: '#398AEA',
-          color: '#ffffff',
-        }}
-      >
-        {'<<'}
-      </Button>
-      <Button
-        display={pageIndex == 0 ? 'none' : 'block'}
-        me={5}
-        className="border rounded p-1"
-        onClick={() => setPagination(pageIndex - 1)}
-        borderRadius="0.125rem"
-        border="0.0625rem solid #DEDEDE"
-        bgColor="rgba(217, 217, 217, 0.15)"
-        color="#393939"
-        _hover={{
-          backgroundColor: '#398AEA',
-          borderColor: '#398AEA',
-          color: '#ffffff',
-        }}
-        _active={{
-          backgroundColor: '#398AEA',
-          borderColor: '#398AEA',
-          color: '#ffffff',
-        }}
-      >
-        {'<'}
-      </Button>
-      <ButtonGroup spacing={2}>
+      <Flex>
+        <Button
+          outline={'none'}
+          display={pageIndex == 0 ? 'none' : 'block'}
+          onClick={() => setPagination(pageIndex - 1)}
+          fontWeight={400}
+          variant="ghost"
+          w="5"
+          color={PaginationStyle._textColor}
+          fontSize="1rem"
+          // caution: при выставлении outline: 'none' и border: 'none' - верстка прыгает
+          // здесь и ниже borderColor выставлен под цвет фона (белый)
+          _hover={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+          _active={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+          _focus={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+        >
+          {<ArrowLeftIcon color="#0052BD" />}
+        </Button>
+        <Button
+          // leftIcon={<ArrowLeftIcon color='#0052BD'/>}
+          outline={'none'}
+          display={pageIndex == 0 ? 'none' : 'block'}
+          ml={0}
+          mr={5}
+          pl={0}
+          className="rounded p-1"
+          onClick={() => setPagination(pageIndex - 1)}
+          fontWeight={400}
+          variant="ghost"
+          color={PaginationStyle._textColor}
+          fontSize="1rem"
+          // caution: при выставлении outline: 'none' и border: 'none' - верстка прыгает
+          // здесь и ниже borderColor выставлен под цвет фона (белый)
+          _hover={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+          _active={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+          _focus={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+        >
+          {' Предыдущая страница'}
+        </Button>
+      </Flex>
+      <ButtonGroup spacing={1}>
         {getVisiblePages(pageIndex, totalPages).map((page, index) => (
           <Button
             key={`page-${Date.now()}}+${index}`}
             onClick={() => handleToPressedPage(pageIndex, page)}
-            borderRadius="0.125rem"
-            border="0.0625rem solid #DEDEDE"
+            borderRadius={PaginationStyle._borderRadius}
             bgColor={
-              page === pageIndex + 1 ? '#398AEA' : 'rgba(217, 217, 217, 0.15)'
+              page === pageIndex + 1
+                ? PaginationStyle._bgColorActive
+                : PaginationStyle._bgColor
             }
-            color={page === pageIndex + 1 ? '#FFFFFF' : '#393939'}
+            color={
+              page === pageIndex + 1 ? '#FFFFFF' : PaginationStyle._textColor
+            }
+            outline={'none'}
+            w={10}
+            h={39}
             _hover={{
-              backgroundColor: '#398AEA',
-              borderColor: '#398AEA',
+              backgroundColor: PaginationStyle._bgColorActive,
               color: '#ffffff',
             }}
             _active={{
-              backgroundColor: '#398AEA',
-              borderColor: '#398AEA',
+              backgroundColor: PaginationStyle._bgColorActive,
               color: '#ffffff',
+              outline: 'none',
+            }}
+            _focus={{
+              outline: 'none',
             }}
           >
             {page}
           </Button>
         ))}
         <Box
-          pe={2}
-          ps={2}
+          pe={3}
+          ps={3}
           pt={2}
           display={
             totalPages > 5 && pageIndex < totalPages - 2 ? 'block' : 'none'
           }
+          color={PaginationStyle._textColor}
         >
           ...
         </Box>
         <Button
           display={
-            totalPages > 5 && pageIndex < totalPages - 2 ? 'block' : 'none'
+            totalPages > 5 && pageIndex < totalPages - 2 ? 'flex' : 'none'
           }
-          className="border rounded p-1"
+          className="rounded p-1"
           onClick={() => setPagination(totalPages - 1)}
-          borderRadius="0.125rem"
-          border="0.0625rem solid #DEDEDE"
-          bgColor="rgba(217, 217, 217, 0.15)"
-          color="#393939"
+          borderRadius={PaginationStyle._borderRadius}
+          bgColor={PaginationStyle._bgColor}
+          color={PaginationStyle._textColor}
+          w={10}
+          h={38}
           _hover={{
-            backgroundColor: '#398AEA',
-            borderColor: '#398AEA',
+            backgroundColor: PaginationStyle._bgColorActive,
             color: '#ffffff',
+            outline: 'none',
           }}
           _active={{
-            backgroundColor: '#398AEA',
-            borderColor: '#398AEA',
+            backgroundColor: PaginationStyle._bgColorActive,
             color: '#ffffff',
+            outline: 'none',
+          }}
+          _focus={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
           }}
         >
           {totalPages}
         </Button>
       </ButtonGroup>
-      <Button
-        display={pageIndex + 1 == totalPages ? 'none' : 'block'}
-        ms={5}
-        className="border rounded p-1"
-        onClick={() => setPagination(pageIndex + 1)}
-        borderRadius="0.125rem"
-        border="0.0625rem solid #DEDEDE"
-        bgColor="rgba(217, 217, 217, 0.15)"
-        color="#393939"
-        _hover={{
-          backgroundColor: '#398AEA',
-          borderColor: '#398AEA',
-          color: '#ffffff',
-        }}
-        _active={{
-          backgroundColor: '#398AEA',
-          borderColor: '#398AEA',
-          color: '#ffffff',
-        }}
-      >
-        {'>'}
-      </Button>
-      <Button
-        display={pageIndex + 1 == totalPages ? 'none' : 'block'}
-        ms={2}
-        className="border rounded p-1"
-        onClick={() => setPagination(totalPages - 1)}
-        borderRadius="0.125rem"
-        border="0.0625rem solid #DEDEDE"
-        bgColor="rgba(217, 217, 217, 0.15)"
-        color="#393939"
-        _hover={{
-          backgroundColor: '#398AEA',
-          borderColor: '#398AEA',
-          color: '#ffffff',
-        }}
-        _active={{
-          backgroundColor: '#398AEA',
-          borderColor: '#398AEA',
-          color: '#ffffff',
-        }}
-      >
-        {'>>'}
-      </Button>
+      <Flex>
+        <Button
+          outline={'none'}
+          display={pageIndex + 1 == totalPages ? 'none' : 'block'}
+          ml={5}
+          pr={1}
+          className="rounded p-1"
+          onClick={() => setPagination(pageIndex + 1)}
+          fontWeight={400}
+          variant="ghost"
+          color={PaginationStyle._textColor}
+          _hover={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+          _active={{
+            outline: 'none',
+            border: 'none',
+          }}
+          _focus={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+        >
+          {'Следующая страница '}
+        </Button>
+        <Button
+          outline={'none'}
+          display={pageIndex == 0 ? 'none' : 'block'}
+          onClick={() => setPagination(pageIndex - 1)}
+          variant="ghost"
+          color={PaginationStyle._textColor}
+          pl="0"
+          // caution: при выставлении outline: 'none' и border: 'none' - верстка прыгает
+          // здесь и ниже borderColor выставлен под цвет фона (белый)
+          _hover={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+          _active={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+          _focus={{
+            outline: 'none',
+            borderColor: '#FFFFFF',
+          }}
+        >
+          {<ArrowRightIcon color="#0052BD" />}
+        </Button>
+      </Flex>
     </Flex>
   ) : null;
 };
