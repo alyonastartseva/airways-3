@@ -85,9 +85,7 @@ const LoginAdminForm = () => {
             right="1rem"
             top="1rem"
             cursor="pointer"
-            onClick={() =>
-              !isAdmin && <Navigate to={ELinks.ADMIN_PASSENGERS} />
-            }
+            onClick={() => !isAdmin && navigate(-1)}
           />
           <div>
             <form data-testid="modal" onSubmit={handleSubmit(handleFormSubmit)}>
