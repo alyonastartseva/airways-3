@@ -23,7 +23,7 @@ const ticketsAPI = {
   patchTickets: async (data: ITickets | null) => {
     if (data) {
       const { id, ...rest } = data;
-      return await adminInstance.put<ITickets>(ERoutes.TICKETS + id, rest);
+      return await adminInstance.patch<ITickets>(ERoutes.TICKETS + id, rest);
     }
   },
 

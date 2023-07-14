@@ -149,20 +149,20 @@ const Tickets = () => {
                   editableRowIndex
                 )}
                 index={info.row.index}
-                id={info.column.id}
+                id={info.getValue().firstName.id}
                 editableRowIndex={editableRowIndex}
                 updateData={handleUpdateRow}
               />
               <EditableCell
                 value={isRowEditing(
                   info.row.index,
-                  info.getValue().firstName.id,
-                  info.getValue().firstName.value,
+                  info.getValue().lastName.id,
+                  info.getValue().lastName.value,
                   editableRowState,
                   editableRowIndex
                 )}
                 index={info.row.index}
-                id={info.column.id}
+                id={info.getValue().lastName.id}
                 editableRowIndex={editableRowIndex}
                 updateData={handleUpdateRow}
               />
