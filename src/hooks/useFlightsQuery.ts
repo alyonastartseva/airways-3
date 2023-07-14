@@ -17,6 +17,7 @@ const useFlightsQuery = (pageIndex: number) => {
       }
     },
     refetchOnWindowFocus: false,
+    keepPreviousData: true,
   });
 };
 export { useFlightsQuery };

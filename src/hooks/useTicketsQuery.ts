@@ -17,6 +17,7 @@ const useTicketsQuery = (pageIndex: number) => {
       }
     },
     refetchOnWindowFocus: false,
+    keepPreviousData: true,
   });
 };
 

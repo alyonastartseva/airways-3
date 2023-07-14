@@ -17,6 +17,7 @@ const usePassengersQuery = (page: number) => {
       }
     },
     refetchOnWindowFocus: false,
+    keepPreviousData: true,
   });
 };
 
