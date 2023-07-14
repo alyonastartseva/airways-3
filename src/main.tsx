@@ -1,5 +1,4 @@
 import { ChakraProvider } from '@chakra-ui/react';
-import '@fontsource/open-sans/700.css';
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
