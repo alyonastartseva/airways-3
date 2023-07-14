@@ -14,7 +14,7 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 
 import { IAircraft, IAircraftPost } from '@interfaces/aircraft.interfaces';
 import { EditableCell } from '@common/EditableCell';
@@ -44,7 +44,13 @@ const Airplanes = () => {
       ...prev,
       pageIndex: pageNumber,
     }));
+    localStorage.setItem('AIRPLANES_CURR_PAGE', String(pageNumber));
   };
+
+  useEffect(() => {
+    const currPage = Number(localStorage.getItem('AIRPLANES_CURR_PAGE'));
+    if (currPage > 0) setPaginationData(currPage);
+  }, []);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -76,7 +82,10 @@ const Airplanes = () => {
   // получение данных
   const { data: airplanesData, isLoading } = useAircraftQuery();
   const airplanes = airplanesData?.content;
-  const totalPages = airplanesData?.totalPages;
+  // const totalPages = airplanesData?.totalPages;
+  const totalElements = airplanesData?.totalElements;
+  let totalAircraftPages = 1;
+  if (totalElements) totalAircraftPages = Math.ceil(totalElements / 10);
 
   // изменение данных
   const { mutate: patchAircraft } = useAircraftPatch();
@@ -295,7 +304,7 @@ const Airplanes = () => {
           cancelEditing={cancelEditing}
           patchRow={patchRow}
           editableRowIndex={editableRowIndex}
-          totalPages={totalPages}
+          totalPages={totalAircraftPages}
         />
       </TableContainer>
     );
