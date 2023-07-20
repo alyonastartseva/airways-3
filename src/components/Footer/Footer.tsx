@@ -24,25 +24,24 @@ const Footer = () => {
       justifyContent="space-between"
       alignItems="center"
     >
-      { isLogged 
-      ? 
-      (<Flex gap="1rem" color="#141414" fontSize="0.9rem" alignItems="center">
-        <Link as={routerLink} _hover={hoverStyles} to="/">
-          Air Alien © 2023 
-        </Link>
-      </Flex>) 
-      :
-      (<Flex gap="1rem" color="white" fontSize="0.9rem" alignItems="center">
-        <Link as={routerLink} _hover={hoverStyles} to="/">
-          О нас
-        </Link>
-        <Link as={routerLink} _hover={hoverStyles} to="/">
-          Политика конфиденциальности
-        </Link>
-        <Link as={routerLink} _hover={hoverStyles} to="/">
-          Связаться с нами
-        </Link>
-      </Flex>
+      {isLogged ? (
+        <Flex gap="1rem" color="#141414" fontSize="0.9rem" alignItems="center">
+          <Link as={routerLink} _hover={hoverStyles} to="/">
+            Air Alien © 2023
+          </Link>
+        </Flex>
+      ) : (
+        <Flex gap="1rem" color="white" fontSize="0.9rem" alignItems="center">
+          <Link as={routerLink} _hover={hoverStyles} to="/">
+            О нас
+          </Link>
+          <Link as={routerLink} _hover={hoverStyles} to="/">
+            Политика конфиденциальности
+          </Link>
+          <Link as={routerLink} _hover={hoverStyles} to="/">
+            Связаться с нами
+          </Link>
+        </Flex>
       )}
       <Spacer />
       <WebsiteLogo isFooter={true} isLogged={isLogged} />

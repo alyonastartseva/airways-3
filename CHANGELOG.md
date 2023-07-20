@@ -1,8 +1,42 @@
-<<<<<<< HEAD
-
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## 1.15.0 (2023-07-15)
+
+
+### Features
+
+* add readme file ([aa3335d](https://gitlab.com/levotarayan98/airways/commit/aa3335dee94fc97a422e12419bac5da6a82d0407))
+* add Ticket Page ([67fc9aa](https://gitlab.com/levotarayan98/airways/commit/67fc9aaa74970176e0a269631191d1c5876667f7))
+* add tickets page, second try ([09af1fb](https://gitlab.com/levotarayan98/airways/commit/09af1fbb13baf8fabd340f19ce3a1b56ff586752))
+* add user header ([896623a](https://gitlab.com/levotarayan98/airways/commit/896623afd283f800e75052c6a5b25dfb900c00d9))
+* fix pagination ([4c50177](https://gitlab.com/levotarayan98/airways/commit/4c5017717e54365843ea3219280388cca8b576a8))
+* **header button:** add exit svg to header button, change header style ([d1bfd2d](https://gitlab.com/levotarayan98/airways/commit/d1bfd2db8131c0d2bc99054cbb75351986a85b7d))
+* **header:** header restyle ([4a87ea5](https://gitlab.com/levotarayan98/airways/commit/4a87ea5d0c05f7e6679c4c6cd671f5a3a1164bda))
+* make test for Header and add Header to pages ([0709f02](https://gitlab.com/levotarayan98/airways/commit/0709f029549cd7cdc73052bf894175212694767f))
+* modal add new ticket ([aa18db6](https://gitlab.com/levotarayan98/airways/commit/aa18db60b4074f573969bd9a525de8a36aa07081))
+* **pagination:** redesign pagination buttons ([07fc041](https://gitlab.com/levotarayan98/airways/commit/07fc041c598760756891d94ebfce841da9209d3a))
+* tickets page ([fc83b75](https://gitlab.com/levotarayan98/airways/commit/fc83b751c3079138d0fbaa122d8c0cd50ad406ed))
+
+
+### Bug Fixes
+
+* **Admin:** fix module path in test ([f1a9b87](https://gitlab.com/levotarayan98/airways/commit/f1a9b87277ff47b5a63404d4d23e7a2cff5d9290))
+* **auth:** fix auth error ([0a508fa](https://gitlab.com/levotarayan98/airways/commit/0a508fa57ca08a7bf5e3b355579b2e8ae2fc9a53))
+* breaking changelog configuration ([b8dd4b2](https://gitlab.com/levotarayan98/airways/commit/b8dd4b24ded5fb511d935cbc6ecd8628ed2ae88e))
+* **builderrors:** fix build errors ([d3f3acc](https://gitlab.com/levotarayan98/airways/commit/d3f3acc207227df6a435cd77b55b2cf25ae3ad51))
+* **destination:** fix destination pagination ([0458615](https://gitlab.com/levotarayan98/airways/commit/04586151861577c406c15cd0b641ad6a5d997f3c))
+* fix admin queries ([6b997fe](https://gitlab.com/levotarayan98/airways/commit/6b997fe3d4f17f2dbc0eed7469ee7b064f3d3d13))
+* fix remove tickets ([6215668](https://gitlab.com/levotarayan98/airways/commit/621566830e702ee6c64cdf8be5a96b474bc9cea8))
+* **footer:** change footer design ([ebcab0b](https://gitlab.com/levotarayan98/airways/commit/ebcab0b8761c9b213579f44d47b850ca572f3f9d))
+* husky ([2f5b476](https://gitlab.com/levotarayan98/airways/commit/2f5b476cadf119fc525850abe28322e98d4349dd))
+* **memo:** improve perf ([a51a18e](https://gitlab.com/levotarayan98/airways/commit/a51a18ec1a78b58fdc6264a6f48f2187ea5d74a9))
+* **pagination:** add arrows style ([ccd5379](https://gitlab.com/levotarayan98/airways/commit/ccd5379b02f37637c4a75d999b3a6b496f1e347d))
+* **pagination:** fix arrows postition ([0506146](https://gitlab.com/levotarayan98/airways/commit/0506146cb037ec11dc320683bfd7e1e8397a2908))
+* **pagination:** fix common pagination bug with Next arrow ([640e106](https://gitlab.com/levotarayan98/airways/commit/640e106076cdc9f339aefb8e16a03c8572db4ae3))
+* **pagination:** fix common pagination bugs, refactor ([5809176](https://gitlab.com/levotarayan98/airways/commit/58091760f05754081ab8ff2990c637719e0a63f8))
+* **perf:** improve performance Tickets Flights ([8bfb3de](https://gitlab.com/levotarayan98/airways/commit/8bfb3dead9fb01f1aad79caa5899a730bd77ad8d))
 
 ## 1.14.0 (2023-07-14)
 

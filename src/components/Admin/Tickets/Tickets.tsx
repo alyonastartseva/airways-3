@@ -9,7 +9,7 @@ import {
   Tbody,
   Td,
 } from '@chakra-ui/react';
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useState, useCallback, useMemo, useEffect, memo } from 'react';
 import {
   createColumnHelper,
   useReactTable,
@@ -17,9 +17,8 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 import dayjs from 'dayjs';
-import { useQueryClient } from 'react-query';
 
-import { HeaderAdmin } from '@common/HeaderAdmin';
+import { HeaderTable } from '@/common/HeaderTable';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { ITickets, ITicketsPost } from '@interfaces/tickets.interface';
 import { useTicketsQuery } from '@hooks/useTicketsQuery';
@@ -36,26 +35,24 @@ import { AlertMessage } from '@/common/AlertMessage';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Tickets = () => {
-  const queryClient = useQueryClient();
-
   // индекс и размер пагинации
-  const [{ pageIndex }, setPagination] = useState({
-    pageIndex: 0,
-  });
+  const [pageIndex, setPagination] = useState(0);
+
+  // получение данных
+  const { data: ticketsData, isLoading } = useTicketsQuery(pageIndex);
+  const tickets = ticketsData?.content;
+  const totalPages = ticketsData?.totalPages;
 
   // изменение пагинации
   const setPaginationData = (pageNumber: number) => {
-    setPagination((prev) => ({
-      ...prev,
-      pageIndex: pageNumber,
-    }));
+    setPagination(pageNumber);
     localStorage.setItem('TICKETS_CURR_PAGE', String(pageNumber));
   };
 
-  // сбрасываем список билетов после смены страницы
+  // если удален последняя строка текущей страницы, то открываем предыдущую страницу
   useEffect(() => {
-    queryClient.invalidateQueries('tickets');
-  }, [pageIndex, queryClient]);
+    if (!tickets && pageIndex > 0) setPaginationData(pageIndex - 1);
+  }, [tickets]);
 
   useEffect(() => {
     const currPage = Number(localStorage.getItem('TICKETS_CURR_PAGE'));
@@ -98,11 +95,6 @@ const Tickets = () => {
     },
     [editableRowState]
   );
-
-  // получение данных
-  const { data: ticketsData, isLoading } = useTicketsQuery(pageIndex);
-  const tickets = ticketsData?.content;
-  const totalPages = ticketsData?.totalPages;
 
   // изменение данных
   const { mutate: patchTickets } = useTicketsPatch();
@@ -317,7 +309,7 @@ const Tickets = () => {
         justifyContent="space-between"
       >
         <Box>
-          <HeaderAdmin<ITicketsPost>
+          <HeaderTable<ITicketsPost>
             heading="Билеты"
             formName={EModalNames.TICKETS}
           />
@@ -385,8 +377,10 @@ const Tickets = () => {
       </TableContainer>
     );
   }
-  if (!Array.isArray(tickets)) return <AlertMessage />;
-  else return null;
+
+  // алерт при ошибке
+  return <AlertMessage />;
 };
 
-export default Tickets;
+const memorizeTickets = memo(Tickets);
+export default memorizeTickets;

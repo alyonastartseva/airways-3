@@ -11,6 +11,7 @@ export interface IDestination {
 
 export interface IDestinationGet {
   content: IDestination[];
+  totalPages?: number;
 }
 
 export interface IDestinationPost extends FieldValues {

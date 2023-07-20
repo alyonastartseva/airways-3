@@ -14,8 +14,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import dayjs from 'dayjs';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useQueryClient } from 'react-query';
+import { useCallback, useMemo, useState, memo } from 'react';
 
 import { EditableSelectCell } from '@/common/EditableSelectCell';
 import { ITEMS_PER_PAGE, flightStatuses } from '@/constants/constants';
@@ -33,31 +32,29 @@ import { AlertMessage } from '@common/AlertMessage';
 import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
 import { FooterTable } from '@common/FooterTable';
-import { HeaderAdmin } from '@common/HeaderAdmin';
+import { HeaderTable } from '@/common/HeaderTable';
 import { PopoverTable } from '@common/PopoverTable';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { isRowEditing } from '@utils/table.utils';
 import { useFlightsPatch } from '@/hooks/useFlightsPatch';
 
 const Flights = () => {
-  const queryClient = useQueryClient();
-
   // индекс и размер пагинации
-  const [{ pageIndex }, setPagination] = useState({
-    pageIndex: 0,
-  });
+  const [pageIndex, setPagination] = useState(0);
+
+  // получение данных
+  const { data: airplanesData, isLoading: isAircraftLoading } =
+    useAircraftQuery();
+  const airplanes = airplanesData?.content;
+
+  const { data: flightsData, isLoading, isError } = useFlightsQuery(pageIndex);
+  const flights = flightsData?.content;
+  const totalPages = flightsData?.totalPages;
 
   // изменение пагинации
   const setPaginationData = (pageNumber: number) => {
-    setPagination((prev) => ({
-      ...prev,
-      pageIndex: pageNumber,
-    }));
+    setPagination(pageNumber);
   };
-
-  useEffect(() => {
-    queryClient.invalidateQueries('flights');
-  }, [pageIndex, queryClient]);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -91,15 +88,6 @@ const Flights = () => {
     },
     [editableRowState]
   );
-
-  // получение данных
-  const { data: airplanesData, isLoading: isAircraftLoading } =
-    useAircraftQuery();
-  const airplanes = airplanesData?.content;
-
-  const { data: flightsData, isLoading, isError } = useFlightsQuery(pageIndex);
-  const flights = flightsData?.content;
-  const totalPages = flightsData?.totalPages;
 
   const { mutate: deleteFlight } = useFlightsDelete();
   const { mutate: patchFlights } = useFlightsPatch();
@@ -349,7 +337,7 @@ const Flights = () => {
   if (Array.isArray(flights) && flights?.length && !isError) {
     return (
       <TableContainer my={10} mx={9}>
-        <HeaderAdmin<IFlightPostFormFields>
+        <HeaderTable<IFlightPostFormFields>
           heading="Рейсы"
           formName={EModalNames.FLIGHTS}
         />
@@ -415,4 +403,5 @@ const Flights = () => {
   } else return <AlertMessage />;
 };
 
-export default Flights;
+const memorizedFlights = memo(Flights);
+export default memorizedFlights;
