@@ -60,10 +60,9 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
           {<ArrowLeftIcon color="#0052BD" />}
         </Button>
         <Button
-          // leftIcon={<ArrowLeftIcon color='#0052BD'/>}
           outline={'none'}
           display={pageIndex == 0 ? 'none' : 'block'}
-          ml={0}
+          // ml={0}
           mr={5}
           pl={0}
           className="rounded p-1"
@@ -191,7 +190,7 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
         </Button>
         <Button
           outline={'none'}
-          display={pageIndex == 0 ? 'none' : 'block'}
+          display={pageIndex + 1 == totalPages ? 'none' : 'block'}
           onClick={() => setPagination(pageIndex - 1)}
           variant="ghost"
           color={PaginationStyle._textColor}

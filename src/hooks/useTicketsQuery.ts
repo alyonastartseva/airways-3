@@ -9,6 +9,7 @@ const useTicketsQuery = (pageIndex: number) => {
   return useQuery(['tickets', pageIndex], () => getTickets(pageIndex), {
     onError: (error) => {
       if (error instanceof Error) {
+        if (pageIndex >= 0) return;
         toast({
           status: 'error',
           title: error.message,

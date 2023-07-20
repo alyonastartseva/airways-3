@@ -25,11 +25,11 @@ import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
 import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
-import { HeaderAdmin } from '@common/HeaderAdmin';
+import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortDestinations } from '@utils/sort.utils';
-import { useDestinationQuery } from '@hooks/useDestinationQuery';
+import { useDestinationQueryByPage } from '@/hooks/useDestinationQueryByPage';
 import { useDestinationPatch } from '@hooks/useDestinationPatch';
 import { useDestinationDelete } from '@hooks/useDestinationDelete';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
@@ -37,16 +37,17 @@ import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Destinations = () => {
   // индекс и размер пагинации
-  const [{ pageIndex }, setPagination] = useState({
-    pageIndex: 0,
-  });
+  const [pageIndex, setPagination] = useState(0);
+
+  // получение данных
+  const { data: destinationsData, isLoading } =
+    useDestinationQueryByPage(pageIndex);
+  const destinations = destinationsData?.content;
+  const totalPages = destinationsData?.totalPages;
 
   // изменение пагинации
   const setPaginationData = (pageNumber: number) => {
-    setPagination((prev) => ({
-      ...prev,
-      pageIndex: pageNumber,
-    }));
+    setPagination(pageNumber);
   };
 
   // стейт и индекс изменяемой строки
@@ -75,10 +76,6 @@ const Destinations = () => {
     },
     [editableRowState]
   );
-
-  // получение данных
-  const { data: destinationsData, isLoading } = useDestinationQuery();
-  const destinations = destinationsData?.content;
 
   // изменение данных
   const { mutate: patchDestination } = useDestinationPatch();
@@ -251,7 +248,7 @@ const Destinations = () => {
         justifyContent="space-between"
       >
         <Box>
-          <HeaderAdmin<IDestinationPost>
+          <HeaderTable<IDestinationPost>
             heading="Места назначения"
             formName={EModalNames.DESTINATIONS}
           />
@@ -314,6 +311,7 @@ const Destinations = () => {
           cancelEditing={cancelEditing}
           patchRow={patchRow}
           editableRowIndex={editableRowIndex}
+          totalPages={totalPages}
         />
       </TableContainer>
     );

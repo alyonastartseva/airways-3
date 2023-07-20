@@ -25,7 +25,7 @@ import { EditableSelectCell } from '@/common/EditableSelectCell';
 import { isRowEditing } from '@utils/table.utils';
 import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
-import { HeaderAdmin } from '@common/HeaderAdmin';
+import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { usePassengersDelete } from '@hooks/usePassengersDelete';
 import { usePassengersPatch } from '@hooks/usePassengersPatch';
@@ -36,18 +36,23 @@ import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Passengers = () => {
   // индекс и размер пагинации
-  const [{ pageIndex }, setPagination] = useState({
-    pageIndex: 0,
-  });
+  const [pageIndex, setPagination] = useState(0);
+
+  // получение данных
+  const { data: dataQuery, isLoading } = usePassengersQuery(pageIndex);
+  const passengers = dataQuery?.content;
+  const totalPages = dataQuery?.totalPages;
 
   // изменение пагинации
   const setPaginationData = (pageNumber: number) => {
-    setPagination((prev) => ({
-      ...prev,
-      pageIndex: pageNumber,
-    }));
+    setPagination(pageNumber);
     localStorage.setItem('PASS_CURR_PAGE', String(pageNumber));
   };
+
+  // если удален последняя строка текущей страницы, то открываем предыдущую страницу
+  useEffect(() => {
+    if (!passengers && pageIndex > 0) setPaginationData(pageIndex - 1);
+  }, [passengers]);
 
   useEffect(() => {
     const currPage = Number(localStorage.getItem('PASS_CURR_PAGE'));
@@ -101,11 +106,6 @@ const Passengers = () => {
     },
     [editableRowState]
   );
-
-  // получение данных
-  const { data: dataQuery, isLoading } = usePassengersQuery(pageIndex);
-  const passengers = dataQuery?.content;
-  const totalPages = dataQuery?.totalPages;
 
   if (!isLoading) {
     localStorage.setItem(
@@ -369,7 +369,7 @@ const Passengers = () => {
   if (Array.isArray(passengers) && passengers?.length) {
     return (
       <TableContainer my={10} mx={14}>
-        <HeaderAdmin<IFormPassengers>
+        <HeaderTable<IFormPassengers>
           heading="Пассажиры"
           formName={EModalNames.PASSENGERS}
         />

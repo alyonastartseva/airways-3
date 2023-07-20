@@ -7,6 +7,14 @@ import {
 } from '@interfaces/destination.interfaces';
 
 const destinationsAPI = {
+  getDestinationsByPage: async (pageIndex: number) => {
+    return await adminInstance
+      .get<IDestinationGet>(
+        ERoutes.DESTINATION + `?pageNumber=${String(pageIndex)}`
+      )
+      .then((response) => response.data);
+  },
+
   getDestinations: async () => {
     return await adminInstance
       .get<IDestinationGet>(ERoutes.DESTINATION)
@@ -39,6 +47,7 @@ const destinationsAPI = {
 
 export const {
   getDestinations,
+  getDestinationsByPage,
   patchDestinations,
   postDestinations,
   deleteDestination,

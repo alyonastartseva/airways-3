@@ -22,7 +22,7 @@ import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
 import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
-import { HeaderAdmin } from '@common/HeaderAdmin';
+import { HeaderTable } from '@common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortAirplanes } from '@utils/sort.utils';
@@ -34,16 +34,11 @@ import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Airplanes = () => {
   // индекс и размер пагинации
-  const [{ pageIndex }, setPagination] = useState({
-    pageIndex: 0,
-  });
+  const [pageIndex, setPagination] = useState(0);
 
   // изменение пагинации
   const setPaginationData = (pageNumber: number) => {
-    setPagination((prev) => ({
-      ...prev,
-      pageIndex: pageNumber,
-    }));
+    setPagination(pageNumber);
     localStorage.setItem('AIRPLANES_CURR_PAGE', String(pageNumber));
   };
 
@@ -241,7 +236,7 @@ const Airplanes = () => {
         justifyContent="space-between"
       >
         <Box>
-          <HeaderAdmin<IAircraftPost>
+          <HeaderTable<IAircraftPost>
             heading="Самолеты"
             formName={EModalNames.AIRPLANES}
           />

@@ -23,7 +23,7 @@ import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
 import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
-import { HeaderAdmin } from '@common/HeaderAdmin';
+import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortSeat } from '@utils/sort.utils';
@@ -295,7 +295,7 @@ const Airplane = () => {
         justifyContent="space-between"
       >
         <Box>
-          <HeaderAdmin<ISeatForm>
+          <HeaderTable<ISeatForm>
             heading="Имя самолета"
             formName={EModalNames.SEAT}
             select

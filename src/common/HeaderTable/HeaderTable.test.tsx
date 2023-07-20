@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 
-import HeaderAdmin from './HeaderAdmin';
+import HeaderTable from './HeaderTable';
 
 vi.mock('react-query', () => {
   const testData = [
@@ -20,11 +20,11 @@ vi.mock('react-query', () => {
   };
 });
 
-describe('HeaderAdmin test', () => {
-  it('HeaderAdmin render', () => {
+describe('HeaderTable test', () => {
+  it('HeaderTable render', () => {
     const heading = 'test';
     render(
-      <HeaderAdmin heading={heading} formName={EModalNames.DESTINATIONS} />
+      <HeaderTable heading={heading} formName={EModalNames.DESTINATIONS} />
     );
 
     expect(screen.getByText('test')).toBeInTheDocument();
