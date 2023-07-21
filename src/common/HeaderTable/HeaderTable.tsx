@@ -6,7 +6,7 @@ import { ModalShape } from '@common/ModalElements/ModalShape';
 import { HeadingAdmin } from '@common/HeadingAdmin';
 // import { ModalInput } from '@common/ModalElements/ModalInput';
 
-const HeaderAdmin = <T extends FieldValues>({
+const HeaderTable = <T extends FieldValues>({
   heading,
   formName,
   select,
@@ -38,4 +38,4 @@ const HeaderAdmin = <T extends FieldValues>({
   );
 };
 
-export default HeaderAdmin;
+export default HeaderTable;

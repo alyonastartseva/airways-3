@@ -1,6 +1,5 @@
 import { IDestination } from '@interfaces/destination.interfaces';
-
-import { ERolesPassenger } from './roles.interfaces';
+import { ERolesPassenger } from '@interfaces/roles.interfaces';
 
 export interface IArticle {
   title: string;

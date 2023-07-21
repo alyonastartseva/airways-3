@@ -1,7 +1,7 @@
 import { describe, vi } from 'vitest';
 import { render } from '@testing-library/react';
 
-import AlertMessage from './AlertMessage';
+import { AlertMessage } from '@common/AlertMessage';
 
 vi.mock('@chakra-ui/react', () => ({
   Flex: ({ children }: React.PropsWithChildren) => (
