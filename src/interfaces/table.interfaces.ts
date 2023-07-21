@@ -2,10 +2,9 @@ import { AxiosResponse } from 'axios';
 import { UseMutateFunction } from 'react-query';
 
 import { EModalNames } from '@/constants/modal-constants/modal-names';
-
-import { TPerson } from './person.interfaces';
-import { IAircraft } from './aircraft.interfaces';
-import { IDestination } from './destination.interfaces';
+import { TPerson } from '@interfaces/person.interfaces';
+import { IAircraft } from '@interfaces/aircraft.interfaces';
+import { IDestination } from '@/interfaces/destination.interfaces';
 
 export interface IEditableCell {
   value: string | number | undefined;

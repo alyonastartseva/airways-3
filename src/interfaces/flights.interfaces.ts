@@ -1,7 +1,7 @@
 import { FieldValues } from 'react-hook-form';
 
-import { IDestination } from './destination.interfaces';
-import { IAircraft } from './aircraft.interfaces';
+import { IDestination } from '@interfaces/destination.interfaces';
+import { IAircraft } from '@interfaces/aircraft.interfaces';
 
 export type TFlightsStatus =
   | 'DELAYED'

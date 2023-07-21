@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import SearchTicketsPage from './SearchTickets.page';
+import { SearchTicketsPage } from '@pages/User/SearchTicketsPage';
 
 // здесь нужно написать нормальный тест
 test('renders SearchTickets component', () => {

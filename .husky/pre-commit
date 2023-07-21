@@ -1,4 +1,36 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+staged_files=$(git diff --cached --name-only)
+
+tests=""
+for file in $staged_files; do
+  dir=$(basename -- $(dirname -- "$file"))
+if [ "$dir" != "src" ] && [ "$dir" != "." ] && [ "$dir" != ".husky" ] && [ "$dir" != "husky" ]; then
+  found=false
+
+    for element in $tests; do
+      if [ "$element" = "$dir" ]; then
+        found=true
+        break
+      fi
+    done
+
+    # Добавление директории в tests (если оно не добавлено ранее)
+    if [ "$found" = false ]; then
+      tests="$tests""$dir"" "
+    fi
+  fi
+done
+
+
+  if [ -n "$tests" ]; then
+    echo "Производится проверка тестов для $tests... Покрытие тестами должно быть от 80%"
+    yarn vitest --coverage $tests
+  fi
+
+echo "Тест на покрытие для $tests успешно пройден."
+
+
 npx lint-staged
+exit 0

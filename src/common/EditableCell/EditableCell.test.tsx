@@ -1,7 +1,7 @@
 import { describe, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import EditableCell from './EditableCell';
+import { EditableCell } from '@common/EditableCell';
 
 describe('EditableCell test', () => {
   it('EditableCell render as div', () => {

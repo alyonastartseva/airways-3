@@ -1,6 +1,5 @@
 import { IDestination } from '@interfaces/destination.interfaces';
-
-import { IFlightPresentation } from './flights.interfaces';
+import { IFlightPresentation } from '@/interfaces/flights.interfaces';
 
 export type TDestQuery = Omit<IDestination, 'id'>;
 
