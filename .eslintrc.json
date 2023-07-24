@@ -51,6 +51,7 @@
     }
   ],
   "rules": {
+    "no-console": "error",
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
     "consistent-return": "off",
@@ -73,7 +74,6 @@
       }
     ],
     "class-methods-use-this": "off",
-    "no-console": "off",
     "import/no-unresolved": [
       2,
       {

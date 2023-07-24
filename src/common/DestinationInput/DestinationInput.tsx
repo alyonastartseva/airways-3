@@ -18,7 +18,7 @@ const DestinationInput: React.FC<IDestProps> = (props: IDestProps) => {
     onSuccess: (res) => {
       setDestinationList(res.content);
     },
-    onError: (err) => console.error(err),
+    onError: (err) => err,
   });
 
   const [destInputFocus, setDestInputFocus] = useState(false);

@@ -58,10 +58,10 @@ const SearchTabPanel: React.FC = () => {
     () => searchService.getSearchResult(searchParams),
     {
       onSuccess: (data) => {
-        console.log(data);
+        data;
       },
       onError: (error) => {
-        console.error(error);
+        error;
       },
       enabled: false,
       retry: false,
@@ -135,7 +135,6 @@ const SearchTabPanel: React.FC = () => {
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('submit>', searchParams);
     refetch();
   };
 
