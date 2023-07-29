@@ -1,3 +1,4 @@
+import { AddIcon } from '@chakra-ui/icons';
 import {
   useDisclosure,
   Modal,
@@ -7,6 +8,7 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
+  Button,
 } from '@chakra-ui/react';
 import {
   SubmitHandler,
@@ -83,6 +85,24 @@ const ModalShape = <T extends FieldValues>({ formName }: IModalProps) => {
                     </ModalInput>
                   );
                 })}
+                {name === 'Добавить самолет' ? (
+                  <Button
+                    rightIcon={<AddIcon boxSize="3" />}
+                    border="1px solid #DEDEDE"
+                    borderRadius="2"
+                    boxShadow="0px 5px 5px rgba(0, 0, 0, 0.06)"
+                    bgColor="#F9F9F9"
+                    fontSize="14px"
+                    fontWeight="500"
+                    _hover={{
+                      backgroundColor: '#398AEA',
+                      borderColor: '#398AEA',
+                      color: '#FFFFFF',
+                    }}
+                  >
+                    Добавить сиденье
+                  </Button>
+                ) : null}
               </ModalBody>
               <ModalFooter pt={0} pb={7} px={7}>
                 <ButtonSubmitAdmin />

@@ -13,6 +13,12 @@ const aircraftsAPI = {
       .then((response) => response.data);
   },
 
+  getAircraftById: async (id: number) => {
+    return adminInstance
+      .get<IAircraft>(ERoutes.AIRCRAFT + id)
+      .then((response) => response.data);
+  },
+
   postAircraft: async (data: IAircraftPost) => {
     return await adminInstance.post<IAircraftPost>(ERoutes.AIRCRAFT, data);
   },
@@ -31,5 +37,10 @@ const aircraftsAPI = {
   },
 };
 
-export const { getAircrafts, postAircraft, deleteAircraft, patchAircraft } =
-  aircraftsAPI;
+export const {
+  getAircrafts,
+  postAircraft,
+  deleteAircraft,
+  patchAircraft,
+  getAircraftById,
+} = aircraftsAPI;

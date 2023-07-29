@@ -23,7 +23,7 @@ const EditableCell = ({
 
   return index === editableRowIndex ? (
     <Input
-      value={value}
+      value={String(value)}
       onChange={onChange}
       onBlur={onBlur}
       fontSize="0.87rem"
@@ -36,7 +36,7 @@ const EditableCell = ({
       }}
     />
   ) : (
-    <FlexCell padding={16} value={value} />
+    <FlexCell padding={16} value={String(value)} />
   );
 };
 

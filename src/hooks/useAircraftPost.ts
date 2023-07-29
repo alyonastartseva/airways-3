@@ -12,7 +12,7 @@ const useAircraftPost = () => {
       queryClient.invalidateQueries('aircrafts');
       toast({
         status: 'success',
-        title: 'Пункт назначения успешно добавлен',
+        title: 'Самолет успешно добавлен',
         position: 'top',
       });
     },

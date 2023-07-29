@@ -6,6 +6,8 @@ import { TPerson } from '@interfaces/person.interfaces';
 import { IAircraft } from '@interfaces/aircraft.interfaces';
 import { IDestination } from '@/interfaces/destination.interfaces';
 
+export type InitialSelectValue = string | { categoryType: string };
+
 export interface IEditableCell {
   value: string | number | undefined;
   index: number;
@@ -16,14 +18,14 @@ export interface IEditableCell {
 
 export interface IEditableSelectCell extends IEditableCell {
   selectOptions: string[];
-  getRenderValue(value: string): string;
+  getRenderValue(value: string | boolean | object): string;
 }
 
 export interface IsRowEditing<Data> {
   (
     index: number,
     id: string,
-    value: string | undefined,
+    value: string | { categoryType: string } | undefined,
     row: Data | null,
     editableIndex: number | null
   ): string | number | undefined;

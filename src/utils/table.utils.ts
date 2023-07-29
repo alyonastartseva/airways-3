@@ -19,6 +19,7 @@ export const isRowEditing: IsRowEditing<TTableData> = (
     }
     return row[id as keyof TTableData];
   } else {
-    return value;
+    if (typeof value === 'object') return value.categoryType;
+    else return String(value);
   }
 };
