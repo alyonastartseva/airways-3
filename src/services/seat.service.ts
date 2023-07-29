@@ -16,6 +16,9 @@ interface ISeatApi {
   deleteSeat: (
     id: number | undefined
   ) => Promise<AxiosResponse<ISeat> | undefined>;
+  patchSeat: (
+    data: ISeatPost | null
+  ) => Promise<AxiosResponse<ISeatPost, any> | undefined>;
 }
 
 const seatAPI: ISeatApi = {
@@ -37,6 +40,27 @@ const seatAPI: ISeatApi = {
       return await adminInstance.delete<ISeat>(ERoutes.SEAT + id);
     }
   },
+
+  patchSeat: async (data) => {
+    if (data) {
+      const { id, ...rest } = data;
+      let categoryPatch = '';
+      if (typeof rest.category === 'object')
+        categoryPatch = rest.category.categoryType;
+      else categoryPatch = rest.category;
+
+      const patchObj = {
+        aircraftId: rest.aircraftId,
+        category: {
+          categoryType: categoryPatch,
+        },
+        isLockedBack: rest.isLockedBack,
+        isNearEmergencyExit: rest.isNearEmergencyExit,
+        seatNumber: rest.seatNumber,
+      };
+      return await adminInstance.patch<ISeatPost>(ERoutes.SEAT + id, patchObj);
+    }
+  },
 };
 
-export const { getSeat, postSeat, deleteSeat } = seatAPI;
+export const { getSeat, postSeat, deleteSeat, patchSeat } = seatAPI;

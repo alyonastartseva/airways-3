@@ -39,7 +39,7 @@ export interface PassengersTableInterface {
     {
       id: number;
       name: string;
-    }
+    },
   ];
   securityQuestion: string;
   birthDate: string;

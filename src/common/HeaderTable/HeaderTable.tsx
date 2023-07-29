@@ -21,7 +21,7 @@ const HeaderTable = <T extends FieldValues>({
           <Flex align="center" justify="space-between" mr={5}>
             <Box mr={5}>Класс</Box>
             <Select
-              placeholder="Выбирете класс"
+              placeholder="Выберите класс"
               value={selectedValue} // Привязываем выбранное значение к состоянию
               onChange={handleSelectChange}
             >

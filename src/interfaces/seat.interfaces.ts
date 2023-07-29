@@ -20,7 +20,7 @@ export interface ISeatPost {
 export interface ISeat extends ISeatPost {
   category: {
     categoryType: TSeatCategory;
-    id: number;
+    // id?: number;
   };
 }
 

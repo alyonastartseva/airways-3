@@ -42,5 +42,5 @@ export type TSettings = [
   IModalSetting<IFlightPostFormFields, IFlight, IFlightPost>,
   IModalSetting<IFormPassengers>,
   IModalSetting<ISeatForm>,
-  IModalSetting<ITicketsForm>
+  IModalSetting<ITicketsForm>,
 ];

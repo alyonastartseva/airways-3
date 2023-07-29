@@ -271,7 +271,7 @@ const Flights = () => {
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              info.getValue(),
+              String(info.getValue()),
               editableRowState,
               editableRowIndex
             )}

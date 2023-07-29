@@ -17,7 +17,12 @@ import {
 import { useCallback, useMemo, useState, useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 
-import { ISeat, ISeatForm } from '@/interfaces/seat.interfaces';
+import {
+  ISeat,
+  ISeatForm,
+  ISeatPost,
+  TSeatCategory,
+} from '@/interfaces/seat.interfaces';
 import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
@@ -32,7 +37,10 @@ import { useSeatPost } from '@hooks/useSeatPost';
 import { useSeatDelete } from '@hooks/useSeatDelete';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import ELinks from '@services/admin-router-links.service';
-import { ITEMS_PER_PAGE } from '@/constants/constants';
+import { ITEMS_PER_PAGE, seatCategory, yesNo } from '@/constants/constants';
+import { EditableSelectCell } from '@/common/EditableSelectCell';
+import { useSeatPatch } from '@/hooks/useSeatPatch';
+import { useAircraftQueryById } from '@/hooks/useAircraftQueryById';
 
 const Airplane = () => {
   // получение параметра ID из роута
@@ -61,18 +69,51 @@ const Airplane = () => {
 
   // обновление редактируемой строки
   const handleUpdateRow = useCallback(
-    (id: string, value: string) => {
+    (id: string, value: string | object) => {
       if (editableRowState)
-        setEditableRowState({ ...editableRowState, [id]: value });
+        setEditableRowState({
+          ...editableRowState,
+          [id as keyof ISeatPost]: value,
+        });
     },
     [editableRowState]
   );
+
+  // получение названия класса билета
+  const getStatusName = (status: TSeatCategory): string => {
+    switch (status) {
+      case 'BUSINESS':
+        return 'Бизнес';
+      case 'ECONOMY':
+        return 'Эконом';
+      case 'FIRST':
+        return 'Первый';
+      case 'PREMIUM_ECONOMY':
+        return 'Премиум';
+      default:
+        return '';
+    }
+  };
+
+  const getYesNo = (status: string): string => {
+    switch (status) {
+      case 'true':
+        return 'Да';
+      case 'false':
+        return 'Нет';
+      default:
+        return '';
+    }
+  };
 
   // получение данных
   const airplaneId = param.airplane;
 
   const { data: dataSeat, isLoading } = useSeatQuery(Number(airplaneId));
   const seat = dataSeat?.content;
+
+  const { data: dataAirplane } = useAircraftQueryById(Number(airplaneId));
+  const planeName = dataAirplane?.model;
 
   // изменение данных
   const { mutate: postSeat } = useSeatPost();
@@ -81,12 +122,21 @@ const Airplane = () => {
   const { mutate: deleteSeat } = useSeatDelete();
 
   // патч данных
+  const { mutate: patchSeat } = useSeatPatch();
+
+  // добавление данных
   const postRow = useCallback(() => {
     if (editableRowState) {
       postSeat(editableRowState);
     }
     cancelEditing();
   }, [postSeat, cancelEditing, editableRowState]);
+
+  // патч данных
+  const patchRow = useCallback(() => {
+    patchSeat(editableRowState);
+    cancelEditing();
+  }, [patchSeat, editableRowState, cancelEditing]);
 
   // Состояние для хранения выбранного класса для фильтра
   const [selectedValue, setSelectedValue] = useState('');
@@ -128,7 +178,7 @@ const Airplane = () => {
         size: 41,
       }),
       columnHelper.accessor('seatNumber', {
-        header: 'Номер сиденье',
+        header: 'Номер сиденья',
         cell: (info) => (
           <EditableCell
             value={isRowEditing(
@@ -149,11 +199,11 @@ const Airplane = () => {
       columnHelper.accessor('category', {
         header: 'Класс',
         cell: (info) => (
-          <EditableCell
+          <EditableSelectCell
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              String(info.row.original.category.categoryType),
+              info.getValue(),
               editableRowState,
               editableRowIndex
             )}
@@ -161,50 +211,48 @@ const Airplane = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            selectOptions={seatCategory}
+            getRenderValue={getStatusName}
           />
         ),
       }),
       columnHelper.accessor('isLockedBack', {
         header: 'Неподвижное сиденье',
         cell: (info) => (
-          <EditableCell
-            value={
-              isRowEditing(
-                info.row.index,
-                info.column.id,
-                String(info.getValue()),
-                editableRowState,
-                editableRowIndex
-              ) === 'true'
-                ? 'Да'
-                : 'Нет'
-            }
+          <EditableSelectCell
+            value={isRowEditing(
+              info.row.index,
+              info.column.id,
+              String(info.getValue()),
+              editableRowState,
+              editableRowIndex
+            )}
             index={info.row.index}
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            selectOptions={yesNo}
+            getRenderValue={getYesNo}
           />
         ),
       }),
       columnHelper.accessor('isNearEmergencyExit', {
         header: 'Близко к экстренному выходу',
         cell: (info) => (
-          <EditableCell
-            value={
-              isRowEditing(
-                info.row.index,
-                info.column.id,
-                String(info.getValue()),
-                editableRowState,
-                editableRowIndex
-              ) === 'true'
-                ? 'Да'
-                : 'Нет'
-            }
+          <EditableSelectCell
+            value={isRowEditing(
+              info.row.index,
+              info.column.id,
+              String(info.getValue()),
+              editableRowState,
+              editableRowIndex
+            )}
             index={info.row.index}
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            selectOptions={yesNo}
+            getRenderValue={getYesNo}
           />
         ),
       }),
@@ -296,7 +344,7 @@ const Airplane = () => {
       >
         <Box>
           <HeaderTable<ISeatForm>
-            heading="Имя самолета"
+            heading={planeName ? planeName : ''}
             formName={EModalNames.SEAT}
             select
             selectedValue={selectedValue}
@@ -359,7 +407,7 @@ const Airplane = () => {
           pageIndex={pageIndex}
           setPaginationData={setPaginationData}
           cancelEditing={cancelEditing}
-          patchRow={postRow}
+          patchRow={patchRow}
           editableRowIndex={editableRowIndex}
         />
       </TableContainer>

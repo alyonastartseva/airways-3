@@ -19,4 +19,5 @@ export interface IAircraftPost extends FieldValues {
   model?: string;
   modelYear?: number;
   flightRange?: number;
+  seat?: number;
 }
