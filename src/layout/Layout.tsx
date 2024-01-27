@@ -9,7 +9,7 @@ const Layout = () => {
     <Flex
       flexDirection={'column'}
       justifyContent={'space-between'}
-      overflow={'hidden'}
+      overflowY={'hidden'}
       minHeight={'100vh'}
     >
       {<Header />}
