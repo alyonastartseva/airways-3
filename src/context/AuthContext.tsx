@@ -5,6 +5,8 @@ type TAuthContextType = {
   setIsAdmin: (auth: boolean) => void;
 };
 
+localStorage.setItem('adminToken', 'true'); //delete when admin funcs created
+
 export const AuthContext = createContext<TAuthContextType>({
   isAdmin: Boolean(localStorage.getItem('adminToken')),
   setIsAdmin: () => {},
