@@ -16,7 +16,7 @@ const AircraftIdOptions = () => {
   if (aircraftList)
     return (
       <>
-        {aircraftList.content.map((el) => (
+        {aircraftList.map((el) => (
           <option key={el.model} value={el.id}>
             {el.model}
           </option>

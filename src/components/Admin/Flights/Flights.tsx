@@ -45,7 +45,7 @@ const Flights = () => {
   // получение данных
   const { data: airplanesData, isLoading: isAircraftLoading } =
     useAircraftQuery();
-  const airplanes = airplanesData?.content;
+  const airplanes = airplanesData;
 
   const { data: flightsData, isLoading, isError } = useFlightsQuery(pageIndex);
   const flights = flightsData?.content;
