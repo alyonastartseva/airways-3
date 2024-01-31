@@ -75,12 +75,15 @@ const Airplanes = () => {
   );
 
   // получение данных
-  const { data: airplanesData, isLoading } = useAircraftQuery();
-  const airplanes = airplanesData?.content;
+  const { data: airplanes, isLoading } = useAircraftQuery();
+
+  // с бека теперь возвращается массив самолетов, вместо объекта вида {content: array, totalPages: number, totalElements: number } !!!
+  // const airplanes = airplanesData?.content;
   // const totalPages = airplanesData?.totalPages;
-  const totalElements = airplanesData?.totalElements;
-  let totalAircraftPages = 1;
-  if (totalElements) totalAircraftPages = Math.ceil(totalElements / 10);
+  // const totalElements = airplanesData?.totalElements;
+  // if (totalElements) totalAircraftPages = Math.ceil(totalElements / 10);
+
+  const totalAircraftPages = airplanes ? Math.ceil(airplanes?.length / 10) : 1;
 
   // изменение данных
   const { mutate: patchAircraft } = useAircraftPatch();

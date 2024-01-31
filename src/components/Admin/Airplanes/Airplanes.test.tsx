@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, vi } from 'vitest';
+import { BrowserRouter } from 'react-router-dom';
 
 import Airplanes from './Airplanes';
 
@@ -12,23 +13,25 @@ describe('Airplanes', () => {
   });
 
   it('Airplanes render table data', async () => {
-    const testData = {
-      content: [
-        {
-          id: 1,
-          model: 'Superjet 100',
-          aircraftNumber: '1337',
-          modelYear: '2000',
-          flightRange: '3804',
-        },
-      ],
-    };
+    const testData = [
+      {
+        id: 1,
+        model: 'Superjet 100',
+        aircraftNumber: '1337',
+        modelYear: '2000',
+        flightRange: '3804',
+      },
+    ];
 
     const data = await import('react-query');
     data.useQuery = vi.fn().mockReturnValue({ data: testData });
     data.useMutation = vi.fn().mockReturnValue({});
 
-    render(<Airplanes />);
+    render(
+      <BrowserRouter>
+        <Airplanes />
+      </BrowserRouter>
+    );
     expect(data.useQuery).toBeCalledTimes(1);
     expect(screen.getByText('Superjet 100')).toBeInTheDocument();
     expect(screen.getByText('1337')).toBeInTheDocument();
