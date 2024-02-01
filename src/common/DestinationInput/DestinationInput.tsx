@@ -91,9 +91,8 @@ const DestinationInput: React.FC<IDestProps> = (props: IDestProps) => {
         {destInputFocus &&
           destinationList &&
           destinationList
-            .filter(
-              (item) =>
-                item.cityName?.toLowerCase()?.includes(inputValue.toLowerCase())
+            .filter((item) =>
+              item.cityName?.toLowerCase()?.includes(inputValue.toLowerCase())
             )
             .map((item) => (
               <Box

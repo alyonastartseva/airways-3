@@ -60,8 +60,8 @@ export const modalPassengersFields: FormInputProps<IFormPassengers>[] = [
     },
     children: (
       <>
-        <option value="male\">Мужской</option>
-        <option value="female\">Женский</option>
+        <option value="male">Мужской</option>
+        <option value="female">Женский</option>
       </>
     ),
   },
