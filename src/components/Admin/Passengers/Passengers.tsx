@@ -40,7 +40,8 @@ const Passengers = () => {
 
   // получение данных
   const { data: dataQuery, isLoading } = usePassengersQuery(pageIndex);
-  const passengers = dataQuery?.content;
+  // const passengers = dataQuery?.content;
+  const passengers = dataQuery;
   const totalPages = dataQuery?.totalPages;
 
   // изменение пагинации
@@ -52,7 +53,7 @@ const Passengers = () => {
   // если удален последняя строка текущей страницы, то открываем предыдущую страницу
   useEffect(() => {
     if (!passengers && pageIndex > 0) setPaginationData(pageIndex - 1);
-  }, [passengers]);
+  }, [passengers, pageIndex]);
 
   useEffect(() => {
     const currPage = Number(localStorage.getItem('PASS_CURR_PAGE'));

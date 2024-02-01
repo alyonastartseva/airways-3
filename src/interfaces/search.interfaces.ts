@@ -18,14 +18,15 @@ export interface IPassenger {
   passport?: IPassport;
   phoneNumber: string;
   birthDate: string;
+  email: string;
 }
 
 export interface IPassport {
   middleName?: string;
   gender?: string;
   serialNumberPassport?: string;
-  passportIssuingCountry?: string;
   passportIssuingDate?: string;
+  passportIssuingCountry?: string;
 }
 
 export interface FormPassengersGet {
@@ -34,14 +35,14 @@ export interface FormPassengersGet {
 }
 
 export interface FormPassengersPost {
-  answerQuestion?: string;
-  birthDate?: string;
-  email?: string;
   firstName?: string;
   lastName?: string;
-  passport?: IPassport;
-  password?: string;
+  birthDate?: string;
   phoneNumber?: string;
+  passport?: IPassport;
+  email?: string;
+  answerQuestion?: string;
+  password?: string;
   roles?: {
     name?: ERolesPassenger;
   }[];
