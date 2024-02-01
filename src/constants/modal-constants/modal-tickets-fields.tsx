@@ -34,7 +34,8 @@ const CityNameOptions = () => {
   if (destinationsList)
     return (
       <>
-        {destinationsList.content.map((el) => (
+        {/* {destinationsList.content.map((el) => ( */}
+        {destinationsList.map((el) => (
           <option key={el.id} value={JSON.stringify(el)}>
             {`${el.airportName}, ${el.airportCode}`}
           </option>

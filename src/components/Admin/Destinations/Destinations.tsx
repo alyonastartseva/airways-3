@@ -42,8 +42,12 @@ const Destinations = () => {
   // получение данных
   const { data: destinationsData, isLoading } =
     useDestinationQueryByPage(pageIndex);
-  const destinations = destinationsData?.content;
-  const totalPages = destinationsData?.totalPages;
+
+  // const destinations = destinationsData?.content;
+  // const totalPages = destinationsData?.totalPages;
+
+  const destinations = destinationsData;
+  const totalPages = destinations ? Math.ceil(destinations?.length / 10) : 1;
 
   // изменение пагинации
   const setPaginationData = (pageNumber: number) => {

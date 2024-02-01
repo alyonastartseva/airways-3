@@ -59,9 +59,8 @@ const MainSearch = ({ startDate, endDate }: Props) => {
 
   const getAirportCode = async (city: string) => {
     const destinations = await getDestinations();
-    const destination = destinations.content.find(
-      (item) => item.cityName === city
-    );
+    // const destination = destinations.content.find(
+    const destination = destinations.find((item) => item.cityName === city);
     return destination ? destination.airportCode : null;
   };
 

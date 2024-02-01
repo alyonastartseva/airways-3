@@ -6,19 +6,26 @@ import {
   IDestinationPost,
 } from '@interfaces/destination.interfaces';
 
+// временное решение, пока с бека не приходят необходимы свойства
+const tempMapDestination = (data: IDestinationGet) =>
+  data.map((destination) => ({
+    ...destination,
+    countryName: '',
+    cityName: '',
+    airportName: '',
+  }));
+
 const destinationsAPI = {
   getDestinationsByPage: async (pageIndex: number) => {
     return await adminInstance
-      .get<IDestinationGet>(
-        ERoutes.DESTINATION + `?pageNumber=${String(pageIndex)}`
-      )
-      .then((response) => response.data);
+      .get<IDestinationGet>(ERoutes.DESTINATION + `?page=${String(pageIndex)}`)
+      .then((response) => tempMapDestination(response.data));
   },
 
   getDestinations: async () => {
     return await adminInstance
       .get<IDestinationGet>(ERoutes.DESTINATION)
-      .then((response) => response.data);
+      .then((response) => tempMapDestination(response.data));
   },
 
   patchDestinations: async (data: IDestination | null) => {
