@@ -2,16 +2,15 @@ import { AxiosResponse } from 'axios';
 
 import { adminInstance } from '@/services/axios.service';
 import ERoutes from '@/services/endpoints.service';
-import {
-  ISeat,
-  ISeatPost,
-  ISeatForm,
-  ISeatContent,
-} from '@/interfaces/seat.interfaces';
+import { ISeat, ISeatPost, ISeatForm } from '@/interfaces/seat.interfaces';
 import { mapSeatFormData } from '@/utils/form-seat.utils';
 
 interface ISeatApi {
-  getSeat: (id: number) => Promise<ISeatContent | undefined>;
+  getSeat: (
+    id: number,
+    size: number,
+    page: number
+  ) => Promise<ISeat[] | undefined>;
   postSeat: (data: ISeatPost) => Promise<AxiosResponse<ISeatPost, Error>>;
   deleteSeat: (
     id: number | undefined
@@ -22,10 +21,12 @@ interface ISeatApi {
 }
 
 const seatAPI: ISeatApi = {
-  getSeat: async (id: number) => {
-    if (id > 0 && id <= 10) {
+  getSeat: async (id: number, size: number, page: number) => {
+    if (id > 0) {
       return await adminInstance
-        .get<ISeatContent>(`${ERoutes.SEAT}aircraft/${id}`)
+        .get<ISeat[]>(
+          `${ERoutes.SEAT}?page=${page}&size=${size}&aircraftId=${id}`
+        )
         .then((response) => response.data);
     }
   },
@@ -45,15 +46,12 @@ const seatAPI: ISeatApi = {
     if (data) {
       const { id, ...rest } = data;
       let categoryPatch = '';
-      if (typeof rest.category === 'object')
-        categoryPatch = rest.category.categoryType;
+      if (typeof rest.category === 'object') categoryPatch = rest.category;
       else categoryPatch = rest.category;
 
       const patchObj = {
         aircraftId: rest.aircraftId,
-        category: {
-          categoryType: categoryPatch,
-        },
+        category: categoryPatch,
         isLockedBack: rest.isLockedBack,
         isNearEmergencyExit: rest.isNearEmergencyExit,
         seatNumber: rest.seatNumber,

@@ -8,27 +8,18 @@ export type TSeatCategory =
 
 export interface ISeatPost {
   aircraftId: number;
-  category: {
-    categoryType: TSeatCategory;
-  };
+  category: TSeatCategory;
   id: number;
   isLockedBack: boolean;
   isNearEmergencyExit: boolean;
   seatNumber: string;
 }
 
-export interface ISeat extends ISeatPost {
-  category: {
-    categoryType: TSeatCategory;
-    // id?: number;
-  };
-}
+export type ISeat = ISeatPost;
 
 export interface ISeatForm extends FieldValues {
   aircraftId?: number;
-  category?: {
-    categoryType?: TSeatCategory;
-  };
+  category?: TSeatCategory;
   id?: number;
   isLockedBack?: boolean;
   isNearEmergencyExit?: boolean;

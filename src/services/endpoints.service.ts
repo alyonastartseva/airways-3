@@ -5,7 +5,7 @@ enum ERoutes {
   PASSENGERS = '/passengers/',
   GET_FLIGHTS = '/flights/all',
   FLIGHTS = '/flights/',
-  SEAT = '/seats/',
+  SEAT = '/seats',
   TICKETS = '/tickets/',
 }
 

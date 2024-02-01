@@ -12,9 +12,7 @@ export const mapSeatFormData = (data: ISeatForm): ISeatPost => {
 
   const seatPostData: ISeatPost = {
     aircraftId: aircraftId || 0,
-    category: {
-      categoryType: category?.categoryType || 'ECONOMY',
-    },
+    category: category || 'ECONOMY',
     id: id || 0,
     isLockedBack: isLockedBack || false,
     isNearEmergencyExit: isNearEmergencyExit || false,
