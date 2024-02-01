@@ -108,9 +108,16 @@ const Airplane = () => {
 
   // получение данных
   const airplaneId = param.airplane;
+  const size = 100;
 
-  const { data: dataSeat, isLoading } = useSeatQuery(Number(airplaneId));
-  const seat = dataSeat?.content;
+  const { data: dataSeat, isLoading } = useSeatQuery(
+    Number(airplaneId),
+    size,
+    pageIndex
+  );
+
+  // const seat = dataSeat?.content;
+  const seat = useMemo(() => dataSeat, [dataSeat]);
 
   const { data: dataAirplane } = useAircraftQueryById(Number(airplaneId));
   const planeName = dataAirplane?.model;
@@ -155,7 +162,7 @@ const Airplane = () => {
       if (seat) {
         const filteredData =
           selectedValue !== ''
-            ? seat.filter((item: ISeat) => item.category.categoryType === value)
+            ? seat.filter((item: ISeat) => item.category === value)
             : seat;
         setFilteredSeat(filteredData);
       }
@@ -332,7 +339,7 @@ const Airplane = () => {
   }
 
   // если полученные данные в порядке выводим таблицу
-  if (Array.isArray(seat) && seat?.length) {
+  if (seat !== undefined) {
     return (
       <TableContainer
         my={10}
