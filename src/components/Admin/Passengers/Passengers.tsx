@@ -40,8 +40,8 @@ const Passengers = () => {
 
   // получение данных
   const { data: dataQuery, isLoading } = usePassengersQuery(pageIndex);
-  // const passengers = dataQuery?.content;
-  const passengers = dataQuery;
+
+  const passengers = dataQuery?.content;
   const totalPages = dataQuery?.totalPages;
 
   // изменение пагинации
@@ -109,10 +109,7 @@ const Passengers = () => {
   );
 
   if (!isLoading) {
-    localStorage.setItem(
-      'PAGE_PASS_COUNT',
-      JSON.stringify(dataQuery?.totalPages || 0)
-    );
+    localStorage.setItem('PAGE_PASS_COUNT', JSON.stringify(totalPages || 0));
   }
 
   // изменение данных

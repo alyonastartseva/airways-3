@@ -29,9 +29,31 @@ export interface IPassport {
   passportIssuingCountry?: string;
 }
 
+interface ISort {
+  unsorted: boolean;
+  sorted: boolean;
+  empty: boolean;
+}
+
 export interface FormPassengersGet {
   content: IPassenger[];
   totalPages: number;
+  pageable: {
+    sort: ISort;
+    pageNumber: number;
+    pageSize: number;
+    offset: number;
+    unpaged: boolean;
+    paged: boolean;
+  };
+  last: boolean;
+  totalElements: number;
+  first: boolean;
+  sort: ISort;
+  numberOfElements: number;
+  size: number;
+  number: number;
+  empty: boolean;
 }
 
 export interface FormPassengersPost {
