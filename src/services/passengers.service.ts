@@ -7,11 +7,14 @@ import {
 } from '@/interfaces/search.interfaces';
 import { IFormPassengers } from '@/interfaces/passenger.interfaces';
 import { mapPassengersFormData } from '@/utils/form-passengers.utils';
+import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const passengersAPI = {
   getPassengers: async (page: number) => {
     return await adminInstance
-      .get<FormPassengersGet>(ERoutes.PASSENGERS, { params: { page: page } })
+      .get<FormPassengersGet>(ERoutes.PASSENGERS, {
+        params: { page: page, size: ITEMS_PER_PAGE },
+      })
       .then((response) => response.data);
   },
 

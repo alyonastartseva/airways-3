@@ -11,11 +11,12 @@
   "scm.alwaysShowActions": true,
   "editor.formatOnSave": true,
   "cSpell.words": [
-	"aircrafts",
-	"chakra",
-	"formated",
-	"uniqid"
-],
+    "aircrafts",
+    "chakra",
+    "formated",
+    "pageable",
+    "uniqid"
+  ],
 "typescript.tsdk": "node_modules/typescript/lib",
 "testing.automaticallyOpenPeekView": "never"
 }
