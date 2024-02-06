@@ -15,36 +15,39 @@ import { PrivateRoute } from '@/layout/PrivateRoute';
 import { SignUpPage } from '@/pages/User/SignUpPage';
 import { SearchTicketsPage } from '@/pages/User/SearchTicketsPage';
 import { TicketsPage } from '@/pages/Admin/Tickets';
+import { BookingPage } from '@/pages/Admin/BookingPage';
 
 const App = () => {
   return (
     <Routes>
-      <Route path='/' element={<Layout />}>
+      <Route path="/" element={<Layout />}>
         <Route index element={<SearchTicketsPage />} />
-        <Route path='search' element={<SearchPage />} />
-        <Route path='register' element={<RegisterPage />} />
-        <Route path='admin' element={<LoginAdminForm />} />
-        <Route path='sign-up' element={<SignUpPage />} />
+        <Route path="search" element={<SearchPage />} />
+        <Route path="register" element={<RegisterPage />} />
+        <Route path="admin" element={<LoginAdminForm />} />
+        <Route path="sign-up" element={<SignUpPage />} />
+        <Route path="booking" element={<BookingPage />} />
+
         <Route element={<PrivateRoute />}>
-          <Route path='users' element={<UsersPage />} />
-          <Route path='airplanes' element={<AirplanesPage />} />
+          <Route path="users" element={<UsersPage />} />
+          <Route path="airplanes" element={<AirplanesPage />} />
           <Route
-            path='airplanes/airplane-more'
+            path="airplanes/airplane-more"
             element={<AirplaneMorePage />}
           />
 
           <Route
-            path='airplanes/airplane-more/:airplane'
+            path="airplanes/airplane-more/:airplane"
             element={<AirplaneMorePage />}
           />
-          <Route path='passengers' element={<PassengersPage />} />
-          <Route path='destinations' element={<DestinationsPage />} />
-          <Route path='flights' element={<FlightsPage />} />
+          <Route path="passengers" element={<PassengersPage />} />
+          <Route path="destinations" element={<DestinationsPage />} />
+          <Route path="flights" element={<FlightsPage />} />
         </Route>
         {/* вернуть внутрь после связики страницы с кнопоко подбронее */}
-        <Route path='airplane-more' element={<AirplaneMorePage />} />
-        <Route path='tickets' element={<TicketsPage />} />
-        <Route path='*' element={<PageNotFound />} />
+        <Route path="airplane-more" element={<AirplaneMorePage />} />
+        <Route path="tickets" element={<TicketsPage />} />
+        <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
     // </QueryClientProvider>

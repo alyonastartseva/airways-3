@@ -24,6 +24,8 @@ const Header = () => {
       pl="1.5rem"
       justifyContent="space-between"
       alignItems="center"
+      position="relative"
+      zIndex={10}
     >
       <WebsiteLogo isFooter={false} isLogged={isLogged} />
       <Spacer />
