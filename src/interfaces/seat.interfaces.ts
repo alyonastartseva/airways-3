@@ -1,5 +1,7 @@
 import { FieldValues } from 'react-hook-form';
 
+import { IGetQuery } from './api-interfaces';
+
 export type TSeatCategory =
   | 'BUSINESS'
   | 'ECONOMY'
@@ -15,7 +17,7 @@ export interface ISeatPost {
   seatNumber: string;
 }
 
-export type ISeat = ISeatPost;
+export type ISeat = IGetQuery<ISeatPost>;
 
 export interface ISeatForm extends FieldValues {
   aircraftId?: number;

@@ -43,16 +43,8 @@ const Destinations = () => {
   const { data: destinationsData, isLoading } =
     useDestinationQueryByPage(pageIndex);
 
-  // const destinations = destinationsData?.content;
-  // const totalPages = destinationsData?.totalPages;
-
-  const destinations = destinationsData;
-  const totalPages = destinations ? Math.ceil(destinations?.length / 10) : 1;
-
-  // изменение пагинации
-  const setPaginationData = (pageNumber: number) => {
-    setPagination(pageNumber);
-  };
+  const destinations = destinationsData?.content;
+  const totalPages = destinationsData?.totalPages;
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -226,10 +218,7 @@ const Destinations = () => {
 
   // создание таблицы
   const table = useReactTable({
-    data: tableData(destinations).slice(
-      pageIndex * ITEMS_PER_PAGE,
-      pageIndex * ITEMS_PER_PAGE + ITEMS_PER_PAGE
-    ),
+    data: tableData(destinations).slice(0, ITEMS_PER_PAGE),
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
@@ -311,7 +300,7 @@ const Destinations = () => {
         <FooterTable
           data={tableData(destinations)}
           pageIndex={pageIndex}
-          setPaginationData={setPaginationData}
+          setPaginationData={(page) => setPagination(page)}
           cancelEditing={cancelEditing}
           patchRow={patchRow}
           editableRowIndex={editableRowIndex}

@@ -18,7 +18,6 @@ import { useCallback, useMemo, useState, useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 
 import {
-  ISeat,
   ISeatForm,
   ISeatPost,
   TSeatCategory,
@@ -47,16 +46,16 @@ const Airplane = () => {
   const param = useParams();
 
   // индекс и размер пагинации
-  const [{ pageIndex }, setPagination] = useState({
-    pageIndex: 0,
-  });
+  const [pageIndex, setPagination] = useState(0);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
-  const [editableRowState, setEditableRowState] = useState<ISeat | null>(null);
+  const [editableRowState, setEditableRowState] = useState<ISeatPost | null>(
+    null
+  );
 
   // установка редактируемой строки
-  const handleEditRow = useCallback((row: ISeat, index: number) => {
+  const handleEditRow = useCallback((row: ISeatPost, index: number) => {
     setEditableRowState(row);
     setEditableRowIndex(index);
   }, []);
@@ -108,16 +107,14 @@ const Airplane = () => {
 
   // получение данных
   const airplaneId = param.airplane;
-  const size = 100;
 
   const { data: dataSeat, isLoading } = useSeatQuery(
     Number(airplaneId),
-    size,
     pageIndex
   );
 
-  // const seat = dataSeat?.content;
-  const seat = useMemo(() => dataSeat, [dataSeat]);
+  const seat = dataSeat?.content;
+  const totalPages = dataSeat?.totalPages;
 
   const { data: dataAirplane } = useAircraftQueryById(Number(airplaneId));
   const planeName = dataAirplane?.model;
@@ -154,7 +151,7 @@ const Airplane = () => {
     filterData(value);
   };
 
-  const [filteredSeat, setFilteredSeat] = useState<ISeat[]>([]);
+  const [filteredSeat, setFilteredSeat] = useState<ISeatPost[]>([]);
 
   // функция для фильтрации данных
   const filterData = useCallback(
@@ -162,7 +159,7 @@ const Airplane = () => {
       if (seat) {
         const filteredData =
           selectedValue !== ''
-            ? seat.filter((item: ISeat) => item.category === value)
+            ? seat.filter((item: ISeatPost) => item.category === value)
             : seat;
         setFilteredSeat(filteredData);
       }
@@ -176,7 +173,7 @@ const Airplane = () => {
   }, [selectedValue, filterData]);
 
   // создание столбцов таблицы
-  const columnHelper = createColumnHelper<ISeat>();
+  const columnHelper = createColumnHelper<ISeatPost>();
   const columns = useMemo(
     () => [
       columnHelper.accessor('id', {
@@ -288,7 +285,7 @@ const Airplane = () => {
   );
 
   // сортировка получаемых данных. ВРЕМЕННО, ПОКА ДАННЫЕ С СЕРВЕРА ПРИХОДЯТ БЕЗ СОРТИРОВКИ
-  const tableData = (data?: ISeat[]) => {
+  const tableData = (data?: ISeatPost[]) => {
     if (Array.isArray(data) && data.length) {
       return sortSeat(data);
     }
@@ -299,34 +296,12 @@ const Airplane = () => {
   const table = useReactTable({
     data:
       selectedValue !== ''
-        ? tableData(filteredSeat).slice(
-            pageIndex * ITEMS_PER_PAGE,
-            pageIndex * ITEMS_PER_PAGE + ITEMS_PER_PAGE
-          )
-        : tableData(seat).slice(
-            pageIndex * ITEMS_PER_PAGE,
-            pageIndex * ITEMS_PER_PAGE + ITEMS_PER_PAGE
-          ),
+        ? tableData(filteredSeat).slice(0, ITEMS_PER_PAGE)
+        : tableData(seat).slice(0, ITEMS_PER_PAGE),
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
   });
-
-  // функция для обновления пагинации
-  const setPaginationData = useCallback(
-    (pageNumber: number) => {
-      if (filteredSeat.length) {
-        const seatLength = filteredSeat.length;
-        if (pageNumber >= 0 && pageNumber < seatLength / ITEMS_PER_PAGE) {
-          setPagination((prev) => ({
-            ...prev,
-            pageIndex: pageNumber,
-          }));
-        }
-      }
-    },
-    [filteredSeat.length]
-  );
 
   // спиннер при загрузке
   if (isLoading) {
@@ -412,10 +387,11 @@ const Airplane = () => {
         <FooterTable
           data={tableData(seat)}
           pageIndex={pageIndex}
-          setPaginationData={setPaginationData}
+          setPaginationData={(page) => setPagination(page)}
           cancelEditing={cancelEditing}
           patchRow={patchRow}
           editableRowIndex={editableRowIndex}
+          totalPages={totalPages}
         />
       </TableContainer>
     );

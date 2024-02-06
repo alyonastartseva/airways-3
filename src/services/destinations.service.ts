@@ -1,3 +1,4 @@
+import { ITEMS_PER_PAGE } from '@/constants/constants';
 import { adminInstance } from '@/services/axios.service';
 import ERoutes from '@/services/endpoints.service';
 import {
@@ -7,18 +8,23 @@ import {
 } from '@interfaces/destination.interfaces';
 
 // временное решение, пока с бека не приходят необходимы свойства
-const tempMapDestination = (data: IDestinationGet) =>
-  data.map((destination) => ({
+const tempMapDestination = (data: IDestinationGet) => ({
+  ...data,
+  content: data.content.map((destination) => ({
     ...destination,
     countryName: '',
     cityName: '',
     airportName: '',
-  }));
+  })),
+});
 
 const destinationsAPI = {
   getDestinationsByPage: async (pageIndex: number) => {
     return await adminInstance
-      .get<IDestinationGet>(ERoutes.DESTINATION + `?page=${String(pageIndex)}`)
+      .get<IDestinationGet>(
+        ERoutes.DESTINATION +
+          `?page=${String(pageIndex)}&size=${ITEMS_PER_PAGE}`
+      )
       .then((response) => tempMapDestination(response.data));
   },
 

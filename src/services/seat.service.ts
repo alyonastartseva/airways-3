@@ -4,31 +4,26 @@ import { adminInstance } from '@/services/axios.service';
 import ERoutes from '@/services/endpoints.service';
 import { ISeat, ISeatPost, ISeatForm } from '@/interfaces/seat.interfaces';
 import { mapSeatFormData } from '@/utils/form-seat.utils';
+import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 interface ISeatApi {
-  getSeat: (
-    id: number,
-    size: number,
-    page: number
-  ) => Promise<ISeat[] | undefined>;
+  getSeat: (id: number, page: number) => Promise<ISeat | undefined>;
   postSeat: (data: ISeatPost) => Promise<AxiosResponse<ISeatPost, Error>>;
   deleteSeat: (
     id: number | undefined
-  ) => Promise<AxiosResponse<ISeat> | undefined>;
+  ) => Promise<AxiosResponse<ISeatPost> | undefined>;
   patchSeat: (
     data: ISeatPost | null
   ) => Promise<AxiosResponse<ISeatPost, any> | undefined>;
 }
 
 const seatAPI: ISeatApi = {
-  getSeat: async (id: number, size: number, page: number) => {
-    if (id > 0) {
-      return await adminInstance
-        .get<ISeat[]>(
-          `${ERoutes.SEAT}?page=${page}&size=${size}&aircraftId=${id}`
-        )
-        .then((response) => response.data);
-    }
+  getSeat: async (id: number, page: number) => {
+    return await adminInstance
+      .get<ISeat>(
+        `${ERoutes.SEAT}?page=${page}&size=${ITEMS_PER_PAGE}&aircraftId=${id}`
+      )
+      .then((response) => response.data);
   },
 
   postSeat: async (data: ISeatForm) => {
@@ -38,7 +33,7 @@ const seatAPI: ISeatApi = {
 
   deleteSeat: async (id: number | undefined) => {
     if (id) {
-      return await adminInstance.delete<ISeat>(ERoutes.SEAT + id);
+      return await adminInstance.delete<ISeatPost>(ERoutes.SEAT + id);
     }
   },
 

@@ -17,7 +17,7 @@ const DestinationInput: React.FC<IDestProps> = (props: IDestProps) => {
   const {} = useQuery('destinations', getDestinations, {
     onSuccess: (res) => {
       // setDestinationList(res.content);
-      setDestinationList(res);
+      setDestinationList(res.content);
     },
     onError: (err) => err,
   });
