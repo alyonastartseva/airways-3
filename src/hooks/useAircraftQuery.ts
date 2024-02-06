@@ -3,10 +3,10 @@ import { useToast } from '@chakra-ui/react';
 
 import { getAircrafts } from '@services/aircrafts.service';
 
-const useAircraftQuery = () => {
+const useAircraftQuery = (page: number) => {
   const toast = useToast();
 
-  return useQuery('aircrafts', getAircrafts, {
+  return useQuery(['aircrafts', page], () => getAircrafts(page), {
     onError: (error) => {
       if (error instanceof Error) {
         toast({

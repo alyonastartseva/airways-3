@@ -108,10 +108,6 @@ const Passengers = () => {
     [editableRowState]
   );
 
-  if (!isLoading) {
-    localStorage.setItem('PAGE_PASS_COUNT', JSON.stringify(totalPages || 0));
-  }
-
   // изменение данных
   const { mutate: patchPassengers } = usePassengersPatch();
 

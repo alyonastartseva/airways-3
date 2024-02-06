@@ -1,3 +1,4 @@
+import { ITEMS_PER_PAGE } from '@/constants/constants';
 import { adminInstance } from '@/services/axios.service';
 import ERoutes from '@/services/endpoints.service';
 import {
@@ -7,9 +8,11 @@ import {
 } from '@interfaces/aircraft.interfaces';
 
 const aircraftsAPI = {
-  getAircrafts: async () => {
+  getAircrafts: async (page: number) => {
     return await adminInstance
-      .get<IAircraft[]>(ERoutes.AIRCRAFT)
+      .get<IAircraftsGet>(
+        ERoutes.AIRCRAFT + `?page=${String(page)}&size=${ITEMS_PER_PAGE}`
+      )
       .then((response) => response.data);
   },
 

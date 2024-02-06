@@ -12,9 +12,9 @@ import { ITEMS_PER_PAGE } from '@/constants/constants';
 const passengersAPI = {
   getPassengers: async (page: number) => {
     return await adminInstance
-      .get<FormPassengersGet>(ERoutes.PASSENGERS, {
-        params: { page: page, size: ITEMS_PER_PAGE },
-      })
+      .get<FormPassengersGet>(
+        ERoutes.PASSENGERS + `?page=${page}&size=${ITEMS_PER_PAGE}`
+      )
       .then((response) => response.data);
   },
 

@@ -3,9 +3,9 @@ import { useToast } from '@chakra-ui/react';
 
 import { getSeat } from '@/services/seat.service';
 
-const useSeatQuery = (id: number, size: number, page: number) => {
+const useSeatQuery = (id: number, page: number) => {
   const toast = useToast();
-  return useQuery(['seats', id], () => getSeat(id, size, page), {
+  return useQuery(['seats', id, page], () => getSeat(id, page), {
     onError: (error) => {
       if (error instanceof Error) {
         toast({
@@ -15,6 +15,8 @@ const useSeatQuery = (id: number, size: number, page: number) => {
         });
       }
     },
+    refetchOnWindowFocus: false,
+    keepPreviousData: true,
   });
 };
 

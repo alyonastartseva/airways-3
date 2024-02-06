@@ -52,7 +52,7 @@ const Tickets = () => {
   // если удален последняя строка текущей страницы, то открываем предыдущую страницу
   useEffect(() => {
     if (!tickets && pageIndex > 0) setPaginationData(pageIndex - 1);
-  }, [tickets]);
+  }, [tickets, pageIndex]);
 
   useEffect(() => {
     const currPage = Number(localStorage.getItem('TICKETS_CURR_PAGE'));
