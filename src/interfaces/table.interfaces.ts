@@ -5,6 +5,7 @@ import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { TPerson } from '@interfaces/person.interfaces';
 import { IAircraft } from '@interfaces/aircraft.interfaces';
 import { IDestination } from '@/interfaces/destination.interfaces';
+import { CellContext } from '@tanstack/react-table';
 
 export type InitialSelectValue = string | { categoryType: string };
 
@@ -13,6 +14,8 @@ export interface IEditableCell {
   index: number;
   id: string;
   editableRowIndex: number | null;
+  fieldName?: string;
+  info?: CellContext<IAircraft, string | number>;
   updateData(id: string, value: string): void;
 }
 
