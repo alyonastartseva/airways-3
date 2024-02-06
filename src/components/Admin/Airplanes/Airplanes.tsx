@@ -117,13 +117,21 @@ const Airplanes = () => {
               editableRowState,
               editableRowIndex
             )}
+            info={info}
             index={info.row.index}
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            fieldName="Модель"
           />
         ),
         size: 250,
+        meta: {
+          type: 'text',
+          required: true,
+          validate: (value: string) => value.trim(),
+          validationMessage: 'Поле должно быть заполнено',
+        },
       }),
       columnHelper.accessor('aircraftNumber', {
         header: 'Номер',
@@ -136,12 +144,24 @@ const Airplanes = () => {
               editableRowState,
               editableRowIndex
             )}
+            info={info}
             index={info.row.index}
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            fieldName="Номер"
           />
         ),
+        meta: {
+          required: true,
+          validate: (value: string) => {
+            const regex = new RegExp('^[1-9]+[0-9]*$');
+            const isValidLength = value.length >= 4 && value.length <= 15;
+            return regex.test(value) && isValidLength;
+          },
+          validationMessage:
+            'Номер должен состоять из цифр, длина от 4 до 16 символов',
+        },
       }),
       columnHelper.accessor('modelYear', {
         header: 'Год выпуска',
@@ -154,12 +174,23 @@ const Airplanes = () => {
               editableRowState,
               editableRowIndex
             )}
+            info={info}
             index={info.row.index}
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            fieldName="Год выпуска"
           />
         ),
+        meta: {
+          type: 'number',
+          required: true,
+          validate: (value: string) => {
+            const currentYear = new Date().getFullYear();
+            return Number(value) >= 2000 && Number(value) <= currentYear;
+          },
+          validationMessage: `Год выпуска должен быть не ранее 2000 года и не позднее текущего (${new Date().getFullYear()})`,
+        },
       }),
       columnHelper.accessor('flightRange', {
         header: 'Дальность полёта (км)',
@@ -172,12 +203,24 @@ const Airplanes = () => {
               editableRowState,
               editableRowIndex
             )}
+            info={info}
             index={info.row.index}
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            fieldName="Дальность полёта"
           />
         ),
+        meta: {
+          type: 'number',
+          required: true,
+          validate: (value: string) => {
+            const regex = new RegExp('^[1-9]+[0-9]*$');
+            return regex.test(value);
+          },
+          validationMessage:
+            'Дальность полёта должна быть положительным числом',
+        },
       }),
       columnHelper.display({
         id: 'actions',
