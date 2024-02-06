@@ -1,11 +1,11 @@
 import { AxiosResponse } from 'axios';
 import { UseMutateFunction } from 'react-query';
+import { CellContext } from '@tanstack/react-table';
 
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { TPerson } from '@interfaces/person.interfaces';
 import { IAircraft } from '@interfaces/aircraft.interfaces';
 import { IDestination } from '@/interfaces/destination.interfaces';
-import { CellContext } from '@tanstack/react-table';
 
 export type InitialSelectValue = string | { categoryType: string };
 

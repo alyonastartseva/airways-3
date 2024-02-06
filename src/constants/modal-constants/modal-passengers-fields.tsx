@@ -2,6 +2,14 @@ import { FormInputProps } from '@/common/ModalElements/ModalInput/ModalInput';
 import { IFormPassengers } from '@/interfaces/passenger.interfaces';
 import { ERolesPassenger } from '@/interfaces/roles.interfaces';
 
+import {
+  onlyLettersPattern,
+  phonePattern,
+  emailPattern,
+  passportPattern,
+  passwordPattern
+} from '../validate-patterns';
+
 export const modalPassengersFields: FormInputProps<IFormPassengers>[] = [
   {
     fieldName: 'lastName',
@@ -11,12 +19,13 @@ export const modalPassengersFields: FormInputProps<IFormPassengers>[] = [
       required: 'Введите фамилию',
       minLength: {
         value: 2,
-        message: 'В названии минимум 2 символа',
+        message: 'Минимум 2 символа',
       },
       maxLength: {
         value: 16,
         message: 'Максимальное количество 16 символов',
       },
+      pattern: onlyLettersPattern.letters,
     },
   },
   {
@@ -27,12 +36,13 @@ export const modalPassengersFields: FormInputProps<IFormPassengers>[] = [
       required: 'Введите имя',
       minLength: {
         value: 3,
-        message: 'В названии минимум 3 символа',
+        message: 'Минимум 2 символа',
       },
       maxLength: {
         value: 15,
         message: 'Максимальное количество 15 символов',
       },
+      pattern: onlyLettersPattern.letters,
     },
   },
   {
@@ -49,6 +59,7 @@ export const modalPassengersFields: FormInputProps<IFormPassengers>[] = [
         value: 15,
         message: 'Максимальное количество 15 символов',
       },
+      pattern: onlyLettersPattern.letters,
     },
   },
   {
@@ -70,15 +81,8 @@ export const modalPassengersFields: FormInputProps<IFormPassengers>[] = [
     label: 'Номер телефона',
     typeInput: 'tel',
     rules: {
-      required: 'Введите номер телефона',
-      minLength: {
-        value: 10,
-        message: 'Номер должен иметь 10 символов',
-      },
-      maxLength: {
-        value: 10,
-        message: 'Номер должен иметь 10 символов',
-      },
+      required: 'Введите номер телефона в формате +7111 222 33 44',
+      pattern: phonePattern.numeric,
     },
   },
   {
@@ -94,11 +98,8 @@ export const modalPassengersFields: FormInputProps<IFormPassengers>[] = [
     label: 'Серийный номер',
     typeInput: 'text',
     rules: {
-      required: 'Введите серийный номер',
-      pattern: {
-        value: /^([0-9]{4}\s{1}[0-9]{6})?$/,
-        message: 'Введите корректный серийный номер',
-      },
+      required: 'Введите серийный номер в формате 1234 567890',
+      pattern: passportPattern.numeric,
     },
   },
   {
@@ -129,11 +130,8 @@ export const modalPassengersFields: FormInputProps<IFormPassengers>[] = [
     label: 'Электронная почта',
     typeInput: 'text',
     rules: {
-      required: 'Введите электронную почту',
-      pattern: {
-        value: /^[^ ]+@[^ ]+\.[a-z]{2,3}$/,
-        message: 'Введите корректный email',
-      },
+      required: 'Введите электронную почту в формате example@domen.ru',
+      pattern: emailPattern.email,
     },
   },
   {
@@ -173,12 +171,7 @@ export const modalPassengersFields: FormInputProps<IFormPassengers>[] = [
     typeInput: 'text',
     rules: {
       required: 'Введите пароль',
-      pattern: {
-        value:
-          /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}/,
-        message:
-          'Пароль должен быть минимум 8 символов, содержать как минимум по одной латинской заглавной и строчной букве, а также иметь спецсимволы',
-      },
+      pattern: passwordPattern.pass,
     },
   },
 ];
