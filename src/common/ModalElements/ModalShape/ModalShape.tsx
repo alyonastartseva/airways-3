@@ -61,7 +61,7 @@ const ModalShape = <T extends FieldValues>({ formName }: IModalProps) => {
         size="xl"
         blockScrollOnMount
         isCentered
-        scrollBehavior="inside"
+        scrollBehavior="outside"
       >
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>
