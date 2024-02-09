@@ -5,6 +5,8 @@ import { useDestinationQuery } from '@/hooks/useDestinationQuery';
 import { usePassengersQuery } from '@/hooks/usePassengersQuery';
 import { ITicketsForm } from '@/interfaces/tickets.interface';
 
+import { onlyLettersPattern } from '../validate-patterns';
+
 const PassengerNameOptions = () => {
   const { data: passengersList, isLoading: isPassengerListLoading } =
     usePassengersQuery(1);
@@ -87,6 +89,7 @@ export const modalTicketsFields: FormInputProps<ITicketsForm>[] = [
         value: 16,
         message: 'Максимальное количество 16 символов',
       },
+      pattern: onlyLettersPattern.letters,
     },
   },
   {
@@ -103,6 +106,7 @@ export const modalTicketsFields: FormInputProps<ITicketsForm>[] = [
         value: 16,
         message: 'Максимальное количество 16 символов',
       },
+      pattern: onlyLettersPattern.letters,
     },
   },
   {
