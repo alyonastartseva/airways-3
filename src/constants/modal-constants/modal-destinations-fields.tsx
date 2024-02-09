@@ -1,7 +1,8 @@
-import { FormInputProps } from '@/common/ModalElements/ModalInput/ModalInput';
-import { IDestinationPost } from '@/interfaces/destination.interfaces';
+import React from 'react';
+import { FormInputProps } from '../../common/ModalElements/ModalInput/ModalInput';
+import { IDestinationPost } from '../../interfaces/destination.interfaces';
 
-import { onlyLettersPattern } from '../validate-patterns/index';
+import { onlyLettersPattern } from '../validate-patterns';
 
 export const modalDestinationsFields: FormInputProps<IDestinationPost>[] = [
   {

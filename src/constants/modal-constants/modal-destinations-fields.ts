@@ -9,6 +9,10 @@ export const modalDestinationsFields: FormInputProps<IDestinationPost>[] = [
       required: 'Введите название страны',
       minLength: { value: 3, message: 'Минимум 3 символа' },
       maxLength: { value: 58, message: 'Максимум 58 символов' },
+      pattern: {
+        value: /^[A-Za-zА-Яа-я]+$/u,
+        message: 'Используйте только буквы',
+      },
     },
   },
   {
@@ -19,6 +23,10 @@ export const modalDestinationsFields: FormInputProps<IDestinationPost>[] = [
       required: 'Введите название города',
       minLength: { value: 1, message: 'Минимум 1 символ' },
       maxLength: { value: 21, message: 'Максимум 21 символ' },
+      pattern: {
+        value: /^[A-Za-zА-Яа-я]+$/u,
+        message: 'Используйте только буквы',
+      },
     },
   },
   {
@@ -29,21 +37,41 @@ export const modalDestinationsFields: FormInputProps<IDestinationPost>[] = [
       required: 'Введите название аэропорта',
     },
   },
+  // инпут надо убрать
+  // {
+  //   fieldName: 'airportCode',
+  //   label: 'Код аэропорта',
+  //   typeInput: 'text',
+  //   rules: {
+  //     required: 'Введите код аэропорта',
+  //     minLength: {
+  //       value: 3,
+  //       message: 'Код аэропорта должен состоять из 3 символов',
+  //     },
+  //     maxLength: {
+  //       value: 3,
+  //       message: 'Код аэропорта должен состоять из 3 символов',
+  //     },
+  //   },
+  // },
+
+  // Селект вставлен вместо инпута
+  // Сам селект работает, проблема имеено а чилдренах
   {
+    select: true,
     fieldName: 'airportCode',
     label: 'Код аэропорта',
-    typeInput: 'text',
     rules: {
-      required: 'Введите код аэропорта',
-      minLength: {
-        value: 3,
-        message: 'Код аэропорта должен состоять из 3 символов',
-      },
-      maxLength: {
-        value: 3,
-        message: 'Код аэропорта должен состоять из 3 символов',
-      },
+      required: 'Выберите код аэропорта',
     },
+    // Если это расскоментировать
+    // children: (
+    //   <>           // тут будет ошибка
+    //     <option value="DME">DME</option>,
+    //     <option value="SVO">SVO</option>,
+    //     <option value="VKO">VKO</option>,
+    //   </>
+    // ),
   },
   {
     fieldName: 'timezone',
