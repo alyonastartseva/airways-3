@@ -33,6 +33,7 @@ const flightsAPI: IFlightsApi = {
       .then((response) => response.data);
   },
 
+
   postFlight: async (data) => {
     return await adminInstance.post<IFlight>(ERoutes.FLIGHTS, data);
   },
@@ -48,6 +49,7 @@ const flightsAPI: IFlightsApi = {
     return await adminInstance.patch<IFlight>(ERoutes.FLIGHTS + id, body);
   },
 };
+
 
 export const { getFlights, postFlight, deleteFlight, updateFlight } =
   flightsAPI;

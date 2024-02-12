@@ -4,6 +4,7 @@ import { SpinnerBlock } from '@/common/SpinnerBlock';
 import { useDestinationQuery } from '@/hooks/useDestinationQuery';
 import { usePassengersQuery } from '@/hooks/usePassengersQuery';
 import { ITicketsForm } from '@/interfaces/tickets.interface';
+import {IAircraftPost} from '@interfaces/aircraft.interfaces';
 
 import { onlyLettersPattern } from '../validate-patterns';
 
@@ -37,7 +38,7 @@ const CityNameOptions = () => {
     return (
       <>
         {/* {destinationsList.content.map((el) => ( */}
-        {destinationsList.map((el) => (
+        {destinationsList.content.map((el: IAircraftPost) => (
           <option key={el.id} value={JSON.stringify(el)}>
             {`${el.airportName}, ${el.airportCode}`}
           </option>

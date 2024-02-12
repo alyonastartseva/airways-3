@@ -4,6 +4,7 @@ import { SpinnerBlock } from '@/common/SpinnerBlock';
 import { useAircraftQuery } from '@/hooks/useAircraftQuery';
 import { useDestinationQuery } from '@/hooks/useDestinationQuery';
 import { AlertMessage } from '@/common/AlertMessage';
+import {IAircraftPost} from '@interfaces/aircraft.interfaces';
 
 import { flightStatuses } from '../constants';
 
@@ -16,7 +17,7 @@ const AircraftIdOptions = () => {
   if (aircraftList)
     return (
       <>
-        {aircraftList.map((el) => (
+        {aircraftList.content.map((el: IAircraftPost) => (
           <option key={el.model} value={el.id}>
             {el.model}
           </option>
@@ -37,7 +38,7 @@ const CityNameOptions = () => {
     return (
       <>
         {/* {destinationsList.content.map((el) => ( */}
-        {destinationsList.map((el) => (
+        {destinationsList.content.map((el: IAircraftPost) => (
           <option key={el.id} value={JSON.stringify(el)}>
             {`${el.airportName}, ${el.airportCode}`}
           </option>
