@@ -5,6 +5,7 @@ export const modalAirplanesFields: FormInputProps<IAircraftPost>[] = [
   {
     fieldName: 'model',
     label: 'Модель',
+    typeInput: 'text',
     rules: {
       required: 'Введите модель самолёта',
       minLength: {
@@ -24,7 +25,7 @@ export const modalAirplanesFields: FormInputProps<IAircraftPost>[] = [
     rules: {
       required: 'Введите модель самолёта',
       minLength: { value: 4, message: 'Минимум 4 символа' },
-      maxLength: { value: 30, message: 'Максимум 30 символов' },
+      maxLength: { value: 15, message: 'Максимум 15 символов' },
     },
   },
   {
@@ -34,8 +35,8 @@ export const modalAirplanesFields: FormInputProps<IAircraftPost>[] = [
     rules: {
       required: 'Введите год выпуска самолёта',
       min: {
-        value: 1920,
-        message: 'Дата должна быть выше или равна 1920 году',
+        value: 2000,
+        message: 'Дата должна быть выше или равна 2000 году',
       },
       max: {
         value: new Date().getFullYear(),
