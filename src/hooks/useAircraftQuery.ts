@@ -3,7 +3,7 @@ import { useToast } from '@chakra-ui/react';
 
 import { getAircrafts } from '@services/aircrafts.service';
 
-const useAircraftQuery = (page: number) => {
+const useAircraftQuery = (page?: number) => {
   const toast = useToast();
 
   return useQuery(['aircrafts', page], () => getAircrafts(page), {

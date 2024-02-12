@@ -30,6 +30,7 @@ import {
 import { getDestinations } from '@services/destinations.service';
 import { getFlights } from '@services/flights.service';
 import { IFlightPresentation } from '@/interfaces/flights.interfaces';
+import {IDestination} from '@interfaces/destination.interfaces';
 
 interface Props {
   startDate: Date | null;
@@ -59,8 +60,7 @@ const MainSearch = ({ startDate, endDate }: Props) => {
 
   const getAirportCode = async (city: string) => {
     const destinations = await getDestinations();
-    // const destination = destinations.content.find(
-    const destination = destinations.find((item) => item.cityName === city);
+    const destination = destinations.content.find((item: IDestination) => item.cityName === city);
     return destination ? destination.airportCode : null;
   };
 

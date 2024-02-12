@@ -8,7 +8,7 @@ import {
 } from '@interfaces/aircraft.interfaces';
 
 const aircraftsAPI = {
-  getAircrafts: async (page: number) => {
+  getAircrafts: async (page?: number) => {
     return await adminInstance
       .get<IAircraftsGet>(
         ERoutes.AIRCRAFT + `?page=${String(page)}&size=${ITEMS_PER_PAGE}`
