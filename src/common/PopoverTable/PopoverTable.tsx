@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 
 import { IPopoverTable } from '@interfaces/table.interfaces';
 import { Details } from '@common/icons';
-import ELinks from '@services/admin-router-links.service';
+import {ELinks} from '@services/constants';
 import { mapRoutesFormData } from '@utils/form-routes.utils';
 
 const PopoverTable = <Data,>({

@@ -1,12 +1,14 @@
 import { AxiosResponse } from 'axios';
 import { UseMutationResult } from 'react-query';
 
-import { useAircraftPost } from '@/hooks/useAircraftPost';
-import { useDestinationPost } from '@/hooks/useDestinationPost';
-import { useFlightsPost } from '@/hooks/useFlightsPost';
-import { usePassengersPost } from '@/hooks/usePassengersPost';
-import { useSeatPost } from '@/hooks/useSeatPost';
-import { useTicketsPost } from '@/hooks/useTicketPost';
+import {
+  useTicketsPost,
+  useSeatPost,
+  usePassengersPost,
+  useFlightsPost,
+  useDestinationPost,
+  useAircraftPost,
+} from '@/hooks';
 import { TSettings } from '@/interfaces/modal-shape.interfaces';
 import { ISeatForm } from '@/interfaces/seat.interfaces';
 import { mapFlightFormToRequestData } from '@/utils/form-flights.utils';

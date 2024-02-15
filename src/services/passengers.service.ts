@@ -1,5 +1,5 @@
 import { adminInstance } from '@/services/axios.service';
-import ERoutes from '@/services/endpoints.service';
+import { ERoutes } from '@/services/constants';
 import {
   FormPassengersGet,
   IPassenger,

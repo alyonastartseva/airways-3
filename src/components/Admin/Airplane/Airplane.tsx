@@ -31,15 +31,11 @@ import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortSeat } from '@utils/sort.utils';
-import { useSeatQuery } from '@hooks/useSeatQuery';
-import { useSeatPost } from '@hooks/useSeatPost';
-import { useSeatDelete } from '@hooks/useSeatDelete';
+import { useSeatQuery, useSeatPost, useSeatDelete, useSeatPatch, useAircraftQueryById } from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
-import ELinks from '@services/admin-router-links.service';
+import {ELinks} from '@services/constants';
 import { ITEMS_PER_PAGE, seatCategory, yesNo } from '@/constants/constants';
 import { EditableSelectCell } from '@/common/EditableSelectCell';
-import { useSeatPatch } from '@/hooks/useSeatPatch';
-import { useAircraftQueryById } from '@/hooks/useAircraftQueryById';
 
 const Airplane = () => {
   // получение параметра ID из роута

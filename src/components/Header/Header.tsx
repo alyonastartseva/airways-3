@@ -1,9 +1,9 @@
 import { Box, Flex, Button, Spacer } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-import ELinks from '@services/admin-router-links.service';
+import {ELinks} from '@services/constants';
 import { WebsiteLogo } from '@common/WebsiteLogo';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks';
 import UserHeader from '@/components/User/UserHeader/UserHeader';
 import { AdminHeader } from '@/components/Admin/AdminHeader';
 import setHeaderParams from '@utils/set-header-params.utils';

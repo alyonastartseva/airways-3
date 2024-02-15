@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks';
 
 const PageNotFound = () => {
   const { isAdmin } = useAuth();

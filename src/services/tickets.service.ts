@@ -4,8 +4,7 @@ import {
   ITicketsGet,
   ITicketsPost,
 } from '@interfaces/tickets.interface';
-
-import ERoutes from './endpoints.service';
+import { ERoutes } from '@services/constants';
 
 const ticketsAPI = {
   getTickets: async (pageIndex?: number) => {
