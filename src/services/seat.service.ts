@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 
 import { adminInstance } from '@/services/axios.service';
-import ERoutes from '@/services/endpoints.service';
+import { ERoutes } from '@/services/constants';
 import { ISeat, ISeatPost, ISeatForm } from '@/interfaces/seat.interfaces';
 import { mapSeatFormData } from '@/utils/form-seat.utils';
 import { ITEMS_PER_PAGE } from '@/constants/constants';

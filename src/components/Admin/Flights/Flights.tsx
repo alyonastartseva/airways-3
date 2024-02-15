@@ -19,9 +19,7 @@ import { useCallback, useMemo, useState, memo } from 'react';
 import { EditableSelectCell } from '@/common/EditableSelectCell';
 import { ITEMS_PER_PAGE, flightStatuses } from '@/constants/constants';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
-import { useAircraftQuery } from '@/hooks/useAircraftQuery';
-import { useFlightsDelete } from '@/hooks/useFlightsDelete';
-import { useFlightsQuery } from '@/hooks/useFlightsQuery';
+import { useAircraftQuery, useFlightsDelete, useFlightsQuery, useFlightsPatch } from '@/hooks';
 import { IAircraft } from '@/interfaces/aircraft.interfaces';
 import {
   IFlightPostFormFields,
@@ -36,7 +34,6 @@ import { HeaderTable } from '@/common/HeaderTable';
 import { PopoverTable } from '@common/PopoverTable';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { isRowEditing } from '@utils/table.utils';
-import { useFlightsPatch } from '@/hooks/useFlightsPatch';
 
 const Flights = () => {
   // индекс и размер пагинации

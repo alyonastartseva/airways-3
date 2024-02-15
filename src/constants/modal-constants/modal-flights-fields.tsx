@@ -1,8 +1,7 @@
 import { FormInputProps } from '@/common/ModalElements/ModalInput/ModalInput';
 import { IFlightPostFormFields } from '@/interfaces/flights.interfaces';
 import { SpinnerBlock } from '@/common/SpinnerBlock';
-import { useAircraftQuery } from '@/hooks/useAircraftQuery';
-import { useDestinationQuery } from '@/hooks/useDestinationQuery';
+import { useDestinationQuery, useAircraftQuery } from '@/hooks';
 import { AlertMessage } from '@/common/AlertMessage';
 import {IAircraftPost} from '@interfaces/aircraft.interfaces';
 

@@ -29,9 +29,7 @@ import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortDestinations } from '@utils/sort.utils';
-import { useDestinationQueryByPage } from '@/hooks/useDestinationQueryByPage';
-import { useDestinationPatch } from '@hooks/useDestinationPatch';
-import { useDestinationDelete } from '@hooks/useDestinationDelete';
+import { useDestinationQueryByPage, useDestinationPatch, useDestinationDelete } from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 

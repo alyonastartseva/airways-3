@@ -1,6 +1,6 @@
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 import { adminInstance } from '@/services/axios.service';
-import ERoutes from '@/services/endpoints.service';
+import { ERoutes } from '@/services/constants';
 import {
   IDestination,
   IDestinationGet,

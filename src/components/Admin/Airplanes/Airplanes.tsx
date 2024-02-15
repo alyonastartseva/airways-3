@@ -26,9 +26,7 @@ import { HeaderTable } from '@common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortAirplanes } from '@utils/sort.utils';
-import { useAircraftQuery } from '@hooks/useAircraftQuery';
-import { useAircraftPatch } from '@hooks/useAircraftPatch';
-import { useAircraftDelete } from '@hooks/useAircraftDelete';
+import { useAircraftQuery, useAircraftPatch, useAircraftDelete } from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 
