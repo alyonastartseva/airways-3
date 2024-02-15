@@ -7,7 +7,7 @@ import {
   phonePattern,
   emailPattern,
   passportPattern,
-  passwordPattern
+  passwordPattern,
 } from '../validate-patterns';
 
 export const modalPassengersFields: FormInputProps<IFormPassengers>[] = [

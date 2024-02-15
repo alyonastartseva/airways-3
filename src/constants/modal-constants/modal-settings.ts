@@ -64,4 +64,11 @@ export const modalSettings: TSettings = [
     name: EModalButtonTexts.TICKETS,
     mapFieldValuesToRequestData: mapTicketsFormData,
   },
+  {
+    formName: EModalNames.TIME_ZONES,
+    fields: [],
+    hook: useTicketsPost,
+    name: EModalButtonTexts.TIME_ZONES,
+    mapFieldValuesToRequestData: mapTicketsFormData,
+  },
 ];
