@@ -29,13 +29,13 @@ import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortDestinations } from '@utils/sort.utils';
-import { useDestinationQueryByPage, useDestinationPatch, useDestinationDelete } from '@/hooks';
+import { useDestinationQueryByPage, useDestinationPatch, useDestinationDelete, useSetCurrentPageInPagination } from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Destinations = () => {
   // индекс и размер пагинации
-  const [pageIndex, setPagination] = useState(0);
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination('DESTINATIONS_CURR_PAGE');
 
   // получение данных
   const { data: destinationsData, isLoading } =
@@ -261,9 +261,9 @@ const Destinations = () => {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </Th>
                   ))}
                 </Tr>
@@ -298,7 +298,7 @@ const Destinations = () => {
         <FooterTable
           data={tableData(destinations)}
           pageIndex={pageIndex}
-          setPaginationData={(page) => setPagination(page)}
+          setPaginationData={setPaginationData}
           cancelEditing={cancelEditing}
           patchRow={patchRow}
           editableRowIndex={editableRowIndex}

@@ -9,7 +9,7 @@ import {
   Tbody,
   Td,
 } from '@chakra-ui/react';
-import { useState, useCallback, useMemo, useEffect, memo } from 'react';
+import { useState, useCallback, useMemo, memo, useEffect } from 'react';
 import {
   createColumnHelper,
   useReactTable,
@@ -21,7 +21,7 @@ import dayjs from 'dayjs';
 import { HeaderTable } from '@/common/HeaderTable';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { ITickets, ITicketsPost } from '@interfaces/tickets.interface';
-import { useTicketsQuery, useTicketsPatch, useTicketDelete } from '@/hooks';
+import { useTicketsQuery, useTicketsPatch, useTicketDelete, useSetCurrentPageInPagination } from '@/hooks';
 import { FlexCell } from '@common/FlexCell';
 import { ticketsSort } from '@utils/sort.utils';
 import { SpinnerBlock } from '@common/SpinnerBlock';
@@ -34,18 +34,12 @@ import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Tickets = () => {
   // индекс и размер пагинации
-  const [pageIndex, setPagination] = useState(0);
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination('TICKETS_CURR_PAGE');
 
   // получение данных
   const { data: ticketsData, isLoading } = useTicketsQuery(pageIndex);
   const tickets = ticketsData?.content;
   const totalPages = ticketsData?.totalPages;
-
-  // изменение пагинации
-  const setPaginationData = (pageNumber: number) => {
-    setPagination(pageNumber);
-    localStorage.setItem('TICKETS_CURR_PAGE', String(pageNumber));
-  };
 
   // если удален последняя строка текущей страницы, то открываем предыдущую страницу
   useEffect(() => {
@@ -329,9 +323,9 @@ const Tickets = () => {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </Th>
                   ))}
                 </Tr>
