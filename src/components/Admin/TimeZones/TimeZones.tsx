@@ -22,7 +22,7 @@ import { useSetCurrentPageInPagination } from '@hooks/useSetCurrentPageInPaginat
 import { DetailsFilling } from '@common/icons';
 import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@/common/FooterTable';
-import { ITimeZone } from '@interfaces/time-zone.interfaces';
+import { ITimeZone, TTimeZoneForm } from '@interfaces/time-zone.interfaces';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 
 const timeZonesData: ITimeZone[] = [
@@ -181,7 +181,7 @@ const TimeZones = () => {
       justifyContent="space-between"
     >
       <Box>
-        <HeaderTable
+        <HeaderTable<TTimeZoneForm>
           heading="Часовые пояса"
           formName={EModalNames.TIME_ZONES}
         />
