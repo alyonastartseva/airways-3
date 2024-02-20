@@ -1,4 +1,4 @@
-import { FormLabel, Input, Select } from '@chakra-ui/react';
+import { FormLabel, Input, InputGroup, InputLeftAddon, Select } from '@chakra-ui/react';
 import {
   FieldValues,
   RegisterOptions,
@@ -14,6 +14,7 @@ export type FormInputProps<TFormValues extends FieldValues> = {
   fieldName: Path<TFormValues>;
   rules: RegisterOptions;
   select?: true;
+  mask?: string;
 };
 
 const ModalInput = <TFormValues extends Record<string, unknown>>({
@@ -23,6 +24,7 @@ const ModalInput = <TFormValues extends Record<string, unknown>>({
   typeInput = 'text',
   select,
   children,
+  mask,
 }: FormInputProps<TFormValues>): JSX.Element => {
   const {
     register,
@@ -41,20 +43,24 @@ const ModalInput = <TFormValues extends Record<string, unknown>>({
       >
         {label}
         {!select ? (
-          <Input
-            type={typeInput}
-            bgColor="#F9F9F9"
-            border={`1px solid ${
-              errors?.[fieldName]?.message ? '#F56565' : '#DEDEDE'
-            }`}
-            borderRadius={2}
-            fontSize={14}
-            color="#393939"
-            aria-label="modal-input"
-            mt={2}
-            mb={1}
-            {...register(fieldName, rules)}
-          />
+          <InputGroup display="flex" alignItems="center" mt={2}
+          mb={1}>
+            {mask && <InputLeftAddon>
+              {mask}
+            </InputLeftAddon>}
+            <Input
+              type={typeInput}
+              bgColor="#F9F9F9"
+              border={`1px solid ${
+                errors?.[fieldName]?.message ? '#F56565' : '#DEDEDE'
+              }`}
+              borderRadius={2}
+              fontSize={14}
+              color="#393939"
+              aria-label="modal-input"
+              {...register(fieldName, rules)}
+            />
+         </InputGroup>
         ) : (
           <Select
             bgColor="#F9F9F9"

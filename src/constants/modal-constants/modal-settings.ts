@@ -8,11 +8,13 @@ import {
   useFlightsPost,
   useDestinationPost,
   useAircraftPost,
+  useTimezonePost,
 } from '@/hooks';
 import { TSettings } from '@/interfaces/modal-shape.interfaces';
 import { ISeatForm } from '@/interfaces/seat.interfaces';
 import { mapFlightFormToRequestData } from '@/utils/form-flights.utils';
 import { mapTicketsFormData } from '@/utils/form-tickets.utils';
+import { mapTimezonesFormData } from '@/utils/form-timezone.utils';
 
 import { modalAirplanesFields } from './modal-airplanes-fields';
 import { modalDestinationsFields } from './modal-destinations-fields';
@@ -21,6 +23,7 @@ import { EModalButtonTexts, EModalNames } from './modal-names';
 import { modalPassengersFields } from './modal-passengers-fields';
 import { modalSeatFields } from './modal-seat-fields';
 import { modalTicketsFields } from './modal-tickets-fields';
+import { modalTimezonesFields } from './modal-timezones-fields';
 
 export const modalSettings: TSettings = [
   {
@@ -68,9 +71,9 @@ export const modalSettings: TSettings = [
   },
   {
     formName: EModalNames.TIME_ZONES,
-    fields: [],
-    hook: useTicketsPost,
+    fields: modalTimezonesFields,
+    hook: useTimezonePost,
     name: EModalButtonTexts.TIME_ZONES,
-    mapFieldValuesToRequestData: mapTicketsFormData,
+    mapFieldValuesToRequestData: mapTimezonesFormData,
   },
 ];
