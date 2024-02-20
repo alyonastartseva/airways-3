@@ -26,18 +26,13 @@ import { HeaderTable } from '@common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortAirplanes } from '@utils/sort.utils';
-import { useAircraftQuery, useAircraftPatch, useAircraftDelete } from '@/hooks';
+import { useAircraftQuery, useAircraftPatch, useAircraftDelete, useSetCurrentPageInPagination } from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Airplanes = () => {
   // индекс и размер пагинации
-  const [pageIndex, setPagination] = useState(0);
-
-  // изменение пагинации
-  const setPaginationData = (pageNumber: number) => {
-    setPagination(pageNumber);
-  };
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination('AIRPLANES_CURR_PAGE');
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -288,9 +283,9 @@ const Airplanes = () => {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </Th>
                   ))}
                 </Tr>

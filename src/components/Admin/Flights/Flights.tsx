@@ -19,7 +19,7 @@ import { useCallback, useMemo, useState, memo } from 'react';
 import { EditableSelectCell } from '@/common/EditableSelectCell';
 import { ITEMS_PER_PAGE, flightStatuses } from '@/constants/constants';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
-import { useAircraftQuery, useFlightsDelete, useFlightsQuery, useFlightsPatch } from '@/hooks';
+import { useAircraftQuery, useFlightsDelete, useFlightsQuery, useFlightsPatch, useSetCurrentPageInPagination } from '@/hooks';
 import { IAircraft } from '@/interfaces/aircraft.interfaces';
 import {
   IFlightPostFormFields,
@@ -37,7 +37,7 @@ import { isRowEditing } from '@utils/table.utils';
 
 const Flights = () => {
   // индекс и размер пагинации
-  const [pageIndex, setPagination] = useState(0);
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination('FLIGHTS_CURR_PAGE');
 
   // получение данных
   const { data: airplanesData, isLoading: isAircraftLoading } =
@@ -48,11 +48,6 @@ const Flights = () => {
 
   const flights = flightsData?.content;
   const totalPages = flightsData?.totalPages;
-
-  // изменение пагинации
-  const setPaginationData = (pageNumber: number) => {
-    setPagination(pageNumber);
-  };
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -357,9 +352,9 @@ const Flights = () => {
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </Th>
                 ))}
               </Tr>
