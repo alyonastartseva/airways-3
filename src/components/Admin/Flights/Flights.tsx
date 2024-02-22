@@ -313,10 +313,7 @@ const Flights = () => {
 
   // создание таблицы
   const table = useReactTable({
-    data: tableData(flights).slice(
-      pageIndex * ITEMS_PER_PAGE,
-      pageIndex * ITEMS_PER_PAGE + ITEMS_PER_PAGE
-    ),
+    data: tableData(flights),
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
