@@ -209,6 +209,7 @@ const Airplanes = () => {
         size: 41,
         cell: (info) => (
           <PopoverTable
+            hasDetailsButton={true}
             row={info.row.original}
             index={info.row.index}
             id={info.row.original.id}

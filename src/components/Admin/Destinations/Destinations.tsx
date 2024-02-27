@@ -22,7 +22,7 @@ import {
 } from '@interfaces/destination.interfaces';
 import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
-import { PopoverTable } from '@common/PopoverTable';
+import {PopoverTable} from '@common/PopoverTable';
 import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { HeaderTable } from '@/common/HeaderTable';
@@ -187,6 +187,7 @@ const Destinations = () => {
         size: 41,
         cell: (info) => (
           <PopoverTable
+            hasDetailsButton={false}
             row={info.row.original}
             index={info.row.index}
             id={info.row.original.id}
