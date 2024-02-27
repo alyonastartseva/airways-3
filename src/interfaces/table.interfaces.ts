@@ -9,17 +9,18 @@ import { IDestination } from '@/interfaces/destination.interfaces';
 
 export type InitialSelectValue = string | { categoryType: string };
 
-export interface IEditableCell {
+export interface IEditableCell<T> {
   value: string | number | undefined;
   index: number;
   id: string;
   editableRowIndex: number | null;
   fieldName?: string;
-  info?: CellContext<IAircraft, string | number>;
+  info?: CellContext<T, string | number | undefined>;
+  isDisabled?: boolean;
   updateData(id: string, value: string): void;
 }
 
-export interface IEditableSelectCell extends IEditableCell {
+export interface IEditableSelectCell<T> extends IEditableCell<T> {
   selectOptions: string[];
   getRenderValue(value: string | boolean | object): string;
 }
