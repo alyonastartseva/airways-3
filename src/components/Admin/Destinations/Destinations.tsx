@@ -21,6 +21,7 @@ import {
   IDestinationPost,
 } from '@interfaces/destination.interfaces';
 import { EditableCell } from '@common/EditableCell';
+import { EditableSelectCell } from '@/common/EditableSelectCell';
 import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
 import { AlertMessage } from '@common/AlertMessage';
@@ -29,13 +30,23 @@ import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortDestinations } from '@utils/sort.utils';
-import { useDestinationQueryByPage, useDestinationPatch, useDestinationDelete, useSetCurrentPageInPagination } from '@/hooks';
+import {
+  useDestinationQueryByPage,
+  useDestinationPatch,
+  useDestinationDelete,
+  useSetCurrentPageInPagination,
+} from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
+import onlyLettersPattern from '@/constants/validate-patterns/only-letters-pattern';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
+
+const AIRPORT_CODES = ['VKO', 'VOG', 'MQF', 'OMS', 'AAQ'];
 
 const Destinations = () => {
   // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination('DESTINATIONS_CURR_PAGE');
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
+    'DESTINATIONS_CURR_PAGE'
+  );
 
   // получение данных
   const { data: destinationsData, isLoading } =
@@ -107,8 +118,20 @@ const Destinations = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            info={info}
+            fieldName="Страна"
+            isDisabled={true}
           />
         ),
+        meta: {
+          type: 'text',
+          required: true,
+          validate: (value: string) => {
+            const regex = new RegExp(onlyLettersPattern.letters.message);
+            return regex.test(value);
+          },
+          validationMessage: onlyLettersPattern.letters.message,
+        },
       }),
       columnHelper.accessor('cityName', {
         header: 'Город',
@@ -125,8 +148,20 @@ const Destinations = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            info={info}
+            fieldName="Город"
+            isDisabled={true}
           />
         ),
+        meta: {
+          type: 'text',
+          required: true,
+          validate: (value: string) => {
+            const regex = new RegExp(onlyLettersPattern.letters.message);
+            return regex.test(value);
+          },
+          validationMessage: onlyLettersPattern.letters.message,
+        },
       }),
       columnHelper.accessor('airportName', {
         header: 'Имя аэропорта',
@@ -143,17 +178,20 @@ const Destinations = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            info={info}
+            fieldName="Имя аэропорта"
+            isDisabled={true}
           />
         ),
       }),
       columnHelper.accessor('airportCode', {
         header: 'Код аэропорта',
         cell: (info) => (
-          <EditableCell
+          <EditableSelectCell
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              info.getValue(),
+              String(info.getValue()),
               editableRowState,
               editableRowIndex
             )}
@@ -161,6 +199,8 @@ const Destinations = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            selectOptions={AIRPORT_CODES}
+            getRenderValue={(code: string) => code.toUpperCase()}
           />
         ),
       }),
@@ -179,6 +219,8 @@ const Destinations = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            info={info}
+            fieldName="Часовой пояс"
           />
         ),
       }),
@@ -261,9 +303,9 @@ const Destinations = () => {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                     </Th>
                   ))}
                 </Tr>

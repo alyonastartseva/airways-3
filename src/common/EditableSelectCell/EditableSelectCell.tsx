@@ -7,7 +7,7 @@ import {
   InitialSelectValue,
 } from '@interfaces/table.interfaces';
 
-const EditableSelectCell = ({
+const EditableSelectCell = <K,>({
   value: initialValue,
   index,
   id,
@@ -15,7 +15,7 @@ const EditableSelectCell = ({
   updateData,
   getRenderValue,
   selectOptions,
-}: IEditableSelectCell) => {
+}: IEditableSelectCell<K>) => {
   const initialValueObj = initialValue as InitialSelectValue;
 
   const editableInitial: string | number | undefined =
