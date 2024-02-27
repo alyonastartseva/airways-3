@@ -310,6 +310,7 @@ const Passengers = () => {
         size: 41,
         cell: (info) => (
           <PopoverTable
+            hasDetailsButton={false}
             row={info.row.original}
             index={info.row.index}
             id={info.row.original.id}
