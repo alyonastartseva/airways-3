@@ -23,6 +23,9 @@ const PopoverTable = <Data,>({
                                handleEditRow,
                                deleteRow,
                                hasDetailsButton,
+                               setPaginationIndex,
+                               indexPage = 0, 
+                               numberElem = 0, 
                              }: IPopoverTable<Data>) => (
     <Popover placement="left-start" arrowSize={10}>
       <PopoverTrigger>
@@ -117,7 +120,14 @@ const PopoverTable = <Data,>({
                 backgroundColor: '#C5E3F6',
               }}
               bgColor="#E2F3F5"
-              onClick={() => deleteRow(id)}
+              onClick={
+                () => { 
+                  if(numberElem === 1 && setPaginationIndex){
+                    setPaginationIndex(indexPage - 1);
+                  }
+                  return deleteRow(id);
+                }
+              }
           >
             Удалить
           </Button>

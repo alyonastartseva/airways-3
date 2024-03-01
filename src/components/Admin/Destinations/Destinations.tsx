@@ -235,6 +235,9 @@ const Destinations = () => {
             id={info.row.original.id}
             handleEditRow={handleEditRow}
             deleteRow={deleteDestination}
+            setPaginationIndex={setPaginationData}
+            indexPage={pageIndex}
+            numberElem={destinations?.length}
           />
         ),
       }),
@@ -246,6 +249,9 @@ const Destinations = () => {
       editableRowState,
       handleUpdateRow,
       handleEditRow,
+      setPaginationData,
+      pageIndex,
+      destinations,
     ]
   );
 
