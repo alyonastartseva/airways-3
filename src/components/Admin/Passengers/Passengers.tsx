@@ -316,6 +316,9 @@ const Passengers = () => {
             id={info.row.original.id}
             handleEditRow={handleEditRow}
             deleteRow={deletePassengers}
+            setPaginationIndex={setPaginationData}
+            indexPage={pageIndex}
+            numberElem={passengers?.length}
           />
         ),
       }),
@@ -328,6 +331,9 @@ const Passengers = () => {
       handleUpdateRow,
       deletePassengers,
       genderSelectOptions,
+      setPaginationData,
+      pageIndex,
+      passengers,
     ]
   );
 

@@ -255,6 +255,9 @@ const Tickets = () => {
             id={info.row.original.id}
             handleEditRow={handleEditRow}
             deleteRow={deleteTicket}
+            setPaginationIndex={setPaginationData}
+            indexPage={pageIndex}
+            numberElem={tickets?.length}
           />
         ),
       }),
@@ -266,6 +269,9 @@ const Tickets = () => {
       handleUpdateRow,
       handleEditRow,
       deleteTicket,
+      setPaginationData,
+      pageIndex,
+      tickets,
     ]
   );
 

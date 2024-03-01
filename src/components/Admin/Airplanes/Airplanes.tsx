@@ -215,6 +215,9 @@ const Airplanes = () => {
             id={info.row.original.id}
             handleEditRow={handleEditRow}
             deleteRow={deleteAircraft}
+            setPaginationIndex={setPaginationData}
+            indexPage={pageIndex}
+            numberElem={airplanes?.length}
           />
         ),
       }),
@@ -226,6 +229,9 @@ const Airplanes = () => {
       editableRowIndex,
       handleEditRow,
       handleUpdateRow,
+      setPaginationData,
+      pageIndex,
+      airplanes,
     ]
   );
 
