@@ -6,9 +6,11 @@ import {
   IFlight,
   IFlightPost,
   IFlightPresentation,
-  IFlightsUpdate,
 } from '@/interfaces/flights.interfaces';
-import { IListResponse } from '@/interfaces/response.interfaces';
+import {
+  IFlightsUpdate,
+  IListResponse,
+} from '@/services/flights/flights.interfaces';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 interface IFlightsApi {
   getFlights: (
@@ -26,12 +28,12 @@ interface IFlightsApi {
 const flightsAPI: IFlightsApi = {
   getFlights: async (pageIndex?: number) => {
     return await adminInstance
-      .get<
-        IListResponse<Required<IFlightPresentation>>
-      >(ERoutes.GET_FLIGHTS + `?page=${String(pageIndex)}&size=${ITEMS_PER_PAGE}`)
+      .get<IListResponse<Required<IFlightPresentation>>>(
+        ERoutes.GET_FLIGHTS +
+          `?page=${String(pageIndex)}&size=${ITEMS_PER_PAGE}`
+      )
       .then((response) => response.data);
   },
-
 
   postFlight: async (data) => {
     return await adminInstance.post<IFlight>(ERoutes.FLIGHTS, data);
@@ -48,7 +50,6 @@ const flightsAPI: IFlightsApi = {
     return await adminInstance.patch<IFlight>(ERoutes.FLIGHTS + id, body);
   },
 };
-
 
 export const { getFlights, postFlight, deleteFlight, updateFlight } =
   flightsAPI;

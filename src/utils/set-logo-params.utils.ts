@@ -1,4 +1,8 @@
-import { ILogoParams } from '@interfaces/logo-params.interfaces';
+interface ILogoParams {
+  width: number;
+  height: number;
+  color: string;
+}
 
 const setLogoParams = (isFooter: boolean, isLogged: boolean) => {
   const result: ILogoParams = { width: 0, height: 0, color: '' };

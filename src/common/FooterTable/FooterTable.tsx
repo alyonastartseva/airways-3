@@ -2,7 +2,7 @@ import { Flex } from '@chakra-ui/react';
 
 import { Pagination } from '@components/Pagination';
 import { ButtonGroupAdmin } from '@common/ButtonGroupAdmin';
-import { IFooterTable } from '@interfaces/table.interfaces';
+import { IFooterTable } from '@common/FooterTable/footerTable.interfaces';
 
 const FooterTable = <Data,>({
   data,

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from 'react-query';
 
-import { patchSeat } from '@/services/seat.service';
+import { patchSeat } from '@/services/seat/seat.service';
 import { useRequestErrorToast } from '@/hooks';
 
 export const useSeatPatch = () => {

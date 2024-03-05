@@ -9,7 +9,7 @@ import { afterEach, beforeEach, describe, expect, vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
-import { userApi } from '@services/user.service';
+import { userApi } from '@/services/user/user.service';
 
 import SignUp from './SignUp';
 

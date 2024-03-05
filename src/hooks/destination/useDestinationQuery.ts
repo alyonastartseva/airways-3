@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import { getDestinations } from '@services/destinations.service';
+import { getDestinations } from '@/services/destinations/destinations.service';
 
 const useDestinationQuery = () => {
   const toast = useToast();

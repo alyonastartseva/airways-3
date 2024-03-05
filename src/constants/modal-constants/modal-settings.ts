@@ -10,7 +10,7 @@ import {
   useAircraftPost,
   useTimezonePost,
 } from '@/hooks';
-import { TSettings } from '@/interfaces/modal-shape.interfaces';
+import { TSettings } from '@/common/ModalElements/ModalShape/modal-shape.interfaces';
 import { ISeatForm } from '@/interfaces/seat.interfaces';
 import { mapFlightFormToRequestData } from '@/utils/form-flights.utils';
 import { mapTicketsFormData } from '@/utils/form-tickets.utils';

@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import { getFlights } from '@/services/flights.service';
+import { getFlights } from '@/services/flights/flights.service';
 
 const useFlightsQuery = (pageIndex: number) => {
   const toast = useToast();

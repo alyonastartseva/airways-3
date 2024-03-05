@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import { getDestinationsByPage } from '@services/destinations.service';
+import { getDestinationsByPage } from '@/services/destinations/destinations.service';
 
 const useDestinationQueryByPage = (pageIndex: number) => {
   const toast = useToast();

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from 'react-query';
 
-import { updateFlight } from '@services/flights.service';
+import { updateFlight } from '@/services/flights/flights.service';
 import { useRequestErrorToast } from '@/hooks';
 
 export const useFlightsPatch = () => {

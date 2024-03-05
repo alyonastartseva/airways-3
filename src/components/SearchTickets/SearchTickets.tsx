@@ -23,14 +23,12 @@ import { ArrowsIcon } from '@common/icons';
 import mainsearch from '@assets/images/main-search.webp';
 import { CalendarTickets } from '@common/CalendarTickets';
 import { searchApi } from '@services/searchTickets.service';
-import {
-  ISearchData,
-  ISearchRadioData,
-} from '@/interfaces/search-tickets.interfaces';
-import { getDestinations } from '@services/destinations.service';
-import { getFlights } from '@services/flights.service';
+import { ISearchData } from '@/interfaces/search-tickets.interfaces';
+import { ISearchRadioData } from '@/components/SearchTickets/SearchTickets.interfaces';
+import { getDestinations } from '@/services/destinations/destinations.service';
+import { getFlights } from '@/services/flights/flights.service';
 import { IFlightPresentation } from '@/interfaces/flights.interfaces';
-import {IDestination} from '@interfaces/destination.interfaces';
+import { IDestination } from '@interfaces/destination.interfaces';
 
 interface Props {
   startDate: Date | null;
@@ -60,7 +58,9 @@ const MainSearch = ({ startDate, endDate }: Props) => {
 
   const getAirportCode = async (city: string) => {
     const destinations = await getDestinations();
-    const destination = destinations.content.find((item: IDestination) => item.cityName === city);
+    const destination = destinations.content.find(
+      (item: IDestination) => item.cityName === city
+    );
     return destination ? destination.airportCode : null;
   };
 

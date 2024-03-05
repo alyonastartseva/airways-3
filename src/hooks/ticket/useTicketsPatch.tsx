@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import { patchTickets } from '@/services/tickets.service';
+import { patchTickets } from '@/services/tickets/tickets.service';
 import { IAxiosErrResponseData } from '@/interfaces/axios-err-response-data';
 import { AxiosErrorMessage } from '@/common/AxiosErrorMessage';
 

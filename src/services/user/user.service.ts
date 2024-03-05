@@ -1,4 +1,5 @@
-import { IFormPost, IFormUserCreate } from '@interfaces/account.interfaces';
+import { IFormUserCreate } from '@interfaces/account.interfaces';
+import { IFormPost } from '@services/user/user.interfaces';
 import { clientInstance } from '@services/axios.service';
 import { ERolesPassenger } from '@interfaces/roles.interfaces';
 

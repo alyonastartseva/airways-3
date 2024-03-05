@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Input, Tooltip } from '@chakra-ui/react';
 
 import { FlexCell } from '@common/FlexCell';
-import { IEditableCell } from '@interfaces/table.interfaces';
+import { IEditableCell } from '@common/EditableCell/editableCell.interfaces';
 
 const EditableCell = <K,>({
   value: initialValue,

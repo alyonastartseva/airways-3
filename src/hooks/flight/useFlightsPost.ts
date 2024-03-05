@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import { postFlight } from '@/services/flights.service';
+import { postFlight } from '@/services/flights/flights.service';
 
 const useFlightsPost = () => {
   const queryClient = useQueryClient();

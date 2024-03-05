@@ -22,7 +22,7 @@ import { modalSettings } from '@/constants/modal-constants/modal-settings';
 import { ButtonSubmitAdmin } from '@common/ButtonSubmitAdmin';
 import { ButtonAddAdmin } from '@common/ButtonAddAdmin';
 import { HeadingAdmin } from '@common/HeadingAdmin';
-import { IModalProps } from '@/interfaces/modal-shape.interfaces';
+import { IModalProps } from '@/common/ModalElements/ModalShape/modal-shape.interfaces';
 
 import { ModalInput } from '../ModalInput';
 

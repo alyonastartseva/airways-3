@@ -23,7 +23,7 @@ import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
-import { userApi } from '@services/user.service';
+import { userApi } from '@/services/user/user.service';
 import { IFormUserCreate } from '@interfaces/account.interfaces';
 
 const validationSchema = Yup.object().shape({

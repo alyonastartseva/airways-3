@@ -1,4 +1,10 @@
-import { IHeaderParams } from '@interfaces/header-params.interfaces';
+interface IHeaderParams {
+  color: string;
+  backgroundColor: string;
+  buttonBackgroundColor: string;
+  buttonColor: string;
+  hover: string;
+}
 
 const setHeaderParams = (isLogged: boolean) => {
   const result: IHeaderParams = {

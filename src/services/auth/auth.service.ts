@@ -1,4 +1,7 @@
-import { ILoginRequest, ILoginResponse } from '@interfaces/login.interfaces';
+import {
+  ILoginRequest,
+  ILoginResponse,
+} from '@/services/auth/login.interfaces';
 import { adminInstance } from '@/services/axios.service';
 import { ERoutes } from '@/services/constants';
 

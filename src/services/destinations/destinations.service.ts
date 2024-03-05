@@ -3,9 +3,10 @@ import { adminInstance } from '@/services/axios.service';
 import { ERoutes } from '@/services/constants';
 import {
   IDestination,
-  IDestinationGet,
   IDestinationPost,
 } from '@interfaces/destination.interfaces';
+
+import { IDestinationGet } from './destinations.interfaces';
 
 // временное решение, пока с бека не приходят необходимы свойства
 const tempMapDestination = (data: IDestinationGet) => ({
