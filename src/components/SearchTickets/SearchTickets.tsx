@@ -200,8 +200,9 @@ const MainSearch = ({ startDate, endDate }: Props) => {
           </Text>
           <Box>
             <Grid
-              templateColumns="17rem 17rem 17rem 9rem repeat(4, 1fr)"
-              gap="2rem"
+              templateColumns="17rem 17rem 17rem 9rem"
+              gap="2rem" 
+              overflow="hidden"
             >
               <GridItem>
                 <Flex direction="column">
