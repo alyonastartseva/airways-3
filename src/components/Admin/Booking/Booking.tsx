@@ -24,10 +24,10 @@ import {
   getSortedRowModel,
 } from '@tanstack/react-table';
 
-import { useSetCurrentPageInPagination } from '@hooks/useSetCurrentPageInPagination';
+import { useSetCurrentPageInPagination } from '@/hooks';
 import { Pagination } from '@components/Pagination';
 import { Gear, DetailsFilling } from '@common/icons';
-import { IBooking } from '@interfaces/booking.interfaces';
+import { IBooking } from '@/components/Admin/Booking/booking.interfaces';
 
 const bookingData: IBooking[] = [
   {

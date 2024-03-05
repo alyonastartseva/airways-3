@@ -26,20 +26,13 @@ import { HeaderTable } from '@common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortAirplanes } from '@utils/sort.utils';
-import { useAircraftQuery } from '@hooks/useAircraftQuery';
-import { useAircraftPatch } from '@hooks/useAircraftPatch';
-import { useAircraftDelete } from '@hooks/useAircraftDelete';
+import { useAircraftQuery, useAircraftPatch, useAircraftDelete, useSetCurrentPageInPagination } from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Airplanes = () => {
   // индекс и размер пагинации
-  const [pageIndex, setPagination] = useState(0);
-
-  // изменение пагинации
-  const setPaginationData = (pageNumber: number) => {
-    setPagination(pageNumber);
-  };
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination('AIRPLANES_CURR_PAGE');
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -216,11 +209,15 @@ const Airplanes = () => {
         size: 41,
         cell: (info) => (
           <PopoverTable
+            hasDetailsButton={true}
             row={info.row.original}
             index={info.row.index}
             id={info.row.original.id}
             handleEditRow={handleEditRow}
             deleteRow={deleteAircraft}
+            setPaginationIndex={setPaginationData}
+            indexPage={pageIndex}
+            numberElem={airplanes?.length}
           />
         ),
       }),
@@ -232,6 +229,9 @@ const Airplanes = () => {
       editableRowIndex,
       handleEditRow,
       handleUpdateRow,
+      setPaginationData,
+      pageIndex,
+      airplanes,
     ]
   );
 
@@ -290,9 +290,9 @@ const Airplanes = () => {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </Th>
                   ))}
                 </Tr>

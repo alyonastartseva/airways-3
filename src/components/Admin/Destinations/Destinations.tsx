@@ -21,23 +21,32 @@ import {
   IDestinationPost,
 } from '@interfaces/destination.interfaces';
 import { EditableCell } from '@common/EditableCell';
+import { EditableSelectCell } from '@/common/EditableSelectCell';
 import { FlexCell } from '@common/FlexCell';
-import { PopoverTable } from '@common/PopoverTable';
+import {PopoverTable} from '@common/PopoverTable';
 import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortDestinations } from '@utils/sort.utils';
-import { useDestinationQueryByPage } from '@/hooks/useDestinationQueryByPage';
-import { useDestinationPatch } from '@hooks/useDestinationPatch';
-import { useDestinationDelete } from '@hooks/useDestinationDelete';
+import {
+  useDestinationQueryByPage,
+  useDestinationPatch,
+  useDestinationDelete,
+  useSetCurrentPageInPagination,
+} from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
+import onlyLettersPattern from '@/constants/validate-patterns/only-letters-pattern';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
+
+const AIRPORT_CODES = ['VKO', 'VOG', 'MQF', 'OMS', 'AAQ'];
 
 const Destinations = () => {
   // индекс и размер пагинации
-  const [pageIndex, setPagination] = useState(0);
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
+    'DESTINATIONS_CURR_PAGE'
+  );
 
   // получение данных
   const { data: destinationsData, isLoading } =
@@ -109,8 +118,20 @@ const Destinations = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            info={info}
+            fieldName="Страна"
+            isDisabled={true}
           />
         ),
+        meta: {
+          type: 'text',
+          required: true,
+          validate: (value: string) => {
+            const regex = new RegExp(onlyLettersPattern.letters.message);
+            return regex.test(value);
+          },
+          validationMessage: onlyLettersPattern.letters.message,
+        },
       }),
       columnHelper.accessor('cityName', {
         header: 'Город',
@@ -127,8 +148,20 @@ const Destinations = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            info={info}
+            fieldName="Город"
+            isDisabled={true}
           />
         ),
+        meta: {
+          type: 'text',
+          required: true,
+          validate: (value: string) => {
+            const regex = new RegExp(onlyLettersPattern.letters.message);
+            return regex.test(value);
+          },
+          validationMessage: onlyLettersPattern.letters.message,
+        },
       }),
       columnHelper.accessor('airportName', {
         header: 'Имя аэропорта',
@@ -145,17 +178,20 @@ const Destinations = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            info={info}
+            fieldName="Имя аэропорта"
+            isDisabled={true}
           />
         ),
       }),
       columnHelper.accessor('airportCode', {
         header: 'Код аэропорта',
         cell: (info) => (
-          <EditableCell
+          <EditableSelectCell
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              info.getValue(),
+              String(info.getValue()),
               editableRowState,
               editableRowIndex
             )}
@@ -163,6 +199,8 @@ const Destinations = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            selectOptions={AIRPORT_CODES}
+            getRenderValue={(code: string) => code.toUpperCase()}
           />
         ),
       }),
@@ -181,6 +219,8 @@ const Destinations = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            info={info}
+            fieldName="Часовой пояс"
           />
         ),
       }),
@@ -189,11 +229,15 @@ const Destinations = () => {
         size: 41,
         cell: (info) => (
           <PopoverTable
+            hasDetailsButton={false}
             row={info.row.original}
             index={info.row.index}
             id={info.row.original.id}
             handleEditRow={handleEditRow}
             deleteRow={deleteDestination}
+            setPaginationIndex={setPaginationData}
+            indexPage={pageIndex}
+            numberElem={destinations?.length}
           />
         ),
       }),
@@ -205,6 +249,9 @@ const Destinations = () => {
       editableRowState,
       handleUpdateRow,
       handleEditRow,
+      setPaginationData,
+      pageIndex,
+      destinations,
     ]
   );
 
@@ -300,7 +347,7 @@ const Destinations = () => {
         <FooterTable
           data={tableData(destinations)}
           pageIndex={pageIndex}
-          setPaginationData={(page) => setPagination(page)}
+          setPaginationData={setPaginationData}
           cancelEditing={cancelEditing}
           patchRow={patchRow}
           editableRowIndex={editableRowIndex}

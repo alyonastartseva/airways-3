@@ -1,4 +1,19 @@
-import { FormTicketsPost, ITicketsPost } from '@/interfaces/tickets.interface';
+import { ITicketsPost } from '@/interfaces/tickets.interface';
+
+interface FormTicketsPost {
+  ticketNumber?: string;
+  passengerId?: string;
+  firstName?: string;
+  lastName?: string;
+  flightId?: number;
+  code?: string;
+  from?: string;
+  to?: string;
+  departureDateTime?: string;
+  arrivalDateTime?: string;
+  flightSeatId?: number;
+  seatNumber?: string;
+}
 
 export const mapTicketsFormData = (data: ITicketsPost): FormTicketsPost => {
   const { passengerId, flightId, flightSeatId, from, to } = data;

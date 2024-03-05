@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Input, Tooltip } from '@chakra-ui/react';
 
 import { FlexCell } from '@common/FlexCell';
-import { IEditableCell } from '@interfaces/table.interfaces';
+import { IEditableCell } from '@common/EditableCell/editableCell.interfaces';
 
-const EditableCell = ({
+const EditableCell = <K,>({
   value: initialValue,
   index,
   id,
@@ -12,7 +12,8 @@ const EditableCell = ({
   updateData,
   info,
   fieldName,
-}: IEditableCell) => {
+  isDisabled = false,
+}: IEditableCell<K>) => {
   const [value, setValue] = useState(initialValue);
   const [validationMessage, setValidationMessage] = useState('');
 
@@ -50,6 +51,7 @@ const EditableCell = ({
           onChange={onChange}
           fontSize="0.87rem"
           border={validationMessage ? '2px solid red' : '1px solid  #242424'}
+          disabled={isDisabled}
           _hover={{
             borderColor: '#398AEA',
           }}

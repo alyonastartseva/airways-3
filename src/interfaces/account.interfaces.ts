@@ -7,7 +7,3 @@ export interface IFormUserCreate {
   checkbox: NonNullable<boolean | undefined>;
   error?: string;
 }
-
-export interface IFormPost extends IFormUserCreate {
-  token: string;
-}

@@ -8,7 +8,7 @@ import {
   IDeparture,
   ITicketReturn,
   TAdditionalServices,
-} from '@interfaces/footer.interfaces';
+} from '@/common/Full/footer.interfaces';
 
 interface IFullProps {
   departure?: IDeparture;

@@ -1,6 +1,6 @@
 import { FieldValues } from 'react-hook-form';
 
-import { IGetQuery } from './api-interfaces';
+import { ISeat } from '@services/seat/seat.interfaces';
 
 export type TSeatCategory =
   | 'BUSINESS'
@@ -16,8 +16,6 @@ export interface ISeatPost {
   isNearEmergencyExit: boolean;
   seatNumber: string;
 }
-
-export type ISeat = IGetQuery<ISeatPost>;
 
 export interface ISeatForm extends FieldValues {
   aircraftId?: number;

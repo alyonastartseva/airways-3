@@ -8,7 +8,7 @@ import {
 import { afterEach, beforeEach, describe, expect, vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 
-import { userApi } from '@services/user.service';
+import { userApi } from '@/services/user/user.service';
 
 import SignUpPage from './SignUp.page';
 

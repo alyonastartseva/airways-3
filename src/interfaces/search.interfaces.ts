@@ -29,30 +29,9 @@ export interface IPassport {
   passportIssuingCountry?: string;
 }
 
-interface ISort {
+export interface ISort {
   unsorted: boolean;
   sorted: boolean;
-  empty: boolean;
-}
-
-export interface FormPassengersGet {
-  content: IPassenger[];
-  totalPages: number;
-  pageable: {
-    sort: ISort;
-    pageNumber: number;
-    pageSize: number;
-    offset: number;
-    unpaged: boolean;
-    paged: boolean;
-  };
-  last: boolean;
-  totalElements: number;
-  first: boolean;
-  sort: ISort;
-  numberOfElements: number;
-  size: number;
-  number: number;
   empty: boolean;
 }
 
@@ -70,10 +49,6 @@ export interface FormPassengersPost {
   }[];
   securityQuestion?: string;
 }
-export interface ISearchPageTab {
-  label: string;
-  icon?: string;
-}
 
 export type TDestQuery = Omit<IDestination, 'id'>;
 
@@ -85,18 +60,7 @@ export interface ISearchQuery {
   to: TDestQuery;
 }
 
-export interface ITravelDates {
-  departureDate: Date | null;
-  returnDate: Date | null;
-}
-
 export interface IFromTo {
   from: TDestQuery;
   to: TDestQuery;
-}
-
-export interface IDestProps {
-  fromOrTo: string;
-  onSetDestination: (fromOrTo: string, destination: TDestQuery) => void;
-  fromTo: IFromTo;
 }

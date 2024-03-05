@@ -31,22 +31,18 @@ import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortSeat } from '@utils/sort.utils';
-import { useSeatQuery } from '@hooks/useSeatQuery';
-import { useSeatPost } from '@hooks/useSeatPost';
-import { useSeatDelete } from '@hooks/useSeatDelete';
+import { useSeatQuery, useSeatPost, useSeatDelete, useSeatPatch, useAircraftQueryById, useSetCurrentPageInPagination } from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
-import ELinks from '@services/admin-router-links.service';
+import { ELinks } from '@services/constants';
 import { ITEMS_PER_PAGE, seatCategory, yesNo } from '@/constants/constants';
 import { EditableSelectCell } from '@/common/EditableSelectCell';
-import { useSeatPatch } from '@/hooks/useSeatPatch';
-import { useAircraftQueryById } from '@/hooks/useAircraftQueryById';
 
 const Airplane = () => {
   // получение параметра ID из роута
   const param = useParams();
 
   // индекс и размер пагинации
-  const [pageIndex, setPagination] = useState(0);
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination('AIRPLANE_CURR_PAGE');
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -350,9 +346,9 @@ const Airplane = () => {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </Th>
                   ))}
                 </Tr>
@@ -387,7 +383,7 @@ const Airplane = () => {
         <FooterTable
           data={tableData(seat)}
           pageIndex={pageIndex}
-          setPaginationData={(page) => setPagination(page)}
+          setPaginationData={(page) => setPaginationData(page)}
           cancelEditing={cancelEditing}
           patchRow={patchRow}
           editableRowIndex={editableRowIndex}

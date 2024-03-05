@@ -17,9 +17,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-import { useAuthAdmin } from '@services/auth.service';
-import { useAuth } from '@/hooks/useAuth';
-import ELinks from '@services/admin-router-links.service';
+import { useAuthAdmin } from '@/services/auth/auth.service';
+import { useAuth } from '@/hooks';
+import { ELinks } from '@services/constants';
 import { SpinnerBlock } from '@/common/SpinnerBlock';
 
 interface IUserForm {

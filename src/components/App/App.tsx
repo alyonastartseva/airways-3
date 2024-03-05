@@ -16,6 +16,7 @@ import { SignUpPage } from '@/pages/User/SignUpPage';
 import { SearchTicketsPage } from '@/pages/User/SearchTicketsPage';
 import { TicketsPage } from '@/pages/Admin/Tickets';
 import { BookingPage } from '@/pages/Admin/BookingPage';
+import { TimeZonesPage } from '@/pages/Admin/TimeZonesPage';
 
 const App = () => {
   return (
@@ -26,8 +27,6 @@ const App = () => {
         <Route path="register" element={<RegisterPage />} />
         <Route path="admin" element={<LoginAdminForm />} />
         <Route path="sign-up" element={<SignUpPage />} />
-        <Route path="booking" element={<BookingPage />} />
-
         <Route element={<PrivateRoute />}>
           <Route path="users" element={<UsersPage />} />
           <Route path="airplanes" element={<AirplanesPage />} />
@@ -43,6 +42,8 @@ const App = () => {
           <Route path="passengers" element={<PassengersPage />} />
           <Route path="destinations" element={<DestinationsPage />} />
           <Route path="flights" element={<FlightsPage />} />
+          <Route path="booking" element={<BookingPage />} />
+          <Route path="hours" element={<TimeZonesPage />} />
         </Route>
         {/* вернуть внутрь после связики страницы с кнопоко подбронее */}
         <Route path="airplane-more" element={<AirplaneMorePage />} />

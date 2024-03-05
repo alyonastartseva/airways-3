@@ -27,16 +27,14 @@ import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
 import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
-import { usePassengersDelete } from '@hooks/usePassengersDelete';
-import { usePassengersPatch } from '@hooks/usePassengersPatch';
-import { usePassengersQuery } from '@hooks/usePassengersQuery';
+import { usePassengersDelete, usePassengersPatch, usePassengersQuery, useSetCurrentPageInPagination } from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { IFormPassengers } from '@/interfaces/passenger.interfaces';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Passengers = () => {
   // индекс и размер пагинации
-  const [pageIndex, setPagination] = useState(0);
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination('PASSENGERS_CURR_PAGE');
 
   // получение данных
   const { data: dataQuery, isLoading } = usePassengersQuery(pageIndex);
@@ -44,19 +42,13 @@ const Passengers = () => {
   const passengers = dataQuery?.content;
   const totalPages = dataQuery?.totalPages;
 
-  // изменение пагинации
-  const setPaginationData = (pageNumber: number) => {
-    setPagination(pageNumber);
-    localStorage.setItem('PASS_CURR_PAGE', String(pageNumber));
-  };
-
   // если удален последняя строка текущей страницы, то открываем предыдущую страницу
   useEffect(() => {
     if (!passengers && pageIndex > 0) setPaginationData(pageIndex - 1);
   }, [passengers, pageIndex]);
 
   useEffect(() => {
-    const currPage = Number(localStorage.getItem('PASS_CURR_PAGE'));
+    const currPage = Number(localStorage.getItem('PASSENGERS_CURR_PAGE'));
     if (currPage > 0) setPaginationData(currPage);
   }, []);
 
@@ -318,11 +310,15 @@ const Passengers = () => {
         size: 41,
         cell: (info) => (
           <PopoverTable
+            hasDetailsButton={false}
             row={info.row.original}
             index={info.row.index}
             id={info.row.original.id}
             handleEditRow={handleEditRow}
             deleteRow={deletePassengers}
+            setPaginationIndex={setPaginationData}
+            indexPage={pageIndex}
+            numberElem={passengers?.length}
           />
         ),
       }),
@@ -335,6 +331,9 @@ const Passengers = () => {
       handleUpdateRow,
       deletePassengers,
       genderSelectOptions,
+      setPaginationData,
+      pageIndex,
+      passengers,
     ]
   );
 
@@ -385,9 +384,9 @@ const Passengers = () => {
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </Th>
                 ))}
               </Tr>

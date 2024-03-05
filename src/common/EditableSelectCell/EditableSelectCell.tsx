@@ -5,9 +5,9 @@ import { FlexCell } from '@common/FlexCell';
 import {
   IEditableSelectCell,
   InitialSelectValue,
-} from '@interfaces/table.interfaces';
+} from '@common/EditableSelectCell/editableSelectCell.interfaces';
 
-const EditableSelectCell = ({
+const EditableSelectCell = <K,>({
   value: initialValue,
   index,
   id,
@@ -15,7 +15,7 @@ const EditableSelectCell = ({
   updateData,
   getRenderValue,
   selectOptions,
-}: IEditableSelectCell) => {
+}: IEditableSelectCell<K>) => {
   const initialValueObj = initialValue as InitialSelectValue;
 
   const editableInitial: string | number | undefined =

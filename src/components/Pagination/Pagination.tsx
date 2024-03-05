@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { Box, Button, ButtonGroup, Flex } from '@chakra-ui/react';
 
 import { ArrowRightIcon, ArrowLeftIcon } from '@/common/icons/';
-import { IPagination } from '@interfaces/pagination.interfaces';
+import { IPagination } from '@components/Pagination/Pagination.interfaces';
 import { getVisiblePages } from '@utils/pagination.utils';
 
 const Pagination = <Data,>(props: IPagination<Data>) => {

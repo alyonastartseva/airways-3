@@ -1,16 +1,20 @@
 import { AxiosResponse } from 'axios';
 import { UseMutationResult } from 'react-query';
 
-import { useAircraftPost } from '@/hooks/useAircraftPost';
-import { useDestinationPost } from '@/hooks/useDestinationPost';
-import { useFlightsPost } from '@/hooks/useFlightsPost';
-import { usePassengersPost } from '@/hooks/usePassengersPost';
-import { useSeatPost } from '@/hooks/useSeatPost';
-import { useTicketsPost } from '@/hooks/useTicketPost';
-import { TSettings } from '@/interfaces/modal-shape.interfaces';
+import {
+  useTicketsPost,
+  useSeatPost,
+  usePassengersPost,
+  useFlightsPost,
+  useDestinationPost,
+  useAircraftPost,
+  useTimezonePost,
+} from '@/hooks';
+import { TSettings } from '@/common/ModalElements/ModalShape/modal-shape.interfaces';
 import { ISeatForm } from '@/interfaces/seat.interfaces';
 import { mapFlightFormToRequestData } from '@/utils/form-flights.utils';
 import { mapTicketsFormData } from '@/utils/form-tickets.utils';
+import { mapTimezonesFormData } from '@/utils/form-timezone.utils';
 
 import { modalAirplanesFields } from './modal-airplanes-fields';
 import { modalDestinationsFields } from './modal-destinations-fields';
@@ -19,6 +23,7 @@ import { EModalButtonTexts, EModalNames } from './modal-names';
 import { modalPassengersFields } from './modal-passengers-fields';
 import { modalSeatFields } from './modal-seat-fields';
 import { modalTicketsFields } from './modal-tickets-fields';
+import { modalTimezonesFields } from './modal-timezones-fields';
 
 export const modalSettings: TSettings = [
   {
@@ -63,5 +68,12 @@ export const modalSettings: TSettings = [
     hook: useTicketsPost,
     name: EModalButtonTexts.TICKETS,
     mapFieldValuesToRequestData: mapTicketsFormData,
+  },
+  {
+    formName: EModalNames.TIME_ZONES,
+    fields: modalTimezonesFields,
+    hook: useTimezonePost,
+    name: EModalButtonTexts.TIME_ZONES,
+    mapFieldValuesToRequestData: mapTimezonesFormData,
   },
 ];

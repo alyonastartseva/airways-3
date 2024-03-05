@@ -1,7 +1,7 @@
 import { Button } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 
-import { IButtonAddAdmin } from '@interfaces/table.interfaces';
+import { IButtonAddAdmin } from '@common/ButtonAddAdmin/buttonAddAdmin.interfaces';
 
 const ButtonAddAdmin = ({ name, onClick }: IButtonAddAdmin) => (
   <Button

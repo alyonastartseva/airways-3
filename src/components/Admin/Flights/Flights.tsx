@@ -19,9 +19,7 @@ import { useCallback, useMemo, useState, memo } from 'react';
 import { EditableSelectCell } from '@/common/EditableSelectCell';
 import { ITEMS_PER_PAGE, flightStatuses } from '@/constants/constants';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
-import { useAircraftQuery } from '@/hooks/useAircraftQuery';
-import { useFlightsDelete } from '@/hooks/useFlightsDelete';
-import { useFlightsQuery } from '@/hooks/useFlightsQuery';
+import { useAircraftQuery, useFlightsDelete, useFlightsQuery, useFlightsPatch, useSetCurrentPageInPagination } from '@/hooks';
 import { IAircraft } from '@/interfaces/aircraft.interfaces';
 import {
   IFlightPostFormFields,
@@ -36,11 +34,10 @@ import { HeaderTable } from '@/common/HeaderTable';
 import { PopoverTable } from '@common/PopoverTable';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { isRowEditing } from '@utils/table.utils';
-import { useFlightsPatch } from '@/hooks/useFlightsPatch';
 
 const Flights = () => {
   // индекс и размер пагинации
-  const [pageIndex, setPagination] = useState(0);
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination('FLIGHTS_CURR_PAGE');
 
   // получение данных
   const { data: airplanesData, isLoading: isAircraftLoading } =
@@ -51,11 +48,6 @@ const Flights = () => {
 
   const flights = flightsData?.content;
   const totalPages = flightsData?.totalPages;
-
-  // изменение пагинации
-  const setPaginationData = (pageNumber: number) => {
-    setPagination(pageNumber);
-  };
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -290,11 +282,15 @@ const Flights = () => {
         size: 41,
         cell: (info) => (
           <PopoverTable
+            hasDetailsButton={false}
             row={info.row.original}
             index={info.row.index}
             id={info.row.original.id}
             handleEditRow={handleEditRow}
             deleteRow={deleteFlight}
+            setPaginationIndex={setPaginationData}
+            indexPage={pageIndex}
+            numberElem={flights?.length}
           />
         ),
       }),
@@ -308,6 +304,9 @@ const Flights = () => {
       deleteFlight,
       airplanes,
       getAircraftModel,
+      setPaginationData,
+      pageIndex,
+      flights,
     ]
   );
 
@@ -321,10 +320,7 @@ const Flights = () => {
 
   // создание таблицы
   const table = useReactTable({
-    data: tableData(flights).slice(
-      pageIndex * ITEMS_PER_PAGE,
-      pageIndex * ITEMS_PER_PAGE + ITEMS_PER_PAGE
-    ),
+    data: tableData(flights),
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
@@ -360,9 +356,9 @@ const Flights = () => {
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </Th>
                 ))}
               </Tr>

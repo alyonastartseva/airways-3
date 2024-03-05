@@ -46,8 +46,7 @@ export const modalDestinationsFields: FormInputProps<IDestinationPost>[] = [
       // Переделать, когда этиданные будут призодить с API
       <>
         <option value="void">Выберите код...</option>,
-        <option value="DME">DME</option>,
-        <option value="SVO">SVO</option>,
+        <option value="DME">DME</option>,<option value="SVO">SVO</option>,
         <option value="VKO">VKO</option>,
       </>
     ),

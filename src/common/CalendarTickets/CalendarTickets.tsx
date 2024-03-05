@@ -35,8 +35,8 @@ import {
 } from '@chakra-ui/react';
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from '@chakra-ui/icons';
 
-import { IDates } from '@/interfaces/search-tickets.interfaces';
 import monthNames from '@data/month.data.json';
+import { IDates } from '@/common/CalendarTickets/calendarTickets.interfaces';
 
 export interface PropsCalendar {
   startDate: Date | null;
