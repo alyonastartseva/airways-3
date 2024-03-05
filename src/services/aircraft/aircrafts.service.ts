@@ -1,11 +1,9 @@
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 import { adminInstance } from '@/services/axios.service';
 import { ERoutes } from '@/services/constants';
-import {
-  IAircraft,
-  IAircraftPost,
-  IAircraftsGet,
-} from '@interfaces/aircraft.interfaces';
+import { IAircraft, IAircraftPost } from '@interfaces/aircraft.interfaces';
+
+import { IAircraftsGet } from './aircraft.interfaces';
 
 const aircraftsAPI = {
   getAircrafts: async (page?: number) => {

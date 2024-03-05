@@ -1,9 +1,6 @@
 import { adminInstance } from '@/services/axios.service';
-import {
-  ITickets,
-  ITicketsGet,
-  ITicketsPost,
-} from '@interfaces/tickets.interface';
+import { ITickets, ITicketsPost } from '@interfaces/tickets.interface';
+import { ITicketsGet } from '@services/tickets/tickets.interfaces';
 import { ERoutes } from '@services/constants';
 
 const ticketsAPI = {

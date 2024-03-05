@@ -11,9 +11,9 @@ import {
 import { EditIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
 
-import { IPopoverTable } from '@interfaces/table.interfaces';
+import { IPopoverTable } from '@common/PopoverTable/popoverTable.interfaces';
 import { Details } from '@common/icons';
-import {ELinks} from '@services/constants';
+import { ELinks } from '@services/constants';
 import { mapRoutesFormData } from '@utils/form-routes.utils';
 
 const PopoverTable = <Data,>({

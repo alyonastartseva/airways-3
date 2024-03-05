@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import { patchDestinations } from '@services/destinations.service';
+import { patchDestinations } from '@/services/destinations/destinations.service';
 
 const useDestinationPatch = () => {
   const queryClient = useQueryClient();

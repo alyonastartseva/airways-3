@@ -1,10 +1,7 @@
 import { adminInstance } from '@/services/axios.service';
 import { ERoutes } from '@/services/constants';
-import {
-  FormPassengersGet,
-  IPassenger,
-  FormPassengersPost,
-} from '@/interfaces/search.interfaces';
+import { IPassenger, FormPassengersPost } from '@/interfaces/search.interfaces';
+import { FormPassengersGet } from '@/services/passengers/passengers.interfaces';
 import { IFormPassengers } from '@/interfaces/passenger.interfaces';
 import { mapPassengersFormData } from '@/utils/form-passengers.utils';
 import { ITEMS_PER_PAGE } from '@/constants/constants';

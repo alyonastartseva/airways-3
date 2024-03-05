@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import { postTimezones } from '@services/timezones.service';
+import { postTimezones } from '@/services/timeZones/timezones.service';
 
 const useTimezonePost = () => {
   const queryClient = useQueryClient();

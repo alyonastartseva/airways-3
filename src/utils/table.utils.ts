@@ -1,4 +1,18 @@
-import { IsRowEditing, TTableData } from '@interfaces/table.interfaces';
+import { TPerson } from '@interfaces/person.interfaces';
+import { IDestination } from '@/interfaces/destination.interfaces';
+import { IAircraft } from '@interfaces/aircraft.interfaces';
+
+export type TTableData = TPerson | IDestination | IAircraft;
+
+export interface IsRowEditing<Data> {
+  (
+    index: number,
+    id: string,
+    value: string | { categoryType: string } | undefined,
+    row: Data | null,
+    editableIndex: number | null
+  ): string | number | undefined;
+}
 
 export const isRowEditing: IsRowEditing<TTableData> = (
   index,

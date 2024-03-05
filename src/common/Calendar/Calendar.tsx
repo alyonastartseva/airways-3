@@ -26,7 +26,7 @@ import {
   isToday,
 } from 'date-fns';
 
-import { ITravelDates } from '@/interfaces/search.interfaces';
+import { ITravelDates } from '@/common/Calendar/calendar.interfaces';
 
 export interface PropsCalendar {
   startDate: Date | null;

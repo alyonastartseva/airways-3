@@ -1,3 +1,9 @@
+import { IFlightPresentation } from '@/interfaces/flights.interfaces';
+
+export interface IFlightsUpdate extends Partial<IFlightPresentation> {
+  id: number;
+}
+
 export interface IPageable {
   pageable: {
     offset: number;

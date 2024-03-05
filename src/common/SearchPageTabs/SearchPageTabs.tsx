@@ -10,7 +10,7 @@ import {
 
 import { PlaneTabIcon } from '@common/icons';
 import { SearchTabPanel } from '@common/SearchTabPanel';
-import { ISearchPageTab } from '@interfaces/search.interfaces';
+import { ISearchPageTab } from '@common/SearchPageTabs/searchPageTab.interfaces';
 
 const tabs: ISearchPageTab[] = [
   { label: 'flights', icon: 'PlaneTabIcon' },
