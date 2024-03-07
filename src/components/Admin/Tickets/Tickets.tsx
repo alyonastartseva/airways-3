@@ -37,7 +37,7 @@ const Tickets = () => {
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination('TICKETS_CURR_PAGE');
 
   // получение данных
-  const { data: ticketsData, isLoading } = useTicketsQuery(pageIndex);
+  const { data: ticketsData, isFetching } = useTicketsQuery(pageIndex);
   const tickets = ticketsData?.content;
   const totalPages = ticketsData?.totalPages;
 
@@ -292,7 +292,7 @@ const Tickets = () => {
   });
 
   // спиннер при загрузке
-  if (isLoading) {
+  if (isFetching) {
     return <SpinnerBlock />;
   }
 

@@ -44,7 +44,7 @@ const Flights = () => {
     useAircraftQuery(pageIndex);
   const airplanes = airplanesData?.content;
 
-  const { data: flightsData, isLoading, isError } = useFlightsQuery(pageIndex);
+  const { data: flightsData, isError, isFetching  } = useFlightsQuery(pageIndex);
 
   const flights = flightsData?.content;
   const totalPages = flightsData?.totalPages;
@@ -327,7 +327,7 @@ const Flights = () => {
   });
 
   // спиннер при загрузке
-  if (isLoading || isAircraftLoading) {
+  if (isAircraftLoading || isFetching ) {
     return <SpinnerBlock />;
   }
 

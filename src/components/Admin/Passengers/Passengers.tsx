@@ -37,7 +37,7 @@ const Passengers = () => {
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination('PASSENGERS_CURR_PAGE');
 
   // получение данных
-  const { data: dataQuery, isLoading } = usePassengersQuery(pageIndex);
+  const { data: dataQuery, isFetching } = usePassengersQuery(pageIndex);
 
   const passengers = dataQuery?.content;
   const totalPages = dataQuery?.totalPages;
@@ -354,7 +354,7 @@ const Passengers = () => {
   });
 
   // спиннер при загрузке
-  if (isLoading) {
+  if ( isFetching ) {
     return <SpinnerBlock />;
   }
 
