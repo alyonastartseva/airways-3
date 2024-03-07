@@ -49,7 +49,7 @@ const Destinations = () => {
   );
 
   // получение данных
-  const { data: destinationsData, isLoading } =
+  const { data: destinationsData, isFetching } =
     useDestinationQueryByPage(pageIndex);
 
   const destinations = destinationsData?.content;
@@ -272,7 +272,7 @@ const Destinations = () => {
   });
 
   // спиннер при загрузке
-  if (isLoading) {
+  if ( isFetching ) {
     return <SpinnerBlock />;
   }
 
