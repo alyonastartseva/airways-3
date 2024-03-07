@@ -13,4 +13,7 @@ export interface IPopoverTable<Data> {
     number | undefined,
     unknown
   >;
+  setPaginationIndex?: (pageNumber: number) => void;
+  indexPage?: number; // текущий индекс
+  numberElem?: number; // общее кол-во элементов на страннице
 }

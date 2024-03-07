@@ -181,7 +181,8 @@ const MainSearch = ({ startDate, endDate }: Props) => {
     <Flex
       justify="center"
       minHeight="54rem"
-      minWidth="90rem"
+      maxWidth="90rem"
+      w="100%"
       alignItems="center"
     >
       <Box>
@@ -191,7 +192,8 @@ const MainSearch = ({ startDate, endDate }: Props) => {
         <Box
           border="0.9rem solid #D3EFFF"
           borderRadius="1rem"
-          w="75rem"
+          w="100%"
+          maxWidth="75rem"
           h="18.75rem"
           p="0.9rem 3.1rem 2.2rem"
         >
@@ -202,7 +204,6 @@ const MainSearch = ({ startDate, endDate }: Props) => {
             <Grid
               templateColumns="17rem 17rem 17rem 9rem"
               gap="2rem" 
-              overflow="hidden"
             >
               <GridItem>
                 <Flex direction="column">
