@@ -184,6 +184,7 @@ const MainSearch = ({ startDate, endDate }: Props) => {
       maxWidth="90rem"
       w="100%"
       alignItems="center"
+      m="auto"
     >
       <Box>
         <Flex justify="center" h="31.25rem" mb="0.7rem" alignItems="center">

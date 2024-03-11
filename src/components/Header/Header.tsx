@@ -31,8 +31,9 @@ const Header = () => {
       <Spacer />
       {!isLogged ? (
         <Flex gap="1rem" color="#006FFF" alignItems="center">
-          <Link to={ELinks.ADMIN_LOGIN}>
+          <Link to={ELinks.ADMIN_LOGIN} >
             <Button
+              display="none"
               fontSize="15"
               fontWeight="600"
               _hover={{ bgColor: '#C2DCFF' }}
