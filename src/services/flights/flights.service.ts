@@ -29,8 +29,7 @@ const flightsAPI: IFlightsApi = {
   getFlights: async (pageIndex?: number) => {
     return await adminInstance
       .get<IListResponse<Required<IFlightPresentation>>>(
-        ERoutes.GET_FLIGHTS +
-          `?page=${String(pageIndex)}&size=${ITEMS_PER_PAGE}`
+        ERoutes.GET_FLIGHTS + `?page=${pageIndex ?? ''}&size=${ITEMS_PER_PAGE}`
       )
       .then((response) => response.data);
   },
