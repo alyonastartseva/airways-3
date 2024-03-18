@@ -5,7 +5,6 @@ import { LoginAdminForm } from '@components/LoginAdminForm';
 import { AirplanesPage } from '@pages/Admin/Airplane';
 import { UsersPage } from '@pages/Admin/Users';
 import { RegisterPage } from '@pages/User/RegisterPage';
-import { SearchPage } from '@pages/User/SearchPage';
 import { DestinationsPage } from '@pages/Admin/DestinationsPage';
 import { PageNotFound } from '@common/PageNotFound';
 import { PassengersPage } from '@/pages/Passengers';

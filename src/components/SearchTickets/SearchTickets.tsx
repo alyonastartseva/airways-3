@@ -16,9 +16,11 @@ import {
   Grid,
   GridItem,
   Spinner,
+  Select,
 } from '@chakra-ui/react';
 import { formatISO, isPast, isToday, compareDesc } from 'date-fns';
 
+import { seatCategory } from '@/constants/constants';
 import { ArrowsIcon } from '@common/icons';
 import mainsearch from '@assets/images/main-search.webp';
 import { CalendarTickets } from '@common/CalendarTickets';
@@ -29,6 +31,7 @@ import { getDestinations } from '@/services/destinations/destinations.service';
 import { getFlights } from '@/services/flights/flights.service';
 import { IFlightPresentation } from '@/interfaces/flights.interfaces';
 import { IDestination } from '@interfaces/destination.interfaces';
+import { TSeatCategory } from '@/interfaces/seat.interfaces';
 
 interface Props {
   startDate: Date | null;
@@ -44,13 +47,16 @@ const MainSearch = ({ startDate, endDate }: Props) => {
   const [tripType, setTripType] = useState('roundTrip');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [seatCategoryValue, setSeatCategoryValue] =
+    useState<TSeatCategory>('BUSINESS');
 
   const initialSearchQuery: ISearchData = {
     departureDate: '',
-    from: {},
+    airportFrom: '',
     numberOfPassengers: 0,
     returnDate: '',
-    to: {},
+    airportTo: '',
+    categoryOfSeats: seatCategoryValue,
   };
 
   const [searchParams, setSearchParams] =
@@ -59,7 +65,7 @@ const MainSearch = ({ startDate, endDate }: Props) => {
   const getAirportCode = async (city: string) => {
     const destinations = await getDestinations();
     const destination = destinations.content.find(
-      (item: IDestination) => item.cityName === city
+      (item: IDestination) => item.airportCode === city
     );
     return destination ? destination.airportCode : null;
   };
@@ -102,16 +108,12 @@ const MainSearch = ({ startDate, endDate }: Props) => {
 
       const searchData: ISearchData & ISearchRadioData = {
         departureDate: searchParams.departureDate,
-        from: {
-          cityName: from,
-          airportCode: fromAirportCode,
-        },
+        airportFrom: fromAirportCode,
         numberOfPassengers: numberOfPassengers,
         returnDate: searchParams.returnDate,
-        to: {
-          cityName: to,
-          airportCode: toAirportCode,
-        },
+        airportTo: toAirportCode,
+        categoryOfSeats: seatCategoryValue,
+
         departFlight: [],
         returnFlight: [],
       };
@@ -148,7 +150,9 @@ const MainSearch = ({ startDate, endDate }: Props) => {
         searchData.returnFlight = returnFlight;
       }
 
-      await searchApi.postSearch(searchData);
+      const searchResult = await searchApi.postSearch(searchData);
+      // eslint-disable-next-line no-console
+      searchResult ? console.log(searchResult) : console.log('Нет билетов');
       setNumberOfPassengers(1);
       setFrom('');
       setTo('');
@@ -202,10 +206,7 @@ const MainSearch = ({ startDate, endDate }: Props) => {
             Найти билеты
           </Text>
           <Box>
-            <Grid
-              templateColumns="17rem 17rem 17rem 9rem"
-              gap="2rem" 
-            >
+            <Grid templateColumns="17rem 17rem 17rem 9rem" gap="2rem">
               <GridItem>
                 <Flex direction="column">
                   <FormControl>
@@ -241,7 +242,7 @@ const MainSearch = ({ startDate, endDate }: Props) => {
               </GridItem>
 
               <GridItem position="relative">
-                <Flex direction="column">
+                <Flex direction="column" height="100%">
                   <FormControl>
                     <FormLabel fontSize={14}>Количество пассажиров</FormLabel>
                     <Input
@@ -256,20 +257,33 @@ const MainSearch = ({ startDate, endDate }: Props) => {
                       </Text>
                     )}
                   </FormControl>
-
-                  <Flex position="absolute" left="0" bottom="2.5" mt={58}>
-                    <Checkbox
-                      isChecked={directFlightsOnly}
-                      onChange={(e) => setDirectFlightsOnly(e.target.checked)}
+                  <FormControl mt="auto">
+                    <FormLabel fontSize={14}>Категория сиденья</FormLabel>
+                    <Select
+                      value={seatCategoryValue}
+                      onChange={(e) => {
+                        setSeatCategoryValue(e.target.value as TSeatCategory);
+                      }}
+                      fontSize="0.87rem"
+                      _hover={{
+                        borderColor: '#cbd5e0',
+                      }}
+                      _active={{
+                        borderColor: '#398AEA',
+                      }}
                     >
-                      Искать билеты без пересадок
-                    </Checkbox>
-                  </Flex>
+                      {seatCategory.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Flex>
               </GridItem>
 
               <GridItem>
-                <Flex direction="column">
+                <Flex direction="column" height="100%" position="relative">
                   <FormControl>
                     <FormLabel fontSize={14}>Дата</FormLabel>
                     <CalendarTickets
@@ -286,11 +300,21 @@ const MainSearch = ({ startDate, endDate }: Props) => {
                       color="red"
                       fontSize={15}
                       mt="2.75rem"
+                      position="absolute"
+                      top="35px"
                     >
                       <AlertIcon mr={1} />
                       {error}
                     </Alert>
                   )}
+                  <Checkbox
+                    py="8px"
+                    mt="auto"
+                    isChecked={directFlightsOnly}
+                    onChange={(e) => setDirectFlightsOnly(e.target.checked)}
+                  >
+                    Искать билеты без пересадок
+                  </Checkbox>
                 </Flex>
               </GridItem>
 
