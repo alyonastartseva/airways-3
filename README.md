@@ -26,39 +26,11 @@
 
 ## Требование к запуску проекта
 
-* Зайти в терминал от администратора в PowerShell и прописать
-
-```bash
-    wsl --install
-```
-
-* Поставить себе вторую версию WSL 2
-
-```bash
-    wsl --set-default-version 2
-```
-
-* Скачать и установить себе *Windows Terminal Preview* из Microsoft Store
-* Поставить себе в настройках *Windows Terminal Preview*>*Профиль по умолчанию* выбрать **Ubuntu**
 * Установить [yarn](https://yarnpkg.com/)
 
 ```node
     npm i -g yarn
 ```
-
-* В зависимости от OS нужно будет установить [Docker](https://www.docker.com/)
-
-[Windows10 Home](https://learn.microsoft.com/ru-ru/windows/wsl/install/)
-
-[Windows10 Pro](https://docs.docker.com/desktop/install/windows-install/)
-
-[Windows11](https://docs.docker.com/desktop/install/windows-install/)
-
-[Apple](https://www.docker.com/)
-
-[Linux](https://www.docker.com/)
-
-Запуск проекта зависит от запуска бэкенд проекта, поэтому нужно будет попросить у меня доступ, чтобы ментор бэкенда добавил вас в команду проекта
 
 ## Запуск проекта фронта
 
@@ -72,12 +44,4 @@
 
 ```property
     yarn dev
-```
-
-## Запуск проекта бэка
-
-Для запуска необходимо зайти в корень бэка проекта, для запуска необходима вот эта команда
-
-```docker
-    docker compose up
 ```
