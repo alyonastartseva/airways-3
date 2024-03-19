@@ -115,6 +115,8 @@ const Airplane = () => {
   const { data: dataAirplane } = useAircraftQueryById(Number(airplaneId));
   const planeName = dataAirplane?.model;
 
+  const initialFormValues = { aircraftId : airplaneId };
+
   // изменение данных
   const { mutate: postSeat } = useSeatPost();
 
@@ -327,6 +329,7 @@ const Airplane = () => {
             select
             selectedValue={selectedValue}
             handleSelectChange={handleSelectChange}
+            initialFormValues={initialFormValues}
           />
           <Table>
             <Thead>

@@ -14,6 +14,7 @@ import { TSettings } from '@/common/ModalElements/ModalShape/modal-shape.interfa
 import { ISeatForm } from '@/interfaces/seat.interfaces';
 import { mapFlightFormToRequestData } from '@/utils/form-flights.utils';
 import { mapTicketsFormData } from '@/utils/form-tickets.utils';
+import { mapEditAircraftFormData } from '@/utils/edit-aircraft.utils';
 import { mapTimezonesFormData } from '@/utils/form-timezone.utils';
 
 import { modalAirplanesFields } from './modal-airplanes-fields';
@@ -61,6 +62,7 @@ export const modalSettings: TSettings = [
       unknown
     >,
     name: EModalButtonTexts.SEAT,
+    mapFieldValuesToRequestData: mapEditAircraftFormData,
   },
   {
     formName: EModalNames.TICKETS,

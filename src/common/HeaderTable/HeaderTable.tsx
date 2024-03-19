@@ -12,6 +12,7 @@ const HeaderTable = <T extends FieldValues>({
   select,
   selectedValue,
   handleSelectChange,
+  initialFormValues ,
 }: IHeaderAdmin) => {
   return (
     <Flex my={5} align="center" justify="space-between">
@@ -32,7 +33,7 @@ const HeaderTable = <T extends FieldValues>({
             </Select>
           </Flex>
         ) : null}
-        <ModalShape<T> formName={formName} />
+        <ModalShape<T> formName={formName} initialFormValues={initialFormValues}/>
       </Flex>
     </Flex>
   );

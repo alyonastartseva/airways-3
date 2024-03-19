@@ -62,7 +62,7 @@ const Airplanes = () => {
   );
 
   // получение данных
-  const { data: airplanesData, isLoading } = useAircraftQuery(pageIndex);
+  const { data: airplanesData, isFetching } = useAircraftQuery(pageIndex);
 
   const airplanes = airplanesData?.content;
   const totalPages = airplanesData?.totalPages;
@@ -252,7 +252,7 @@ const Airplanes = () => {
   });
 
   // спиннер при загрузке
-  if (isLoading) {
+  if (isFetching) {
     return <SpinnerBlock />;
   }
 

@@ -86,6 +86,7 @@ const AdminHeader: FC = () => {
       <Button
         w="6.25rem"
         h="2rem"
+        display="none"
         bg={buttonBackgroundColor}
         borderRadius="5"
         alignSelf="right"
