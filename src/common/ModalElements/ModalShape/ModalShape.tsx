@@ -26,7 +26,7 @@ import { IModalProps } from '@/common/ModalElements/ModalShape/modal-shape.inter
 
 import { ModalInput } from '../ModalInput';
 
-const ModalShape = <T extends FieldValues>({ formName }: IModalProps) => {
+const ModalShape = <T extends FieldValues>({formName, initialFormValues }: IModalProps) => {
   const [currentModal] = modalSettings.filter(
     (item) => item.formName === formName
   );
@@ -74,35 +74,19 @@ const ModalShape = <T extends FieldValues>({ formName }: IModalProps) => {
               <ModalBody mt={0} px={7}>
                 {fields.map((field) => {
                   const { fieldName, ...fieldRest } = field;
+                  const defaultValue = initialFormValues && fieldName in initialFormValues ? initialFormValues[fieldName] : undefined;
 
                   return (
                     <ModalInput<T>
                       key={fieldName}
                       fieldName={fieldName as Path<T>}
+                      value={defaultValue}
                       {...fieldRest}
                     >
                       {field.children}
                     </ModalInput>
                   );
                 })}
-                {name === 'Добавить самолет' ? (
-                  <Button
-                    rightIcon={<AddIcon boxSize="3" />}
-                    border="1px solid #DEDEDE"
-                    borderRadius="2"
-                    boxShadow="0px 5px 5px rgba(0, 0, 0, 0.06)"
-                    bgColor="#F9F9F9"
-                    fontSize="14px"
-                    fontWeight="500"
-                    _hover={{
-                      backgroundColor: '#398AEA',
-                      borderColor: '#398AEA',
-                      color: '#FFFFFF',
-                    }}
-                  >
-                    Добавить сиденье
-                  </Button>
-                ) : null}
               </ModalBody>
               <ModalFooter pt={0} pb={7} px={7}>
                 <ButtonSubmitAdmin />

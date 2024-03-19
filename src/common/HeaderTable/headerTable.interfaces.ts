@@ -6,4 +6,5 @@ export interface IHeaderAdmin {
   select?: boolean;
   selectedValue?: string;
   handleSelectChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  initialFormValues?: Record<string, number | string | undefined>;
 }

@@ -1,4 +1,4 @@
-import { FormLabel, Input, InputGroup, InputLeftAddon, Select } from '@chakra-ui/react';
+import { FormLabel, Input, InputGroup,  Checkbox, InputLeftAddon, Select } from '@chakra-ui/react';
 import {
   FieldValues,
   RegisterOptions,
@@ -10,11 +10,13 @@ import { ErrorMessage } from '@hookform/error-message';
 export type FormInputProps<TFormValues extends FieldValues> = {
   children?: React.ReactNode;
   label: string;
-  typeInput?: 'text' | 'number' | 'datetime-local' | 'date' | 'tel';
+  typeInput?: 'text' | 'number' | 'datetime-local' | 'date' | 'tel' | 'hidden';
   fieldName: Path<TFormValues>;
-  rules: RegisterOptions;
+  rules?: RegisterOptions;
   select?: true;
   mask?: string;
+  checkbox?: boolean;
+  value?: number | string;
 };
 
 const ModalInput = <TFormValues extends Record<string, unknown>>({
@@ -25,12 +27,33 @@ const ModalInput = <TFormValues extends Record<string, unknown>>({
   select,
   children,
   mask,
+  checkbox,
+  value,
 }: FormInputProps<TFormValues>): JSX.Element => {
   const {
     register,
     formState: { errors },
   } = useFormContext();
 
+  if (typeInput === 'hidden') {
+    return <Input
+      type={typeInput}
+      value={value}
+      {...register(fieldName, rules)}
+    />;
+  }
+
+  if (checkbox) {
+    return <Checkbox 
+              w="100%"
+              mb={4}
+              color="#393939"
+              fontWeight="400"
+              {...register(fieldName, rules)}
+            >
+              {label}
+            </Checkbox>;
+  }
   return (
     <>
       <FormLabel
