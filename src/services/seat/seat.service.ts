@@ -29,6 +29,7 @@ const seatAPI: ISeatApi = {
 
   postSeat: async (data: ISeatForm) => {
     const editedData: ISeatForm = mapSeatFormData(data);
+    editedData.aircraftId = Number(editedData.aircraftId);
     return await adminInstance.post<ISeatPost>(ERoutes.SEAT, editedData);
   },
 

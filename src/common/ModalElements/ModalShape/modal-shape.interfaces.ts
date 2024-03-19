@@ -21,6 +21,7 @@ import { TTimeZoneForm } from '@interfaces/time-zone.interfaces';
 
 export interface IModalProps {
   formName: EModalNames;
+  initialFormValues?: Record<string, number | string | undefined>;
 }
 
 // AxiosResponse<T, any> - требуемый тип в библиотеке
