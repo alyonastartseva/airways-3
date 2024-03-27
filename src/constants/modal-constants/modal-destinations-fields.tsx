@@ -1,6 +1,5 @@
-import React from 'react';
-import { FormInputProps } from '../../common/ModalElements/ModalInput/ModalInput';
-import { IDestinationPost } from '../../interfaces/destination.interfaces';
+import { FormInputProps } from '@common/ModalElements/ModalInput/ModalInput';
+import { IDestinationPost } from '@interfaces/destination.interfaces';
 
 import { onlyLettersPattern } from '../validate-patterns';
 
