@@ -134,44 +134,4 @@ export const modalPassengersFields: FormInputProps<IFormPassengers>[] = [
       pattern: emailPattern.email,
     },
   },
-  {
-    fieldName: 'securityQuestion',
-    label: 'Секретный вопрос',
-    typeInput: 'text',
-    rules: {
-      required: 'Введите секретный вопрос',
-    },
-  },
-  {
-    fieldName: 'answerQuestion',
-    label: 'Ответ на вопрос',
-    typeInput: 'text',
-    rules: {
-      required: 'Введите ответ',
-    },
-  },
-  {
-    select: true,
-    fieldName: 'rolesName',
-    label: 'Роль',
-    rules: {
-      required: 'Укажите роль',
-    },
-    children: (
-      <>
-        <option value={ERolesPassenger.ROLE_ADMIN}>Администратор</option>
-        <option value={ERolesPassenger.ROLE_PASSENGER}>Пассажир</option>
-        <option value={ERolesPassenger.ROLE_MANAGER}>Менеджер</option>
-      </>
-    ),
-  },
-  {
-    fieldName: 'password',
-    label: 'Пароль',
-    typeInput: 'text',
-    rules: {
-      required: 'Введите пароль',
-      pattern: passwordPattern.pass,
-    },
-  },
 ];
