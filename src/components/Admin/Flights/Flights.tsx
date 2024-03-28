@@ -13,7 +13,6 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import dayjs from 'dayjs';
 import { useCallback, useMemo, useState, memo } from 'react';
 
 import { EditableSelectCell } from '@/common/EditableSelectCell';
@@ -40,6 +39,7 @@ import { HeaderTable } from '@/common/HeaderTable';
 import { PopoverTable } from '@common/PopoverTable';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { isRowEditing } from '@utils/table.utils';
+import { formatDateTime } from '@utils/date.utils';
 
 const Flights = () => {
   // индекс и размер пагинации
@@ -96,12 +96,6 @@ const Flights = () => {
     patchFlights(editableRowState);
     cancelEditing();
   }, [patchFlights, editableRowState, cancelEditing]);
-
-  // форматирование даты
-  const formatDate = (date: string): string => {
-    const dateFormat = 'DD.MM.YYYY HH:mm';
-    return dayjs(date).format(dateFormat);
-  };
 
   // получение модели самолета по id
   const getAircraftModel = useCallback(
@@ -215,7 +209,7 @@ const Flights = () => {
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              formatDate(info.getValue()),
+              formatDateTime(info.getValue()),
               editableRowState,
               editableRowIndex
             )}
@@ -233,7 +227,7 @@ const Flights = () => {
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              formatDate(info.getValue()),
+              formatDateTime(info.getValue()),
               editableRowState,
               editableRowIndex
             )}

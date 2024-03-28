@@ -11,6 +11,7 @@ const EditableCell = <K,>({
   editableRowIndex,
   updateData,
   info,
+  typeInput = 'text',
   fieldName,
   isDisabled = false,
 }: IEditableCell<K>) => {
@@ -45,6 +46,7 @@ const EditableCell = <K,>({
     <>
       <Tooltip label={validationMessage} placement="bottom-start">
         <Input
+          type={typeInput}
           name={fieldName}
           value={String(value)}
           onBlur={onBlur}

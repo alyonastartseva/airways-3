@@ -16,7 +16,6 @@ import {
   getCoreRowModel,
   flexRender,
 } from '@tanstack/react-table';
-import dayjs from 'dayjs';
 
 import { HeaderTable } from '@/common/HeaderTable';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
@@ -36,6 +35,7 @@ import { PopoverTable } from '@common/PopoverTable';
 import { FooterTable } from '@/common/FooterTable';
 import { AlertMessage } from '@/common/AlertMessage';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
+import { formatDateTime } from '@utils/date.utils';
 
 const Tickets = () => {
   // индекс и размер пагинации
@@ -68,12 +68,6 @@ const Tickets = () => {
     setEditableRowState(row);
     setEditableRowIndex(index);
   }, []);
-
-  // форматирование даты
-  const formatDate = (date: string): string => {
-    const dateFormat = 'DD.MM.YYYY HH:mm';
-    return dayjs(date).format(dateFormat);
-  };
 
   // сброс редактируемой строки
   const cancelEditing = useCallback(() => {
@@ -203,7 +197,7 @@ const Tickets = () => {
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              formatDate(info.getValue()),
+              formatDateTime(info.getValue()),
               editableRowState,
               editableRowIndex
             )}
@@ -221,7 +215,7 @@ const Tickets = () => {
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              formatDate(info.getValue()),
+              formatDateTime(info.getValue()),
               editableRowState,
               editableRowIndex
             )}

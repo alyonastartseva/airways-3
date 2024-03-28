@@ -28,7 +28,10 @@ const passengersAPI = {
   patchPassengers: async (data: IPassenger | null) => {
     if (data) {
       const { id, ...rest } = data;
-      return await adminInstance.put<IPassenger>(ERoutes.PASSENGERS + id, rest);
+      return await adminInstance.patch<IPassenger>(
+        ERoutes.PASSENGERS + id,
+        rest
+      );
     }
   },
 };

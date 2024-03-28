@@ -15,6 +15,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { useCallback, useState, useMemo, useEffect, memo } from 'react';
+import { isValidNumber } from 'libphonenumber-js';
 
 import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
@@ -36,6 +37,8 @@ import {
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { IFormPassengers } from '@/interfaces/passenger.interfaces';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
+import { formatDate } from '@utils/date.utils';
+import passportPattern from '@constants/validate-patterns/passport-pattern';
 
 const Passengers = () => {
   // индекс и размер пагинации
@@ -112,6 +115,7 @@ const Passengers = () => {
 
   // удаление данных
   const { mutate: deletePassengers } = usePassengersDelete();
+
   // патч данных
   const patchRow = useCallback(() => {
     patchPassengers(editableRowState);
@@ -229,24 +233,6 @@ const Passengers = () => {
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              `+${info.getValue()}`,
-              editableRowState,
-              editableRowIndex
-            )}
-            index={info.row.index}
-            id={info.column.id}
-            editableRowIndex={editableRowIndex}
-            updateData={handleUpdateRow}
-          />
-        ),
-      }),
-      columnHelper.accessor('birthDate', {
-        header: 'Дата рождения',
-        cell: (info) => (
-          <EditableCell
-            value={isRowEditing(
-              info.row.index,
-              info.column.id,
               info.getValue(),
               editableRowState,
               editableRowIndex
@@ -255,6 +241,31 @@ const Passengers = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            info={info}
+          />
+        ),
+        meta: {
+          required: true,
+          validate: (value: string) => isValidNumber(value),
+          validationMessage: 'Введите номер телефона в формате: +71112223344',
+        },
+      }),
+      columnHelper.accessor('birthDate', {
+        header: 'Дата рождения',
+        cell: (info) => (
+          <EditableCell
+            value={isRowEditing(
+              info.row.index,
+              info.column.id,
+              formatDate(info.getValue()),
+              editableRowState,
+              editableRowIndex
+            )}
+            index={info.row.index}
+            id={info.column.id}
+            editableRowIndex={editableRowIndex}
+            updateData={handleUpdateRow}
+            typeInput={'date'}
           />
         ),
       }),
@@ -273,8 +284,14 @@ const Passengers = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            info={info}
           />
         ),
+        meta: {
+          required: true,
+          validate: (value: string) => passportPattern.numeric.value.test(value),
+          validationMessage: passportPattern.numeric.message,
+        },
       }),
       columnHelper.accessor('passport.passportIssuingCountry', {
         header: 'Гражданство',
@@ -301,7 +318,7 @@ const Passengers = () => {
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              info.getValue(),
+              formatDate(info.getValue()),
               editableRowState,
               editableRowIndex
             )}
@@ -309,6 +326,7 @@ const Passengers = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            typeInput={'date'}
           />
         ),
       }),
