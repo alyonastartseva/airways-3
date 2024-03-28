@@ -7,10 +7,12 @@ import {
 } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 
+import { TypeInput } from '@interfaces/type-input.types';
+
 export type FormInputProps<TFormValues extends FieldValues> = {
   children?: React.ReactNode;
   label: string;
-  typeInput?: 'text' | 'number' | 'datetime-local' | 'date' | 'tel' | 'hidden';
+  typeInput?: TypeInput;
   fieldName: Path<TFormValues>;
   rules?: RegisterOptions;
   select?: true;
