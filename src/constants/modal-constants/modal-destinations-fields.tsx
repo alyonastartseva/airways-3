@@ -1,13 +1,14 @@
 import { FormInputProps } from '@common/ModalElements/ModalInput/ModalInput';
 import { IDestinationPost } from '@interfaces/destination.interfaces';
 
-import { onlyLettersPattern } from '../validate-patterns';
+import { airportCodePattern, onlyLettersPattern } from '../validate-patterns';
 
 export const modalDestinationsFields: FormInputProps<IDestinationPost>[] = [
   {
     fieldName: 'countryName',
     label: 'Страна',
     rules: {
+      disabled: true,
       required: 'Введите название страны',
       minLength: { value: 3, message: 'Минимум 3 символа' },
       maxLength: { value: 58, message: 'Максимум 58 символов' },
@@ -19,6 +20,7 @@ export const modalDestinationsFields: FormInputProps<IDestinationPost>[] = [
     label: 'Город',
     typeInput: 'text',
     rules: {
+      disabled: true,
       required: 'Введите название города',
       minLength: { value: 1, message: 'Минимум 1 символ' },
       maxLength: { value: 21, message: 'Максимум 21 символ' },
@@ -30,32 +32,33 @@ export const modalDestinationsFields: FormInputProps<IDestinationPost>[] = [
     label: 'Название аэропорта',
     typeInput: 'text',
     rules: {
+      disabled: true,
       required: 'Введите название аэропорта',
     },
   },
   {
-    select: true,
     fieldName: 'airportCode',
     label: 'Код аэропорта',
     rules: {
-      required: 'Выберите код аэропорта',
+      required: 'Введите код аэропорта',
+      minLength: { value: 1, message: 'Минимум 1 символ' },
+      maxLength: { value: 3, message: 'Максимум 3 символа' },
+      pattern: airportCodePattern.letters,
     },
-    children: (
-      // Временно захардкожено
-      // Переделать, когда этиданные будут призодить с API
-      <>
-        <option value="void">Выберите код...</option>,
-        <option value="DME">DME</option>,<option value="SVO">SVO</option>,
-        <option value="VKO">VKO</option>,
-      </>
-    ),
   },
   {
+    mask: 'GMT',
     fieldName: 'timezone',
-    label: 'Часовой пояс',
+    label: 'Среднее время по Гринвичу (GMT)',
     typeInput: 'text',
     rules: {
       required: 'Введите часовой пояс',
+      minLength: { value: 2, message: 'Минимум 2 символа' },
+      maxLength: { value: 3, message: 'Максимум 3 символа' },
+      pattern: {
+        value: /^[-+][ 0-9]+$/u,
+        message: 'Используйте только знак + или - и цифры',
+      },
     },
   },
 ];

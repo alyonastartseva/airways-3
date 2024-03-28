@@ -23,7 +23,7 @@ import {
 import { EditableCell } from '@common/EditableCell';
 import { EditableSelectCell } from '@/common/EditableSelectCell';
 import { FlexCell } from '@common/FlexCell';
-import {PopoverTable} from '@common/PopoverTable';
+import { PopoverTable } from '@common/PopoverTable';
 import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { HeaderTable } from '@/common/HeaderTable';
@@ -31,6 +31,7 @@ import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortDestinations } from '@utils/sort.utils';
 import {
+  useDestinationQuery,
   useDestinationQueryByPage,
   useDestinationPatch,
   useDestinationDelete,
@@ -40,8 +41,6 @@ import { EModalNames } from '@/constants/modal-constants/modal-names';
 import onlyLettersPattern from '@/constants/validate-patterns/only-letters-pattern';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 
-const AIRPORT_CODES = ['VKO', 'VOG', 'MQF', 'OMS', 'AAQ'];
-
 const Destinations = () => {
   // индекс и размер пагинации
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
@@ -49,11 +48,16 @@ const Destinations = () => {
   );
 
   // получение данных
-  const { data: destinationsData, isFetching } =
+  const { data: destinationsByPageData, isFetching } =
     useDestinationQueryByPage(pageIndex);
+  const { data: destinationsAllList } = useDestinationQuery();
 
-  const destinations = destinationsData?.content;
-  const totalPages = destinationsData?.totalPages;
+  const destinationsByPage = destinationsByPageData?.content;
+  const totalPages = destinationsByPageData?.totalPages;
+  const destinationsAll = useMemo(
+    () => destinationsAllList?.content.map((el) => el?.airportCode ?? '') || [],
+    [destinationsAllList?.content]
+  );
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -199,7 +203,7 @@ const Destinations = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
-            selectOptions={AIRPORT_CODES}
+            selectOptions={destinationsAll}
             getRenderValue={(code: string) => code.toUpperCase()}
           />
         ),
@@ -237,7 +241,7 @@ const Destinations = () => {
             deleteRow={deleteDestination}
             setPaginationIndex={setPaginationData}
             indexPage={pageIndex}
-            numberElem={destinations?.length}
+            numberElem={destinationsByPage?.length}
           />
         ),
       }),
@@ -251,7 +255,8 @@ const Destinations = () => {
       handleEditRow,
       setPaginationData,
       pageIndex,
-      destinations,
+      destinationsByPage,
+      destinationsAll,
     ]
   );
 
@@ -265,19 +270,19 @@ const Destinations = () => {
 
   // создание таблицы
   const table = useReactTable({
-    data: tableData(destinations).slice(0, ITEMS_PER_PAGE),
+    data: tableData(destinationsByPage).slice(0, ITEMS_PER_PAGE),
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
   });
 
   // спиннер при загрузке
-  if ( isFetching ) {
+  if (isFetching) {
     return <SpinnerBlock />;
   }
 
   // если полученные данные в порядке выводим таблицу
-  if (Array.isArray(destinations) && destinations?.length) {
+  if (Array.isArray(destinationsByPage) && destinationsByPage?.length) {
     return (
       <TableContainer
         my={10}
@@ -345,7 +350,7 @@ const Destinations = () => {
           </Table>
         </Box>
         <FooterTable
-          data={tableData(destinations)}
+          data={tableData(destinationsByPage)}
           pageIndex={pageIndex}
           setPaginationData={setPaginationData}
           cancelEditing={cancelEditing}
