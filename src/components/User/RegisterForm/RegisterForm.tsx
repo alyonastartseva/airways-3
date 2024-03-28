@@ -17,7 +17,7 @@ import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import {useCountryQuery} from '@/hooks';
+import { useCountryQuery } from '@/hooks';
 import { AlertMessage } from '@common/AlertMessage';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import InputField from '@common/InputField/InputField';

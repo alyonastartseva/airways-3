@@ -3,7 +3,7 @@ import { IFlightPostFormFields } from '@/interfaces/flights.interfaces';
 import { SpinnerBlock } from '@/common/SpinnerBlock';
 import { useDestinationQuery, useAircraftQuery } from '@/hooks';
 import { AlertMessage } from '@/common/AlertMessage';
-import {IAircraftPost} from '@interfaces/aircraft.interfaces';
+import { IAircraftPost } from '@interfaces/aircraft.interfaces';
 
 import { flightStatuses } from '../constants';
 

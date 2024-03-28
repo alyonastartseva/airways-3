@@ -4,8 +4,8 @@ import { ISeatForm } from '@/interfaces/seat.interfaces';
 import { seatCategory } from '../constants';
 
 const seatCategoryOptions = seatCategory.map((el) => (
-  <option key={el} value={el}>
-    {el}
+  <option key={el.eng} value={el.eng}>
+    {el.ru}
   </option>
 ));
 

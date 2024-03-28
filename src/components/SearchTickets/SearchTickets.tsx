@@ -20,7 +20,6 @@ import {
 } from '@chakra-ui/react';
 import { formatISO, isPast, isToday, compareDesc } from 'date-fns';
 
-import { seatCategory } from '@/constants/constants';
 import { ArrowsIcon } from '@common/icons';
 import mainsearch from '@assets/images/main-search.webp';
 import { CalendarTickets } from '@common/CalendarTickets';
@@ -32,6 +31,7 @@ import { getFlights } from '@/services/flights/flights.service';
 import { IFlightPresentation } from '@/interfaces/flights.interfaces';
 import { IDestination } from '@interfaces/destination.interfaces';
 import { TSeatCategory } from '@/interfaces/seat.interfaces';
+import { SeatCategory } from '@/common/SeatCategory';
 
 interface Props {
   startDate: Date | null;
@@ -272,11 +272,7 @@ const MainSearch = ({ startDate, endDate }: Props) => {
                         borderColor: '#398AEA',
                       }}
                     >
-                      {seatCategory.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
+                      <SeatCategory />
                     </Select>
                   </FormControl>
                 </Flex>

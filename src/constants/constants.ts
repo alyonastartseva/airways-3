@@ -9,6 +9,11 @@ export const flightStatuses = [
 
 export const yesNo = ['true', 'false'];
 
-export const seatCategory = ['BUSINESS', 'ECONOMY', 'FIRST', 'PREMIUM_ECONOMY'];
+export const seatCategory = [
+  { ru: 'Бизнес', eng: 'BUSINESS' },
+  { ru: 'Эконом', eng: 'ECONOMY' },
+  { ru: 'Первый', eng: 'FIRST' },
+  { ru: 'Премиум', eng: 'PREMIUM_ECONOMY' },
+];
 
 export const ITEMS_PER_PAGE = 10;

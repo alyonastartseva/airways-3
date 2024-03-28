@@ -31,18 +31,43 @@ import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortSeat } from '@utils/sort.utils';
-import { useSeatQuery, useSeatPost, useSeatDelete, useSeatPatch, useAircraftQueryById, useSetCurrentPageInPagination } from '@/hooks';
+import {
+  useSeatQuery,
+  useSeatDelete,
+  useSeatPatch,
+  useAircraftQueryById,
+  useSetCurrentPageInPagination,
+} from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { ELinks } from '@services/constants';
-import { ITEMS_PER_PAGE, seatCategory, yesNo } from '@/constants/constants';
+import { ITEMS_PER_PAGE, seatCategory, yesNo } from '@constants/constants';
 import { EditableSelectCell } from '@/common/EditableSelectCell';
+import { SeatCategory } from '@/common/SeatCategory';
+
+// получение названия класса билета
+const getStatusName = (status: TSeatCategory): string => {
+  const obj = seatCategory.find((el) => el.eng === status);
+  return obj?.ru || '';
+};
+
+const getYesNo = (status: string): string => {
+  switch (status) {
+    case 'true':
+      return 'Да';
+    case 'false':
+      return 'Нет';
+    default:
+      return '';
+  }
+};
 
 const Airplane = () => {
   // получение параметра ID из роута
   const param = useParams();
 
   // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination('AIRPLANE_CURR_PAGE');
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination('AIRPLANE_CURR_PAGE');
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -74,33 +99,6 @@ const Airplane = () => {
     [editableRowState]
   );
 
-  // получение названия класса билета
-  const getStatusName = (status: TSeatCategory): string => {
-    switch (status) {
-      case 'BUSINESS':
-        return 'Бизнес';
-      case 'ECONOMY':
-        return 'Эконом';
-      case 'FIRST':
-        return 'Первый';
-      case 'PREMIUM_ECONOMY':
-        return 'Премиум';
-      default:
-        return '';
-    }
-  };
-
-  const getYesNo = (status: string): string => {
-    switch (status) {
-      case 'true':
-        return 'Да';
-      case 'false':
-        return 'Нет';
-      default:
-        return '';
-    }
-  };
-
   // получение данных
   const airplaneId = param.airplane;
 
@@ -115,10 +113,10 @@ const Airplane = () => {
   const { data: dataAirplane } = useAircraftQueryById(Number(airplaneId));
   const planeName = dataAirplane?.model;
 
-  const initialFormValues = { aircraftId : airplaneId };
+  const initialFormValues = { aircraftId: airplaneId };
 
-  // изменение данных
-  const { mutate: postSeat } = useSeatPost();
+  // изменение данных НЕ ИСПОЛЬЗУЕТСЯ
+  // const { mutate: postSeat } = useSeatPost();
 
   // удаление данных
   const { mutate: deleteSeat } = useSeatDelete();
@@ -126,13 +124,13 @@ const Airplane = () => {
   // патч данных
   const { mutate: patchSeat } = useSeatPatch();
 
-  // добавление данных
-  const postRow = useCallback(() => {
-    if (editableRowState) {
-      postSeat(editableRowState);
-    }
-    cancelEditing();
-  }, [postSeat, cancelEditing, editableRowState]);
+  // добавление данных НЕ ИСПОЛЬЗУЕТСЯ
+  // const postRow = useCallback(() => {
+  //   if (editableRowState) {
+  //     postSeat(editableRowState);
+  //   }
+  //   cancelEditing();
+  // }, [postSeat, cancelEditing, editableRowState]);
 
   // патч данных
   const patchRow = useCallback(() => {
@@ -213,7 +211,7 @@ const Airplane = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
-            selectOptions={seatCategory}
+            selectOptions={<SeatCategory />}
             getRenderValue={getStatusName}
           />
         ),
@@ -349,9 +347,9 @@ const Airplane = () => {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                     </Th>
                   ))}
                 </Tr>

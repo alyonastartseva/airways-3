@@ -21,7 +21,12 @@ import dayjs from 'dayjs';
 import { HeaderTable } from '@/common/HeaderTable';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { ITickets, ITicketsPost } from '@interfaces/tickets.interface';
-import { useTicketsQuery, useTicketsPatch, useTicketDelete, useSetCurrentPageInPagination } from '@/hooks';
+import {
+  useTicketsQuery,
+  useTicketsPatch,
+  useTicketDelete,
+  useSetCurrentPageInPagination,
+} from '@/hooks';
 import { FlexCell } from '@common/FlexCell';
 import { ticketsSort } from '@utils/sort.utils';
 import { SpinnerBlock } from '@common/SpinnerBlock';
@@ -34,7 +39,8 @@ import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Tickets = () => {
   // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination('TICKETS_CURR_PAGE');
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination('TICKETS_CURR_PAGE');
 
   // получение данных
   const { data: ticketsData, isFetching } = useTicketsQuery(pageIndex);
@@ -330,9 +336,9 @@ const Tickets = () => {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                     </Th>
                   ))}
                 </Tr>

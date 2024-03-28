@@ -4,6 +4,7 @@ import { FieldValues } from 'react-hook-form';
 import { IHeaderAdmin } from '@common/HeaderTable//headerTable.interfaces';
 import { ModalShape } from '@common/ModalElements/ModalShape';
 import { HeadingAdmin } from '@common/HeadingAdmin';
+import { SeatCategory } from '@/common/SeatCategory';
 // import { ModalInput } from '@common/ModalElements/ModalInput';
 
 const HeaderTable = <T extends FieldValues>({
@@ -12,7 +13,7 @@ const HeaderTable = <T extends FieldValues>({
   select,
   selectedValue,
   handleSelectChange,
-  initialFormValues ,
+  initialFormValues,
 }: IHeaderAdmin) => {
   return (
     <Flex my={5} align="center" justify="space-between">
@@ -26,14 +27,14 @@ const HeaderTable = <T extends FieldValues>({
               value={selectedValue} // Привязываем выбранное значение к состоянию
               onChange={handleSelectChange}
             >
-              <option value="BUSINESS">BUSINESS</option>
-              <option value="ECONOMY">ECONOMY</option>
-              <option value="FIRST">FIRST</option>
-              <option value="PREMIUM_ECONOMY">PREMIUM_ECONOMY</option>
+              <SeatCategory />
             </Select>
           </Flex>
         ) : null}
-        <ModalShape<T> formName={formName} initialFormValues={initialFormValues}/>
+        <ModalShape<T>
+          formName={formName}
+          initialFormValues={initialFormValues}
+        />
       </Flex>
     </Flex>
   );
