@@ -16,6 +16,7 @@ import { mapFlightFormToRequestData } from '@/utils/form-flights.utils';
 import { mapTicketsFormData } from '@/utils/form-tickets.utils';
 import { mapEditAircraftFormData } from '@/utils/edit-aircraft.utils';
 import { mapTimezonesFormData } from '@/utils/form-timezone.utils';
+import { mapDestinationFormData } from '@/utils/form-destinations.utils';
 
 import { modalAirplanesFields } from './modal-airplanes-fields';
 import { modalDestinationsFields } from './modal-destinations-fields';
@@ -32,6 +33,7 @@ export const modalSettings: TSettings = [
     fields: modalDestinationsFields,
     hook: useDestinationPost,
     name: EModalButtonTexts.DESTINATIONS,
+    mapFieldValuesToRequestData: mapDestinationFormData,
   },
   {
     formName: EModalNames.AIRPLANES,
