@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Flex, Button, Spacer, Text, Box } from '@chakra-ui/react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import {ELinks} from '@services/constants';
+import { ELinks } from '@services/constants';
 import { useAuth } from '@/hooks';
 import setHeaderParams from '@utils/set-header-params.utils';
 import { PhoneNumber } from '@common/PhoneNumber';

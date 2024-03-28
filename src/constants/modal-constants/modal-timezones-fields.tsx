@@ -26,7 +26,7 @@ export const modalTimezonesFields: FormInputProps<TTimeZoneForm>[] = [
     },
   },
   {
-    mask:'GMT+',
+    mask: 'GMT+',
     fieldName: 'gmt',
     label: 'Среднее время по Гринвичу (GMT)',
     typeInput: 'text',
@@ -39,7 +39,7 @@ export const modalTimezonesFields: FormInputProps<TTimeZoneForm>[] = [
     },
   },
   {
-    mask:'GMT+',
+    mask: 'GMT+',
     fieldName: 'gmtWinter',
     label: 'Зимнее среднее время по Гринвичу (GMT)',
     typeInput: 'text',

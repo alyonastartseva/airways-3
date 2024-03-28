@@ -27,14 +27,21 @@ import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
 import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
-import { usePassengersDelete, usePassengersPatch, usePassengersQuery, useSetCurrentPageInPagination } from '@/hooks';
+import {
+  usePassengersDelete,
+  usePassengersPatch,
+  usePassengersQuery,
+  useSetCurrentPageInPagination,
+} from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { IFormPassengers } from '@/interfaces/passenger.interfaces';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Passengers = () => {
   // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination('PASSENGERS_CURR_PAGE');
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
+    'PASSENGERS_CURR_PAGE'
+  );
 
   // получение данных
   const { data: dataQuery, isFetching } = usePassengersQuery(pageIndex);
@@ -354,7 +361,7 @@ const Passengers = () => {
   });
 
   // спиннер при загрузке
-  if ( isFetching ) {
+  if (isFetching) {
     return <SpinnerBlock />;
   }
 
@@ -384,9 +391,9 @@ const Passengers = () => {
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                   </Th>
                 ))}
               </Tr>

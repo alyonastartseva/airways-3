@@ -28,7 +28,12 @@ describe('ModalShape test', () => {
   it('Modal creating', () => {
     const formName = EModalNames.AIRPLANES;
     const aircraftId = 0;
-    render(<ModalShape<IAircraftPost> formName={formName} initialFormValues={{aircraftId}} />);
+    render(
+      <ModalShape<IAircraftPost>
+        formName={formName}
+        initialFormValues={{ aircraftId }}
+      />
+    );
 
     expect(screen.getByText(EModalButtonTexts.AIRPLANES)).toBeInTheDocument();
   });
@@ -36,7 +41,12 @@ describe('ModalShape test', () => {
   it('ModalShape inputs is rendering', async () => {
     const formName = EModalNames.AIRPLANES;
     const aircraftId = 0;
-    render(<ModalShape<IAircraftPost> formName={formName} initialFormValues={{aircraftId}} />);
+    render(
+      <ModalShape<IAircraftPost>
+        formName={formName}
+        initialFormValues={{ aircraftId }}
+      />
+    );
     fireEvent.click(screen.getByRole('button'));
 
     expect(screen.getAllByLabelText('modal-input')).toHaveLength(4);

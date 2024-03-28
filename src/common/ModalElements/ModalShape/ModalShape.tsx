@@ -26,7 +26,10 @@ import { IModalProps } from '@/common/ModalElements/ModalShape/modal-shape.inter
 
 import { ModalInput } from '../ModalInput';
 
-const ModalShape = <T extends FieldValues>({formName, initialFormValues }: IModalProps) => {
+const ModalShape = <T extends FieldValues>({
+  formName,
+  initialFormValues,
+}: IModalProps) => {
   const [currentModal] = modalSettings.filter(
     (item) => item.formName === formName
   );
@@ -74,7 +77,10 @@ const ModalShape = <T extends FieldValues>({formName, initialFormValues }: IModa
               <ModalBody mt={0} px={7}>
                 {fields.map((field) => {
                   const { fieldName, ...fieldRest } = field;
-                  const defaultValue = initialFormValues && fieldName in initialFormValues ? initialFormValues[fieldName] : undefined;
+                  const defaultValue =
+                    initialFormValues && fieldName in initialFormValues
+                      ? initialFormValues[fieldName]
+                      : undefined;
 
                   return (
                     <ModalInput<T>

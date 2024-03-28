@@ -52,11 +52,13 @@ const EditableSelectCell = <K,>({
         borderColor: '#398AEA',
       }}
     >
-      {selectOptions.map((option) => (
-        <option key={option} value={option}>
-          {getRenderValue(option)}
-        </option>
-      ))}
+      {Array.isArray(selectOptions)
+        ? selectOptions.map((option) => (
+            <option key={option} value={option}>
+              {getRenderValue(option)}
+            </option>
+          ))
+        : selectOptions}
     </Select>
   ) : (
     <FlexCell

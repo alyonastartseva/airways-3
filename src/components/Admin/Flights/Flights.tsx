@@ -19,7 +19,13 @@ import { useCallback, useMemo, useState, memo } from 'react';
 import { EditableSelectCell } from '@/common/EditableSelectCell';
 import { ITEMS_PER_PAGE, flightStatuses } from '@/constants/constants';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
-import { useAircraftQuery, useFlightsDelete, useFlightsQuery, useFlightsPatch, useSetCurrentPageInPagination } from '@/hooks';
+import {
+  useAircraftQuery,
+  useFlightsDelete,
+  useFlightsQuery,
+  useFlightsPatch,
+  useSetCurrentPageInPagination,
+} from '@/hooks';
 import { IAircraft } from '@/interfaces/aircraft.interfaces';
 import {
   IFlightPostFormFields,
@@ -37,14 +43,15 @@ import { isRowEditing } from '@utils/table.utils';
 
 const Flights = () => {
   // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination('FLIGHTS_CURR_PAGE');
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination('FLIGHTS_CURR_PAGE');
 
   // получение данных
   const { data: airplanesData, isLoading: isAircraftLoading } =
     useAircraftQuery(pageIndex);
   const airplanes = airplanesData?.content;
 
-  const { data: flightsData, isError, isFetching  } = useFlightsQuery(pageIndex);
+  const { data: flightsData, isError, isFetching } = useFlightsQuery(pageIndex);
 
   const flights = flightsData?.content;
   const totalPages = flightsData?.totalPages;
@@ -327,7 +334,7 @@ const Flights = () => {
   });
 
   // спиннер при загрузке
-  if (isAircraftLoading || isFetching ) {
+  if (isAircraftLoading || isFetching) {
     return <SpinnerBlock />;
   }
 
@@ -356,9 +363,9 @@ const Flights = () => {
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                   </Th>
                 ))}
               </Tr>

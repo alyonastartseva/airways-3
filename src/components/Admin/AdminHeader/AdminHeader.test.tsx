@@ -5,7 +5,7 @@ import { Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 
-import {ELinks} from '@/services/constants';
+import { ELinks } from '@/services/constants';
 
 import { AdminHeader } from './index';
 

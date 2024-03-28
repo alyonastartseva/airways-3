@@ -1,4 +1,11 @@
-import { FormLabel, Input, InputGroup,  Checkbox, InputLeftAddon, Select } from '@chakra-ui/react';
+import {
+  FormLabel,
+  Input,
+  InputGroup,
+  Checkbox,
+  InputLeftAddon,
+  Select,
+} from '@chakra-ui/react';
 import {
   FieldValues,
   RegisterOptions,
@@ -36,23 +43,23 @@ const ModalInput = <TFormValues extends Record<string, unknown>>({
   } = useFormContext();
 
   if (typeInput === 'hidden') {
-    return <Input
-      type={typeInput}
-      value={value}
-      {...register(fieldName, rules)}
-    />;
+    return (
+      <Input type={typeInput} value={value} {...register(fieldName, rules)} />
+    );
   }
 
   if (checkbox) {
-    return <Checkbox 
-              w="100%"
-              mb={4}
-              color="#393939"
-              fontWeight="400"
-              {...register(fieldName, rules)}
-            >
-              {label}
-            </Checkbox>;
+    return (
+      <Checkbox
+        w="100%"
+        mb={4}
+        color="#393939"
+        fontWeight="400"
+        {...register(fieldName, rules)}
+      >
+        {label}
+      </Checkbox>
+    );
   }
   return (
     <>
@@ -66,11 +73,8 @@ const ModalInput = <TFormValues extends Record<string, unknown>>({
       >
         {label}
         {!select ? (
-          <InputGroup display="flex" alignItems="center" mt={2}
-          mb={1}>
-            {mask && <InputLeftAddon>
-              {mask}
-            </InputLeftAddon>}
+          <InputGroup display="flex" alignItems="center" mt={2} mb={1}>
+            {mask && <InputLeftAddon>{mask}</InputLeftAddon>}
             <Input
               type={typeInput}
               bgColor="#F9F9F9"
@@ -83,7 +87,7 @@ const ModalInput = <TFormValues extends Record<string, unknown>>({
               aria-label="modal-input"
               {...register(fieldName, rules)}
             />
-         </InputGroup>
+          </InputGroup>
         ) : (
           <Select
             bgColor="#F9F9F9"

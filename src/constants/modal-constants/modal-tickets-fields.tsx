@@ -3,7 +3,7 @@ import { FormInputProps } from '@/common/ModalElements/ModalInput/ModalInput';
 import { SpinnerBlock } from '@/common/SpinnerBlock';
 import { usePassengersQuery, useDestinationQuery } from '@/hooks';
 import { ITicketsForm } from '@/interfaces/tickets.interface';
-import {IAircraftPost} from '@interfaces/aircraft.interfaces';
+import { IAircraftPost } from '@interfaces/aircraft.interfaces';
 
 import { onlyLettersPattern } from '../validate-patterns';
 
