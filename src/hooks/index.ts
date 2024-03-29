@@ -31,6 +31,9 @@ export { useAircraftQuery } from '@hooks/aircraft';
 export { useAircraftQueryById } from '@hooks/aircraft';
 
 export { useTimezonePost } from '@hooks/timezone';
+export { useTimezonesQuery } from '@hooks/timezone';
+export { useTimezonesDelete } from '@hooks/timezone';
+export { useTimezonesPatch } from '@hooks/timezone';
 
 export { useAuth } from './useAuth';
 export { default as useCountryQuery } from './useCountryQuery';

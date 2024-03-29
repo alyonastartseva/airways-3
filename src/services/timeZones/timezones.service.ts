@@ -5,9 +5,9 @@ import { ITimezoneGet } from '@/services/timeZones/timeZones.interfaces';
 import { ERoutes } from '../constants';
 
 const timezonesAPI = {
-  getTimezones: async () => {
+  getTimezones: async (page: number, size: number) => {
     return await adminInstance
-      .get<ITimezoneGet>(ERoutes.TIMEZONES)
+      .get<ITimezoneGet>(ERoutes.TIMEZONES + `?page=${page}&size=${size}`)
       .then((response) => response.data);
   },
 
