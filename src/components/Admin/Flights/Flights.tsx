@@ -16,7 +16,7 @@ import {
 import { useCallback, useMemo, useState, memo } from 'react';
 
 import { EditableSelectCell } from '@/common/EditableSelectCell';
-import { ITEMS_PER_PAGE, flightStatuses } from '@/constants/constants';
+import { flightStatuses } from '@/constants/constants';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import {
   useAircraftQuery,
@@ -48,7 +48,7 @@ const Flights = () => {
 
   // получение данных
   const { data: airplanesData, isLoading: isAircraftLoading } =
-    useAircraftQuery(pageIndex);
+    useAircraftQuery();
   const airplanes = airplanesData?.content;
 
   const { data: flightsData, isError, isFetching } = useFlightsQuery(pageIndex);

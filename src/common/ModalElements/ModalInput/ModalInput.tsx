@@ -63,11 +63,13 @@ const ModalInput = <TFormValues extends Record<string, unknown>>({
       </Checkbox>
     );
   }
+
   return (
     <>
       <FormLabel
         htmlFor={fieldName}
         fontSize={14}
+        fontStyle="italic"
         w="100%"
         mb={5}
         color="#393939"
@@ -85,6 +87,7 @@ const ModalInput = <TFormValues extends Record<string, unknown>>({
               }`}
               borderRadius={2}
               fontSize={14}
+              fontStyle="italic"
               color="#393939"
               aria-label="modal-input"
               {...register(fieldName, rules)}
@@ -98,6 +101,7 @@ const ModalInput = <TFormValues extends Record<string, unknown>>({
             }`}
             borderRadius={2}
             fontSize={14}
+            fontStyle="italic"
             color="#393939"
             mt={2}
             mb={1}

@@ -1,55 +1,43 @@
 import { FormInputProps } from '@/common/ModalElements/ModalInput/ModalInput';
 import { IFlightPostFormFields } from '@/interfaces/flights.interfaces';
-import { SpinnerBlock } from '@/common/SpinnerBlock';
 import { useDestinationQuery, useAircraftQuery } from '@/hooks';
-import { AlertMessage } from '@/common/AlertMessage';
 import { IAircraftPost } from '@interfaces/aircraft.interfaces';
 
-import { flightStatuses } from '../constants';
+import { flightStatuses, statusNames } from '../constants';
 
 const AircraftIdOptions = () => {
-  const { data: aircraftList, isLoading: isAircraftLoading } =
-    useAircraftQuery();
-
-  if (isAircraftLoading) return <SpinnerBlock />;
+  const { data: aircraftList } = useAircraftQuery();
 
   if (aircraftList)
     return (
       <>
-        {aircraftList.content.map((el: IAircraftPost) => (
-          <option key={el.model} value={el.id}>
+        {aircraftList.content.map((el: IAircraftPost, i) => (
+          <option key={`${el.model}${i}`} value={el.id}>
             {el.model}
           </option>
         ))}
       </>
     );
-
-  return <AlertMessage />;
 };
 
 const CityNameOptions = () => {
-  const { data: destinationsList, isLoading: isDestinationsLoading } =
-    useDestinationQuery();
-
-  if (isDestinationsLoading) return <SpinnerBlock />;
+  const { data: destinationsList } = useDestinationQuery();
 
   if (destinationsList)
     return (
       <>
         {destinationsList.content.map((el: IAircraftPost) => (
           <option key={el.id} value={JSON.stringify(el)}>
-            {`${el.airportName}, ${el.airportCode}`}
+            {`${el.airportCode}, ${el.timezone}`}
           </option>
         ))}
       </>
     );
-
-  return <AlertMessage />;
 };
 
 const flightStatusesOptions = flightStatuses.map((el) => (
   <option key={el} value={el}>
-    {el}
+    {statusNames[el]}
   </option>
 ));
 

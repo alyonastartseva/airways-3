@@ -1,3 +1,5 @@
+import { TFlightsStatus } from '@/interfaces/flights.interfaces';
+
 export const flightStatuses = [
   'DELAYED',
   'DEPARTED',
@@ -5,7 +7,16 @@ export const flightStatuses = [
   'COMPLETED',
   'ARRIVED',
   'ON_TIME',
-];
+] as TFlightsStatus[];
+
+export const statusNames = {
+  DELAYED: 'Отложен',
+  DEPARTED: 'Отправлен',
+  CANCELED: 'Отменен',
+  COMPLETED: 'Завершенный',
+  ARRIVED: 'Прибыл',
+  ON_TIME: 'В срок',
+};
 
 export const yesNo = ['true', 'false'];
 

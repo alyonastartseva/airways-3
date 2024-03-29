@@ -5,6 +5,13 @@ const theme = extendTheme({
     heading: `${'Roboto'}, sans-serif`,
     body: `${'Roboto'}, sans-serif`,
   },
+  components: {
+    Modal: {
+      baseStyle: () => ({
+        dialog: { borderRadius: 0 },
+      }),
+    },
+  },
 });
 
 export default theme;
