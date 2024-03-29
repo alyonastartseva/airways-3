@@ -7,8 +7,14 @@ import {
 export const mapFlightFormToRequestData = (
   formData: IFlightPostFormFields
 ): IFlightPost => {
-  const airportFrom = (JSON.parse(formData.from || '') as IDestination)
-    .airportCode;
-  const airportTo = (JSON.parse(formData.to || '') as IDestination).airportCode;
-  return { airportFrom, airportTo, ...formData } as IFlightPost;
+  const { from, to, ...rest } = formData;
+  const airportFrom = (JSON.parse(from || '') as IDestination).airportCode;
+  const airportTo = (JSON.parse(to || '') as IDestination).airportCode;
+
+  return {
+    id: 0,
+    airportFrom,
+    airportTo,
+    ...rest,
+  } as IFlightPost;
 };
