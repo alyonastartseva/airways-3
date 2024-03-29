@@ -1,4 +1,6 @@
 enum ELinks {
+  REGISTRATION = '/sign-up',
+  AUTHORIZATION = '/sign-in',
   ADMIN_LOGIN = '/admin',
   ADMIN_PASSENGERS = '/passengers',
   ADMIN_DESTINATIONS = '/destinations',

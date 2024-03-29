@@ -23,7 +23,7 @@ const setHeaderParams = (isLogged: boolean) => {
     result.hover = '#4797FF';
   } else {
     result.color = '#fff';
-    result.backgroundColor = '#006FFF';
+    result.backgroundColor = '#445EBD';
     result.buttonBackgroundColor = '#fff';
     result.buttonColor = '#141414';
     result.hover = '#646cff';

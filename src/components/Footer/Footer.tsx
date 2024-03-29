@@ -3,9 +3,13 @@ import { Link as routerLink } from 'react-router-dom';
 
 import { WebsiteLogo } from '@common/WebsiteLogo';
 import { useAuth } from '@/hooks';
+import { ELinks } from '@services/constants';
 
 const Footer = () => {
   const { isAdmin: isLogged } = useAuth();
+  // TODO заглушка для отображения контента для неавторизованного пользователя
+  const { pathname } = window.location;
+  const isSignIn = pathname === ELinks.AUTHORIZATION;
 
   const hoverStyles = {
     color: 'white',
@@ -16,7 +20,7 @@ const Footer = () => {
     <Box
       h="80px"
       display="flex"
-      bg={isLogged ? '#F5F5F5' : '#445EBD'}
+      bg={isLogged && !isSignIn ? '#F5F5F5' : '#445EBD'}
       pr="30px"
       pl="30px"
       borderTopColor={'#C2C2C2'}
@@ -24,7 +28,7 @@ const Footer = () => {
       justifyContent="space-between"
       alignItems="center"
     >
-      {isLogged ? (
+      {isLogged && !isSignIn ? (
         <Flex gap="1rem" color="#141414" fontSize="0.9rem" alignItems="center">
           <Link as={routerLink} _hover={hoverStyles} to="/">
             Air Alien © 2023
@@ -44,7 +48,7 @@ const Footer = () => {
         </Flex>
       )}
       <Spacer />
-      <WebsiteLogo isFooter={true} isLogged={isLogged} />
+      <WebsiteLogo isFooter={true} isLogged={isLogged && !isSignIn} />
     </Box>
   );
 };

@@ -4,7 +4,6 @@ import { Layout } from '@/layout';
 import { LoginAdminForm } from '@components/LoginAdminForm';
 import { AirplanesPage } from '@pages/Admin/Airplane';
 import { UsersPage } from '@pages/Admin/Users';
-import { RegisterPage } from '@pages/User/RegisterPage';
 import { DestinationsPage } from '@pages/Admin/DestinationsPage';
 import { PageNotFound } from '@common/PageNotFound';
 import { PassengersPage } from '@/pages/Passengers';
@@ -16,14 +15,15 @@ import { SearchTicketsPage } from '@/pages/User/SearchTicketsPage';
 import { TicketsPage } from '@/pages/Admin/Tickets';
 import { BookingPage } from '@/pages/Admin/BookingPage';
 import { TimeZonesPage } from '@/pages/Admin/TimeZonesPage';
+import { LoginForm } from '@components/LoginForm';
 
 const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<SearchTicketsPage />} />
-        <Route path="register" element={<RegisterPage />} />
         <Route path="admin" element={<LoginAdminForm />} />
+        <Route path="sign-in" element={<LoginForm />} />
         <Route path="sign-up" element={<SignUpPage />} />
         <Route element={<PrivateRoute />}>
           <Route path="users" element={<UsersPage />} />
