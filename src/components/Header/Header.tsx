@@ -10,7 +10,10 @@ import setHeaderParams from '@utils/set-header-params.utils';
 
 const Header = () => {
   const { isAdmin: isLogged } = useAuth();
-  const { backgroundColor } = setHeaderParams(isLogged);
+  // TODO заглушка для отображения контента для неавторизованного пользователя
+  const { pathname } = window.location;
+  const isSignIn = pathname === ELinks.AUTHORIZATION;
+  const { backgroundColor } = setHeaderParams(isLogged && !isSignIn);
 
   //Заглушка для авторизации пользователя
 
@@ -27,28 +30,51 @@ const Header = () => {
       position="relative"
       zIndex={10}
     >
-      <WebsiteLogo isFooter={false} isLogged={isLogged} />
+      <WebsiteLogo isFooter={false} isLogged={isLogged && !isSignIn} />
       <Spacer />
-      {!isLogged ? (
+      {!isLogged || isSignIn ? (
         <Flex gap="1rem" color="#006FFF" alignItems="center">
-          <Link to={ELinks.ADMIN_LOGIN}>
+          {isSignIn ? (
+            <Link to={ELinks.REGISTRATION}>
+              <Button
+                fontSize="15"
+                fontWeight="600"
+                border="1px solid #CBD5E0"
+                color="#006FFF"
+                bg="white"
+                _hover={{ bg: '#F2F3F6' }}
+                _active={{ bg: '#85BAFF' }}
+                _focus={{ outline: 'none' }}
+              >
+                Регистрация
+              </Button>
+            </Link>
+          ) : (
+            <Link to={ELinks.AUTHORIZATION}>
+              <Button
+                fontSize="15"
+                fontWeight="600"
+                border="1px solid #CBD5E0"
+                color="#006FFF"
+                bg="white"
+                _hover={{ bg: '#F2F3F6' }}
+                _active={{ bg: '#85BAFF' }}
+                _focus={{ outline: 'none' }}
+              >
+                Вход
+              </Button>
+            </Link>
+          )}
+
+          <Link to="/">
             <Button
-              display="none"
               fontSize="15"
               fontWeight="600"
-              _hover={{ bgColor: '#C2DCFF' }}
-              _active={{ bgColor: '#85BAFF' }}
-              _focus={{ outline: 'none' }}
-            >
-              Вход
-            </Button>
-          </Link>
-          <Link to="/search">
-            <Button
-              fontSize="15"
-              fontWeight="600"
-              _hover={{ bgColor: '#C2DCFF' }}
-              _active={{ bgColor: '#85BAFF' }}
+              border="1px solid #CBD5E0"
+              color="#006FFF"
+              bg="white"
+              _hover={{ bg: '#F2F3F6' }}
+              _active={{ bg: '#85BAFF' }}
               _focus={{ outline: 'none' }}
             >
               На главную
