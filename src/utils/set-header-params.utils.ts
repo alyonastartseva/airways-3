@@ -16,8 +16,8 @@ const setHeaderParams = (isLogged: boolean) => {
   };
 
   if (isLogged) {
-    result.color = '#141414';
-    result.backgroundColor = '#F5F5F5';
+    result.color = '#FFFFFF';
+    result.backgroundColor = '#445EBD';
     result.buttonBackgroundColor = '#006FFF';
     result.buttonColor = '#fff';
     result.hover = '#4797FF';

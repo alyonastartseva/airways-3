@@ -49,7 +49,7 @@ const AdminHeader: FC = () => {
   const activeStyle = {
     textDecoration: 'underline',
     textDecorationThickness: '0.25rem',
-    textDecorationColor: '#4797ff',
+    textDecorationColor: '#D3EFFF',
     textUnderlineOffset: '1.775rem',
   };
   // проверяем активность ссылки, если активна, добавляем стили выше для активной кнопки
