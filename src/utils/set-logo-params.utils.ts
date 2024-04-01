@@ -17,7 +17,7 @@ const setLogoParams = (isFooter: boolean, isLogged: boolean) => {
     result.width = headerSizes.width;
     result.height = headerSizes.height;
   }
-  isLogged ? (result.color = '#4797FF') : (result.color = '#fff');
+  result.color = '#FFFFFF';
 
   return result;
 };

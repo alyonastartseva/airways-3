@@ -1,17 +1,24 @@
 import { Box, Flex, Button, Spacer } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-import { ELinks } from '@services/constants';
 import { WebsiteLogo } from '@common/WebsiteLogo';
 import { useAuth } from '@/hooks';
 import UserHeader from '@/components/User/UserHeader/UserHeader';
 import { AdminHeader } from '@/components/Admin/AdminHeader';
 import setHeaderParams from '@utils/set-header-params.utils';
+import { ELinks } from '@/services/constants';
+
+const HEADER_LINKS = [
+  { path: ELinks.AUTHORIZATION, name: 'Вход' },
+  { path: ELinks.REGISTRATION, name: 'Регистрация' },
+  { path: '/', name: 'На главную' },
+];
 
 const Header = () => {
   const { isAdmin: isLogged } = useAuth();
   // TODO заглушка для отображения контента для неавторизованного пользователя
-  const { pathname } = window.location;
+
+  const { pathname } = useLocation();
   const isSignIn = pathname === ELinks.AUTHORIZATION;
   const { backgroundColor } = setHeaderParams(isLogged && !isSignIn);
 
@@ -34,52 +41,23 @@ const Header = () => {
       <Spacer />
       {!isLogged || isSignIn ? (
         <Flex gap="1rem" color="#006FFF" alignItems="center">
-          {isSignIn ? (
-            <Link to={ELinks.REGISTRATION}>
-              <Button
-                fontSize="15"
-                fontWeight="600"
-                border="1px solid #CBD5E0"
-                color="#006FFF"
-                bg="white"
-                _hover={{ bg: '#F2F3F6' }}
-                _active={{ bg: '#85BAFF' }}
-                _focus={{ outline: 'none' }}
-              >
-                Регистрация
-              </Button>
-            </Link>
-          ) : (
-            <Link to={ELinks.AUTHORIZATION}>
-              <Button
-                fontSize="15"
-                fontWeight="600"
-                border="1px solid #CBD5E0"
-                color="#006FFF"
-                bg="white"
-                _hover={{ bg: '#F2F3F6' }}
-                _active={{ bg: '#85BAFF' }}
-                _focus={{ outline: 'none' }}
-              >
-                Вход
-              </Button>
-            </Link>
+          {HEADER_LINKS.map(
+            ({ path, name }) =>
+              path !== pathname && (
+                <Link key={path} to={path}>
+                  <Button
+                    color="#006EFF"
+                    fontSize="15"
+                    fontWeight="600"
+                    _hover={{ bgColor: '#C2DCFF' }}
+                    _active={{ bgColor: '#85BAFF' }}
+                    _focus={{ outline: 'none' }}
+                  >
+                    {name}
+                  </Button>
+                </Link>
+              )
           )}
-
-          <Link to="/">
-            <Button
-              fontSize="15"
-              fontWeight="600"
-              border="1px solid #CBD5E0"
-              color="#006FFF"
-              bg="white"
-              _hover={{ bg: '#F2F3F6' }}
-              _active={{ bg: '#85BAFF' }}
-              _focus={{ outline: 'none' }}
-            >
-              На главную
-            </Button>
-          </Link>
         </Flex>
       ) : isLogged ? (
         <AdminHeader />

@@ -10,7 +10,7 @@ const PhoneNumber = () => {
       data-testid="phoneNumber"
     >
       <Text
-        color="black"
+        color="white"
         lineHeight="1.125rem"
         fontWeight="semibold"
         _hover={{ cursor: 'default' }}
