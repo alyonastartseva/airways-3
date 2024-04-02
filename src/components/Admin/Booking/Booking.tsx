@@ -1,232 +1,300 @@
 import {
   Box,
   Container,
-  Heading,
-  Flex,
-  Button,
-  VStack,
   IconButton,
-  TableContainer,
   Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Th,
   Thead,
   Tr,
-  Th,
-  Td,
-  Tbody,
+  VStack,
 } from '@chakra-ui/react';
-import { AddIcon, ChevronUpIcon, ChevronDownIcon } from '@chakra-ui/icons';
-import { useMemo } from 'react';
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   createColumnHelper,
-  useReactTable,
-  getCoreRowModel,
   flexRender,
-  getSortedRowModel,
+  getCoreRowModel,
+  useReactTable,
 } from '@tanstack/react-table';
 
-import { useSetCurrentPageInPagination } from '@/hooks';
+import {
+  useSetCurrentPageInPagination,
+  useBookingDelete,
+  useBookingQuery,
+} from '@/hooks';
 import { Pagination } from '@components/Pagination';
-import { Gear, DetailsFilling } from '@common/icons';
-import { IBooking } from '@/components/Admin/Booking/booking.interfaces';
-
-const bookingData: IBooking[] = [
-  {
-    id: 1,
-    bookingNumber: 'SV-221122',
-    bookingData: '2022-11-21T21:00:00',
-    passengerId: 4,
-    flightId: 1,
-    categoryType: 'BUSINESS',
-  },
-  {
-    id: 2,
-    bookingNumber: 'CK-231122',
-    bookingData: '2022-11-22T21:00:00',
-    passengerId: 5,
-    flightId: 1,
-    categoryType: 'PREMIUM_ECONOMY',
-  },
-  {
-    id: 3,
-    bookingNumber: 'BK-00001',
-    bookingData: '2022-11-23T21:00:00',
-    passengerId: 4,
-    flightId: 1,
-    categoryType: 'BUSINESS',
-  },
-];
+import { Gear } from '@common/icons';
+import { IBooking, IFormBooking } from '@/interfaces/booking.interfaces';
+import { SpinnerBlock } from '@common/SpinnerBlock';
+import { HeaderTable } from '@common/HeaderTable';
+import { EModalNames } from '@constants/modal-constants/modal-names';
+import { FlexCell } from '@common/FlexCell';
+import { EditableCell } from '@common/EditableCell';
+import { isRowEditing } from '@utils/table.utils';
+import { PopoverTable } from '@common/PopoverTable';
+import { formatDateTime } from '@utils/date.utils';
 
 const Booking = () => {
   const [pageIndex, setPaginationData] =
     useSetCurrentPageInPagination('BOOKING_CURR_PAGE');
+
+  const { data: dataQuery, isFetching } = useBookingQuery(pageIndex);
+
+  const bookingData = useMemo(() => {
+    return dataQuery?.content ? dataQuery.content : [];
+  }, [dataQuery]);
+
+  const totalPages = dataQuery?.totalPages;
+
+  useEffect(() => {
+    if (!bookingData && pageIndex > 0) setPaginationData(pageIndex - 1);
+  }, [bookingData, pageIndex, setPaginationData]);
+
+  useEffect(() => {
+    const currPage = Number(localStorage.getItem('BOOKING_CURR_PAGE'));
+    if (currPage > 0) setPaginationData(currPage);
+  }, [setPaginationData]);
+
+  const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
+  const [editableRowState, setEditableRowState] = useState<IBooking | null>(
+    null
+  );
+
+  const handleEditRow = useCallback((row: IBooking, index: number) => {
+    setEditableRowState(row);
+    setEditableRowIndex(index);
+  }, []);
+
+  const handleUpdateRow = useCallback(
+    (id: string, value: string) => {
+      if (!editableRowState) return;
+
+      setEditableRowState({
+        ...editableRowState,
+        [id as keyof IBooking]: value,
+      });
+    },
+    [editableRowState]
+  );
+
+  const { mutate: deleteBooking } = useBookingDelete();
 
   const columnHelper = createColumnHelper<IBooking>();
   const columns = useMemo(
     () => [
       columnHelper.accessor('id', {
         header: 'ID',
+        cell: (info) => <FlexCell padding={24} value={info.getValue()} />,
+        size: 41,
       }),
-      columnHelper.accessor('bookingNumber', {
-        header: 'Номер бронирования',
-      }),
-      columnHelper.accessor('bookingData', {
+
+      columnHelper.accessor('bookingDate', {
         header: 'Дата бронирования',
-      }),
-      columnHelper.accessor('categoryType', {
-        header: 'Категория',
+        cell: (info) => (
+          <EditableCell
+            value={isRowEditing(
+              info.row.index,
+              info.column.id,
+              formatDateTime(info.getValue(), 'DD.MM.YYYY, HH:mm'),
+              editableRowState,
+              editableRowIndex
+            )}
+            index={info.row.index}
+            id={info.column.id}
+            editableRowIndex={editableRowIndex}
+            updateData={handleUpdateRow}
+          />
+        ),
       }),
       columnHelper.accessor('passengerId', {
         header: 'Идентификатор пассажира',
+        cell: (info) => (
+          <EditableCell
+            value={isRowEditing(
+              info.row.index,
+              info.column.id,
+              String(info.getValue()),
+              editableRowState,
+              editableRowIndex
+            )}
+            index={info.row.index}
+            id={info.column.id}
+            editableRowIndex={editableRowIndex}
+            updateData={handleUpdateRow}
+          />
+        ),
       }),
-      columnHelper.accessor('flightId', {
-        header: 'Идентификатор рейса',
+      columnHelper.accessor('flightSeatId', {
+        header: 'Номер сиденья',
+        cell: (info) => (
+          <EditableCell
+            value={isRowEditing(
+              info.row.index,
+              info.column.id,
+              String(info.getValue()),
+              editableRowState,
+              editableRowIndex
+            )}
+            index={info.row.index}
+            id={info.column.id}
+            editableRowIndex={editableRowIndex}
+            updateData={handleUpdateRow}
+          />
+        ),
       }),
       columnHelper.display({
         header: () => <Gear />,
-        id: 'editing',
-        cell: () => (
-          <IconButton
-            minW={0}
-            h="auto"
-            bg="none"
-            border="none"
-            aria-label="Редактировать"
-            icon={<DetailsFilling />}
-            _hover={{ backgroundColor: 'transparent' }}
+        id: 'actions',
+        size: 41,
+        cell: (info) => (
+          <PopoverTable
+            hasDetailsButton={false}
+            row={info.row.original}
+            index={info.row.index}
+            id={info.row.original.id}
+            handleEditRow={handleEditRow}
+            deleteRow={deleteBooking}
+            setPaginationIndex={setPaginationData}
+            indexPage={pageIndex}
+            numberElem={bookingData?.length}
           />
         ),
-        enableSorting: false,
       }),
     ],
-    [columnHelper]
+    [
+      columnHelper,
+      setPaginationData,
+      handleEditRow,
+      deleteBooking,
+      pageIndex,
+      bookingData,
+      handleUpdateRow,
+      editableRowIndex,
+      editableRowState,
+    ]
   );
 
   const table = useReactTable({
     data: bookingData,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     manualPagination: true,
   });
+
+  if (isFetching) {
+    return <SpinnerBlock />;
+  }
 
   return (
     <Box pt="50px" pb="121px">
       <Container maxW="1372px">
-        <Flex alignItems="center" justifyContent="space-between" py="20px">
-          <Heading as="h1" fontSize="20px" fontWeight={600} color="#000">
-            Бронирование
-          </Heading>
-          <Button
-            rightIcon={<AddIcon boxSize="3" />}
-            pl="19px"
-            pr="19px"
-            border="1px solid #006FFF"
-            borderRadius="4"
-            bgColor="#006FFF"
-            fontSize="14px"
-            fontWeight="600"
-            color="#FFFFFF"
-            _hover={{
-              backgroundColor: 'transparent',
-              borderColor: '#398AEA',
-              color: '#006FFF',
-            }}
-          >
-            Забронировать
-          </Button>
-        </Flex>
-        <TableContainer mb="22px">
-          <Table variant="unstyled" border="1px solid #dedede" bg="#fff">
-            <Thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <Tr
-                  key={headerGroup.id}
-                  bg="#F5F5F5"
-                  border="1px solid #dedede"
-                >
-                  {headerGroup.headers.map((header, i) => (
-                    <Th
-                      textAlign={
-                        headerGroup.headers.length === i + 1 ? 'center' : 'left'
-                      }
-                      textTransform="none"
-                      border="1px solid #dedede"
-                      py="18px"
-                      key={header.id}
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                      {header.column.getCanSort() && (
-                        <VStack gap={0} ml="6px" display="inline-flex">
-                          <IconButton
-                            w="20px"
-                            h="10px"
-                            px="4px"
-                            minW={0}
-                            border="none"
-                            borderRadius={0}
-                            bg="none"
-                            color="#808080"
-                            aria-label="Сортировка по возростанию"
-                            icon={<ChevronUpIcon />}
-                            _focus={{ outline: 0, bg: '#e2e8f0' }}
-                          />
-                          <IconButton
-                            w="20px"
-                            h="10px"
-                            px="4px"
-                            minW={0}
-                            border="none"
-                            borderRadius={0}
-                            bg="none"
-                            color="#808080"
-                            aria-label="Сортировка по убыванию"
-                            icon={<ChevronDownIcon />}
-                            _focus={{ outline: 0, bg: '#e2e8f0' }}
-                          />
-                        </VStack>
-                      )}
-                    </Th>
-                  ))}
-                </Tr>
-              ))}
-            </Thead>
-            <Tbody fontSize="14px" fontWeight={600}>
-              {table.getRowModel().rows.map((row) => (
-                <Tr key={row.id}>
-                  {row.getVisibleCells().map((cell, i) => (
-                    <Td
-                      key={cell.id}
-                      borderRight="1px solid #dedede"
-                      py="13px"
-                      textAlign={
-                        row.getVisibleCells().length === i + 1
-                          ? 'center'
-                          : 'left'
-                      }
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Td>
-                  ))}
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
-
-        <Pagination
-          data={bookingData}
-          pageIndex={pageIndex}
-          totalPages={10}
-          setPaginationData={setPaginationData}
+        <HeaderTable<IFormBooking>
+          heading="Бронирование"
+          formName={EModalNames.BOOKING}
         />
+        {
+          // если полученные данные в порядке выводим таблицу
+          Array.isArray(bookingData) && bookingData?.length ? (
+            <>
+              <TableContainer mb="22px">
+                <Table variant="unstyled" border="1px solid #dedede" bg="#fff">
+                  <Thead>
+                    {table.getHeaderGroups().map((headerGroup) => (
+                      <Tr
+                        key={headerGroup.id}
+                        bg="#F5F5F5"
+                        border="1px solid #dedede"
+                      >
+                        {headerGroup.headers.map((header, i) => (
+                          <Th
+                            textAlign={
+                              headerGroup.headers.length === i + 1
+                                ? 'center'
+                                : 'left'
+                            }
+                            textTransform="none"
+                            border="1px solid #dedede"
+                            py="18px"
+                            key={header.id}
+                          >
+                            {header.isPlaceholder &&
+                              flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                            {header.column.getCanSort() && (
+                              <VStack gap={0} ml="6px" display="inline-flex">
+                                <IconButton
+                                  w="20px"
+                                  h="10px"
+                                  px="4px"
+                                  minW={0}
+                                  border="none"
+                                  borderRadius={0}
+                                  bg="none"
+                                  color="#808080"
+                                  aria-label="Сортировка по возростанию"
+                                  icon={<ChevronUpIcon />}
+                                  _focus={{ outline: 0, bg: '#e2e8f0' }}
+                                />
+                                <IconButton
+                                  w="20px"
+                                  h="10px"
+                                  px="4px"
+                                  minW={0}
+                                  border="none"
+                                  borderRadius={0}
+                                  bg="none"
+                                  color="#808080"
+                                  aria-label="Сортировка по убыванию"
+                                  icon={<ChevronDownIcon />}
+                                  _focus={{ outline: 0, bg: '#e2e8f0' }}
+                                />
+                              </VStack>
+                            )}
+                          </Th>
+                        ))}
+                      </Tr>
+                    ))}
+                  </Thead>
+                  <Tbody fontSize="14px" fontWeight={600}>
+                    {table.getRowModel().rows.map((row) => (
+                      <Tr key={row.id}>
+                        {row.getVisibleCells().map((cell, i) => (
+                          <Td
+                            key={cell.id}
+                            borderRight="1px solid #dedede"
+                            py="13px"
+                            textAlign={
+                              row.getVisibleCells().length === i + 1
+                                ? 'center'
+                                : 'left'
+                            }
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </Td>
+                        ))}
+                      </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
+              </TableContainer>
+
+              <Pagination
+                data={bookingData}
+                pageIndex={pageIndex}
+                totalPages={totalPages}
+                setPaginationData={setPaginationData}
+              />
+            </>
+          ) : null
+        }
       </Container>
     </Box>
   );

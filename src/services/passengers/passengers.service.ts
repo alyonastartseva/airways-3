@@ -4,14 +4,12 @@ import { IPassenger, FormPassengersPost } from '@/interfaces/search.interfaces';
 import { FormPassengersGet } from '@/services/passengers/passengers.interfaces';
 import { IFormPassengers } from '@/interfaces/passenger.interfaces';
 import { mapPassengersFormData } from '@/utils/form-passengers.utils';
-import { ITEMS_PER_PAGE } from '@/constants/constants';
+import { ITEMS_PER_PAGE } from '@constants/constants';
 
 const passengersAPI = {
-  getPassengers: async (page: number) => {
+  getPassengers: async (page: number, size = ITEMS_PER_PAGE) => {
     return await adminInstance
-      .get<FormPassengersGet>(
-        ERoutes.PASSENGERS + `?page=${page}&size=${ITEMS_PER_PAGE}`
-      )
+      .get<FormPassengersGet>(ERoutes.PASSENGERS + `?page=${page}&size=${size}`)
       .then((response) => response.data);
   },
 

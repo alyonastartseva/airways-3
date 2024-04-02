@@ -11,10 +11,11 @@ import {
   IFlightsUpdate,
   IListResponse,
 } from '@/services/flights/flights.interfaces';
-import { ITEMS_PER_PAGE } from '@/constants/constants';
+import { ITEMS_PER_PAGE } from '@constants/constants';
 interface IFlightsApi {
   getFlights: (
-    pageIndex?: number
+    pageIndex?: number,
+    size?: number
   ) => Promise<IListResponse<Required<IFlightPresentation>> | undefined>;
   postFlight: (data: IFlightPost) => Promise<AxiosResponse<IFlight, any>>;
   deleteFlight: (
@@ -26,11 +27,11 @@ interface IFlightsApi {
 }
 
 const flightsAPI: IFlightsApi = {
-  getFlights: async (pageIndex?: number) => {
+  getFlights: async (pageIndex?: number, size = ITEMS_PER_PAGE) => {
     return await adminInstance
       .get<
         IListResponse<Required<IFlightPresentation>>
-      >(ERoutes.GET_FLIGHTS + `?page=${pageIndex ?? ''}&size=${ITEMS_PER_PAGE}`)
+      >(ERoutes.GET_FLIGHTS + `?page=${pageIndex ?? ''}&size=${size}`)
       .then((response) => response.data);
   },
 

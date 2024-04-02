@@ -1,13 +1,11 @@
 import { FormInputProps } from '@/common/ModalElements/ModalInput/ModalInput';
 import { IFormPassengers } from '@/interfaces/passenger.interfaces';
-import { ERolesPassenger } from '@/interfaces/roles.interfaces';
 
 import {
   onlyLettersPattern,
   phonePattern,
   emailPattern,
   passportPattern,
-  passwordPattern,
 } from '../validate-patterns';
 
 export const modalPassengersFields: FormInputProps<IFormPassengers>[] = [

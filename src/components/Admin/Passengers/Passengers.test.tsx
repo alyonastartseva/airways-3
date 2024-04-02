@@ -1,5 +1,4 @@
-import { render, screen, renderHook, waitFor } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { render, screen, renderHook } from '@testing-library/react';
 import { afterEach, describe, expect, vi } from 'vitest';
 
 import Passengers from './Passengers';

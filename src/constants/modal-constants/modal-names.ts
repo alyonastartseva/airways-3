@@ -7,6 +7,7 @@ export enum EModalNames {
   TICKETS = 'tickets',
   TEST = 'test',
   TIME_ZONES = 'time_zones',
+  BOOKING = 'booking',
 }
 
 export enum EModalButtonTexts {
@@ -18,4 +19,5 @@ export enum EModalButtonTexts {
   TICKETS = 'Добавить билет',
   TEST = 'test',
   TIME_ZONES = 'Добавить часовой пояс',
+  BOOKING = 'Забронировать',
 }

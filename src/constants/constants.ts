@@ -18,6 +18,13 @@ export const statusNames = {
   ON_TIME: 'В срок',
 };
 
+export const bookingStatuses = [
+  'NOT_PAID',
+  'PAID',
+  'OVERDUE',
+  'CANCELED',
+] as const;
+
 export const yesNo = ['true', 'false'];
 
 export const seatCategory = [

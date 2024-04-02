@@ -1,0 +1,1 @@
+export { useFlightSeatsQuery } from './useFlightSeatsQuery';
