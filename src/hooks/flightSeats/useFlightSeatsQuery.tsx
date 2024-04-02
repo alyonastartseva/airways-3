@@ -1,13 +1,12 @@
 import { useQuery } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import { getPassengers } from '@/services/passengers/passengers.service';
-import { ITEMS_PER_PAGE } from '@constants/constants';
+import { getFlightsSeats } from '@services/flightSeats/flightSeats.service';
 
-const usePassengersQuery = (page: number, size = ITEMS_PER_PAGE) => {
+const useFlightSeatsQuery = () => {
   const toast = useToast();
 
-  return useQuery(['passengers', page, size], () => getPassengers(page, size), {
+  return useQuery(['flight-seats'], () => getFlightsSeats(), {
     onError: (error) => {
       if (error instanceof Error) {
         toast({
@@ -22,4 +21,4 @@ const usePassengersQuery = (page: number, size = ITEMS_PER_PAGE) => {
   });
 };
 
-export { usePassengersQuery };
+export { useFlightSeatsQuery };

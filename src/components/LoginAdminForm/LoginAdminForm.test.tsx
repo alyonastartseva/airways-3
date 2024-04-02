@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { afterEach, beforeEach, describe, expect, vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';

@@ -9,6 +9,7 @@ import {
   useDestinationPost,
   useAircraftPost,
   useTimezonePost,
+  useBookingPost,
 } from '@/hooks';
 import { TSettings } from '@/common/ModalElements/ModalShape/modal-shape.interfaces';
 import { ISeatForm } from '@/interfaces/seat.interfaces';
@@ -26,6 +27,8 @@ import { modalPassengersFields } from './modal-passengers-fields';
 import { modalSeatFields } from './modal-seat-fields';
 import { modalTicketsFields } from './modal-tickets-fields';
 import { modalTimezonesFields } from './modal-timezones-fields';
+import { modalBookingFields } from './modal-booking-fields';
+
 
 export const modalSettings: TSettings = [
   {
@@ -79,5 +82,11 @@ export const modalSettings: TSettings = [
     hook: useTimezonePost,
     name: EModalButtonTexts.TIME_ZONES,
     mapFieldValuesToRequestData: mapTimezonesFormData,
+  },
+  {
+    formName: EModalNames.BOOKING,
+    fields: modalBookingFields,
+    hook: useBookingPost,
+    name: EModalButtonTexts.BOOKING,
   },
 ];

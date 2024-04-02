@@ -30,6 +30,13 @@ export { useAircraftPatch } from '@hooks/aircraft';
 export { useAircraftQuery } from '@hooks/aircraft';
 export { useAircraftQueryById } from '@hooks/aircraft';
 
+export { useBookingPost } from '@hooks/booking';
+export { useBookingPatch } from '@hooks/booking';
+export { useBookingDelete } from '@hooks/booking';
+export { useBookingQuery } from '@hooks/booking';
+
+export { useFlightSeatsQuery } from '@hooks/flightSeats';
+
 export { useTimezonePost } from '@hooks/timezone';
 export { useTimezonesQuery } from '@hooks/timezone';
 export { useTimezonesDelete } from '@hooks/timezone';

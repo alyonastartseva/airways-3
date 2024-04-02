@@ -123,7 +123,7 @@ const PopoverTable = <Data,>({
             if (numberElem === 1 && setPaginationIndex) {
               setPaginationIndex(indexPage - 1);
             }
-            return deleteRow(id);
+            deleteRow(id);
           }}
         >
           Удалить

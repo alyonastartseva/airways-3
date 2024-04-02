@@ -50,12 +50,12 @@ const Tickets = () => {
   // если удален последняя строка текущей страницы, то открываем предыдущую страницу
   useEffect(() => {
     if (!tickets && pageIndex > 0) setPaginationData(pageIndex - 1);
-  }, [tickets, pageIndex]);
+  }, [tickets, pageIndex, setPaginationData]);
 
   useEffect(() => {
     const currPage = Number(localStorage.getItem('TICKETS_CURR_PAGE'));
     if (currPage > 0) setPaginationData(currPage);
-  }, []);
+  }, [setPaginationData]);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);

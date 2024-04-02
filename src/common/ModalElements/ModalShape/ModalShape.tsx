@@ -1,4 +1,3 @@
-import { AddIcon } from '@chakra-ui/icons';
 import {
   useDisclosure,
   Modal,
@@ -8,7 +7,6 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  Button,
 } from '@chakra-ui/react';
 import {
   SubmitHandler,
