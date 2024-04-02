@@ -29,9 +29,9 @@ interface IFlightsApi {
 const flightsAPI: IFlightsApi = {
   getFlights: async (pageIndex?: number, size = ITEMS_PER_PAGE) => {
     return await adminInstance
-      .get<
-        IListResponse<Required<IFlightPresentation>>
-      >(ERoutes.GET_FLIGHTS + `?page=${pageIndex ?? ''}&size=${size}`)
+      .get<IListResponse<Required<IFlightPresentation>>>(
+        ERoutes.GET_FLIGHTS + `?page=${pageIndex ?? ''}&size=${size}`
+      )
       .then((response) => response.data);
   },
 

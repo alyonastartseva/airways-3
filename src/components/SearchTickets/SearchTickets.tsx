@@ -26,10 +26,9 @@ import { CalendarTickets } from '@common/CalendarTickets';
 import { searchApi } from '@services/searchTickets.service';
 import { ISearchData } from '@/interfaces/search-tickets.interfaces';
 import { ISearchRadioData } from '@/components/SearchTickets/SearchTickets.interfaces';
-import { getDestinations } from '@/services/destinations/destinations.service';
+import { InputSelector } from '@/common/InputSelector';
 import { getFlights } from '@/services/flights/flights.service';
 import { IFlightPresentation } from '@/interfaces/flights.interfaces';
-import { IDestination } from '@interfaces/destination.interfaces';
 import { TSeatCategory } from '@/interfaces/seat.interfaces';
 import { SeatCategory } from '@/common/SeatCategory';
 
@@ -62,14 +61,6 @@ const MainSearch = ({ startDate, endDate }: Props) => {
   const [searchParams, setSearchParams] =
     useState<ISearchData>(initialSearchQuery);
 
-  const getAirportCode = async (city: string) => {
-    const destinations = await getDestinations();
-    const destination = destinations.content.find(
-      (item: IDestination) => item.airportCode === city
-    );
-    return destination ? destination.airportCode : null;
-  };
-
   const getDates = (day: Date) => {
     setSearchParams((prev) => {
       const newDate = formatISO(day, {
@@ -98,8 +89,8 @@ const MainSearch = ({ startDate, endDate }: Props) => {
     }
     try {
       setIsLoading(true);
-      const fromAirportCode = await getAirportCode(from);
-      const toAirportCode = await getAirportCode(to);
+      const fromAirportCode = from;
+      const toAirportCode = to;
 
       if (!fromAirportCode || !toAirportCode) {
         setError('Ошибка поиска');
@@ -211,10 +202,10 @@ const MainSearch = ({ startDate, endDate }: Props) => {
                 <Flex direction="column">
                   <FormControl>
                     <FormLabel fontSize={14}>Откуда</FormLabel>
-                    <Input
+                    <InputSelector
                       value={from}
-                      onChange={(e) => setFrom(e.target.value)}
                       placeholder="Город отправления"
+                      setValue={setFrom}
                     />
                   </FormControl>
                 </Flex>
@@ -232,10 +223,10 @@ const MainSearch = ({ startDate, endDate }: Props) => {
                 <Flex direction="column">
                   <FormControl>
                     <FormLabel fontSize={14}>Куда</FormLabel>
-                    <Input
+                    <InputSelector
                       value={to}
-                      onChange={(e) => setTo(e.target.value)}
                       placeholder="Город прибытия"
+                      setValue={setTo}
                     />
                   </FormControl>
                 </Flex>
@@ -261,9 +252,9 @@ const MainSearch = ({ startDate, endDate }: Props) => {
                     <FormLabel fontSize={14}>Категория сиденья</FormLabel>
                     <Select
                       value={seatCategoryValue}
-                      onChange={(e) => {
-                        setSeatCategoryValue(e.target.value as TSeatCategory);
-                      }}
+                      onChange={(e) =>
+                        setSeatCategoryValue(e.target.value as TSeatCategory)
+                      }
                       fontSize="0.87rem"
                       _hover={{
                         borderColor: '#cbd5e0',
