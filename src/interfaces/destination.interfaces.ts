@@ -16,3 +16,8 @@ export interface IDestinationPost extends FieldValues {
   airportCode?: string;
   timezone?: string;
 }
+
+export interface IDestinationList {
+  code?: string;
+  name?: string;
+}

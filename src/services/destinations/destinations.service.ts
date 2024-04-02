@@ -6,6 +6,8 @@ import {
   IDestinationPost,
 } from '@interfaces/destination.interfaces';
 
+import { NO_CONTENT } from '../constants/server-codes.constants';
+
 import { IDestinationGet } from './destinations.interfaces';
 
 // временное решение, пока с бека не приходят необходимы свойства
@@ -20,13 +22,31 @@ const tempMapDestination = (data: IDestinationGet) => ({
 });
 
 const destinationsAPI = {
-  getDestinationsByPage: async (pageIndex: number) => {
+  getDestinationsByPage: async (pageIndex: number, size = ITEMS_PER_PAGE) => {
+    return await adminInstance
+      .get<IDestinationGet>(
+        ERoutes.DESTINATION + `?page=${String(pageIndex)}&size=${size}`
+      )
+      .then((response) => {
+        if (response.status === NO_CONTENT) return response.data;
+        return tempMapDestination(response.data);
+      });
+  },
+
+  getDestinationsByCity: async (
+    city: string,
+    pageIndex = 0,
+    size = ITEMS_PER_PAGE
+  ) => {
     return await adminInstance
       .get<IDestinationGet>(
         ERoutes.DESTINATION +
-          `?page=${String(pageIndex)}&size=${ITEMS_PER_PAGE}`
+          `?cityName=${city}&page=${String(pageIndex)}&size=${size}`
       )
-      .then((response) => tempMapDestination(response.data));
+      .then((response) => {
+        if (response.status === NO_CONTENT) return response.data;
+        return tempMapDestination(response.data);
+      });
   },
 
   getDestinations: async () => {
@@ -61,6 +81,7 @@ const destinationsAPI = {
 
 export const {
   getDestinations,
+  getDestinationsByCity,
   getDestinationsByPage,
   patchDestinations,
   postDestinations,

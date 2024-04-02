@@ -289,7 +289,8 @@ const Passengers = () => {
         ),
         meta: {
           required: true,
-          validate: (value: string) => passportPattern.numeric.value.test(value),
+          validate: (value: string) =>
+            passportPattern.numeric.value.test(value),
           validationMessage: passportPattern.numeric.message,
         },
       }),
