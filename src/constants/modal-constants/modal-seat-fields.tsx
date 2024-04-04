@@ -37,7 +37,7 @@ export const modalSeatFields: FormInputProps<ISeatForm>[] = [
     fieldName: 'category',
     label: 'Класс',
     rules: {
-      required: 'Ввеите класс бронирования',
+      required: 'Введите класс бронирования',
     },
     children: seatCategoryOptions,
   },
@@ -50,7 +50,7 @@ export const modalSeatFields: FormInputProps<ISeatForm>[] = [
   {
     checkbox: true,
     fieldName: 'isNearEmergencyExit',
-    label: 'Близко к экстренному выходу',
+    label: 'Рядом с экстренным выходом',
     rules: {},
   },
 ];
