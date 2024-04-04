@@ -4,4 +4,5 @@ export type TypeInput =
   | 'datetime-local'
   | 'date'
   | 'tel'
-  | 'hidden';
+  | 'hidden'
+  | 'add';

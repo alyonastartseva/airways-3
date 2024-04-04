@@ -1,5 +1,6 @@
-import { FormInputProps } from '@/common/ModalElements/ModalInput/ModalInput';
+﻿import { FormInputProps } from '@/common/ModalElements/ModalInput/ModalInput';
 import { IAircraftPost } from '@/interfaces/aircraft.interfaces';
+import { EModalNames } from '@constants/modal-constants/modal-names';
 
 export const modalAirplanesFields: FormInputProps<IAircraftPost>[] = [
   {
@@ -23,7 +24,7 @@ export const modalAirplanesFields: FormInputProps<IAircraftPost>[] = [
     label: 'Номер самолёта',
     typeInput: 'number',
     rules: {
-      required: 'Введите модель самолёта',
+      required: 'Введите номер самолёта',
       minLength: { value: 4, message: 'Минимум 4 символа' },
       maxLength: { value: 15, message: 'Максимум 15 символов' },
     },
@@ -59,5 +60,10 @@ export const modalAirplanesFields: FormInputProps<IAircraftPost>[] = [
         message: 'Ваше значение выше рекорда 41 467км',
       },
     },
+  },
+  {
+    label: 'Сиденья',
+    fieldName: 'seats',
+    typeInput: 'add',
   },
 ];

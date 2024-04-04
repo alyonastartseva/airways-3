@@ -9,9 +9,9 @@ export interface IAircraft {
 }
 
 export interface IAircraftPost extends FieldValues {
+  id?: number;
   aircraftNumber?: number;
   model?: string;
   modelYear?: number;
   flightRange?: number;
-  seat?: number;
 }
