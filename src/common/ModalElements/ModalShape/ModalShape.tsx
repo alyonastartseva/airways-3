@@ -43,14 +43,18 @@ const ModalShape = <T extends FieldValues>({
 
   const { mutateAsync } = hook();
 
+  const onModalClose = () => {
+    methods.reset();
+    onClose();
+  };
+
   const onSubmit: SubmitHandler<T> = async (data) => {
     const requestData = mapFieldValuesToRequestData
       ? mapFieldValuesToRequestData?.(data)
       : data;
     await mutateAsync(requestData).then((response: { status: number }) => {
       if (response.status < 400) {
-        methods.reset();
-        onClose();
+        onModalClose();
       }
     });
   };
@@ -60,7 +64,7 @@ const ModalShape = <T extends FieldValues>({
       <ButtonAddAdmin name={name} onClick={onOpen} />
       <Modal
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={onModalClose}
         size="xl"
         blockScrollOnMount
         isCentered
