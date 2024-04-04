@@ -36,10 +36,34 @@ import { EditableCell } from '@common/EditableCell';
 import { isRowEditing } from '@utils/table.utils';
 import { PopoverTable } from '@common/PopoverTable';
 import { formatDateTime } from '@utils/date.utils';
+import { ConfirmCancelModal } from '@/common/ModalElements/ConfirmCancelModal';
 
 const Booking = () => {
   const [pageIndex, setPaginationData] =
     useSetCurrentPageInPagination('BOOKING_CURR_PAGE');
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deletingBookingId, setDeletingBookingId] = useState<number | null>(
+    null
+  );
+
+  const { mutate: deleteBooking } = useBookingDelete();
+
+  const handleDeleteBooking = useCallback(() => {
+    if (deletingBookingId) {
+      deleteBooking(deletingBookingId);
+      setIsModalOpen(false);
+      setDeletingBookingId(null);
+    }
+  }, [deletingBookingId, deleteBooking, setIsModalOpen, setDeletingBookingId]);
+
+  const toggleModal = useCallback(
+    (id?: number) => {
+      setIsModalOpen(!isModalOpen);
+      setDeletingBookingId(id ?? null);
+    },
+    [isModalOpen]
+  );
 
   const { data: dataQuery, isFetching } = useBookingQuery(pageIndex);
 
@@ -79,8 +103,6 @@ const Booking = () => {
     },
     [editableRowState]
   );
-
-  const { mutate: deleteBooking } = useBookingDelete();
 
   const columnHelper = createColumnHelper<IBooking>();
   const columns = useMemo(
@@ -156,7 +178,7 @@ const Booking = () => {
             index={info.row.index}
             id={info.row.original.id}
             handleEditRow={handleEditRow}
-            deleteRow={deleteBooking}
+            deleteRow={toggleModal}
             setPaginationIndex={setPaginationData}
             indexPage={pageIndex}
             numberElem={bookingData?.length}
@@ -168,12 +190,12 @@ const Booking = () => {
       columnHelper,
       setPaginationData,
       handleEditRow,
-      deleteBooking,
       pageIndex,
       bookingData,
       handleUpdateRow,
       editableRowIndex,
       editableRowState,
+      toggleModal,
     ]
   );
 
@@ -285,6 +307,13 @@ const Booking = () => {
                   </Tbody>
                 </Table>
               </TableContainer>
+
+              <ConfirmCancelModal
+                isOpen={isModalOpen}
+                onClose={toggleModal}
+                onDelete={handleDeleteBooking}
+                modalText={'Вы действительно хотите удалить бронирование?'}
+              />
 
               <Pagination
                 data={bookingData}

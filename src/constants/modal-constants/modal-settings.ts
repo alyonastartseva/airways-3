@@ -29,7 +29,6 @@ import { modalTicketsFields } from './modal-tickets-fields';
 import { modalTimezonesFields } from './modal-timezones-fields';
 import { modalBookingFields } from './modal-booking-fields';
 
-
 export const modalSettings: TSettings = [
   {
     formName: EModalNames.DESTINATIONS,
