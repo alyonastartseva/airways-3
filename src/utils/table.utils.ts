@@ -21,7 +21,6 @@ export const isRowEditing: IsRowEditing<TTableData> = (
   row,
   editableIndex
 ) => {
-  if (value === null) return '';
   if (row && editableIndex !== null && editableIndex === index) {
     if (id.indexOf('_') !== -1) {
       const key1 = id.slice(0, id.indexOf('_'));
@@ -32,8 +31,9 @@ export const isRowEditing: IsRowEditing<TTableData> = (
         return nestedObject[key2 as keyof typeof nestedObject];
       }
     }
-    return row[id as keyof TTableData];
+    const returnValue = row[id as keyof TTableData];
+    return returnValue ? returnValue : '';
   } else {
-    return String(value);
+    return value ? String(value) : '';
   }
 };
