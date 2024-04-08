@@ -21,6 +21,7 @@ export const isRowEditing: IsRowEditing<TTableData> = (
   row,
   editableIndex
 ) => {
+  if (value === null) return '';
   if (row && editableIndex !== null && editableIndex === index) {
     if (id.indexOf('_') !== -1) {
       const key1 = id.slice(0, id.indexOf('_'));
@@ -33,7 +34,6 @@ export const isRowEditing: IsRowEditing<TTableData> = (
     }
     return row[id as keyof TTableData];
   } else {
-    if (typeof value === 'object') return value.categoryType;
-    else return String(value);
+    return String(value);
   }
 };
