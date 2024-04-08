@@ -1,6 +1,7 @@
-import { Input } from '@chakra-ui/react';
-import { useState, useCallback } from 'react';
+import { Input, Text } from '@chakra-ui/react';
+import { useState, useCallback, useEffect } from 'react';
 
+import { FlexCell } from '@common/FlexCell';
 import { debounce } from '@/utils/debounce.utils';
 import { IDestinationGet } from '@/services/destinations/destinations.interfaces';
 import { IDestinationList } from '@/interfaces/destination.interfaces';
@@ -11,18 +12,25 @@ import {
 
 import { InfiniteScrollSelector } from '../InfiniteScrollSelector';
 
-import { IInputSelector } from './inputSelector.interface';
-import { normalizeDestinations } from './inputSelector.utils';
+import { IInputSelector } from './destinationsInputSelector.interface';
+import { normalizeDestinations } from './destinationsInputSelector.utils';
 
 const InputSelector = ({
-  value,
+  value: initialValue,
   setValue,
+  index,
+  id,
+  updateData,
+  editableRowIndex,
   placeholder = 'Value',
+  type: inputType = 'default',
+  label,
 }: IInputSelector) => {
   const debouncedGetDestinationsByCityName = useCallback(
     debounce(getDestinationsListByCityName, 500),
     []
   );
+  const [value, setInputValue] = useState(initialValue);
   const [previousRequestType, setPreviousRequestType] = useState('page');
   const [destinationsList, setDestinationsList] = useState<IDestinationList[]>(
     []
@@ -31,6 +39,16 @@ const InputSelector = ({
   const [isLoading, setLoading] = useState(false);
   const [isFocused, setFocus] = useState(false);
   const [isHasMore, setHasMore] = useState(true);
+
+  useEffect(() => {
+    initialValue &&
+      setDestinationsList([
+        {
+          name: '',
+          code: String(initialValue),
+        },
+      ]);
+  }, []);
 
   const addDestinations = (data: IDestinationList[]) => {
     setDestinationsList([...destinationsList, ...data]);
@@ -75,8 +93,13 @@ const InputSelector = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
-    setValue(newValue);
+    changeValue(newValue);
     debouncedGetDestinationsByCityName(newValue);
+  };
+
+  const changeValue = (inputValue: string) => {
+    setValue && setValue(inputValue);
+    setInputValue(inputValue);
   };
 
   const handleClick = (e: React.BaseSyntheticEvent) => {
@@ -84,13 +107,41 @@ const InputSelector = ({
       getDestinationsListByPage();
   };
 
-  return (
-    <>
+  const onBlur = () => {
+    setFocus(false);
+    if (inputType === 'editable' && updateData && id && value)
+      updateData(id, value.toString());
+  };
+
+  return inputType !== 'editable' ||
+    (inputType === 'editable' && index === editableRowIndex) ? (
+    <div
+      style={{
+        position: 'relative',
+      }}
+      {...(label && {
+        style: { marginBottom: '1.25rem', position: 'relative' },
+      })}
+    >
+      {label && (
+        <label
+          htmlFor={label.name}
+          style={{ marginBottom: '0.5rem', display: 'block' }}
+        >
+          {
+            <Text as="i" fontSize={14}>
+              {label.value}
+            </Text>
+          }
+        </label>
+      )}
       <Input
-        value={value}
+        type="text"
+        fontSize={'100%'}
+        value={String(value)}
         onChange={handleChange}
         onClick={handleClick}
-        onBlur={() => setFocus(false)}
+        onBlur={onBlur}
         onFocus={() => setFocus(true)}
         placeholder={placeholder}
         style={{
@@ -103,6 +154,21 @@ const InputSelector = ({
             borderBottomColor: 'transparent',
           },
         })}
+        border={
+          inputType === 'editable' ? '1px solid #242424' : '1px solid #e5e7eb'
+        }
+        backgroundColor={inputType === 'modal' ? '#F9F9F9' : 'inherit'}
+        borderRadius={inputType === 'modal' ? 'none' : '0.375rem'}
+        _active={{
+          borderColor: '#398AEA',
+        }}
+        _hover={
+          inputType === 'editable'
+            ? {
+                borderColor: '#398AEA',
+              }
+            : undefined
+        }
         autoComplete="off"
       />
       {isFocused && (
@@ -112,13 +178,15 @@ const InputSelector = ({
           next={() =>
             previousRequestType === 'page'
               ? getDestinationsListByPage()
-              : getDestinationsListByCityName(value)
+              : getDestinationsListByCityName(String(value))
           }
-          onClick={setValue}
+          onClick={changeValue}
           targetList={destinationsList}
         />
       )}
-    </>
+    </div>
+  ) : (
+    <FlexCell padding={16} value={String(value)} />
   );
 };
 
