@@ -14,14 +14,13 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 
 import {
   IDestination,
   IDestinationPost,
 } from '@interfaces/destination.interfaces';
 import { EditableCell } from '@common/EditableCell';
-import { EditableSelectCell } from '@/common/EditableSelectCell';
 import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
 import { AlertMessage } from '@common/AlertMessage';
@@ -31,7 +30,6 @@ import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortDestinations } from '@utils/sort.utils';
 import {
-  useDestinationQuery,
   useDestinationQueryByPage,
   useDestinationPatch,
   useDestinationDelete,
@@ -40,44 +38,43 @@ import {
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import onlyLettersPattern from '@/constants/validate-patterns/only-letters-pattern';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
+import { DestinationsInputSelector } from '@/common/DestinationsInputSelector';
 
 const Destinations = () => {
-  // индекс и размер пагинации
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
     'DESTINATIONS_CURR_PAGE'
   );
 
-  // получение данных
-  const { data: destinationsByPageData, isFetching } =
-    useDestinationQueryByPage(pageIndex);
-  const { data: destinationsAllList } = useDestinationQuery();
+  const {
+    data: destinationsByPageData,
+    isFetching,
+    isError,
+  } = useDestinationQueryByPage(pageIndex);
 
-  const destinationsByPage = destinationsByPageData?.content;
-  const totalPages = destinationsByPageData?.totalPages;
-  const destinationsAll = useMemo(
-    () => destinationsAllList?.content.map((el) => el?.airportCode ?? '') || [],
-    [destinationsAllList?.content]
+  const destinationsByPage = useMemo(
+    () => destinationsByPageData?.content || [],
+    [destinationsByPageData]
+  );
+  const totalPages = useMemo(
+    () => destinationsByPageData?.totalPages || 0,
+    [destinationsByPageData]
   );
 
-  // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IDestination | null>(
     null
   );
 
-  // установка редактируемой строки
-  const handleEditRow = useCallback((row: IDestination, index: number) => {
-    setEditableRowState(row);
-    setEditableRowIndex(index);
+  const handleEditRow = useCallback((row = null, index = -1) => {
+    if (index >= 0) {
+      setEditableRowState(row);
+      setEditableRowIndex(index);
+    } else {
+      setEditableRowState(null);
+      setEditableRowIndex(null);
+    }
   }, []);
 
-  // сброс редактируемой строки
-  const cancelEditing = useCallback(() => {
-    setEditableRowIndex(null);
-    setEditableRowState(null);
-  }, []);
-
-  // обновление редактируемой строки
   const handleUpdateRow = useCallback(
     (id: string, value: string) => {
       if (editableRowState)
@@ -86,19 +83,15 @@ const Destinations = () => {
     [editableRowState]
   );
 
-  // изменение данных
   const { mutate: patchDestination } = useDestinationPatch();
 
-  // удаление данных
   const { mutate: deleteDestination } = useDestinationDelete();
 
-  // патч данных
   const patchRow = useCallback(() => {
     patchDestination(editableRowState);
-    cancelEditing();
-  }, [patchDestination, editableRowState, cancelEditing]);
+    handleEditRow();
+  }, [patchDestination, editableRowState, handleEditRow]);
 
-  // создание столбцов таблицы
   const columnHelper = createColumnHelper<IDestination>();
   const columns = useMemo(
     () => [
@@ -191,7 +184,7 @@ const Destinations = () => {
       columnHelper.accessor('airportCode', {
         header: 'Код аэропорта',
         cell: (info) => (
-          <EditableSelectCell
+          <DestinationsInputSelector
             value={isRowEditing(
               info.row.index,
               info.column.id,
@@ -199,12 +192,11 @@ const Destinations = () => {
               editableRowState,
               editableRowIndex
             )}
+            type="editable"
             index={info.row.index}
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
-            selectOptions={destinationsAll}
-            getRenderValue={(code: string) => code.toUpperCase()}
           />
         ),
       }),
@@ -256,11 +248,9 @@ const Destinations = () => {
       setPaginationData,
       pageIndex,
       destinationsByPage,
-      destinationsAll,
     ]
   );
 
-  // сортировка получаемых данных. ВРЕМЕННО, ПОКА ДАННЫЕ С СЕРВЕРА ПРИХОДЯТ БЕЗ СОРТИРОВКИ
   const tableData = (data?: IDestination[]) => {
     if (Array.isArray(data) && data.length) {
       return sortDestinations(data);
@@ -268,7 +258,6 @@ const Destinations = () => {
     return [];
   };
 
-  // создание таблицы
   const table = useReactTable({
     data: tableData(destinationsByPage).slice(0, ITEMS_PER_PAGE),
     columns,
@@ -276,13 +265,11 @@ const Destinations = () => {
     manualPagination: true,
   });
 
-  // спиннер при загрузке
   if (isFetching) {
     return <SpinnerBlock />;
   }
 
-  // если полученные данные в порядке выводим таблицу
-  if (Array.isArray(destinationsByPage) && destinationsByPage?.length) {
+  if (!isError) {
     return (
       <TableContainer
         my={10}
@@ -353,7 +340,7 @@ const Destinations = () => {
           data={tableData(destinationsByPage)}
           pageIndex={pageIndex}
           setPaginationData={setPaginationData}
-          cancelEditing={cancelEditing}
+          cancelEditing={handleEditRow}
           patchRow={patchRow}
           editableRowIndex={editableRowIndex}
           totalPages={totalPages}
@@ -362,8 +349,8 @@ const Destinations = () => {
     );
   }
 
-  // алерт при ошбике
   return <AlertMessage />;
 };
 
-export default Destinations;
+const memoizedDestinations = memo(Destinations);
+export default memoizedDestinations;

@@ -1,6 +1,6 @@
 enum ERoutes {
   LOGIN_ADMIN = '/auth/login',
-  DESTINATION = '/destinations',
+  DESTINATION = '/destinations/',
   AIRCRAFT = '/aircrafts/',
   GET_FLIGHTS = '/flights',
   PASSENGERS = '/passengers/',

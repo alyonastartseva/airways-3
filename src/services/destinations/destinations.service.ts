@@ -53,9 +53,12 @@ const destinationsAPI = {
   patchDestinations: async (data: IDestination | null) => {
     if (data) {
       const { id, ...rest } = data;
+      // // TODO: удалить temp когда сервер будет принимать данные
+      const temp = { airportCode: rest.airportCode, timezone: rest.timezone };
       return await adminInstance.patch<IDestination>(
         ERoutes.DESTINATION + id,
-        rest
+        // TODO: поменять на rest когда сервер будет принимать данные
+        temp
       );
     }
   },
