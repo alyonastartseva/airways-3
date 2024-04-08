@@ -26,7 +26,7 @@ import { CalendarTickets } from '@common/CalendarTickets';
 import { searchApi } from '@services/searchTickets.service';
 import { ISearchData } from '@/interfaces/search-tickets.interfaces';
 import { ISearchRadioData } from '@/components/SearchTickets/SearchTickets.interfaces';
-import { InputSelector } from '@/common/InputSelector';
+import { DestinationsInputSelector } from '@/common/DestinationsInputSelector';
 import { getFlights } from '@/services/flights/flights.service';
 import { IFlightPresentation } from '@/interfaces/flights.interfaces';
 import { TSeatCategory } from '@/interfaces/seat.interfaces';
@@ -202,7 +202,7 @@ const MainSearch = ({ startDate, endDate }: Props) => {
                 <Flex direction="column">
                   <FormControl>
                     <FormLabel fontSize={14}>Откуда</FormLabel>
-                    <InputSelector
+                    <DestinationsInputSelector
                       value={from}
                       placeholder="Город отправления"
                       setValue={setFrom}
@@ -223,7 +223,7 @@ const MainSearch = ({ startDate, endDate }: Props) => {
                 <Flex direction="column">
                   <FormControl>
                     <FormLabel fontSize={14}>Куда</FormLabel>
-                    <InputSelector
+                    <DestinationsInputSelector
                       value={to}
                       placeholder="Город прибытия"
                       setValue={setTo}

@@ -43,26 +43,24 @@ const EditableCell = <K,>({
   };
 
   return index === editableRowIndex ? (
-    <>
-      <Tooltip label={validationMessage} placement="bottom-start">
-        <Input
-          type={typeInput}
-          name={fieldName}
-          value={String(value)}
-          onBlur={onBlur}
-          onChange={onChange}
-          fontSize="0.87rem"
-          border={validationMessage ? '2px solid red' : '1px solid  #242424'}
-          disabled={isDisabled}
-          _hover={{
-            borderColor: '#398AEA',
-          }}
-          _active={{
-            borderColor: '#398AEA',
-          }}
-        />
-      </Tooltip>
-    </>
+    <Tooltip label={validationMessage} placement="bottom-start">
+      <Input
+        type={typeInput}
+        name={fieldName}
+        value={String(value)}
+        onBlur={onBlur}
+        onChange={onChange}
+        fontSize="0.87rem"
+        border={validationMessage ? '2px solid red' : '1px solid  #242424'}
+        disabled={isDisabled}
+        _hover={{
+          borderColor: '#398AEA',
+        }}
+        _active={{
+          borderColor: '#398AEA',
+        }}
+      />
+    </Tooltip>
   ) : (
     <FlexCell padding={16} value={String(value)} />
   );

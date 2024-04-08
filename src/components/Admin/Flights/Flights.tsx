@@ -15,8 +15,8 @@ import {
 } from '@tanstack/react-table';
 import { useCallback, useMemo, useState, memo } from 'react';
 
-import { EditableSelectCell } from '@/common/EditableSelectCell';
-import { flightStatuses } from '@/constants/constants';
+import { EditableSelectCell } from '@common/EditableSelectCell';
+import { flightStatuses } from '@constants/constants';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import {
   useAircraftQuery,
@@ -40,13 +40,12 @@ import { PopoverTable } from '@common/PopoverTable';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
+import { DestinationsInputSelector } from '@/common/DestinationsInputSelector';
 
 const Flights = () => {
-  // индекс и размер пагинации
   const [pageIndex, setPaginationData] =
     useSetCurrentPageInPagination('FLIGHTS_CURR_PAGE');
 
-  // получение данных
   const { data: airplanesData, isLoading: isAircraftLoading } =
     useAircraftQuery();
   const airplanes = airplanesData?.content;
@@ -54,14 +53,12 @@ const Flights = () => {
   const { data: flightsData, isError, isFetching } = useFlightsQuery(pageIndex);
 
   const flights = flightsData?.content;
-  const totalPages = flightsData?.totalPages;
+  const totalPagesFlights = flightsData?.totalPages;
 
-  // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] =
     useState<Required<IFlightPresentation> | null>(null);
 
-  // установка редактируемой строки
   const handleEditRow = useCallback(
     (row: Required<IFlightPresentation>, index: number) => {
       setEditableRowState(row);
@@ -70,13 +67,11 @@ const Flights = () => {
     []
   );
 
-  // сброс редактируемой строки
   const cancelEditing = useCallback(() => {
     setEditableRowIndex(null);
     setEditableRowState(null);
   }, []);
 
-  // обновление редактируемой строки
   const handleUpdateRow = useCallback(
     (id: string, value: string) => {
       if (!editableRowState) return;
@@ -97,7 +92,6 @@ const Flights = () => {
     cancelEditing();
   }, [patchFlights, editableRowState, cancelEditing]);
 
-  // получение модели самолета по id
   const getAircraftModel = useCallback(
     (id: string) => {
       if (airplanes) {
@@ -111,7 +105,6 @@ const Flights = () => {
     [airplanes]
   );
 
-  // option для поля "модель самолета"
   const getAircraftSelectOptions = (aircrafts: IAircraft[] | undefined) => {
     if (aircrafts) {
       return aircrafts.map((airplane) => airplane.id.toString());
@@ -119,7 +112,6 @@ const Flights = () => {
     return [];
   };
 
-  // получение названия статуса по value
   const getStatusName = (status: TFlightsStatus): string => {
     switch (status) {
       case 'DELAYED':
@@ -139,7 +131,6 @@ const Flights = () => {
     }
   };
 
-  // создание столбцов таблицы
   const columnHelper = createColumnHelper<Required<IFlightPresentation>>();
   const columns = useMemo(
     () => [
@@ -169,7 +160,8 @@ const Flights = () => {
       columnHelper.accessor('airportFrom', {
         header: 'Город откуда',
         cell: (info) => (
-          <EditableCell
+          <DestinationsInputSelector
+            placeholder="Город откуда"
             value={isRowEditing(
               info.row.index,
               info.column.id,
@@ -177,6 +169,7 @@ const Flights = () => {
               editableRowState,
               editableRowIndex
             )}
+            type="editable"
             index={info.row.index}
             id={info.column.id}
             editableRowIndex={editableRowIndex}
@@ -187,7 +180,8 @@ const Flights = () => {
       columnHelper.accessor('airportTo', {
         header: 'Город куда',
         cell: (info) => (
-          <EditableCell
+          <DestinationsInputSelector
+            placeholder="Город куда"
             value={isRowEditing(
               info.row.index,
               info.column.id,
@@ -195,6 +189,7 @@ const Flights = () => {
               editableRowState,
               editableRowIndex
             )}
+            type="editable"
             index={info.row.index}
             id={info.column.id}
             editableRowIndex={editableRowIndex}
@@ -311,7 +306,7 @@ const Flights = () => {
     ]
   );
 
-  // сортировка получаемых данных. ВРЕМЕННО, ПОКА ДАННЫЕ С СЕРВЕРА ПРИХОДЯТ БЕЗ СОРТИРОВКИ
+  // TODO: удалить когда будет сортировка на бэке
   const tableData = (data?: Required<IFlightPresentation>[]) => {
     if (Array.isArray(data) && data.length) {
       return data.sort((a, b) => a.id - b.id);
@@ -319,7 +314,6 @@ const Flights = () => {
     return [];
   };
 
-  // создание таблицы
   const table = useReactTable({
     data: tableData(flights),
     columns,
@@ -327,14 +321,13 @@ const Flights = () => {
     manualPagination: true,
   });
 
-  // спиннер при загрузке
   if (isAircraftLoading || isFetching) {
     return <SpinnerBlock />;
   }
 
   if (Array.isArray(flights) && flights?.length && !isError) {
     return (
-      <TableContainer my={10} mx={9}>
+      <TableContainer py={45} px={9}>
         <HeaderTable<IFlightPostFormFields>
           heading="Рейсы"
           formName={EModalNames.FLIGHTS}
@@ -394,7 +387,7 @@ const Flights = () => {
           cancelEditing={cancelEditing}
           patchRow={patchRow}
           editableRowIndex={editableRowIndex}
-          totalPages={totalPages}
+          totalPages={totalPagesFlights}
         />
       </TableContainer>
     );
