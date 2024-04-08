@@ -38,21 +38,21 @@ describe('Destinations', () => {
 
   it('Destinations render spinner', async () => {
     const data = await import('react-query');
-    data.useQuery = vi.fn().mockReturnValue({ isLoading: true });
+    data.useQuery = vi.fn().mockReturnValue({ isFetching: true });
     data.useMutation = vi.fn().mockReturnValue({});
 
     render(<Destinations />);
-    expect(data.useQuery).toBeCalledTimes(1);
+    expect(data.useQuery).toBeCalledTimes(2);
     expect(screen.getAllByText('Loading...')).toHaveLength(2);
   });
 
   it('Destinations render alert', async () => {
     const data = await import('react-query');
-    data.useQuery = vi.fn().mockReturnValue({});
+    data.useQuery = vi.fn().mockReturnValue({ isError: true });
     data.useMutation = vi.fn().mockReturnValue({});
 
     render(<Destinations />);
-    expect(data.useQuery).toBeCalledTimes(1);
+    expect(data.useQuery).toBeCalledTimes(2);
     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
   });
 });
