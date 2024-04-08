@@ -62,7 +62,7 @@ const bookingStatusesOptions = bookingStatuses.map((el) => {
 
 export const modalBookingFields: FormInputProps<IFormBooking>[] = [
   {
-    select: true,
+    type: 'select',
     fieldName: 'passengerId',
     label: 'ФИО пассажира',
     rules: {
@@ -71,7 +71,7 @@ export const modalBookingFields: FormInputProps<IFormBooking>[] = [
     children: <PassengersOptions />,
   },
   {
-    select: true,
+    type: 'select',
     fieldName: 'flightSeatId',
     label: 'Номер сиденья',
     rules: {
@@ -80,7 +80,7 @@ export const modalBookingFields: FormInputProps<IFormBooking>[] = [
     children: <SeatsOptions />,
   },
   {
-    select: true,
+    type: 'select',
     fieldName: 'bookingStatus',
     label: 'Статус',
     rules: {

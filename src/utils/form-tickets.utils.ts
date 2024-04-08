@@ -26,13 +26,13 @@ export const mapTicketsFormData = (data: ITicketsPost): FormTicketsPost => {
   if (from) {
     const fromCity = JSON.parse(from);
     // eslint-disable-next-line no-param-reassign
-    data = { ...data, from: fromCity.cityName };
+    data = { ...data, from: fromCity.airportCode };
   }
   if (to) {
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const toCity = JSON.parse(to);
     // eslint-disable-next-line no-param-reassign
-    data = { ...data, to: toCity.cityName };
+    data = { ...data, to: toCity.airportCode };
   }
   if (flightId) {
     // eslint-disable-next-line no-param-reassign

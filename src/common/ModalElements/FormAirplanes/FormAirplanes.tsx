@@ -148,7 +148,7 @@ const FormAirplanes = <T extends FieldValues>({
                                 />
                                 <ModalInput
                                   label="Класс"
-                                  select={true}
+                                  type="select"
                                   value={fieldArray.category}
                                   fieldName={`seats.${id}.category`}
                                 >

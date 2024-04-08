@@ -61,7 +61,7 @@ export const modalPassengersFields: FormInputProps<IFormPassengers>[] = [
     },
   },
   {
-    select: true,
+    type: 'select',
     fieldName: 'gender',
     label: 'Пол',
     rules: {
@@ -101,7 +101,7 @@ export const modalPassengersFields: FormInputProps<IFormPassengers>[] = [
     },
   },
   {
-    select: true,
+    type: 'select',
     fieldName: 'passportIssuingCountry',
     label: 'Гражданство',
     rules: {

@@ -58,7 +58,7 @@ export const modalFlightsFields: FormInputProps<IFlightPostFormFields>[] = [
     },
   },
   {
-    select: true,
+    type: 'select',
     fieldName: 'from',
     label: 'Город откуда',
     typeInput: 'text',
@@ -68,7 +68,7 @@ export const modalFlightsFields: FormInputProps<IFlightPostFormFields>[] = [
     children: <CityNameOptions />,
   },
   {
-    select: true,
+    type: 'select',
     fieldName: 'to',
     label: 'Город куда',
     typeInput: 'text',
@@ -96,7 +96,7 @@ export const modalFlightsFields: FormInputProps<IFlightPostFormFields>[] = [
     },
   },
   {
-    select: true,
+    type: 'select',
     fieldName: 'aircraftId',
     label: 'Модель самолета',
     rules: {
@@ -105,7 +105,7 @@ export const modalFlightsFields: FormInputProps<IFlightPostFormFields>[] = [
     children: <AircraftIdOptions />,
   },
   {
-    select: true,
+    type: 'select',
     fieldName: 'flightStatus',
     label: 'Статус',
     rules: {

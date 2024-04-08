@@ -5,8 +5,8 @@ import { debounce } from '@/utils/debounce.utils';
 import { IDestinationGet } from '@/services/destinations/destinations.interfaces';
 import { IDestinationList } from '@/interfaces/destination.interfaces';
 import {
-  getDestinationsByCity,
   getDestinationsByPage,
+  getDestinationsByParams,
 } from '@/services/destinations/destinations.service';
 
 import { InfiniteScrollSelector } from '../InfiniteScrollSelector';
@@ -43,7 +43,10 @@ const InputSelector = ({
     }
     setLoading(true);
     const requestPage = previousRequestType === 'city' ? page : 0;
-    const destinations = await getDestinationsByCity(query, requestPage);
+    const destinations = await getDestinationsByParams({
+      cityName: query,
+      page: requestPage,
+    });
     setPreparedData(destinations, 'city');
   }
 
