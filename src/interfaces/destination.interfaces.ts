@@ -21,3 +21,11 @@ export interface IDestinationList {
   code?: string;
   name?: string;
 }
+
+export interface IDestinationData {
+  page?: number;
+  size?: number;
+  cityName?: string;
+  countryName?: string;
+  timezone?: string;
+}

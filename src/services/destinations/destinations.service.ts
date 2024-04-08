@@ -1,8 +1,10 @@
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 import { adminInstance } from '@/services/axios.service';
 import { ERoutes } from '@/services/constants';
+import { getQueryString } from '@/utils/get-query-string.utils';
 import {
   IDestination,
+  IDestinationData,
   IDestinationPost,
 } from '@interfaces/destination.interfaces';
 
@@ -33,20 +35,13 @@ const destinationsAPI = {
       });
   },
 
-  getDestinationsByCity: async (
-    city: string,
-    pageIndex = 0,
-    size = ITEMS_PER_PAGE
-  ) => {
-    return await adminInstance
-      .get<IDestinationGet>(
-        ERoutes.DESTINATION +
-          `?cityName=${city}&page=${String(pageIndex)}&size=${size}`
-      )
-      .then((response) => {
-        if (response.status === NO_CONTENT) return response.data;
-        return tempMapDestination(response.data);
-      });
+  getDestinationsByParams: async (query: IDestinationData) => {
+    const url = `${ERoutes.DESTINATION}${getQueryString(query)}`;
+
+    return await adminInstance.get<IDestinationGet>(url).then((response) => {
+      if (response.status === NO_CONTENT) return response.data;
+      return tempMapDestination(response.data);
+    });
   },
 
   getDestinations: async () => {
@@ -80,9 +75,9 @@ const destinationsAPI = {
 };
 
 export const {
-  getDestinations,
-  getDestinationsByCity,
   getDestinationsByPage,
+  getDestinationsByParams,
+  getDestinations,
   patchDestinations,
   postDestinations,
   deleteDestination,
