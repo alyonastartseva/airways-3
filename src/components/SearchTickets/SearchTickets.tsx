@@ -25,12 +25,18 @@ import mainsearch from '@assets/images/main-search.webp';
 import { CalendarTickets } from '@common/CalendarTickets';
 import { searchApi } from '@services/searchTickets.service';
 import { ISearchData } from '@/interfaces/search-tickets.interfaces';
-import { ISearchRadioData } from '@/components/SearchTickets/SearchTickets.interfaces';
+import {
+  DataToType,
+  ISearchRadioData,
+} from '@/components/SearchTickets/SearchTickets.interfaces';
 import { DestinationsInputSelector } from '@/common/DestinationsInputSelector';
 import { getFlights } from '@/services/flights/flights.service';
 import { IFlightPresentation } from '@/interfaces/flights.interfaces';
 import { TSeatCategory } from '@/interfaces/seat.interfaces';
 import { SeatCategory } from '@/common/SeatCategory';
+
+import { TicketCard } from '../Ticket/TicketCard';
+import { ITicketCardProps } from '../Ticket/TicketCard/ticketCard.interfaces';
 
 interface Props {
   startDate: Date | null;
@@ -48,6 +54,9 @@ const MainSearch = ({ startDate, endDate }: Props) => {
   const [error, setError] = useState('');
   const [seatCategoryValue, setSeatCategoryValue] =
     useState<TSeatCategory>('BUSINESS');
+  const [ticketCardProps, setTicketCardProps] = useState<
+    ITicketCardProps & { flightSeatId: number }[]
+  >([]);
 
   const initialSearchQuery: ISearchData = {
     departureDate: '',
@@ -144,6 +153,29 @@ const MainSearch = ({ startDate, endDate }: Props) => {
       const searchResult = await searchApi.postSearch(searchData);
       // eslint-disable-next-line no-console
       searchResult ? console.log(searchResult) : console.log('Нет билетов');
+
+      setTicketCardProps([]);
+      if (searchResult) {
+        const {
+          search: { categoryOfSeats },
+          flights: [...rest],
+        } = searchResult;
+
+        // временное решение для хранения пропсов TicketCard
+        setTicketCardProps(
+          rest.map((data: { dataTo: DataToType; totalPrice: number }) => ({
+            ...data.dataTo,
+            // TODO: заменить значения тарифов, когда будут приходить данные с сервера
+            tariffsData: {
+              basic: { price: data.totalPrice, ticketsCount: 2 },
+              standard: { price: data.totalPrice * 2, ticketsCount: 8 },
+              plus: { price: data.totalPrice * 3, ticketsCount: 10 },
+            },
+            categoryOfSeats,
+          }))
+        );
+      }
+
       setNumberOfPassengers(1);
       setFrom('');
       setTo('');
@@ -335,6 +367,12 @@ const MainSearch = ({ startDate, endDate }: Props) => {
             </Grid>
           </Box>
         </Box>
+        {ticketCardProps &&
+          ticketCardProps.map(({ flightSeatId, ...ticketProps }) => (
+            <Box key={flightSeatId} my={8}>
+              <TicketCard {...ticketProps} />
+            </Box>
+          ))}
       </Box>
     </Flex>
   );
