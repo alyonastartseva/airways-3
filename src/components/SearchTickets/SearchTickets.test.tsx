@@ -6,7 +6,7 @@ import MainSearch from './SearchTickets';
 
 describe('MainSearch', () => {
   test('renders correctly', () => {
-    render(<MainSearch startDate={null} endDate={null} />);
+    render(<MainSearch />);
 
     expect(screen.getByText('Найти билеты')).toBeInTheDocument();
     expect(screen.getByLabelText('Откуда')).toBeInTheDocument();
@@ -21,7 +21,7 @@ describe('MainSearch', () => {
   });
 
   test('search button shows error if fields are empty', async () => {
-    render(<MainSearch startDate={null} endDate={null} />);
+    render(<MainSearch />);
 
     userEvent.click(screen.getByRole('button', { name: 'Найти' }));
 
@@ -32,7 +32,7 @@ describe('MainSearch', () => {
   });
 
   test('reverse button calls handleReverse when clicked', () => {
-    render(<MainSearch startDate={null} endDate={null} />);
+    render(<MainSearch />);
     const reverseButton = screen.getByTestId('Reverse');
 
     userEvent.click(reverseButton);
@@ -42,7 +42,7 @@ describe('MainSearch', () => {
   });
 
   test('passenger input changes value and shows warning when invalid value is entered', () => {
-    render(<MainSearch startDate={null} endDate={null} />);
+    render(<MainSearch />);
     const passengerInput = screen.getByLabelText('Количество пассажиров');
 
     fireEvent.change(passengerInput, { target: { value: 0 } });
