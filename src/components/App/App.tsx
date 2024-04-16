@@ -12,6 +12,7 @@ import { AirplaneMorePage } from '@/pages/Admin/AirplaneMorePage';
 import { PrivateRoute } from '@/layout/PrivateRoute';
 import { SignUpPage } from '@/pages/User/SignUpPage';
 import { SearchTicketsPage } from '@/pages/User/SearchTicketsPage';
+import { FilteredTicketsPage } from '@pages/User/FilteredTicketsPage';
 import { TicketsPage } from '@/pages/Admin/Tickets';
 import { BookingPage } from '@/pages/Admin/BookingPage';
 import { TimeZonesPage } from '@/pages/Admin/TimeZonesPage';
@@ -22,6 +23,7 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<SearchTicketsPage />} />
+        <Route path="filter-tickets" element={<FilteredTicketsPage />} />
         <Route path="admin" element={<LoginAdminForm />} />
         <Route path="sign-in" element={<LoginForm />} />
         <Route path="sign-up" element={<SignUpPage />} />

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Alert,
   AlertIcon,
@@ -18,7 +18,7 @@ import {
   Spinner,
   Select,
 } from '@chakra-ui/react';
-import { formatISO, isPast, isToday, compareDesc } from 'date-fns';
+import { formatISO, parseISO, isPast, isToday, compareDesc } from 'date-fns';
 
 import { ArrowsIcon } from '@common/icons';
 import mainsearch from '@assets/images/main-search.webp';
@@ -39,36 +39,40 @@ import { TicketCard } from '../Ticket/TicketCard';
 import { ITicketCardProps } from '../Ticket/TicketCard/ticketCard.interfaces';
 
 interface Props {
-  startDate: Date | null;
-  endDate: Date | null;
+  initialValues?: ISearchData;
+  onSearch?: (searchFormData: ISearchData) => void;
+  showImage?: boolean;
+  alignItems?: string;
+  marginTop?: string;
 }
 
-const MainSearch = ({ startDate, endDate }: Props) => {
-  const [numberOfPassengers, setNumberOfPassengers] = useState(1);
+const MainSearch = ({
+  initialValues = {
+    departureDate: '',
+    returnDate: '',
+    airportFrom: '',
+    numberOfPassengers: null,
+    airportTo: '',
+    directFlightsOnly: false,
+    tripType: 'roundTrip',
+    categoryOfSeats: 'BUSINESS',
+  },
+  onSearch,
+  showImage = true,
+  alignItems = 'center',
+  marginTop,
+}: Props) => {
+  const [searchParams, setSearchParams] = useState(initialValues);
   const [passengerWarning, setPassengerWarning] = useState(false);
-  const [from, setFrom] = useState('');
-  const [to, setTo] = useState('');
-  const [directFlightsOnly, setDirectFlightsOnly] = useState(false);
-  const [tripType, setTripType] = useState('roundTrip');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [seatCategoryValue, setSeatCategoryValue] =
-    useState<TSeatCategory>('BUSINESS');
   const [ticketCardProps, setTicketCardProps] = useState<
     ITicketCardProps & { flightSeatId: number }[]
   >([]);
 
-  const initialSearchQuery: ISearchData = {
-    departureDate: '',
-    airportFrom: '',
-    numberOfPassengers: 0,
-    returnDate: '',
-    airportTo: '',
-    categoryOfSeats: seatCategoryValue,
+  const updateSearchParam = (param: Partial<ISearchData>) => {
+    setSearchParams((prev) => ({ ...prev, ...param }));
   };
-
-  const [searchParams, setSearchParams] =
-    useState<ISearchData>(initialSearchQuery);
 
   const getDates = (day: Date) => {
     setSearchParams((prev) => {
@@ -96,24 +100,28 @@ const MainSearch = ({ startDate, endDate }: Props) => {
     if (passengerWarning) {
       return;
     }
+
+    const searchFormData = {
+      numberOfPassengers: searchParams.numberOfPassengers,
+      airportFrom: searchParams.airportFrom,
+      airportTo: searchParams.airportTo,
+      directFlightsOnly: searchParams.directFlightsOnly,
+      tripType: searchParams.tripType,
+      categoryOfSeats: searchParams.categoryOfSeats,
+      departureDate: searchParams.departureDate,
+      returnDate: searchParams.returnDate,
+    };
+
     try {
       setIsLoading(true);
-      const fromAirportCode = from;
-      const toAirportCode = to;
 
-      if (!fromAirportCode || !toAirportCode) {
+      if (!searchFormData.airportFrom || !searchFormData.airportTo) {
         setError('Ошибка поиска');
         return;
       }
 
       const searchData: ISearchData & ISearchRadioData = {
-        departureDate: searchParams.departureDate,
-        airportFrom: fromAirportCode,
-        numberOfPassengers: numberOfPassengers,
-        returnDate: searchParams.returnDate,
-        airportTo: toAirportCode,
-        categoryOfSeats: seatCategoryValue,
-
+        ...searchFormData,
         departFlight: [],
         returnFlight: [],
       };
@@ -123,8 +131,9 @@ const MainSearch = ({ startDate, endDate }: Props) => {
         const departFlight: IFlightPresentation[] = [];
         const returnFlight: IFlightPresentation[] = [];
 
-        if (directFlightsOnly) {
-          const directFlightCode = fromAirportCode + toAirportCode;
+        if (searchFormData.directFlightsOnly) {
+          const directFlightCode =
+            searchFormData.airportFrom + searchFormData.airportTo;
           const directFlight = flights.content.find(
             (flight: IFlightPresentation) => flight.code === directFlightCode
           );
@@ -133,8 +142,10 @@ const MainSearch = ({ startDate, endDate }: Props) => {
             departFlight.push(directFlight);
           }
         } else {
-          const departFlightCode = fromAirportCode + toAirportCode;
-          const returnFlightCode = toAirportCode + fromAirportCode;
+          const departFlightCode =
+            searchFormData.airportFrom + searchFormData.airportTo;
+          const returnFlightCode =
+            searchFormData.airportTo + searchFormData.airportFrom;
 
           const departFlights: IFlightPresentation[] = flights.content.filter(
             (flight) => flight.code.includes(departFlightCode)
@@ -151,8 +162,13 @@ const MainSearch = ({ startDate, endDate }: Props) => {
       }
 
       const searchResult = await searchApi.postSearch(searchData);
-      // eslint-disable-next-line no-console
-      searchResult ? console.log(searchResult) : console.log('Нет билетов');
+      if (searchResult) {
+        // eslint-disable-next-line no-console
+        console.log(searchResult);
+      } else {
+        // eslint-disable-next-line no-console
+        console.log('Нет билетов');
+      }
 
       setTicketCardProps([]);
       if (searchResult) {
@@ -176,11 +192,9 @@ const MainSearch = ({ startDate, endDate }: Props) => {
         );
       }
 
-      setNumberOfPassengers(1);
-      setFrom('');
-      setTo('');
-      setDirectFlightsOnly(false);
-      setTripType('roundTrip');
+      if (onSearch) {
+        onSearch(searchFormData);
+      }
     } catch (err) {
       setError('Ошибка поиска');
     } finally {
@@ -194,15 +208,26 @@ const MainSearch = ({ startDate, endDate }: Props) => {
     if (passengers < 1) {
       setPassengerWarning(true);
     } else {
-      setNumberOfPassengers(passengers);
+      updateSearchParam({ numberOfPassengers: passengers });
       setPassengerWarning(false);
     }
   };
 
   const handleReverse = () => {
-    setFrom(to);
-    setTo(from);
+    updateSearchParam({ airportTo: searchParams.airportTo });
+    updateSearchParam({ airportFrom: searchParams.airportFrom });
   };
+
+  const calendarDates = useMemo(() => {
+    const startDate = searchParams.departureDate
+      ? parseISO(searchParams.departureDate)
+      : null;
+    const endDate = searchParams.returnDate
+      ? parseISO(searchParams.returnDate)
+      : null;
+
+    return { startDate, endDate };
+  }, [searchParams.departureDate, searchParams.returnDate]);
 
   return (
     <Flex
@@ -210,13 +235,16 @@ const MainSearch = ({ startDate, endDate }: Props) => {
       minHeight="54rem"
       maxWidth="90rem"
       w="100%"
-      alignItems="center"
+      alignItems={alignItems}
       m="auto"
+      marginTop={marginTop}
     >
       <Box>
-        <Flex justify="center" h="31.25rem" mb="0.7rem" alignItems="center">
-          <Image src={mainsearch} alt="Main-search" />
-        </Flex>
+        {showImage && (
+          <Flex justify="center" h="31.25rem" mb="0.7rem" alignItems="center">
+            <Image src={mainsearch} alt="Main-search" />
+          </Flex>
+        )}
         <Box
           border="0.9rem solid #D3EFFF"
           borderRadius="1rem"
@@ -235,9 +263,11 @@ const MainSearch = ({ startDate, endDate }: Props) => {
                   <FormControl>
                     <FormLabel fontSize={14}>Откуда</FormLabel>
                     <DestinationsInputSelector
-                      value={from}
+                      value={searchParams.airportFrom}
                       placeholder="Город отправления"
-                      setValue={setFrom}
+                      setValue={(value) =>
+                        updateSearchParam({ airportFrom: value })
+                      }
                     />
                   </FormControl>
                 </Flex>
@@ -256,9 +286,11 @@ const MainSearch = ({ startDate, endDate }: Props) => {
                   <FormControl>
                     <FormLabel fontSize={14}>Куда</FormLabel>
                     <DestinationsInputSelector
-                      value={to}
+                      value={searchParams.airportTo}
                       placeholder="Город прибытия"
-                      setValue={setTo}
+                      setValue={(value) =>
+                        updateSearchParam({ airportTo: value })
+                      }
                     />
                   </FormControl>
                 </Flex>
@@ -270,9 +302,14 @@ const MainSearch = ({ startDate, endDate }: Props) => {
                     <FormLabel fontSize={14}>Количество пассажиров</FormLabel>
                     <Input
                       type="number"
+                      value={searchParams.numberOfPassengers}
                       onChange={handlePassengerChange}
                       placeholder="Количество пассажиров"
-                      isInvalid={passengerWarning && numberOfPassengers < 1}
+                      isInvalid={
+                        passengerWarning &&
+                        (!searchParams.numberOfPassengers ||
+                          searchParams.numberOfPassengers < 1)
+                      }
                     />
                     {passengerWarning && (
                       <Text color="red" fontSize={12} mt={1}>
@@ -283,9 +320,11 @@ const MainSearch = ({ startDate, endDate }: Props) => {
                   <FormControl mt="auto">
                     <FormLabel fontSize={14}>Категория сиденья</FormLabel>
                     <Select
-                      value={seatCategoryValue}
+                      value={searchParams.categoryOfSeats}
                       onChange={(e) =>
-                        setSeatCategoryValue(e.target.value as TSeatCategory)
+                        updateSearchParam({
+                          categoryOfSeats: e.target.value as TSeatCategory,
+                        })
                       }
                       fontSize="0.87rem"
                       _hover={{
@@ -307,8 +346,8 @@ const MainSearch = ({ startDate, endDate }: Props) => {
                     <FormLabel fontSize={14}>Дата</FormLabel>
                     <CalendarTickets
                       select={(day: Date) => getDates(day)}
-                      startDate={startDate}
-                      endDate={endDate}
+                      startDate={calendarDates.startDate}
+                      endDate={calendarDates.endDate}
                       calendarFormat={2}
                     />
                   </FormControl>
@@ -329,8 +368,10 @@ const MainSearch = ({ startDate, endDate }: Props) => {
                   <Checkbox
                     py="8px"
                     mt="auto"
-                    isChecked={directFlightsOnly}
-                    onChange={(e) => setDirectFlightsOnly(e.target.checked)}
+                    isChecked={searchParams.directFlightsOnly}
+                    onChange={(e) =>
+                      updateSearchParam({ directFlightsOnly: e.target.checked })
+                    }
                   >
                     Искать билеты без пересадок
                   </Checkbox>
@@ -341,8 +382,10 @@ const MainSearch = ({ startDate, endDate }: Props) => {
                 <Flex direction="column">
                   <FormControl>
                     <RadioGroup
-                      value={tripType}
-                      onChange={(value) => setTripType(value)}
+                      value={searchParams.tripType}
+                      onChange={(value) =>
+                        updateSearchParam({ tripType: value })
+                      }
                     >
                       <Radio value="roundTrip">Туда и обратно</Radio>
                       <Radio value="oneWay" mt="1rem">
