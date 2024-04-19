@@ -1,4 +1,4 @@
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -9,26 +9,36 @@ import { setDefaultOptions } from 'date-fns';
 import ru from 'date-fns/locale/ru/index';
 
 import { App } from '@components/App';
-import { chakraTheme, antdTheme } from '@utils/theme.utils';
 
 import { AuthProvider } from './context/AuthContext';
 
 import './index.css';
 
-setDefaultOptions({ locale: ru });
+const theme = extendTheme({
+  fonts: {
+    heading: 'Roboto, sans-serif',
+    body: 'Roboto, sans-serif',
+  },
+  components: {
+    Modal: {
+      baseStyle: () => ({
+        dialog: { borderRadius: 0 },
+      }),
+    },
+  },
+});
+
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <StrictMode>
-    <ChakraProvider theme={chakraTheme}>
-      <ConfigProvider theme={antdTheme} locale={ruRU}>
-        <AuthProvider>
-          <QueryClientProvider client={queryClient}>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
-          </QueryClientProvider>
-        </AuthProvider>
-      </ConfigProvider>
+    <ChakraProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </QueryClientProvider>
+      </AuthProvider>
     </ChakraProvider>
   </StrictMode>
 );

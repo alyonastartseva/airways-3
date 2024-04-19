@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 import { ELinks } from '@services/constants';
 import { useAuth } from '@/hooks';
-import setHeaderParams from '@utils/set-header-params.utils';
+import setParams from '@utils/set-params.utils';
 import { PhoneNumber } from '@common/PhoneNumber';
 import { ExitIcon } from '@/common/icons';
 
@@ -13,7 +13,7 @@ const AdminHeader: FC = () => {
   const navigate = useNavigate();
 
   const { color, backgroundColor, buttonBackgroundColor, buttonColor, hover } =
-    setHeaderParams(isLogged);
+    setParams('header', isLogged);
 
   const tabs = [
     {

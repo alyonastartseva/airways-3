@@ -5,7 +5,7 @@ import { WebsiteLogo } from '@common/WebsiteLogo';
 import { useAuth } from '@/hooks';
 import UserHeader from '@/components/User/UserHeader/UserHeader';
 import { AdminHeader } from '@/components/Admin/AdminHeader';
-import setHeaderParams from '@utils/set-header-params.utils';
+import setParams from '@utils/set-params.utils';
 import { ELinks } from '@/services/constants';
 
 const HEADER_LINKS = [
@@ -20,7 +20,7 @@ const Header = () => {
 
   const { pathname } = useLocation();
   const isSignIn = pathname === ELinks.AUTHORIZATION;
-  const { backgroundColor } = setHeaderParams(isLogged && !isSignIn);
+  const { backgroundColor } = setParams('header', isLogged && !isSignIn);
 
   //Заглушка для авторизации пользователя
 

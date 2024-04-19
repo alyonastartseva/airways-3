@@ -1,21 +1,13 @@
 import dayjs from 'dayjs';
 import { format } from 'date-fns';
 
-import { capitalize } from './string.utils';
+import { capitalize } from '@/utils/string.utils';
 
-const dateFormatDefault = 'DD.MM.YYYY';
-const dateTimeFormatDefault = 'DD.MM.YYYY HH:mm';
-
-export const formatDate = (
-  date?: string,
-  dateFormat = dateFormatDefault
-): string => {
-  return dayjs(date).format(dateFormat);
-};
+const defaultDateTimeFormat = 'DD.MM.YYYY HH:mm';
 
 export const formatDateTime = (
-  date: string,
-  dateTimeFormat = dateTimeFormatDefault
+  date: string | undefined,
+  dateTimeFormat: string = defaultDateTimeFormat
 ): string => {
   return dayjs(date).format(dateTimeFormat);
 };
@@ -23,12 +15,12 @@ export const formatDateTime = (
 export const getFormattedDateTime = (
   date: string,
   timeFormat = 'HH:mm',
-  dateFormat = 'd MMM EEEEEE'
+  customDateFormat = 'd MMM EEEEEE'
 ): [string, string] => {
   const parsedDate = new Date(date);
   return [
     format(parsedDate, timeFormat),
-    format(parsedDate, dateFormat)
+    format(parsedDate, customDateFormat)
       .split(' ')
       .map((word) => capitalize(word).replace('.', ','))
       .join(' '),

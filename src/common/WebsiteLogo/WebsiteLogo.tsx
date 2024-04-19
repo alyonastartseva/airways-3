@@ -2,11 +2,15 @@ import { Box, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 import { Logo } from '@common/icons';
-import setLogoParams from '@utils/set-logo-params.utils';
+import setParams from '@utils/set-params.utils';
 
 const WebsiteLogo = (props: { isFooter: boolean; isLogged: boolean }) => {
   const { isFooter, isLogged } = props;
-  const { width, height, color } = setLogoParams(isFooter, isLogged);
+  const {
+    width = 29,
+    height = 34,
+    color = '#FFFFFF',
+  } = setParams('logo', isLogged, isFooter);
 
   return (
     <Link to="/">

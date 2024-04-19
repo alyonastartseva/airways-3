@@ -28,7 +28,7 @@ import { SpinnerBlock } from '@common/SpinnerBlock';
 import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
-import { sortDestinations } from '@utils/sort.utils';
+import { sortById } from '@utils/sort.utils';
 import {
   useDestinationQueryByPage,
   useDestinationPatch,
@@ -253,7 +253,7 @@ const Destinations = () => {
 
   const tableData = (data?: IDestination[]) => {
     if (Array.isArray(data) && data.length) {
-      return sortDestinations(data);
+      return sortById(data);
     }
     return [];
   };
