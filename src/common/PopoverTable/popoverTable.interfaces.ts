@@ -1,12 +1,14 @@
 import { AxiosResponse } from 'axios';
 import { UseMutateFunction } from 'react-query';
 
-export interface IPopoverTable<Data> {
+import { IFlightPresentation } from '@/interfaces/flights.interfaces';
+
+export interface IPopoverTable<Data extends IFlightPresentation> {
   row: Data;
   index: number;
   id: number | undefined;
   hasDetailsButton?: boolean;
-  handleEditRow(row: Data, index: number): void;
+  handleEditRow(row?: Data | null, index?: number): void;
   deleteRow: UseMutateFunction<
     AxiosResponse<Data, any> | undefined,
     unknown,

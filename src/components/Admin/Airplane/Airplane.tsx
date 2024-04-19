@@ -30,7 +30,7 @@ import { SpinnerBlock } from '@common/SpinnerBlock';
 import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
-import { sortSeat } from '@utils/sort.utils';
+import { sortById } from '@utils/sort.utils';
 import {
   useSeatQuery,
   useSeatDelete,
@@ -283,7 +283,7 @@ const Airplane = () => {
   // сортировка получаемых данных. ВРЕМЕННО, ПОКА ДАННЫЕ С СЕРВЕРА ПРИХОДЯТ БЕЗ СОРТИРОВКИ
   const tableData = (data?: ISeatPost[]) => {
     if (Array.isArray(data) && data.length) {
-      return sortSeat(data);
+      return sortById(data);
     }
     return [];
   };

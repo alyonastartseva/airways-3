@@ -27,7 +27,7 @@ import {
   useSetCurrentPageInPagination,
 } from '@/hooks';
 import { FlexCell } from '@common/FlexCell';
-import { ticketsSort } from '@utils/sort.utils';
+import { sortById } from '@utils/sort.utils';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { isRowEditing } from '@utils/table.utils';
 import { EditableCell } from '@common/EditableCell';
@@ -278,7 +278,7 @@ const Tickets = () => {
   // сортировка получаемых данных. ВРЕМЕННО, ПОКА ДАННЫЕ С СЕРВЕРА ПРИХОДЯТ БЕЗ СОРТИРОВКИ
   const tableData = (data?: ITickets[]) => {
     if (Array.isArray(data) && data.length) {
-      return ticketsSort(data);
+      return sortById(data);
     }
     return [];
   };

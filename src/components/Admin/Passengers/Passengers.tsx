@@ -37,8 +37,8 @@ import {
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { IFormPassengers } from '@/interfaces/passenger.interfaces';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
-import { formatDate } from '@utils/date.utils';
 import passportPattern from '@constants/validate-patterns/passport-pattern';
+import { formatDateTime } from '@utils/date.utils';
 
 const Passengers = () => {
   // индекс и размер пагинации
@@ -257,7 +257,7 @@ const Passengers = () => {
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              formatDate(info.getValue()),
+              formatDateTime(info.getValue()),
               editableRowState,
               editableRowIndex
             )}
@@ -319,7 +319,7 @@ const Passengers = () => {
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              formatDate(info.getValue()),
+              formatDateTime(info.getValue()),
               editableRowState,
               editableRowIndex
             )}

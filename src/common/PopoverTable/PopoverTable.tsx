@@ -12,11 +12,23 @@ import { EditIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
 
 import { IPopoverTable } from '@common/PopoverTable/popoverTable.interfaces';
+import { IFlightPresentation } from '@/interfaces/flights.interfaces';
 import { Details } from '@common/icons';
 import { ELinks } from '@services/constants';
-import { mapRoutesFormData } from '@utils/form-routes.utils';
 
-const PopoverTable = <Data,>({
+interface RouteData {
+  model?: string;
+  id?: number;
+}
+
+const mapRoutesFormData = (data: RouteData): number | undefined => {
+  const { model, id } = data;
+  if (model) {
+    return id;
+  }
+};
+
+const PopoverTable = ({
   row,
   index,
   id,
@@ -26,7 +38,7 @@ const PopoverTable = <Data,>({
   setPaginationIndex,
   indexPage = 0,
   numberElem = 0,
-}: IPopoverTable<Data>) => (
+}: IPopoverTable<IFlightPresentation>) => (
   <Popover placement="left-start" arrowSize={10}>
     <PopoverTrigger>
       <Box

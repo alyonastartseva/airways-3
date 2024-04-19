@@ -4,7 +4,6 @@ import { adminInstance } from '@/services/axios.service';
 import { ERoutes } from '@/services/constants';
 import { ISeatPost, ISeatForm } from '@/interfaces/seat.interfaces';
 import { ISeat } from '@/services/seat/seat.interfaces';
-import { mapSeatFormData } from '@/utils/form-seat.utils';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 interface ISeatApi {
@@ -17,6 +16,28 @@ interface ISeatApi {
     data: ISeatPost | null
   ) => Promise<AxiosResponse<ISeatPost, any> | undefined>;
 }
+
+const mapSeatFormData = (data: ISeatForm): ISeatPost => {
+  const {
+    aircraftId,
+    category,
+    id,
+    isLockedBack,
+    isNearEmergencyExit,
+    seatNumber,
+  } = data;
+
+  const seatPostData: ISeatPost = {
+    aircraftId: aircraftId || 0,
+    category: category || 'ECONOMY',
+    id: id || 0,
+    isLockedBack: isLockedBack || false,
+    isNearEmergencyExit: isNearEmergencyExit || false,
+    seatNumber: seatNumber || '',
+  };
+
+  return seatPostData;
+};
 
 const seatAPI: ISeatApi = {
   getSeat: async (id: number, page: number) => {

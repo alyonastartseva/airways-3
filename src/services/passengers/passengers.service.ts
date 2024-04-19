@@ -3,7 +3,7 @@ import { ERoutes } from '@/services/constants';
 import { IPassenger, FormPassengersPost } from '@/interfaces/search.interfaces';
 import { FormPassengersGet } from '@/services/passengers/passengers.interfaces';
 import { IFormPassengers } from '@/interfaces/passenger.interfaces';
-import { mapPassengersFormData } from '@/utils/form-passengers.utils';
+import { mapPassengersFormData } from '@/services/passengers/form-passengers.utils';
 import { ITEMS_PER_PAGE } from '@constants/constants';
 
 const passengersAPI = {
