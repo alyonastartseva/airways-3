@@ -302,7 +302,11 @@ const MainSearch = ({
                     <FormLabel fontSize={14}>Количество пассажиров</FormLabel>
                     <Input
                       type="number"
-                      value={searchParams.numberOfPassengers}
+                      value={
+                        searchParams.numberOfPassengers
+                          ? searchParams.numberOfPassengers
+                          : ''
+                      }
                       onChange={handlePassengerChange}
                       placeholder="Количество пассажиров"
                       isInvalid={
