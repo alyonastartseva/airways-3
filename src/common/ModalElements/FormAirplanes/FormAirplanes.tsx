@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import {
   FieldValues,
   FormProvider,
@@ -18,21 +19,23 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
-import { useMemo } from 'react';
 
-import { ButtonAddAdmin } from '@common/ButtonAddAdmin';
 import { EModalButtonTexts } from '@constants/modal-constants/modal-names';
 import { modalSettings } from '@constants/modal-constants/modal-settings';
-import { ModalInput } from '@common/ModalElements/ModalInput';
 import { seatCategory } from '@constants/constants';
-import { HeadingAdmin } from '@common/HeadingAdmin';
-import { ButtonSubmitAdmin } from '@common/ButtonSubmitAdmin';
 import { modalSeatFields } from '@constants/modal-constants/modal-seat-fields';
+import { usePostAircraftWithSeats } from '@hooks/usePostAircraftWithSeats';
+import {
+  ButtonAddAdmin,
+  ModalInput,
+  HeadingAdmin,
+  ButtonSubmitAdmin,
+} from '@/common';
+
 import {
   IFormAirplanesProps,
   TFormAirplanesValues,
-} from '@common/ModalElements/FormAirplanes/form-airplanes.interfaces';
-import { usePostAircraftWithSeats } from '@hooks/usePostAircraftWithSeats';
+} from './form-airplanes.interfaces';
 
 const seatCategoryOptions = seatCategory.map((el) => (
   <option key={el.eng} value={el.eng}>
@@ -204,4 +207,4 @@ const FormAirplanes = <T extends FieldValues>({
   );
 };
 
-export { FormAirplanes };
+export default FormAirplanes;

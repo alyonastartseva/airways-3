@@ -1,5 +1,12 @@
 import { useState } from 'react';
 import {
+  FieldValues,
+  RegisterOptions,
+  Path,
+  useFormContext,
+  PathValue,
+} from 'react-hook-form';
+import {
   FormLabel,
   Input,
   InputGroup,
@@ -7,18 +14,11 @@ import {
   InputLeftAddon,
   Select,
 } from '@chakra-ui/react';
-import {
-  FieldValues,
-  RegisterOptions,
-  Path,
-  useFormContext,
-  PathValue,
-} from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 
 import { TypeInput } from '@interfaces/type-input.types';
-import { DebounceSelect } from '@/common/DebounceSelect';
-import { TGetOptions } from '@/common/DebounceSelect/debounceSelect.interface';
+import { DebounceSelect } from '@/common';
+import { TGetOptions } from '@common/DebounceSelect/debounceSelect.interface';
 
 export interface ISelectValue {
   label: string;

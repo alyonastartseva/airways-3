@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
   Popover,
   PopoverTrigger,
@@ -9,12 +10,11 @@ import {
   Box,
 } from '@chakra-ui/react';
 import { EditIcon, CloseIcon } from '@chakra-ui/icons';
-import { Link } from 'react-router-dom';
 
-import { IPopoverTable } from '@common/PopoverTable/popoverTable.interfaces';
-import { IFlightPresentation } from '@/interfaces/flights.interfaces';
 import { Details } from '@common/icons';
 import { ELinks } from '@services/constants';
+import { IPopoverTable } from '@common/PopoverTable/popoverTable.interfaces';
+import { IFlightPresentation } from '@interfaces/flights.interfaces';
 
 interface RouteData {
   model?: string;

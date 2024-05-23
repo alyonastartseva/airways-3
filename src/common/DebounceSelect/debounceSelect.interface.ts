@@ -1,6 +1,6 @@
 import { SelectProps } from 'antd';
 
-import { ISelectValue } from '../ModalElements/ModalInput/ModalInput';
+import { ISelectValue } from '@common/ModalElements/ModalInput';
 
 export type TGetOptions = (query: {
   page: number;

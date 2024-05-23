@@ -1,4 +1,4 @@
-import { seatCategory } from '@/constants/constants';
+import { seatCategory } from '@constants/constants';
 
 const SeatCategory = () =>
   seatCategory.map((value) => (

@@ -1,4 +1,4 @@
-import { IEditableCell } from '@/common/EditableCell/editableCell.interfaces';
+import { IEditableCell } from '@common/EditableCell';
 
 export type InitialSelectValue = string | { categoryType: string };
 

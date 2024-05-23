@@ -1,4 +1,11 @@
 import {
+  FieldValues,
+  FormProvider,
+  Path,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
+import {
   useDisclosure,
   Modal,
   ModalOverlay,
@@ -8,23 +15,17 @@ import {
   ModalCloseButton,
   ModalBody,
 } from '@chakra-ui/react';
-import {
-  FieldValues,
-  FormProvider,
-  Path,
-  SubmitHandler,
-  useForm,
-} from 'react-hook-form';
 
-import { modalSettings } from '@/constants/modal-constants/modal-settings';
-import { ButtonSubmitAdmin } from '@common/ButtonSubmitAdmin';
-import { ButtonAddAdmin } from '@common/ButtonAddAdmin';
-import { HeadingAdmin } from '@common/HeadingAdmin';
-import { IModalProps } from '@/common/ModalElements/ModalShape/modal-shape.interfaces';
+import { modalSettings } from '@constants/modal-constants/modal-settings';
 import { EModalNames } from '@constants/modal-constants/modal-names';
-import { FormAirplanes } from '@common/ModalElements/FormAirplanes/FormAirplanes';
-
-import { ModalInput } from '../ModalInput';
+import { IModalProps } from '@common/ModalElements/ModalShape/modal-shape.interfaces';
+import {
+  ButtonSubmitAdmin,
+  ButtonAddAdmin,
+  HeadingAdmin,
+  FormAirplanes,
+  ModalInput,
+} from '@/common';
 
 const ModalShape = <T extends FieldValues>({
   formName,

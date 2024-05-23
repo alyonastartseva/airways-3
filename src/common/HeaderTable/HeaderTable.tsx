@@ -1,10 +1,9 @@
 import { Box, Flex, Select } from '@chakra-ui/react';
 import { FieldValues } from 'react-hook-form';
 
-import { IHeaderAdmin } from '@common/HeaderTable//headerTable.interfaces';
-import { ModalShape } from '@common/ModalElements/ModalShape';
-import { HeadingAdmin } from '@common/HeadingAdmin';
-import { SeatCategory } from '@/common/SeatCategory';
+import { ModalShape, HeadingAdmin, SeatCategory } from '@/common';
+
+import { IHeaderAdmin } from './headerTable.interfaces';
 // import { ModalInput } from '@common/ModalElements/ModalInput';
 
 const HeaderTable = <T extends FieldValues>({

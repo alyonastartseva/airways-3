@@ -1,6 +1,6 @@
 import { vi } from 'vitest';
 
-import { RedButton } from '@common/RedButton/RedButton';
+import { RedButton } from '@/common';
 import { fireEvent, render, screen } from '@utils/test-utils';
 
 describe('red button', () => {

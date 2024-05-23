@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { describe, it } from 'vitest';
 
-import { ArticleCard } from '@common/ArticleCard';
+import { ArticleCard } from './index';
 
 describe('ArticleCard component', () => {
   const props = {

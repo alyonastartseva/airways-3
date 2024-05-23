@@ -1,7 +1,7 @@
 import { describe, vi } from 'vitest';
 import { fireEvent, render } from '@testing-library/react';
 
-import { ButtonAddAdmin } from '@common/ButtonAddAdmin';
+import { ButtonAddAdmin } from './index';
 
 describe('ButtonAddAdmin test', () => {
   it('ButtonAddAdmin render', () => {

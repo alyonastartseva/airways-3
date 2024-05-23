@@ -1,7 +1,7 @@
 import { describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
-import HeadingAdmin from './HeadingAdmin';
+import { HeadingAdmin } from './index';
 
 describe('HeadingAdmin test', () => {
   it('HeadingAdmin render', () => {

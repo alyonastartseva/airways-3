@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
   Flex,
   Alert,
@@ -6,9 +7,8 @@ import {
   Button,
   AlertDescription,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
 
-import { useAuth } from '@/hooks';
+import { useAuth } from '@hooks/.';
 
 const PageNotFound = () => {
   const { isAdmin } = useAuth();

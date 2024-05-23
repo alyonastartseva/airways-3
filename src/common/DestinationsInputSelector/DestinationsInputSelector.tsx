@@ -1,16 +1,14 @@
 import { Input, Text } from '@chakra-ui/react';
 import { useState, useCallback, useEffect } from 'react';
 
-import { FlexCell } from '@common/FlexCell';
-import { debounce } from '@/utils/debounce.utils';
-import { IDestinationGet } from '@/services/destinations/destinations.interfaces';
-import { IDestinationList } from '@/interfaces/destination.interfaces';
+import { FlexCell, InfiniteScrollSelector } from '@/common';
+import { debounce } from '@utils/debounce.utils';
+import { IDestinationGet } from '@services/destinations/destinations.interfaces';
+import { IDestinationList } from '@interfaces/destination.interfaces';
 import {
   getDestinationsByPage,
   getDestinationsByParams,
-} from '@/services/destinations/destinations.service';
-
-import { InfiniteScrollSelector } from '../InfiniteScrollSelector';
+} from '@services/destinations/destinations.service';
 
 import { IInputSelector } from './destinationsInputSelector.interface';
 import { normalizeDestinations } from './destinationsInputSelector.utils';

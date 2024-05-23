@@ -1,3 +1,1 @@
-import CalendarPopover from './CalendarPopover';
-
-export default CalendarPopover;
+export { default as CalendarPopover } from './CalendarPopover';

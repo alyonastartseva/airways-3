@@ -1,6 +1,6 @@
 import { ButtonGroup, Button } from '@chakra-ui/react';
 
-import { IButtonGroupAdmin } from '@common/ButtonGroupAdmin/buttonGroupAdmin.interfaces';
+import { IButtonGroupAdmin } from './buttonGroupAdmin.interfaces';
 
 const ButtonGroupAdmin = ({ cancelEditing, patchRow }: IButtonGroupAdmin) => (
   <ButtonGroup my={8}>

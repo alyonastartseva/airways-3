@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { format, addMonths, compareDesc } from 'date-fns';
 
-import Calendar, { calendarHeadingFormat } from './Calendar';
+import { Calendar, calendarHeadingFormat } from './index';
 
 const props = {
   startDate: new Date(),

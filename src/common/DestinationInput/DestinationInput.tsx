@@ -2,10 +2,11 @@ import { Box, Flex, Input, Text, InputGroup } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 
-import { getDestinations } from '@/services/destinations/destinations.service';
+import { getDestinations } from '@services/destinations/destinations.service';
 import { TDestQuery } from '@interfaces/search.interfaces';
-import { IDestProps } from '@/common/DestinationInput/destination.interfaces';
 import { IDestination } from '@interfaces/destination.interfaces';
+
+import { IDestProps } from './destination.interfaces';
 
 const DestinationInput: React.FC<IDestProps> = (props: IDestProps) => {
   const { fromOrTo, onSetDestination, fromTo } = props;

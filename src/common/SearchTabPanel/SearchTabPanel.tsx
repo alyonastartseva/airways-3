@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useQuery } from 'react-query';
 import {
   Box,
   Button,
@@ -15,24 +16,21 @@ import {
   Divider,
   Center,
 } from '@chakra-ui/react';
-import { useQuery } from 'react-query';
 import { formatISO, format, isPast, isToday, compareDesc } from 'date-fns';
 
+import { DestinationInput, CalendarPopover } from '@/common';
+import searchService from '@services/search.service';
 import {
   ArrowDownIcon,
   ResetIcon,
   ArrowsIcon,
   CalendarIcon,
 } from '@common/icons';
-import { DestinationInput } from '@common/DestinationInput';
-import searchService from '@/services/search.service';
 import {
   IFromTo,
   TDestQuery,
   ISearchQuery,
 } from '@interfaces/search.interfaces';
-
-import CalendarPopover from '../CalendarPopover';
 
 const SearchTabPanel: React.FC = () => {
   const today = formatISO(new Date());

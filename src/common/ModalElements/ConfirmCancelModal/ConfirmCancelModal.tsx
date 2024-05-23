@@ -10,8 +10,9 @@ import {
   Flex,
 } from '@chakra-ui/react';
 
-import { IConfirmCancelModal } from '@/common/ModalElements/ConfirmCancelModal/confirmCancelModal.interface';
 import { TrashCanIcon, WarningCircleIcon } from '@/common/icons';
+
+import { IConfirmCancelModal } from './confirmCancelModal.interface';
 
 const ConfirmCancelModal = ({
   isOpen,
