@@ -7,6 +7,7 @@ import {
   Td,
   TableContainer,
   Flex,
+  useToast,
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
@@ -31,7 +32,6 @@ import { FooterTable } from '@common/FooterTable';
 import {
   usePassengersDelete,
   usePassengersPatch,
-  usePassengersQuery,
   useSetCurrentPageInPagination,
 } from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
@@ -39,6 +39,8 @@ import { IFormPassengers } from '@/interfaces/passenger.interfaces';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 import passportPattern from '@constants/validate-patterns/passport-pattern';
 import { formatDateTime } from '@utils/date.utils';
+import { useGetPassangersQuery } from '@/store/services';
+import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 
 const Passengers = () => {
   // индекс и размер пагинации
@@ -46,11 +48,26 @@ const Passengers = () => {
     'PASSENGERS_CURR_PAGE'
   );
 
+  const toast = useToast();
   // получение данных
-  const { data: dataQuery, isFetching } = usePassengersQuery(pageIndex);
+  const {
+    data: dataQuery,
+    isFetching,
+    error,
+    isError,
+  } = useGetPassangersQuery({ page: pageIndex });
 
   const passengers = dataQuery?.content;
   const totalPages = dataQuery?.totalPages;
+
+  useEffect(() => {
+    if (isError && isFetchBaseQueryError(error))
+      toast({
+        status: 'error',
+        title: error.data.message || 'Something went wrong',
+        position: 'top',
+      });
+  }, [isError, toast, error]);
 
   // если удален последняя строка текущей страницы, то открываем предыдущую страницу
   useEffect(() => {
@@ -385,76 +402,81 @@ const Passengers = () => {
   }
 
   // если полученные данные в порядке выводим таблицу
-  if (Array.isArray(passengers) && passengers?.length) {
-    return (
-      <TableContainer my={10} mx={14}>
-        <HeaderTable<IFormPassengers>
-          heading="Пассажиры"
-          formName={EModalNames.PASSENGERS}
-        />
-        <Table>
-          <Thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <Tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <Th
-                    border="1px solid #DEDEDE"
-                    color="#000000"
-                    key={header.id}
-                    fontSize="14px"
-                    lineHeight="18px"
-                    textTransform="none"
-                    fontWeight="semibold"
-                    w={header.getSize()}
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </Th>
-                ))}
-              </Tr>
-            ))}
-          </Thead>
-          <Tbody>
-            {table.getRowModel().rows.map((row) => (
-              <Tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <Td
-                    border="1px solid #DEDEDE"
-                    color="#393939"
-                    fontSize="14px"
-                    lineHeight="18px"
-                    key={cell.id}
-                    textTransform="none"
-                    fontWeight="normal"
-                    paddingX="4px"
-                    paddingY="2px"
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Td>
-                ))}
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
-        <FooterTable
-          data={tableData(passengers)}
-          pageIndex={pageIndex}
-          setPaginationData={setPaginationData}
-          cancelEditing={cancelEditing}
-          patchRow={patchRow}
-          editableRowIndex={editableRowIndex}
-          totalPages={totalPages}
-        />
-      </TableContainer>
-    );
-  }
 
-  // алерт при ошибке
-  return <AlertMessage />;
+  return (
+    <>
+      {passengers?.length ? (
+        <TableContainer my={10} mx={14}>
+          <HeaderTable<IFormPassengers>
+            heading="Пассажиры"
+            formName={EModalNames.PASSENGERS}
+          />
+          <Table>
+            <Thead>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <Tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <Th
+                      border="1px solid #DEDEDE"
+                      color="#000000"
+                      key={header.id}
+                      fontSize="14px"
+                      lineHeight="18px"
+                      textTransform="none"
+                      fontWeight="semibold"
+                      w={header.getSize()}
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </Th>
+                  ))}
+                </Tr>
+              ))}
+            </Thead>
+            <Tbody>
+              {table.getRowModel().rows.map((row) => (
+                <Tr key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <Td
+                      border="1px solid #DEDEDE"
+                      color="#393939"
+                      fontSize="14px"
+                      lineHeight="18px"
+                      key={cell.id}
+                      textTransform="none"
+                      fontWeight="normal"
+                      paddingX="4px"
+                      paddingY="2px"
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </Td>
+                  ))}
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+          <FooterTable
+            data={tableData(passengers)}
+            pageIndex={pageIndex}
+            setPaginationData={setPaginationData}
+            cancelEditing={cancelEditing}
+            patchRow={patchRow}
+            editableRowIndex={editableRowIndex}
+            totalPages={totalPages}
+          />
+        </TableContainer>
+      ) : (
+        <AlertMessage />
+      )}
+    </>
+  );
 };
 
 const memorizedPassengers = memo(Passengers);

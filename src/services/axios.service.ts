@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'http://92.118.114.29:8080/api';
+export const baseURL = 'http://92.118.114.29:8080/api';
 
 // пока нигде не используется
 export const axiosInstance = axios.create({
