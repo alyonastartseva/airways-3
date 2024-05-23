@@ -1,11 +1,12 @@
-import { describe, it } from 'vitest';
 import '@testing-library/jest-dom';
+import { describe, it } from 'vitest';
+import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import { Router } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 
 import { Footer } from './index';
+
 //Изменить ссылки на нужные, когда те будут доступны
 describe('Footer test', () => {
   it('Footer renders correctly', async () => {

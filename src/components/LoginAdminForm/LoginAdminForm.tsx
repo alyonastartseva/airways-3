@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useMutation } from 'react-query';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   Box,
   Button,
@@ -13,14 +16,11 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { CloseIcon, ViewOffIcon, ViewIcon } from '@chakra-ui/icons';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { useMutation } from 'react-query';
-import { Navigate, useNavigate } from 'react-router-dom';
 
-import { useAuthAdmin } from '@/services/auth/auth.service';
-import { useAuth } from '@/hooks';
+import { useAuthAdmin } from '@services/auth/auth.service';
 import { ELinks } from '@services/constants';
-import { SpinnerBlock } from '@/common/SpinnerBlock';
+import { SpinnerBlock } from '@/common';
+import { useAuth } from '@/hooks';
 
 interface IUserForm {
   username: string;

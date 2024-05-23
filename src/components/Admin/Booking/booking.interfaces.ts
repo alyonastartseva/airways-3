@@ -1,4 +1,4 @@
-import { TSeatCategory } from '../../../interfaces/seat.interfaces';
+import { TSeatCategory } from '@interfaces/seat.interfaces';
 
 export interface IBooking {
   id: number;

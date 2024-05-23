@@ -1,3 +1,7 @@
+import { useState } from 'react';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { ViewIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -12,18 +16,11 @@ import {
   Select,
   Text,
 } from '@chakra-ui/react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import * as yup from 'yup';
 
-import { useCountryQuery } from '@/hooks';
-import { AlertMessage } from '@common/AlertMessage';
-import { SpinnerBlock } from '@common/SpinnerBlock';
-import InputField from '@common/InputField/InputField';
-import SelectField from '@common/SelectField/SelectField';
-import { IFormValuesRegisterUser } from '@interfaces/form-values-register-user.interfaces';
 import { months, years, days } from '@utils/form-data.utils';
+import { IFormValuesRegisterUser } from '@interfaces/form-values-register-user.interfaces';
+import { SelectField, InputField, SpinnerBlock, AlertMessage } from '@/common';
+import { useCountryQuery } from '@/hooks';
 
 interface IRegisterForm {
   onSubmit: SubmitHandler<IFormValuesRegisterUser>;

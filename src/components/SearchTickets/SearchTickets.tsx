@@ -21,22 +21,22 @@ import {
 import { formatISO, parseISO, isPast, isToday, compareDesc } from 'date-fns';
 
 import { ArrowsIcon } from '@common/icons';
-import mainsearch from '@assets/images/main-search.webp';
-import { CalendarTickets } from '@common/CalendarTickets';
+import { mainsearch } from '@/assets';
 import { searchApi } from '@services/searchTickets.service';
-import { ISearchData } from '@/interfaces/search-tickets.interfaces';
-import {
-  DataToType,
-  ISearchRadioData,
-} from '@/components/SearchTickets/SearchTickets.interfaces';
-import { DestinationsInputSelector } from '@/common/DestinationsInputSelector';
 import { getFlights } from '@/services/flights/flights.service';
+import { ISearchData } from '@/interfaces/search-tickets.interfaces';
 import { IFlightPresentation } from '@/interfaces/flights.interfaces';
 import { TSeatCategory } from '@/interfaces/seat.interfaces';
-import { SeatCategory } from '@/common/SeatCategory';
+import {
+  CalendarTickets,
+  DestinationsInputSelector,
+  SeatCategory,
+} from '@/common';
 
 import { TicketCard } from '../Ticket/TicketCard';
 import { ITicketCardProps } from '../Ticket/TicketCard/ticketCard.interfaces';
+
+import { DataToType, ISearchRadioData } from './SearchTickets.interfaces';
 
 interface Props {
   initialValues?: ISearchData;
@@ -46,7 +46,7 @@ interface Props {
   marginTop?: string;
 }
 
-const MainSearch = ({
+const SearchTickets = ({
   initialValues = {
     departureDate: '',
     returnDate: '',
@@ -421,4 +421,4 @@ const MainSearch = ({
   );
 };
 
-export default MainSearch;
+export default SearchTickets;

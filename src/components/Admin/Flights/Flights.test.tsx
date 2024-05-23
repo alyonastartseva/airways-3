@@ -2,9 +2,9 @@ import { render, screen, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, vi } from 'vitest';
 import { QueryClientProvider, QueryClient } from 'react-query';
 
-import { IFlight } from '@/interfaces/flights.interfaces';
+import { IFlight } from '@interfaces/flights.interfaces';
 
-import Flights from './Flights';
+import { Flights } from './index';
 
 vi.mock('react-query', async () => {
   const actual: object = await vi.importActual('react-query');

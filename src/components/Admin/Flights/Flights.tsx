@@ -1,3 +1,4 @@
+import { useCallback, useMemo, useState, memo } from 'react';
 import {
   Table,
   TableContainer,
@@ -13,11 +14,17 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useCallback, useMemo, useState, memo } from 'react';
 
-import { EditableSelectCell } from '@common/EditableSelectCell';
 import { flightStatuses } from '@constants/constants';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
+import { IAircraft } from '@/interfaces/aircraft.interfaces';
+import { isRowEditing } from '@utils/table.utils';
+import { formatDateTime } from '@utils/date.utils';
+import {
+  IFlightPostFormFields,
+  IFlightPresentation,
+  TFlightsStatus,
+} from '@/interfaces/flights.interfaces';
 import {
   useAircraftQuery,
   useFlightsDelete,
@@ -25,22 +32,17 @@ import {
   useFlightsPatch,
   useSetCurrentPageInPagination,
 } from '@/hooks';
-import { IAircraft } from '@/interfaces/aircraft.interfaces';
 import {
-  IFlightPostFormFields,
-  IFlightPresentation,
-  TFlightsStatus,
-} from '@/interfaces/flights.interfaces';
-import { AlertMessage } from '@common/AlertMessage';
-import { EditableCell } from '@common/EditableCell';
-import { FlexCell } from '@common/FlexCell';
-import { FooterTable } from '@common/FooterTable';
-import { HeaderTable } from '@/common/HeaderTable';
-import { PopoverTable } from '@common/PopoverTable';
-import { SpinnerBlock } from '@common/SpinnerBlock';
-import { isRowEditing } from '@utils/table.utils';
-import { formatDateTime } from '@utils/date.utils';
-import { DestinationsInputSelector } from '@/common/DestinationsInputSelector';
+  DestinationsInputSelector,
+  SpinnerBlock,
+  PopoverTable,
+  HeaderTable,
+  FooterTable,
+  FlexCell,
+  EditableCell,
+  AlertMessage,
+  EditableSelectCell,
+} from '@/common';
 
 const Flights = () => {
   const [pageIndex, setPaginationData] =

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import {
   Box,
   Button,
@@ -13,11 +14,10 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { ViewOffIcon, ViewIcon } from '@chakra-ui/icons';
-import { useForm } from 'react-hook-form';
 
-import EmptyPasswordIcon from '@/common/icons/EmptyPasswordIcon';
 import { ELinks } from '@services/constants';
 import emailPattern from '@constants/validate-patterns/email-pattern';
+import { EmptyPasswordIcon } from '@common/icons';
 
 interface IUserForm {
   username: string;

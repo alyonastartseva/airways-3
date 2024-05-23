@@ -1,12 +1,12 @@
-import { Box, Flex, Button, Spacer } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
+import { Box, Flex, Button, Spacer } from '@chakra-ui/react';
 
-import { WebsiteLogo } from '@common/WebsiteLogo';
-import { useAuth } from '@/hooks';
 import UserHeader from '@/components/User/UserHeader/UserHeader';
-import { AdminHeader } from '@/components/Admin/AdminHeader';
 import setParams from '@utils/set-params.utils';
 import { ELinks } from '@/services/constants';
+import { AdminHeader } from '@/components';
+import { useAuth } from '@/hooks';
+import { WebsiteLogo } from '@/common';
 
 const HEADER_LINKS = [
   { path: ELinks.AUTHORIZATION, name: 'Вход' },

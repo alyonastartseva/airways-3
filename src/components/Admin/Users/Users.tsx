@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { useQuery } from 'react-query';
+import { useForm } from 'react-hook-form';
 import {
   Alert,
   AlertDescription,
@@ -35,17 +38,13 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useState } from 'react';
-import { useQuery } from 'react-query';
-import { useForm } from 'react-hook-form';
 
-import AviasalesService from '@/services/aviasales.service';
-import { TPerson } from '@interfaces/person.interfaces';
-import { IFormPassenger } from '@/interfaces/passenger.interfaces';
+import AviasalesService from '@services/aviasales.service';
 import { Pagination } from '@components/Pagination';
-import { ITEMS_PER_PAGE } from '@/constants/constants';
-
-import { UserInput } from '../UserInput';
+import { ITEMS_PER_PAGE } from '@constants/constants';
+import { TPerson } from '@interfaces/person.interfaces';
+import { IFormPassenger } from '@interfaces/passenger.interfaces';
+import { UserInput } from '@/components';
 
 const Users = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

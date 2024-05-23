@@ -1,3 +1,5 @@
+import { useCallback, useMemo, useState, useEffect } from 'react';
+import { Navigate, useParams } from 'react-router-dom';
 import {
   TableContainer,
   Table,
@@ -14,23 +16,28 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { useCallback, useMemo, useState, useEffect } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
 
+import { ITEMS_PER_PAGE, seatCategory, yesNo } from '@constants/constants';
+import { EModalNames } from '@/constants/modal-constants/modal-names';
+import { isRowEditing } from '@utils/table.utils';
+import { sortById } from '@utils/sort.utils';
+import { ELinks } from '@services/constants';
 import {
   ISeatForm,
   ISeatPost,
   TSeatCategory,
 } from '@/interfaces/seat.interfaces';
-import { EditableCell } from '@common/EditableCell';
-import { FlexCell } from '@common/FlexCell';
-import { PopoverTable } from '@common/PopoverTable';
-import { AlertMessage } from '@common/AlertMessage';
-import { SpinnerBlock } from '@common/SpinnerBlock';
-import { HeaderTable } from '@/common/HeaderTable';
-import { FooterTable } from '@common/FooterTable';
-import { isRowEditing } from '@utils/table.utils';
-import { sortById } from '@utils/sort.utils';
+import {
+  EditableCell,
+  FlexCell,
+  PopoverTable,
+  AlertMessage,
+  SpinnerBlock,
+  HeaderTable,
+  FooterTable,
+  EditableSelectCell,
+  SeatCategory,
+} from '@/common';
 import {
   useSeatQuery,
   useSeatDelete,
@@ -38,11 +45,6 @@ import {
   useAircraftQueryById,
   useSetCurrentPageInPagination,
 } from '@/hooks';
-import { EModalNames } from '@/constants/modal-constants/modal-names';
-import { ELinks } from '@services/constants';
-import { ITEMS_PER_PAGE, seatCategory, yesNo } from '@constants/constants';
-import { EditableSelectCell } from '@/common/EditableSelectCell';
-import { SeatCategory } from '@/common/SeatCategory';
 
 // получение названия класса билета
 const getStatusName = (status: TSeatCategory): string => {

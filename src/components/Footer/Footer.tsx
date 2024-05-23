@@ -1,9 +1,9 @@
-import { Box, Flex, Link, Spacer } from '@chakra-ui/react';
 import { Link as routerLink } from 'react-router-dom';
+import { Box, Flex, Link, Spacer } from '@chakra-ui/react';
 
-import { WebsiteLogo } from '@common/WebsiteLogo';
-import { useAuth } from '@/hooks';
 import { ELinks } from '@services/constants';
+import { useAuth } from '@/hooks';
+import { WebsiteLogo } from '@/common';
 
 const Footer = () => {
   const { isAdmin: isLogged } = useAuth();

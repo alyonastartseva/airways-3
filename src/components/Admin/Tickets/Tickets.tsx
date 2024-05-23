@@ -1,3 +1,4 @@
+import { useState, useCallback, useMemo, memo, useEffect } from 'react';
 import {
   Box,
   Flex,
@@ -9,7 +10,6 @@ import {
   Tbody,
   Td,
 } from '@chakra-ui/react';
-import { useState, useCallback, useMemo, memo, useEffect } from 'react';
 import {
   createColumnHelper,
   useReactTable,
@@ -17,7 +17,10 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 
-import { HeaderTable } from '@/common/HeaderTable';
+import { sortById } from '@utils/sort.utils';
+import { formatDateTime } from '@utils/date.utils';
+import { isRowEditing } from '@utils/table.utils';
+import { ITEMS_PER_PAGE } from '@/constants/constants';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { ITickets, ITicketsPost } from '@interfaces/tickets.interface';
 import {
@@ -26,16 +29,15 @@ import {
   useTicketDelete,
   useSetCurrentPageInPagination,
 } from '@/hooks';
-import { FlexCell } from '@common/FlexCell';
-import { sortById } from '@utils/sort.utils';
-import { SpinnerBlock } from '@common/SpinnerBlock';
-import { isRowEditing } from '@utils/table.utils';
-import { EditableCell } from '@common/EditableCell';
-import { PopoverTable } from '@common/PopoverTable';
-import { FooterTable } from '@/common/FooterTable';
-import { AlertMessage } from '@/common/AlertMessage';
-import { ITEMS_PER_PAGE } from '@/constants/constants';
-import { formatDateTime } from '@utils/date.utils';
+import {
+  AlertMessage,
+  FooterTable,
+  PopoverTable,
+  EditableCell,
+  SpinnerBlock,
+  FlexCell,
+  HeaderTable,
+} from '@/common';
 
 const Tickets = () => {
   // индекс и размер пагинации

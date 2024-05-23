@@ -15,9 +15,9 @@ import {
   AirplaneLandingIcon,
   CaretDownIcon,
   AirplaneIcon,
-} from '@/common/icons';
-import { pluralize } from '@/utils/string.utils';
-import { getFormattedDateTime } from '@/utils/date.utils';
+} from '@common/icons';
+import { pluralize } from '@utils/string.utils';
+import { getFormattedDateTime } from '@utils/date.utils';
 
 import { TicketTariff } from '../TicketTariff';
 

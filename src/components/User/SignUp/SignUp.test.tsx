@@ -5,13 +5,13 @@ import {
   waitFor,
   cleanup,
 } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
 
-import { userApi } from '@/services/user/user.service';
+import { userApi } from '@services/user/user.service';
 
-import SignUp from './SignUp';
+import { SignUp } from './index';
 
 vi.mock('@services/user.service');
 

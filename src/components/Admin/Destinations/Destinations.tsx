@@ -1,3 +1,4 @@
+import { memo, useCallback, useMemo, useState } from 'react';
 import {
   TableContainer,
   Table,
@@ -14,31 +15,32 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { memo, useCallback, useMemo, useState } from 'react';
 
+import { isRowEditing } from '@utils/table.utils';
+import { sortById } from '@utils/sort.utils';
+import { EModalNames } from '@/constants/modal-constants/modal-names';
+import onlyLettersPattern from '@/constants/validate-patterns/only-letters-pattern';
+import { ITEMS_PER_PAGE } from '@/constants/constants';
 import {
   IDestination,
   IDestinationPost,
 } from '@interfaces/destination.interfaces';
-import { EditableCell } from '@common/EditableCell';
-import { FlexCell } from '@common/FlexCell';
-import { PopoverTable } from '@common/PopoverTable';
-import { AlertMessage } from '@common/AlertMessage';
-import { SpinnerBlock } from '@common/SpinnerBlock';
-import { HeaderTable } from '@/common/HeaderTable';
-import { FooterTable } from '@common/FooterTable';
-import { isRowEditing } from '@utils/table.utils';
-import { sortById } from '@utils/sort.utils';
 import {
   useDestinationQueryByPage,
   useDestinationPatch,
   useDestinationDelete,
   useSetCurrentPageInPagination,
 } from '@/hooks';
-import { EModalNames } from '@/constants/modal-constants/modal-names';
-import onlyLettersPattern from '@/constants/validate-patterns/only-letters-pattern';
-import { ITEMS_PER_PAGE } from '@/constants/constants';
-import { DestinationsInputSelector } from '@/common/DestinationsInputSelector';
+import {
+  EditableCell,
+  FlexCell,
+  PopoverTable,
+  AlertMessage,
+  SpinnerBlock,
+  HeaderTable,
+  FooterTable,
+  DestinationsInputSelector,
+} from '@/common';
 
 const Destinations = () => {
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
