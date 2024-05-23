@@ -1,9 +1,9 @@
-import { FormInputProps } from '@common/ModalElements/ModalInput/ModalInput';
 import { IFormBooking } from '@interfaces/booking.interfaces';
-import { useFlightSeatsQuery, usePassengersQuery } from '@/hooks';
-import { bookingStatuses } from '@constants/constants';
 import { IPassenger } from '@interfaces/search.interfaces';
+import { FormInputProps } from '@common/ModalElements/ModalInput';
 import { IFlightSeat } from '@services/flightSeats/flightSeats.interfaces';
+import { bookingStatuses } from '@/constants';
+import { useFlightSeatsQuery, usePassengersQuery } from '@/hooks';
 
 const PassengersOptions = () => {
   const { data } = usePassengersQuery(0, 100);

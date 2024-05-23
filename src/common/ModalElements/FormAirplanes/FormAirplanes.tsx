@@ -20,11 +20,13 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 
-import { EModalButtonTexts } from '@constants/modal-constants/modal-names';
-import { modalSettings } from '@constants/modal-constants/modal-settings';
-import { seatCategory } from '@constants/constants';
-import { modalSeatFields } from '@constants/modal-constants/modal-seat-fields';
 import { usePostAircraftWithSeats } from '@hooks/usePostAircraftWithSeats';
+import {
+  EModalButtonTexts,
+  modalSettings,
+  seatCategory,
+  modalSeatFields,
+} from '@/constants';
 import {
   ButtonAddAdmin,
   ModalInput,

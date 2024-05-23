@@ -18,9 +18,7 @@ import {
 
 import { isRowEditing } from '@utils/table.utils';
 import { sortById } from '@utils/sort.utils';
-import { EModalNames } from '@/constants/modal-constants/modal-names';
-import onlyLettersPattern from '@/constants/validate-patterns/only-letters-pattern';
-import { ITEMS_PER_PAGE } from '@/constants/constants';
+import { EModalNames, onlyLettersPattern, ITEMS_PER_PAGE } from '@/constants';
 import {
   IDestination,
   IDestinationPost,

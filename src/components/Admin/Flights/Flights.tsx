@@ -15,8 +15,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import { flightStatuses } from '@constants/constants';
-import { EModalNames } from '@/constants/modal-constants/modal-names';
+import { flightStatuses, EModalNames } from '@/constants';
 import { IAircraft } from '@/interfaces/aircraft.interfaces';
 import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';

@@ -1,6 +1,30 @@
-import { AxiosResponse } from 'axios';
 import { UseMutationResult } from 'react-query';
+import { AxiosResponse } from 'axios';
 
+import { TSettings } from '@common/ModalElements/ModalShape/modal-shape.interfaces';
+import { ISeatForm } from '@interfaces/seat.interfaces';
+import { TTimeZoneForm } from '@interfaces/time-zone.interfaces';
+import { ITicketsPost } from '@interfaces/tickets.interface';
+import {
+  IDestinationPost,
+  IDestination,
+} from '@interfaces/destination.interfaces';
+import {
+  IFlightPost,
+  IFlightPostFormFields,
+} from '@interfaces/flights.interfaces';
+import {
+  modalAirplanesFields,
+  modalDestinationsFields,
+  modalFlightsFields,
+  EModalNames,
+  EModalButtonTexts,
+  modalPassengersFields,
+  modalSeatFields,
+  modalTicketsFields,
+  modalTimezonesFields,
+  modalBookingFields,
+} from '@/constants';
 import {
   useTicketsPost,
   useSeatPost,
@@ -11,28 +35,6 @@ import {
   useTimezonePost,
   useBookingPost,
 } from '@/hooks';
-import { TSettings } from '@/common/ModalElements/ModalShape/modal-shape.interfaces';
-import { ISeatForm } from '@/interfaces/seat.interfaces';
-import { TTimeZoneForm } from '@/interfaces/time-zone.interfaces';
-import {
-  IDestinationPost,
-  IDestination,
-} from '@/interfaces/destination.interfaces';
-import {
-  IFlightPost,
-  IFlightPostFormFields,
-} from '@/interfaces/flights.interfaces';
-import { ITicketsPost } from '@/interfaces/tickets.interface';
-
-import { modalAirplanesFields } from './modal-airplanes-fields';
-import { modalDestinationsFields } from './modal-destinations-fields';
-import { modalFlightsFields } from './modal-flights-fields';
-import { EModalButtonTexts, EModalNames } from './modal-names';
-import { modalPassengersFields } from './modal-passengers-fields';
-import { modalSeatFields } from './modal-seat-fields';
-import { modalTicketsFields } from './modal-tickets-fields';
-import { modalTimezonesFields } from './modal-timezones-fields';
-import { modalBookingFields } from './modal-booking-fields';
 
 interface FormTicketsPost {
   ticketNumber?: string;

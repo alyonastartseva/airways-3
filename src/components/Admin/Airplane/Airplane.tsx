@@ -17,8 +17,7 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 
-import { ITEMS_PER_PAGE, seatCategory, yesNo } from '@constants/constants';
-import { EModalNames } from '@/constants/modal-constants/modal-names';
+import { ITEMS_PER_PAGE, seatCategory, yesNo, EModalNames } from '@/constants';
 import { isRowEditing } from '@utils/table.utils';
 import { sortById } from '@utils/sort.utils';
 import { ELinks } from '@services/constants';

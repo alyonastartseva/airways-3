@@ -1,10 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Box, Flex, Button, Spacer } from '@chakra-ui/react';
 
-import UserHeader from '@/components/User/UserHeader/UserHeader';
 import setParams from '@utils/set-params.utils';
-import { ELinks } from '@/services/constants';
-import { AdminHeader } from '@/components';
+import { ELinks } from '@services/constants';
+import { UserHeader, AdminHeader } from '@/components';
 import { useAuth } from '@/hooks';
 import { WebsiteLogo } from '@/common';
 

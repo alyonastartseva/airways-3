@@ -18,7 +18,7 @@ import {
 } from '@tanstack/react-table';
 
 import { isRowEditing } from '@utils/table.utils';
-import { EModalNames } from '@/constants/modal-constants/modal-names';
+import { EModalNames } from '@/constants';
 import { ITimeZone, TTimeZoneForm } from '@interfaces/time-zone.interfaces';
 import {
   useTimezonesQuery,

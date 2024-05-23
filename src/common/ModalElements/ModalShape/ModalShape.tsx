@@ -16,8 +16,7 @@ import {
   ModalBody,
 } from '@chakra-ui/react';
 
-import { modalSettings } from '@constants/modal-constants/modal-settings';
-import { EModalNames } from '@constants/modal-constants/modal-names';
+import { EModalNames, modalSettings } from '@/constants';
 import { IModalProps } from '@common/ModalElements/ModalShape/modal-shape.interfaces';
 import {
   ButtonSubmitAdmin,

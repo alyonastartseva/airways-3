@@ -20,8 +20,7 @@ import {
 import { sortById } from '@utils/sort.utils';
 import { formatDateTime } from '@utils/date.utils';
 import { isRowEditing } from '@utils/table.utils';
-import { ITEMS_PER_PAGE } from '@/constants/constants';
-import { EModalNames } from '@/constants/modal-constants/modal-names';
+import { ITEMS_PER_PAGE, EModalNames } from '@/constants';
 import { ITickets, ITicketsPost } from '@interfaces/tickets.interface';
 import {
   useTicketsQuery,

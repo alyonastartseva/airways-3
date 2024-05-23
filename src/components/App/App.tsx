@@ -1,22 +1,21 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { Layout } from '@/layout';
-import { LoginAdminForm } from '@components/LoginAdminForm';
+import { PageNotFound } from '@/common';
+import { LoginAdminForm, LoginForm } from '@/components';
+import { PrivateRoute } from '@/layout/PrivateRoute';
 import { AirplanesPage } from '@pages/Admin/Airplane';
 import { UsersPage } from '@pages/Admin/Users';
 import { DestinationsPage } from '@pages/Admin/DestinationsPage';
-import { PageNotFound } from '@common/PageNotFound';
 import { PassengersPage } from '@/pages/Passengers';
 import { FlightsPage } from '@/pages/Admin/FlightsPage';
 import { AirplaneMorePage } from '@/pages/Admin/AirplaneMorePage';
-import { PrivateRoute } from '@/layout/PrivateRoute';
 import { SignUpPage } from '@/pages/User/SignUpPage';
 import { SearchTicketsPage } from '@/pages/User/SearchTicketsPage';
 import { FilteredTicketsPage } from '@pages/User/FilteredTicketsPage';
 import { TicketsPage } from '@/pages/Admin/Tickets';
 import { BookingPage } from '@/pages/Admin/BookingPage';
 import { TimeZonesPage } from '@/pages/Admin/TimeZonesPage';
-import { LoginForm } from '@components/LoginForm';
 
 const App = () => {
   return (

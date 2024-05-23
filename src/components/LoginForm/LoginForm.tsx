@@ -16,7 +16,7 @@ import {
 import { ViewOffIcon, ViewIcon } from '@chakra-ui/icons';
 
 import { ELinks } from '@services/constants';
-import emailPattern from '@constants/validate-patterns/email-pattern';
+import { emailPattern } from '@/constants';
 import { EmptyPasswordIcon } from '@common/icons';
 
 interface IUserForm {

@@ -1,7 +1,6 @@
-import { FormInputProps } from '@/common/ModalElements/ModalInput/ModalInput';
-import { ISeatForm } from '@/interfaces/seat.interfaces';
-
-import { seatCategory } from '../constants';
+import { FormInputProps } from '@common/ModalElements/ModalInput';
+import { ISeatForm } from '@interfaces/seat.interfaces';
+import { seatCategory } from '@/constants';
 
 const seatCategoryOptions = seatCategory.map((el) => (
   <option key={el.eng} value={el.eng}>

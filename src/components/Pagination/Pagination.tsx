@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { Box, Button, ButtonGroup, Flex } from '@chakra-ui/react';
 
-import { ArrowRightIcon, ArrowLeftIcon } from '@common/icons/';
+import { ArrowRightIcon, ArrowLeftIcon } from '@common/icons';
 import { getVisiblePages } from '@utils/pagination.utils';
 
 import { IPagination } from './Pagination.interfaces';

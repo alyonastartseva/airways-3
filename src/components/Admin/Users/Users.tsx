@@ -40,11 +40,10 @@ import {
 } from '@tanstack/react-table';
 
 import AviasalesService from '@services/aviasales.service';
-import { Pagination } from '@components/Pagination';
+import { Pagination, UserInput } from '@/components';
 import { ITEMS_PER_PAGE } from '@constants/constants';
 import { TPerson } from '@interfaces/person.interfaces';
 import { IFormPassenger } from '@interfaces/passenger.interfaces';
-import { UserInput } from '@/components';
 
 const Users = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
