@@ -19,7 +19,7 @@ import { isValidNumber } from 'libphonenumber-js';
 
 import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
-import { EModalNames, ITEMS_PER_PAGE, passportPattern } from '@/constants';
+import { ITEMS_PER_PAGE, EModalNames, passportPattern } from '@/constants';
 import { IFormPassengers, IPassenger, PersonGenders } from '@/interfaces';
 import {
   usePassengersDelete,

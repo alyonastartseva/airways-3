@@ -8,7 +8,7 @@ import {
   AlertDescription,
 } from '@chakra-ui/react';
 
-import { useAuth } from '@hooks/.';
+import { useAuth } from '@/hooks';
 
 const PageNotFound = () => {
   const { isAdmin } = useAuth();

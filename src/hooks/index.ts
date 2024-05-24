@@ -31,6 +31,7 @@ export { useSeatPost } from '@hooks/seat';
 export { useSeatQuery } from '@hooks/seat';
 
 export { useFlightSeatsQuery } from '@hooks/flightSeats';
+export { usePostAircraftWithSeats } from '@hooks/usePostAircraftWithSeats';
 
 export { useBookingPost } from '@hooks/booking';
 export { useBookingPatch } from '@hooks/booking';

@@ -17,8 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { CloseIcon, ViewOffIcon, ViewIcon } from '@chakra-ui/icons';
 
-import { useAuthAdmin } from '@services/auth/auth.service';
-import { ELinks } from '@services/constants';
+import { ELinks, useAuthAdmin } from '@/services';
 import { SpinnerBlock } from '@/common';
 import { useAuth } from '@/hooks';
 

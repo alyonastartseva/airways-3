@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { ICountry } from '@interfaces/country.interfaces';
+import { ICountry } from '@/interfaces';
 
 type TCountryName = {
   name: string;

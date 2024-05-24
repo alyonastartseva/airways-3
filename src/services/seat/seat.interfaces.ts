@@ -1,4 +1,3 @@
-import { ISeatPost } from '@/interfaces/seat.interfaces';
-import { IGetQuery } from '@/interfaces/api-interfaces';
+import { ISeatPost, IGetQuery } from '@/interfaces';
 
 export type ISeat = IGetQuery<ISeatPost>;

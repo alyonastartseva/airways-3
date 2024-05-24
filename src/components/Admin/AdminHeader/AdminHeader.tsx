@@ -2,11 +2,11 @@ import { FC } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Flex, Button, Spacer, Text, Box } from '@chakra-ui/react';
 
-import { ELinks } from '@services/constants';
+import { useAuth } from '@/hooks';
+import { ELinks } from '@/services';
+import { PhoneNumber } from '@/common';
 import setParams from '@utils/set-params.utils';
 import { ExitIcon } from '@/common/icons';
-import { PhoneNumber } from '@/common';
-import { useAuth } from '@/hooks';
 
 const AdminHeader: FC = () => {
   const { isAdmin: isLogged, setIsAdmin } = useAuth();

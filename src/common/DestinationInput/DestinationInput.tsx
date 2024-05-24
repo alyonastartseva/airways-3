@@ -2,7 +2,7 @@ import { Box, Flex, Input, Text, InputGroup } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 
-import { getDestinations } from '@services/destinations/destinations.service';
+import { getDestinations } from '@/services';
 import { TDestQuery, IDestination } from '@/interfaces';
 
 import { IDestProps } from './destination.interfaces';

@@ -39,7 +39,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import AviasalesService from '@services/aviasales.service';
+import { AviasalesService } from '@/services';
 import { ITEMS_PER_PAGE } from '@/constants';
 import { Pagination, UserInput } from '@/components';
 import { TPerson, IFormPassenger } from '@/interfaces';

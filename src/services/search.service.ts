@@ -1,5 +1,5 @@
-import { adminInstance } from '@/services/axios.service';
-import { ISearchQuery } from '@interfaces/search.interfaces';
+import { adminInstance } from '@/services';
+import { ISearchQuery } from '@/interfaces';
 // import { ILoginRequest } from '@interfaces/login.interfaces';
 
 class searchService {

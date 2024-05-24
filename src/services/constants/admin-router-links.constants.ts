@@ -12,4 +12,4 @@ enum ELinks {
   ADMIN_BOOKING = '/booking',
 }
 
-export default ELinks;
+export { ELinks };

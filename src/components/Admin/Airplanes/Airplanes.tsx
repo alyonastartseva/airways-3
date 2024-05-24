@@ -17,7 +17,7 @@ import {
 } from '@tanstack/react-table';
 
 import { IAircraft, IAircraftPost } from '@/interfaces';
-import { EModalNames, ITEMS_PER_PAGE } from '@/constants';
+import { ITEMS_PER_PAGE, EModalNames } from '@/constants';
 import { sortById } from '@utils/sort.utils';
 import { isRowEditing } from '@utils/table.utils';
 import {

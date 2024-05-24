@@ -1,7 +1,7 @@
-import { IFormUserCreate } from '@interfaces/account.interfaces';
-import { IFormPost } from '@services/user/user.interfaces';
-import { clientInstance } from '@services/axios.service';
-import { ERolesPassenger } from '@interfaces/roles.interfaces';
+import { IFormUserCreate, ERolesPassenger } from '@/interfaces';
+import { clientInstance } from '@/services';
+
+import { IFormPost } from './user.interfaces';
 
 export const userApi = {
   async postUser(data: IFormUserCreate) {

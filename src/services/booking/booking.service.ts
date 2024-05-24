@@ -1,7 +1,5 @@
-import { adminInstance } from '@services/axios.service';
-import { IGetQuery } from '@interfaces/api-interfaces';
-import { ERoutes } from '@services/constants';
-import { IBooking, IFormBooking } from '@interfaces/booking.interfaces';
+import { IGetQuery, IBooking, IFormBooking } from '@/interfaces';
+import { adminInstance, ERoutes } from '@/services';
 
 const bookingAPI = {
   getBookings: async (page: number, size: number) => {

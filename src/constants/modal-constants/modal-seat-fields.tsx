@@ -1,4 +1,4 @@
-import { FormInputProps } from '@common/ModalElements/ModalInput';
+import { FormInputProps } from '@/common/ModalElements/ModalInput';
 import { ISeatForm } from '@/interfaces';
 import { seatCategory } from '@/constants';
 

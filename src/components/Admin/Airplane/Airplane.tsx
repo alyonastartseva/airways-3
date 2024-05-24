@@ -19,9 +19,9 @@ import {
 
 import { ITEMS_PER_PAGE, seatCategory, yesNo, EModalNames } from '@/constants';
 import { ISeatForm, ISeatPost, TSeatCategory } from '@/interfaces';
+import { ELinks } from '@/services';
 import { isRowEditing } from '@utils/table.utils';
 import { sortById } from '@utils/sort.utils';
-import { ELinks } from '@services/constants';
 import {
   EditableCell,
   FlexCell,

@@ -1,7 +1,7 @@
-import { adminInstance } from '@/services/axios.service';
-import { ITickets, ITicketsPost } from '@interfaces/tickets.interface';
-import { ITicketsGet } from '@services/tickets/tickets.interfaces';
-import { ERoutes } from '@services/constants';
+import { adminInstance, ERoutes } from '@/services';
+import { ITickets, ITicketsPost } from '@/interfaces';
+
+import { ITicketsGet } from './tickets.interfaces';
 
 const ticketsAPI = {
   getTickets: async (pageIndex?: number) => {

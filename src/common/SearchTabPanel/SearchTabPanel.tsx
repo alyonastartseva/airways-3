@@ -18,9 +18,9 @@ import {
 } from '@chakra-ui/react';
 import { formatISO, format, isPast, isToday, compareDesc } from 'date-fns';
 
+import { searchService } from '@/services';
 import { DestinationInput, CalendarPopover } from '@/common';
 import { IFromTo, TDestQuery, ISearchQuery } from '@/interfaces';
-import searchService from '@services/search.service';
 import {
   ArrowDownIcon,
   ResetIcon,

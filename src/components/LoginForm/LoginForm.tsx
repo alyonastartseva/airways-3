@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { ViewOffIcon, ViewIcon } from '@chakra-ui/icons';
 
-import { ELinks } from '@services/constants';
+import { ELinks } from '@/services';
 import { emailPattern } from '@/constants';
 import { EmptyPasswordIcon } from '@common/icons';
 

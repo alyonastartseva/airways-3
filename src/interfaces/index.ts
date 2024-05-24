@@ -6,7 +6,7 @@ export type { ICountry } from './country.interfaces';
 export type { IFormValuesRegisterUser } from './form-values-register-user.interfaces';
 export type { TPerson } from './person.interfaces';
 export { PersonGenders } from './person.interfaces';
-export type { ERolesPassenger } from './roles.interfaces';
+export { ERolesPassenger } from './roles.interfaces';
 export type { TDestQuery, ISearchData } from './search-tickets.interfaces';
 export type { IModalFormPage } from './table.interfaces';
 export type { ITickets, ITicketsPost, ITicketsForm } from './tickets.interface';

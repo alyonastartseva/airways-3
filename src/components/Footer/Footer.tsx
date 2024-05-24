@@ -1,7 +1,7 @@
 import { Link as routerLink } from 'react-router-dom';
 import { Box, Flex, Link, Spacer } from '@chakra-ui/react';
 
-import { ELinks } from '@services/constants';
+import { ELinks } from '@/services';
 import { useAuth } from '@/hooks';
 import { WebsiteLogo } from '@/common';
 

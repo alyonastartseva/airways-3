@@ -23,16 +23,18 @@ import {
   modalTimezonesFields,
   modalBookingFields,
 } from '@/constants';
-import {
-  useDestinationPost,
-  useAircraftPost,
-  useFlightsPost,
-  // usePassengersPost,
-  // useSeatPost,
-  // useTicketsPost,
-  // useTimezonePost,
-  // useBookingPost,
-} from '@/hooks';
+import // useDestinationPost,
+// useAircraftPost,
+// useFlightsPost,
+// usePassengersPost,
+// useSeatPost,
+// useTicketsPost,
+// useTimezonePost,
+// useBookingPost,
+'@/hooks';
+import { useDestinationPost } from '@hooks/destination/useDestinationPost';
+import { useAircraftPost } from '@hooks/aircraft/useAircraftPost';
+import { useFlightsPost } from '@hooks/flight/useFlightsPost';
 import { usePassengersPost } from '@hooks/passenger/usePassengersPost';
 import { useSeatPost } from '@hooks/seat/useSeatPost';
 import { useTicketsPost } from '@hooks/ticket/useTicketPost';
