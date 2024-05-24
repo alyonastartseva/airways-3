@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
-import { ISearchData } from '@/interfaces/search-tickets.interfaces';
-import { SearchTickets } from '@components/SearchTickets';
+import { ISearchData } from '@/interfaces';
+import { SearchTickets } from '@/components';
 
 const SearchTicketsPage = () => {
   const navigate = useNavigate();

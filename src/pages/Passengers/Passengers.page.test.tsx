@@ -1,8 +1,8 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { vi } from 'vitest';
 
-import PassengersPage from './Passengers.page';
+import { PassengersPage } from './index';
 
 describe('PassengersPage component', () => {
   it('Passengers page render table data', async () => {

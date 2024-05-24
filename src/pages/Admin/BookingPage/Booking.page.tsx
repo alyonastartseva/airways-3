@@ -1,4 +1,4 @@
-import { Booking } from '@/components/Admin/Booking';
+import { Booking } from '@/components';
 
 const BookingPage = () => {
   return <Booking />;

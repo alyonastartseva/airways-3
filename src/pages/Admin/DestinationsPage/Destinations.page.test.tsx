@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
-import { DestinationsPage } from '@pages/Admin/DestinationsPage/index';
+import { DestinationsPage } from './index';
 
 describe('DestinationsPage renders', () => {
   afterEach(() => {

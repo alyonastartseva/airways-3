@@ -1,4 +1,4 @@
-import { Tickets } from '@/components/Admin/Tickets';
+import { Tickets } from '@/components';
 
 const TicketsPage = () => {
   return (
