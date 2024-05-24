@@ -1,5 +1,5 @@
 import { FormInputProps } from '@common/ModalElements/ModalInput';
-import { IFormPassengers } from '@interfaces/passenger.interfaces';
+import { IFormPassengers } from '@/interfaces';
 import {
   onlyLettersPattern,
   phonePattern,

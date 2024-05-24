@@ -5,7 +5,7 @@ import { QueryClientProvider, QueryClient } from 'react-query';
 import { FC, PropsWithChildren } from 'react';
 
 import { useCountryQuery } from '@/hooks';
-import { ICountry } from '@interfaces/country.interfaces';
+import { ICountry } from '@/interfaces';
 
 import { RegisterForm } from './index';
 

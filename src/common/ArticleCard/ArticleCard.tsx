@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 
 import { ArrowRightIcon } from '@common/icons';
-import { IArticle } from '@interfaces/search.interfaces';
+import { IArticle } from '@/interfaces';
 
 const ArticleCard: React.FC<IArticle> = (props: IArticle) => {
   const { title, header, body, image } = props;

@@ -2,9 +2,9 @@ import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import { patchTimezones } from '@/services/timeZones/timezones.service';
-import { IAxiosErrResponseData } from '@/interfaces/axios-err-response-data';
-import { AxiosErrorMessage } from '@/common/AxiosErrorMessage';
+import { patchTimezones } from '@services/timeZones/timezones.service';
+import { IAxiosErrResponseData } from '@/interfaces';
+import { AxiosErrorMessage } from '@/common';
 
 const useTimezonesPatch = () => {
   const queryClient = useQueryClient();

@@ -2,7 +2,7 @@ import { render, screen, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, vi } from 'vitest';
 import { QueryClientProvider, QueryClient } from 'react-query';
 
-import { ITickets } from '@interfaces/tickets.interface';
+import { ITickets } from '@/interfaces';
 
 import { Tickets } from './index';
 

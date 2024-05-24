@@ -1,4 +1,4 @@
-import { TFlightsStatus } from '@interfaces/flights.interfaces';
+import { TFlightsStatus } from '@/interfaces';
 
 export const flightStatuses = [
   'DELAYED',

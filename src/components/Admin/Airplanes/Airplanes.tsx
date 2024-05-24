@@ -16,7 +16,7 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 
-import { IAircraft, IAircraftPost } from '@interfaces/aircraft.interfaces';
+import { IAircraft, IAircraftPost } from '@/interfaces';
 import { EModalNames, ITEMS_PER_PAGE } from '@/constants';
 import { sortById } from '@utils/sort.utils';
 import { isRowEditing } from '@utils/table.utils';

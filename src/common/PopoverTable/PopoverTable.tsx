@@ -14,7 +14,7 @@ import { EditIcon, CloseIcon } from '@chakra-ui/icons';
 import { Details } from '@common/icons';
 import { ELinks } from '@services/constants';
 import { IPopoverTable } from '@common/PopoverTable/popoverTable.interfaces';
-import { IFlightPresentation } from '@interfaces/flights.interfaces';
+import { IFlightPresentation } from '@/interfaces';
 
 interface RouteData {
   model?: string;

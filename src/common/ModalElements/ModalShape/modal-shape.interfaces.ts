@@ -4,18 +4,18 @@ import { AxiosResponse } from 'axios';
 
 import { FormInputProps } from '@common/ModalElements/ModalInput';
 import { EModalButtonTexts, EModalNames } from '@/constants';
-import { IFormPassengers } from '@interfaces/passenger.interfaces';
-import { IAircraftPost } from '@interfaces/aircraft.interfaces';
-import { IDestinationPost } from '@interfaces/destination.interfaces';
-import { ISeatForm } from '@interfaces/seat.interfaces';
-import { ITicketsForm } from '@interfaces/tickets.interface';
-import { TTimeZoneForm } from '@interfaces/time-zone.interfaces';
-import { IFormBooking } from '@interfaces/booking.interfaces';
 import {
+  IFormPassengers,
+  IAircraftPost,
+  IDestinationPost,
+  ISeatForm,
+  ITicketsForm,
+  TTimeZoneForm,
+  IFormBooking,
   IFlight,
   IFlightPost,
   IFlightPostFormFields,
-} from '@interfaces/flights.interfaces';
+} from '@/interfaces';
 
 export interface IModalProps {
   formName: EModalNames;

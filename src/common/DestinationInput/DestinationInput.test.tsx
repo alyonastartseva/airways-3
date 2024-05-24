@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { describe, vi } from 'vitest';
 import { render } from '@testing-library/react';
 
-import { IFromTo } from '@interfaces/search.interfaces';
+import { IFromTo } from '@/interfaces';
 
 import { DestinationInput } from './index';
 

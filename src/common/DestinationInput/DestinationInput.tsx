@@ -3,8 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 
 import { getDestinations } from '@services/destinations/destinations.service';
-import { TDestQuery } from '@interfaces/search.interfaces';
-import { IDestination } from '@interfaces/destination.interfaces';
+import { TDestQuery, IDestination } from '@/interfaces';
 
 import { IDestProps } from './destination.interfaces';
 

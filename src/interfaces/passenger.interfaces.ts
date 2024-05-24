@@ -1,6 +1,6 @@
 import { FieldValues } from 'react-hook-form';
 
-import { ERolesPassenger } from '@interfaces/roles.interfaces';
+import { ERolesPassenger } from '@/interfaces';
 
 export interface IFormPassengers extends FieldValues {
   lastName?: string;

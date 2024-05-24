@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { UseSetCurrentPageInPagination } from '@interfaces/pagination.interfaces';
+import { UseSetCurrentPageInPagination } from '@/interfaces';
 
 const useSetCurrentPageInPagination: UseSetCurrentPageInPagination = (key) => {
   const [pageIndex, setPageIndex] = useState<number>(0);

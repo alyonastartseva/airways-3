@@ -1,7 +1,7 @@
 import { describe, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import { IAircraftPost } from '@/interfaces/aircraft.interfaces';
+import { IAircraftPost } from '@/interfaces';
 import { EModalButtonTexts, EModalNames } from '@/constants';
 
 import { ModalShape } from './index';

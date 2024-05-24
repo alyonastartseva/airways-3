@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { ErrorMessage } from '@hookform/error-message';
 
-import { TypeInput } from '@interfaces/type-input.types';
+import { TypeInput } from '@/interfaces';
 import { DebounceSelect } from '@/common';
 import { TGetOptions } from '@common/DebounceSelect/debounceSelect.interface';
 

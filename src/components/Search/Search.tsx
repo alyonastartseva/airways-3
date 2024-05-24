@@ -1,6 +1,6 @@
 import { Box, Flex, Link, Text } from '@chakra-ui/react';
 
-import { IArticle } from '@interfaces/search.interfaces';
+import { IArticle } from '@/interfaces';
 import { SearchPageTabs, CovidCard, ArticleCard } from '@/common';
 import {
   InstagramIcon,

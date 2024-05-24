@@ -19,10 +19,7 @@ import {
 import { isRowEditing } from '@utils/table.utils';
 import { sortById } from '@utils/sort.utils';
 import { EModalNames, onlyLettersPattern, ITEMS_PER_PAGE } from '@/constants';
-import {
-  IDestination,
-  IDestinationPost,
-} from '@interfaces/destination.interfaces';
+import { IDestination, IDestinationPost } from '@/interfaces';
 import {
   useDestinationQueryByPage,
   useDestinationPatch,

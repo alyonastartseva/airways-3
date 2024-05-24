@@ -20,10 +20,10 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
+import { IBooking, IFormBooking } from '@/interfaces';
 import { Pagination } from '@/components';
 import { EModalNames } from '@/constants';
 import { Gear } from '@common/icons';
-import { IBooking, IFormBooking } from '@/interfaces/booking.interfaces';
 import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
 import {

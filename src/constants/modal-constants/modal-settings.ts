@@ -2,23 +2,21 @@ import { UseMutationResult } from 'react-query';
 import { AxiosResponse } from 'axios';
 
 import { TSettings } from '@common/ModalElements/ModalShape/modal-shape.interfaces';
-import { ISeatForm } from '@interfaces/seat.interfaces';
-import { TTimeZoneForm } from '@interfaces/time-zone.interfaces';
-import { ITicketsPost } from '@interfaces/tickets.interface';
 import {
   IDestinationPost,
   IDestination,
-} from '@interfaces/destination.interfaces';
-import {
   IFlightPost,
   IFlightPostFormFields,
-} from '@interfaces/flights.interfaces';
+  TTimeZoneForm,
+  ITicketsPost,
+  ISeatForm,
+} from '@/interfaces';
 import {
+  EModalButtonTexts,
+  EModalNames,
   modalAirplanesFields,
   modalDestinationsFields,
   modalFlightsFields,
-  EModalNames,
-  EModalButtonTexts,
   modalPassengersFields,
   modalSeatFields,
   modalTicketsFields,
@@ -26,16 +24,20 @@ import {
   modalBookingFields,
 } from '@/constants';
 import {
-  useTicketsPost,
-  useSeatPost,
-  usePassengersPost,
-  useFlightsPost,
   useDestinationPost,
   useAircraftPost,
-  useTimezonePost,
-  useBookingPost,
+  useFlightsPost,
+  // usePassengersPost,
+  // useSeatPost,
+  // useTicketsPost,
+  // useTimezonePost,
+  // useBookingPost,
 } from '@/hooks';
-
+import { usePassengersPost } from '@hooks/passenger/usePassengersPost';
+import { useSeatPost } from '@hooks/seat/useSeatPost';
+import { useTicketsPost } from '@hooks/ticket/useTicketPost';
+import { useTimezonePost } from '@hooks/timezone/useTimezonePost';
+import { useBookingPost } from '@hooks/booking/useBookingPost'; //  Cannot access before initialization at "modal-settings"
 interface FormTicketsPost {
   ticketNumber?: string;
   passengerId?: string;

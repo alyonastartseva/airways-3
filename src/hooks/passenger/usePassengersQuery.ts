@@ -1,8 +1,8 @@
 import { useQuery } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import { getPassengers } from '@/services/passengers/passengers.service';
-import { ITEMS_PER_PAGE } from '@constants/constants';
+import { getPassengers } from '@services/passengers/passengers.service';
+import { ITEMS_PER_PAGE } from '@/constants';
 
 const usePassengersQuery = (page: number, size = ITEMS_PER_PAGE) => {
   const toast = useToast();

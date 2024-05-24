@@ -23,10 +23,8 @@ import { formatISO, parseISO, isPast, isToday, compareDesc } from 'date-fns';
 import { ArrowsIcon } from '@common/icons';
 import { mainsearch } from '@/assets';
 import { searchApi } from '@services/searchTickets.service';
-import { getFlights } from '@/services/flights/flights.service';
-import { ISearchData } from '@/interfaces/search-tickets.interfaces';
-import { IFlightPresentation } from '@/interfaces/flights.interfaces';
-import { TSeatCategory } from '@/interfaces/seat.interfaces';
+import { getFlights } from '@services/flights/flights.service';
+import { ISearchData, IFlightPresentation, TSeatCategory } from '@/interfaces';
 import {
   CalendarTickets,
   DestinationsInputSelector,

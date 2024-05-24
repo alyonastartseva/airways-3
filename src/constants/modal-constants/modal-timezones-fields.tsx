@@ -1,5 +1,5 @@
 import { FormInputProps } from '@common/ModalElements/ModalInput';
-import { TTimeZoneForm } from '@interfaces/time-zone.interfaces';
+import { TTimeZoneForm } from '@/interfaces';
 import { onlyLettersPattern } from '@/constants';
 
 export const modalTimezonesFields: FormInputProps<TTimeZoneForm>[] = [

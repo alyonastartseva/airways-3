@@ -19,6 +19,7 @@ import {
 import { formatISO, format, isPast, isToday, compareDesc } from 'date-fns';
 
 import { DestinationInput, CalendarPopover } from '@/common';
+import { IFromTo, TDestQuery, ISearchQuery } from '@/interfaces';
 import searchService from '@services/search.service';
 import {
   ArrowDownIcon,
@@ -26,11 +27,6 @@ import {
   ArrowsIcon,
   CalendarIcon,
 } from '@common/icons';
-import {
-  IFromTo,
-  TDestQuery,
-  ISearchQuery,
-} from '@interfaces/search.interfaces';
 
 const SearchTabPanel: React.FC = () => {
   const today = formatISO(new Date());

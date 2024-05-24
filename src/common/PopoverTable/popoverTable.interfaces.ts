@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { UseMutateFunction } from 'react-query';
 
-import { IFlightPresentation } from '@interfaces/flights.interfaces';
+import { IFlightPresentation } from '@/interfaces';
 
 export interface IPopoverTable<Data extends IFlightPresentation> {
   row: Data;

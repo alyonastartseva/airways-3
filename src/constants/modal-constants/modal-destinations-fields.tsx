@@ -1,5 +1,5 @@
 import { FormInputProps } from '@common/ModalElements/ModalInput';
-import { IDestinationPost } from '@interfaces/destination.interfaces';
+import { IDestinationPost } from '@/interfaces';
 import { airportCodePattern, onlyLettersPattern } from '@/constants';
 
 export const modalDestinationsFields: FormInputProps<IDestinationPost>[] = [

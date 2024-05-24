@@ -1,6 +1,6 @@
 import { FormInputProps } from '@common/ModalElements/ModalInput';
 import { getDestinationsByParams } from '@services/destinations/destinations.service';
-import { ITicketsForm } from '@interfaces/tickets.interface';
+import { ITicketsForm } from '@/interfaces';
 import { onlyLettersPattern } from '@/constants';
 
 const getCityNameOptions = async (query = { page: 0, searchValue: '' }) => {

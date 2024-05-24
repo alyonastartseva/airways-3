@@ -18,14 +18,10 @@ import {
 } from '@tanstack/react-table';
 
 import { ITEMS_PER_PAGE, seatCategory, yesNo, EModalNames } from '@/constants';
+import { ISeatForm, ISeatPost, TSeatCategory } from '@/interfaces';
 import { isRowEditing } from '@utils/table.utils';
 import { sortById } from '@utils/sort.utils';
 import { ELinks } from '@services/constants';
-import {
-  ISeatForm,
-  ISeatPost,
-  TSeatCategory,
-} from '@/interfaces/seat.interfaces';
 import {
   EditableCell,
   FlexCell,

@@ -24,7 +24,7 @@ import {
 import { ViewOffIcon, ViewIcon } from '@chakra-ui/icons';
 
 import { userApi } from '@services/user/user.service';
-import { IFormUserCreate } from '@interfaces/account.interfaces';
+import { IFormUserCreate } from '@/interfaces';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required('Введите email').email('Формат email неверен'),

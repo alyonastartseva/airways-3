@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import { IDestinationList } from '@interfaces/destination.interfaces';
+import { IDestinationList } from '@/interfaces';
 
 declare type Fn = () => any;
 

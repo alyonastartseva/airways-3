@@ -1,4 +1,4 @@
-import IValidatePattern from '@/interfaces/validate-ptterns.interface';
+import { IValidatePattern } from '@/interfaces';
 
 const phonePattern: Record<string, IValidatePattern> = {
   numeric: {

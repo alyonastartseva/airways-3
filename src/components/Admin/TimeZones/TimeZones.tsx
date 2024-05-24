@@ -19,7 +19,7 @@ import {
 
 import { isRowEditing } from '@utils/table.utils';
 import { EModalNames } from '@/constants';
-import { ITimeZone, TTimeZoneForm } from '@interfaces/time-zone.interfaces';
+import { ITimeZone, TTimeZoneForm } from '@/interfaces';
 import {
   useTimezonesQuery,
   useTimezonesDelete,

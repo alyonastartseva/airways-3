@@ -21,7 +21,7 @@ import { sortById } from '@utils/sort.utils';
 import { formatDateTime } from '@utils/date.utils';
 import { isRowEditing } from '@utils/table.utils';
 import { ITEMS_PER_PAGE, EModalNames } from '@/constants';
-import { ITickets, ITicketsPost } from '@interfaces/tickets.interface';
+import { ITickets, ITicketsPost } from '@/interfaces';
 import {
   useTicketsQuery,
   useTicketsPatch,

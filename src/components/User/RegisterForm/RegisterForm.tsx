@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react';
 
 import { months, years, days } from '@utils/form-data.utils';
-import { IFormValuesRegisterUser } from '@interfaces/form-values-register-user.interfaces';
+import { IFormValuesRegisterUser } from '@/interfaces';
 import { SelectField, InputField, SpinnerBlock, AlertMessage } from '@/common';
 import { useCountryQuery } from '@/hooks';
 

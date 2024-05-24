@@ -16,14 +16,14 @@ import {
 } from '@tanstack/react-table';
 
 import { flightStatuses, EModalNames } from '@/constants';
-import { IAircraft } from '@/interfaces/aircraft.interfaces';
 import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
 import {
+  IAircraft,
   IFlightPostFormFields,
   IFlightPresentation,
   TFlightsStatus,
-} from '@/interfaces/flights.interfaces';
+} from '@/interfaces';
 import {
   useAircraftQuery,
   useFlightsDelete,
