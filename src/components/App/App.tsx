@@ -17,6 +17,7 @@ import { TicketsPage } from '@/pages/Admin/Tickets';
 import { BookingPage } from '@/pages/Admin/BookingPage';
 import { TimeZonesPage } from '@/pages/Admin/TimeZonesPage';
 import { LoginForm } from '@components/LoginForm';
+import { FlightSeatsPage } from '@/pages/Admin/Seats';
 
 const App = () => {
   return (
@@ -34,11 +35,11 @@ const App = () => {
             path="airplanes/airplane-more"
             element={<AirplaneMorePage />}
           />
-
           <Route
             path="airplanes/airplane-more/:airplane"
             element={<AirplaneMorePage />}
           />
+          <Route path="flight-seats" element={<FlightSeatsPage />} />
           <Route path="passengers" element={<PassengersPage />} />
           <Route path="destinations" element={<DestinationsPage />} />
           <Route path="flights" element={<FlightsPage />} />

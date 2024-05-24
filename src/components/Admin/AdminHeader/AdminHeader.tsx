@@ -44,6 +44,10 @@ const AdminHeader: FC = () => {
       tabName: 'Бронирование',
       tabPath: ELinks.ADMIN_BOOKING,
     },
+    {
+      tabName: 'Посадочное',
+      tabPath: ELinks.ADMIN_FLIGHTS_SEATS,
+    },
   ];
 
   const activeStyle = {
