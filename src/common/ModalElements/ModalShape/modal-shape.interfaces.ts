@@ -1,6 +1,4 @@
 import { FieldValues } from 'react-hook-form';
-import { UseMutationResult } from 'react-query';
-import { AxiosResponse } from 'axios';
 
 import { FormInputProps } from '@common/ModalElements/ModalInput/ModalInput';
 import {
@@ -19,22 +17,19 @@ import {
 } from '@interfaces/flights.interfaces';
 import { TTimeZoneForm } from '@interfaces/time-zone.interfaces';
 import { IFormBooking } from '@interfaces/booking.interfaces';
+import { useDestinationPost, usePassengersPost } from '@/hooks';
 
 export interface IModalProps {
   formName: EModalNames;
   initialFormValues?: Record<string, number | string | undefined>;
 }
 
-// AxiosResponse<T, any> - требуемый тип в библиотеке
 export interface IModalSetting<T extends FieldValues, Req = T, Q = T> {
   formName: EModalNames;
   fields: FormInputProps<T>[];
-  hook: () => UseMutationResult<
-    AxiosResponse<Req, unknown>,
-    unknown,
-    Q,
-    unknown
-  >;
+  hook: () =>
+    | ReturnType<typeof useDestinationPost>
+    | ReturnType<typeof usePassengersPost>;
   name: EModalButtonTexts;
   mapFieldValuesToRequestData?: (formData: T) => Q;
 }

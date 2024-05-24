@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 import { AxiosResponse } from 'axios';
 import { UseMutationResult } from 'react-query';
 

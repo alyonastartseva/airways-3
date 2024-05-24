@@ -7,6 +7,7 @@ import {
   Tr,
   Th,
   Box,
+  useToast,
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
@@ -14,7 +15,7 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
   IDestination,
@@ -30,7 +31,6 @@ import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortById } from '@utils/sort.utils';
 import {
-  useDestinationQueryByPage,
   useDestinationPatch,
   useDestinationDelete,
   useSetCurrentPageInPagination,
@@ -39,17 +39,21 @@ import { EModalNames } from '@/constants/modal-constants/modal-names';
 import onlyLettersPattern from '@/constants/validate-patterns/only-letters-pattern';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 import { DestinationsInputSelector } from '@/common/DestinationsInputSelector';
+import { useGetDestionationsQuery } from '@/store/services/destinations';
+import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 
 const Destinations = () => {
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
     'DESTINATIONS_CURR_PAGE'
   );
 
+  const toast = useToast();
   const {
     data: destinationsByPageData,
     isFetching,
     isError,
-  } = useDestinationQueryByPage(pageIndex);
+    error,
+  } = useGetDestionationsQuery({ page: pageIndex });
 
   const destinationsByPage = useMemo(
     () => destinationsByPageData?.content || [],
@@ -86,6 +90,15 @@ const Destinations = () => {
   const { mutate: patchDestination } = useDestinationPatch();
 
   const { mutate: deleteDestination } = useDestinationDelete();
+
+  useEffect(() => {
+    if (isError && isFetchBaseQueryError(error))
+      toast({
+        status: 'error',
+        title: error.data.message || 'Something went wrong',
+        position: 'top',
+      });
+  }, [isError, toast, error]);
 
   const patchRow = useCallback(() => {
     patchDestination(editableRowState);
@@ -253,7 +266,7 @@ const Destinations = () => {
 
   const tableData = (data?: IDestination[]) => {
     if (Array.isArray(data) && data.length) {
-      return sortById(data);
+      return sortById(data.slice());
     }
     return [];
   };

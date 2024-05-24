@@ -4,6 +4,8 @@ import { baseURL as baseUrl } from '@/services/axios.service';
 import { ERoutes } from '@/services/constants';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 import { FormPassengersGet } from '@/services/passengers/passengers.interfaces';
+import { IFormPassenger } from '@/interfaces/passenger.interfaces';
+import { mapPassengersFormData } from '@/services/passengers/form-passengers.utils';
 
 interface GetPassengersArgs {
   page: number;
@@ -21,9 +23,14 @@ export const passengersApi = createApi({
       providesTags: ['Passenger'],
     }),
     addPassenger: builder.mutation({
-      query: () => '',
+      query: (body: IFormPassenger) => ({
+        url: ERoutes.PASSENGERS,
+        method: 'POST',
+        body: mapPassengersFormData(body),
+      }),
+      invalidatesTags: ['Passenger'],
     }),
   }),
 });
 
-export const { useGetPassangersQuery } = passengersApi;
+export const { useGetPassangersQuery, useAddPassengerMutation } = passengersApi;

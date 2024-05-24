@@ -7,6 +7,7 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
+  useToast,
 } from '@chakra-ui/react';
 import {
   FieldValues,
@@ -23,6 +24,7 @@ import { HeadingAdmin } from '@common/HeadingAdmin';
 import { IModalProps } from '@/common/ModalElements/ModalShape/modal-shape.interfaces';
 import { EModalNames } from '@constants/modal-constants/modal-names';
 import { FormAirplanes } from '@common/ModalElements/FormAirplanes/FormAirplanes';
+import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 
 import { ModalInput } from '../ModalInput';
 
@@ -40,8 +42,8 @@ const ModalShape = <T extends FieldValues>({
   });
 
   const { isOpen, onClose, onOpen } = useDisclosure();
-
-  const { mutateAsync } = hook();
+  const toast = useToast();
+  const { mutateAsync, title } = hook();
 
   const onModalClose = () => {
     methods.reset();
@@ -52,10 +54,24 @@ const ModalShape = <T extends FieldValues>({
     const requestData = mapFieldValuesToRequestData
       ? mapFieldValuesToRequestData?.(data)
       : data;
-    await mutateAsync(requestData).then((response: { status: number }) => {
-      if (response.status < 400) {
-        onModalClose();
+    await mutateAsync(requestData).then(({ error }) => {
+      if (error) {
+        if (isFetchBaseQueryError(error)) {
+          toast({
+            status: 'error',
+            title: error.data.message,
+            position: 'top',
+          });
+        }
+      } else {
+        toast({
+          status: 'success',
+          title,
+          position: 'top',
+        });
       }
+
+      onModalClose();
     });
   };
 

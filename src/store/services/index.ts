@@ -1,1 +1,10 @@
-export { passengersApi, useGetPassangersQuery } from './passengers';
+export {
+  passengersApi,
+  useGetPassangersQuery,
+  useAddPassengerMutation,
+} from './passengers';
+export {
+  destinationsApi,
+  useGetDestionationsQuery,
+  useAddDestinationMutation,
+} from './destinations';
