@@ -1,5 +1,8 @@
+import { FieldValues } from 'react-hook-form';
+
 import { ISort } from '@interfaces/api-interfaces';
 import { TSeatCategory } from '@interfaces/seat.interfaces';
+import { IFlightSeatsPresentation } from '@/interfaces/flightsSeats.interfaces';
 
 export interface IFlightSeatsQuery {
   content: IFlightSeat[];
@@ -33,4 +36,11 @@ export interface Seat {
   isLockedBack: boolean;
   category: string;
   aircraftId: number;
+}
+
+export interface IFlightSeatsPostFormFields
+  extends FieldValues,
+    Omit<IFlightSeatsPresentation, 'fare' | 'airportTo'> {
+  from?: string; // stringyfied IDestination
+  to?: string; // stringyfied IDestination
 }

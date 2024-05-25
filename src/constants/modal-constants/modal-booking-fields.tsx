@@ -27,7 +27,7 @@ const PassengersOptions = () => {
 };
 
 const SeatsOptions = () => {
-  const { data: flightSeatsData } = useFlightSeatsQuery();
+  const { data: flightSeatsData } = useFlightSeatsQuery(1);
 
   if (flightSeatsData)
     return (
