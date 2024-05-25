@@ -14,6 +14,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { string } from 'yup';
 
 import { EditableCell } from '@/common/EditableCell';
 import { FlexCell } from '@/common/FlexCell';
@@ -62,6 +63,18 @@ const Seats = () => {
     patchFlights(editableRowState);
     cancelEditing();
   }, [patchFlights, editableRowState, cancelEditing]);
+
+  const classCheck = (str:string):string => {
+    switch (str) {
+      case 'FIRST':
+        return 'Первый класс';
+      case 'BUSINESS':
+        return 'Бизнес';
+      case 'PREMIUM_ECONOMY':
+        return 'Премиум';
+      default: return 'Эконом';
+    }
+  };
 
   const out: IFlightSeatsQuery | undefined = dataFlightSeats;
   // if (out === undefined) {
@@ -136,7 +149,7 @@ const Seats = () => {
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              info.getValue().toString(),
+              classCheck(info.getValue()),
               editableRowState,
               editableRowIndex
             )}
@@ -154,7 +167,7 @@ const Seats = () => {
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              info.getValue().toString(),
+              info.getValue() ? 'Да' : 'Нет',
               editableRowState,
               editableRowIndex
             )}
@@ -172,7 +185,25 @@ const Seats = () => {
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              info.getValue().toString(),
+              info.getValue() ? 'Да' : 'Нет',
+              editableRowState,
+              editableRowIndex
+            )}
+            index={info.row.index}
+            id={info.column.id}
+            editableRowIndex={editableRowIndex}
+            updateData={handleUpdateRow}
+          />
+        ),
+      }),
+      columnHelper.accessor('isBooked', {
+        header: 'Забронировано',
+        cell: (info) => (
+          <EditableCell
+            value={isRowEditing(
+              info.row.index,
+              info.column.id,
+              (info.getValue() ? 'Да' : 'Нет') ,
               editableRowState,
               editableRowIndex
             )}
@@ -202,10 +233,12 @@ const Seats = () => {
 
   return (
     <TableContainer py={45} px={9}>
-      {/* <HeaderTable<IFlightPostFormFields>
+      <HeaderTable<IFlightPostFormFields>
                 heading="Посадочные Места"
-                formName={EModalNames.FLIGHTS_SEATS}
-            /> */}
+                formName={EModalNames.SEAT}
+                //formNmae={SEAT такой, потому что нету модалки AV2-8 готово}
+            />
+            
       <Table>
         <Thead>
           {table.getHeaderGroups().map((headerGroup) => (
