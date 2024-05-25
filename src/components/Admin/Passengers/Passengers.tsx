@@ -50,6 +50,16 @@ const Passengers = () => {
   const passengers = dataQuery?.content;
   const totalPages = dataQuery?.totalPages;
 
+  // если удален последняя строка текущей страницы, то открываем предыдущую страницу
+  useEffect(() => {
+    if (!passengers && pageIndex > 0) setPaginationData(pageIndex - 1);
+  }, [passengers, pageIndex, setPaginationData]);
+
+  useEffect(() => {
+    const currPage = Number(localStorage.getItem('PASSENGERS_CURR_PAGE'));
+    if (currPage > 0) setPaginationData(currPage);
+  }, [setPaginationData]);
+
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IPassenger | null>(
