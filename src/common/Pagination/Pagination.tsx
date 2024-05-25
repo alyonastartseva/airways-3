@@ -1,6 +1,7 @@
 import {
   Pagination as PaginationAntd,
   PaginationProps as PaginationPropsAntd,
+  ConfigProvider,
 } from 'antd';
 
 import { ArrowRightIcon, ArrowLeftIcon } from '@/common/icons/';
@@ -46,7 +47,7 @@ const Pagination = (props: IPagination) => {
   if (totalPages === 1) return null;
 
   return (
-    <>
+    <ConfigProvider theme={{ components: { Pagination: { itemSize: 40 } } }}>
       <PaginationAntd
         className="paginationAntd"
         showSizeChanger={false}
@@ -55,7 +56,7 @@ const Pagination = (props: IPagination) => {
         onChange={setPaginationData}
         itemRender={itemRender}
       />
-    </>
+    </ConfigProvider>
   );
 };
 
