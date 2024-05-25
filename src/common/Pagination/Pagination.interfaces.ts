@@ -1,5 +1,4 @@
-export interface IPagination<Data> {
-  data: Data[] | undefined;
+export interface IPagination {
   pageIndex: number;
   totalPages?: number;
   setPaginationData: (pageNumber: number) => void;

@@ -49,7 +49,6 @@ describe('Pagination tests', () => {
     // рендер компонента пагинации с тестовыми данными
     render(
       <Pagination
-        data={testData}
         pageIndex={testIndex}
         // pageSize={testSize}
         setPaginationData={setPaginationData}
@@ -67,7 +66,6 @@ describe('Pagination tests', () => {
     // рендер компонента пагинации с тестовыми данными
     render(
       <Pagination
-        data={testData}
         pageIndex={testIndex}
         // pageSize={testSize}
         setPaginationData={setPaginationData}
@@ -83,7 +81,6 @@ describe('Pagination tests', () => {
     async () => {
       render(
         <Pagination
-          data={testData}
           pageIndex={1}
           // pageSize={testSize}
           setPaginationData={setPaginationData}
@@ -97,7 +94,6 @@ describe('Pagination tests', () => {
     async () => {
       render(
         <Pagination
-          data={testData}
           pageIndex={2}
           // pageSize={testSize}
           setPaginationData={setPaginationData}
@@ -111,7 +107,6 @@ describe('Pagination tests', () => {
     async () => {
       render(
         <Pagination
-          data={testData}
           pageIndex={0}
           // pageSize={testSize}
           setPaginationData={setPaginationData}

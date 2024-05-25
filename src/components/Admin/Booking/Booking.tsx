@@ -318,7 +318,6 @@ const Booking = () => {
               />
 
               <Pagination
-                data={bookingData}
                 pageIndex={pageIndex}
                 totalPages={totalPages}
                 setPaginationData={setPaginationData}

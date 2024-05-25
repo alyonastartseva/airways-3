@@ -70,7 +70,7 @@ const Airplanes = () => {
   );
 
   // получение данных
-  const { data: airplanesData, isFetching } = useAircraftQuery(pageIndex);
+  const { data: airplanesData, isFetching } = useAircraftQuery(pageIndex - 1);
 
   const airplanes = airplanesData?.content;
   const totalPages = airplanesData?.totalPages;

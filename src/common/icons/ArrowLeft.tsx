@@ -5,7 +5,7 @@ const ArrowLeft = (props: { color?: string }) => (
     xmlns="http://www.w3.org/2000/svg"
     width="1rem"
     height="1rem"
-    viewBox="0 0 32 32"
+    viewBox="0 -4 32 32"
     fill={props.color}
     transform="rotate(180deg)"
   >

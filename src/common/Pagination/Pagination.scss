@@ -1,0 +1,27 @@
+.paginationAntd {
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  & .ant-pagination-item {
+    border-radius: 0;
+    border: 1px solid #dedede;
+
+    &-active {
+      background-color: #398aea;
+
+      & a {
+        color: #fff;
+      }
+    }
+  }
+
+  & .ant-pagination-next a:hover,
+  & .ant-pagination-prev a:hover {
+    color: #393939a1;
+  }
+
+  & .ant-pagination-next a[disabled]:hover,
+  & .ant-pagination-prev a[disabled]:hover {
+    color: rgba(0, 0, 0, 0.25);
+  }
+}

@@ -51,7 +51,11 @@ const Flights = () => {
     useAircraftQuery();
   const airplanes = airplanesData?.content;
 
-  const { data: flightsData, isError, isFetching } = useFlightsQuery(pageIndex);
+  const {
+    data: flightsData,
+    isError,
+    isFetching,
+  } = useFlightsQuery(pageIndex - 1);
 
   const flights = flightsData?.content;
   const totalPagesFlights = flightsData?.totalPages;
