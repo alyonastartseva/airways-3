@@ -11,6 +11,7 @@ export { Tickets } from './Admin/Tickets';
 export { TimeZones } from './Admin/TimeZones';
 export { UserInput } from './Admin/UserInput';
 export { Users } from './Admin/Users';
+export { Seats } from './Admin/Seats';
 
 export { Header } from './Header';
 export { Footer } from './Footer';

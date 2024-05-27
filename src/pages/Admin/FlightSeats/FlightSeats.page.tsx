@@ -1,4 +1,4 @@
-import Seats from '@/components/Admin/Seats';
+import { Seats } from '@/components';
 
 const SeatsPage = () => {
   return <Seats />;

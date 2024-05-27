@@ -1,7 +1,7 @@
 import { adminInstance, ERoutes } from '@/services';
+import { ISeats } from '@/interfaces/flightsSeats.interfaces';
 
 import { IFlightSeatsQuery } from './flightSeats.interfaces';
-import { ISeats } from '@/interfaces/flightsSeats.interfaces';
 
 const flightSeatsAPI = {
   getFlightsSeats: async (pageIndex?: number, size?: number) => {

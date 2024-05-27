@@ -270,9 +270,7 @@ const Seats = () => {
       <HeaderTable<IFlightPostFormFields>
         heading="Посадочные Места"
         formName={EModalNames.SEAT}
-        //formNmae={SEAT такой, потому что нету модалки AV2-8 готово}
       />
-
       <Table>
         <Thead>
           {table.getHeaderGroups().map((headerGroup) => (

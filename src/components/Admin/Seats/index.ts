@@ -1,3 +1,1 @@
-import Seats from './Seats';
-
-export default Seats;
+export { default as Seats } from './Seats';
