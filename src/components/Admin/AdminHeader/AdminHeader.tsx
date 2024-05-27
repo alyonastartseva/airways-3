@@ -45,7 +45,7 @@ const AdminHeader: FC = () => {
       tabPath: ELinks.ADMIN_BOOKING,
     },
     {
-      tabName: 'Посадочное',
+      tabName: 'Посадочные места',
       tabPath: ELinks.ADMIN_FLIGHTS_SEATS,
     },
   ];

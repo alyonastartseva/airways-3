@@ -1,6 +1,10 @@
 import { adminInstance } from '@services/axios.service';
-import { IFlightSeatsQuery } from '@services/flightSeats/flightSeats.interfaces';
+import {
+  IFlightSeat,
+  IFlightSeatsQuery,
+} from '@services/flightSeats/flightSeats.interfaces';
 import { ERoutes } from '@services/constants';
+import { ISeats } from '@/interfaces/flightsSeats.interfaces';
 
 const flightSeatsAPI = {
   getFlightsSeats: async (pageIndex?: number, size?: number) => {
@@ -10,6 +14,12 @@ const flightSeatsAPI = {
       )
       .then((response) => response.data);
   },
+
+  deleteFlightSeats: async (id: number | undefined) => {
+    if (id) {
+      return adminInstance.delete<ISeats>(ERoutes.FLIGHT_SEATS + id);
+    }
+  },
 };
 
-export const { getFlightsSeats } = flightSeatsAPI;
+export const { getFlightsSeats, deleteFlightSeats } = flightSeatsAPI;

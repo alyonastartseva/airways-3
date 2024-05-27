@@ -14,7 +14,6 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { string } from 'yup';
 
 import { EditableCell } from '@/common/EditableCell';
 import { FlexCell } from '@/common/FlexCell';
@@ -23,25 +22,32 @@ import {
   useFlightsPatch,
   useSetCurrentPageInPagination,
 } from '@/hooks';
-import { IFlightSeatsPresentation } from '@/interfaces/flightsSeats.interfaces';
-import { isRowEditing } from '@/utils/table.utils';
 import {
-  IFlightSeat,
-  IFlightSeatsQuery,
-} from '@/services/flightSeats/flightSeats.interfaces';
+  IFlightSeatsPresentation,
+  ISeatCategory,
+  ISeatCategoryType,
+} from '@/interfaces/flightsSeats.interfaces';
+import { isRowEditing } from '@/utils/table.utils';
+import { IFlightSeat } from '@/services/flightSeats/flightSeats.interfaces';
 import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { IFlightPostFormFields } from '@/interfaces/flights.interfaces';
+import { PopoverTable } from '@/common/PopoverTable';
+import { useFlightSeatsDelete } from '@/hooks/flightSeats';
+import { EditableSelectCell } from '@/common/EditableSelectCell';
 
 const Seats = () => {
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
     'FLIGHTSSEATS_CURR_PAGE'
   );
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
+
   const [editableRowState, setEditableRowState] =
     useState<Required<IFlightSeatsPresentation> | null>(null);
+
   const { data: dataFlightSeats } = useFlightSeatsQuery(pageIndex);
+
   const handleUpdateRow = useCallback(
     (id: string, value: string) => {
       if (!editableRowState) return;
@@ -53,103 +59,93 @@ const Seats = () => {
     },
     [editableRowState]
   );
+
   const totalPagesFlights = dataFlightSeats?.totalPages;
+
   const cancelEditing = useCallback(() => {
     setEditableRowIndex(null);
     setEditableRowState(null);
   }, []);
+
   const { mutate: patchFlights } = useFlightsPatch();
+
   const patchRow = useCallback(() => {
     patchFlights(editableRowState);
     cancelEditing();
   }, [patchFlights, editableRowState, cancelEditing]);
 
-  const classCheck = (str:string):string => {
-    switch (str) {
-      case 'FIRST':
-        return 'Первый класс';
-      case 'BUSINESS':
+  const { mutate: deleteFlightSeats } = useFlightSeatsDelete();
+
+  const handleEditRow = useCallback(
+    (row: IFlightSeatsPresentation, index: number) => {
+      setEditableRowState(row);
+      setEditableRowIndex(index);
+    },
+    []
+  );
+
+  const flightClass = (value: ISeatCategory): ISeatCategoryType => {
+    switch (value) {
+      case ISeatCategory.BUSINESS:
         return 'Бизнес';
-      case 'PREMIUM_ECONOMY':
+      case ISeatCategory.ECONOM:
+        return 'Эконом';
+      case ISeatCategory.FIRST:
+        return 'Первый класс';
+      case ISeatCategory.PREMIUM_ECONOMY:
         return 'Премиум';
-      default: return 'Эконом';
     }
   };
 
-  const out: IFlightSeatsQuery | undefined = dataFlightSeats;
-  // if (out === undefined) {
-  //     return <div>Loading...</div>;
-  // }
+  const boolCheck = (str: string): string => (str === 'Да' ? 'Да' : 'Нет');
+
+  const flightClassOptions = Object.values(ISeatCategory);
+
   const columnHelper = createColumnHelper<IFlightSeat>();
+
+  const columnIds = (id: columnType, header: string) => {
+    return columnHelper.accessor(id, {
+      header,
+      cell: (info) => <FlexCell padding={24} value={info.getValue()} />,
+      size: 41,
+    });
+  };
+  type columnType = 'id' | 'seat.aircraftId' | 'seat.id' | 'fare';
+  const columnCreator = (id: columnType, header: string) => {
+    return columnHelper.accessor(id, {
+      header,
+      cell: (info) => (
+        <EditableCell
+          value={isRowEditing(
+            info.row.index,
+            info.column.id,
+            info.getValue().toString(),
+            editableRowState,
+            editableRowIndex
+          )}
+          index={info.row.index}
+          id={info.column.id}
+          editableRowIndex={editableRowIndex}
+          updateData={handleUpdateRow}
+        />
+      ),
+    });
+  };
+
   const columns = useMemo(
     () => [
-      columnHelper.accessor('id', {
-        header: 'ID',
-        cell: (info) => <FlexCell padding={24} value={info.getValue()} />,
-        size: 41,
-      }),
-      columnHelper.accessor('seat.aircraftId', {
-        header: 'ID рейса',
-        cell: (info) => (
-          <EditableCell
-            value={isRowEditing(
-              info.row.index,
-              info.column.id,
-              info.getValue().toString(),
-              editableRowState,
-              editableRowIndex
-            )}
-            index={info.row.index}
-            id={info.column.id}
-            editableRowIndex={editableRowIndex}
-            updateData={handleUpdateRow}
-          />
-        ),
-      }),
-      columnHelper.accessor('seat.id', {
-        header: 'ID места',
-        cell: (info) => (
-          <EditableCell
-            value={isRowEditing(
-              info.row.index,
-              info.column.id,
-              info.getValue().toString(),
-              editableRowState,
-              editableRowIndex
-            )}
-            index={info.row.index}
-            id={info.column.id}
-            editableRowIndex={editableRowIndex}
-            updateData={handleUpdateRow}
-          />
-        ),
-      }),
-      columnHelper.accessor('fare', {
-        header: 'цена',
-        cell: (info) => (
-          <EditableCell
-            value={isRowEditing(
-              info.row.index,
-              info.column.id,
-              info.getValue().toString(),
-              editableRowState,
-              editableRowIndex
-            )}
-            index={info.row.index}
-            id={info.column.id}
-            editableRowIndex={editableRowIndex}
-            updateData={handleUpdateRow}
-          />
-        ),
-      }),
+      columnIds('id', 'ID'),
+      columnCreator('seat.aircraftId', 'ID рейса'),
+      columnCreator('seat.id', 'ID Места'),
+      columnCreator('fare', 'Цена'),
       columnHelper.accessor('seat.category', {
         header: 'Класс',
         cell: (info) => (
-          <EditableCell
+          <EditableSelectCell
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              classCheck(info.getValue()),
+              info.getValue(),
               editableRowState,
               editableRowIndex
             )}
@@ -157,13 +153,15 @@ const Seats = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            selectOptions={flightClassOptions}
+            getRenderValue={flightClass}
           />
         ),
       }),
       columnHelper.accessor('isSold', {
         header: 'продано',
         cell: (info) => (
-          <EditableCell
+          <EditableSelectCell
             value={isRowEditing(
               info.row.index,
               info.column.id,
@@ -175,13 +173,15 @@ const Seats = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            selectOptions={['Да', 'Нет']}
+            getRenderValue={boolCheck}
           />
         ),
       }),
       columnHelper.accessor('isRegistered', {
         header: 'Зарегистрировано',
         cell: (info) => (
-          <EditableCell
+          <EditableSelectCell
             value={isRowEditing(
               info.row.index,
               info.column.id,
@@ -193,17 +193,19 @@ const Seats = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            selectOptions={['Да', 'Нет']}
+            getRenderValue={boolCheck}
           />
         ),
       }),
       columnHelper.accessor('isBooked', {
         header: 'Забронировано',
         cell: (info) => (
-          <EditableCell
+          <EditableSelectCell
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              (info.getValue() ? 'Да' : 'Нет') ,
+              info.getValue() ? 'Да' : 'Нет',
               editableRowState,
               editableRowIndex
             )}
@@ -211,11 +213,43 @@ const Seats = () => {
             id={info.column.id}
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
+            selectOptions={['Да', 'Нет']}
+            getRenderValue={boolCheck}
+          />
+        ),
+      }),
+      columnHelper.display({
+        id: 'actions',
+        size: 41,
+        cell: (info) => (
+          <PopoverTable
+            hasDetailsButton={false}
+            row={info.row.original}
+            index={info.row.index}
+            id={info.row.original.id}
+            handleEditRow={handleEditRow}
+            deleteRow={deleteFlightSeats}
+            setPaginationIndex={setPaginationData}
+            indexPage={pageIndex}
+            numberElem={dataFlightSeats?.content.length}
           />
         ),
       }),
     ],
-    [columnHelper, editableRowIndex, editableRowState, handleUpdateRow]
+    [
+      columnHelper,
+      editableRowIndex,
+      editableRowState,
+      handleUpdateRow,
+      columnIds,
+      columnCreator,
+      dataFlightSeats?.content.length,
+      deleteFlightSeats,
+      flightClassOptions,
+      handleEditRow,
+      pageIndex,
+      setPaginationData,
+    ]
   );
 
   const tableData = (data?: IFlightSeat[]) => {
@@ -234,11 +268,11 @@ const Seats = () => {
   return (
     <TableContainer py={45} px={9}>
       <HeaderTable<IFlightPostFormFields>
-                heading="Посадочные Места"
-                formName={EModalNames.SEAT}
-                //formNmae={SEAT такой, потому что нету модалки AV2-8 готово}
-            />
-            
+        heading="Посадочные Места"
+        formName={EModalNames.SEAT}
+        //formNmae={SEAT такой, потому что нету модалки AV2-8 готово}
+      />
+
       <Table>
         <Thead>
           {table.getHeaderGroups().map((headerGroup) => (

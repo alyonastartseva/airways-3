@@ -1,10 +1,20 @@
 import { FieldValues } from 'react-hook-form';
-import { number } from 'yup';
 
-import { IDestination } from '@interfaces/destination.interfaces';
-import { IAircraft } from '@interfaces/aircraft.interfaces';
+// import { IDestination } from '@interfaces/destination.interfaces';
+// import { IAircraft } from '@interfaces/aircraft.interfaces';
 
-export type ISeatCategory = 'FIRST' | 'BUSINESS' | 'PREMIUM_ECONOMY';
+export enum ISeatCategory {
+  BUSINESS = 'BUSINESS',
+  PREMIUM_ECONOMY = 'PREMIUM_ECONOMY',
+  FIRST = 'FIRST',
+  ECONOM = 'ECONOMY',
+}
+
+export type ISeatCategoryType =
+  | 'Первый класс'
+  | 'Бизнес'
+  | 'Эконом'
+  | 'Премиум';
 
 export interface IFlightSeats {
   id: number;
@@ -26,17 +36,17 @@ export interface ISeats {
 }
 
 export interface IFlightSeatsPresentation {
-  seat?: {
-    id?: number;
-    seatNumber?: string;
-    aircraftId?: number;
+  seat: {
+    id: number;
+    seatNumber: string;
+    aircraftId: number;
   };
-  id?: number;
-  fare?: number;
-  category?: ISeatCategory;
-  isSold?: boolean;
-  isRegistered?: boolean;
-  isBooked?: boolean;
+  id: number;
+  fare: number;
+  category: ISeatCategory;
+  isSold: boolean;
+  isRegistered: boolean;
+  isBooked: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
