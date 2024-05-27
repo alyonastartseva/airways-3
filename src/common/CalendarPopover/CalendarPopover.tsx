@@ -10,7 +10,7 @@ import {
   Box,
 } from '@chakra-ui/react';
 
-import Calendar from '@common/Calendar';
+import { Calendar, RedButton } from '@/common';
 
 interface Props {
   children: React.ReactNode;
@@ -18,7 +18,6 @@ interface Props {
   startDate: Date | null;
   endDate: Date | null;
 }
-import { RedButton } from '../RedButton';
 
 const CalendarPopover = ({ children, select, startDate, endDate }: Props) => {
   return (

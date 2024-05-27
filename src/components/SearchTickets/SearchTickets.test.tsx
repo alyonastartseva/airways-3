@@ -2,11 +2,11 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect } from 'vitest';
 
-import MainSearch from './SearchTickets';
+import { SearchTickets } from './index';
 
 describe('MainSearch', () => {
   test('renders correctly', () => {
-    render(<MainSearch />);
+    render(<SearchTickets />);
 
     expect(screen.getByText('Найти билеты')).toBeInTheDocument();
     expect(screen.getByLabelText('Откуда')).toBeInTheDocument();
@@ -21,7 +21,7 @@ describe('MainSearch', () => {
   });
 
   test('search button shows error if fields are empty', async () => {
-    render(<MainSearch />);
+    render(<SearchTickets />);
 
     userEvent.click(screen.getByRole('button', { name: 'Найти' }));
 
@@ -32,7 +32,7 @@ describe('MainSearch', () => {
   });
 
   test('reverse button calls handleReverse when clicked', () => {
-    render(<MainSearch />);
+    render(<SearchTickets />);
     const reverseButton = screen.getByTestId('Reverse');
 
     userEvent.click(reverseButton);
@@ -42,7 +42,7 @@ describe('MainSearch', () => {
   });
 
   test('passenger input changes value and shows warning when invalid value is entered', () => {
-    render(<MainSearch />);
+    render(<SearchTickets />);
     const passengerInput = screen.getByLabelText('Количество пассажиров');
 
     fireEvent.change(passengerInput, { target: { value: 0 } });

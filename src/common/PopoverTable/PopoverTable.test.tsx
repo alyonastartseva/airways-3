@@ -2,7 +2,7 @@ import { describe, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import PopoverTable from './PopoverTable';
+import { PopoverTable } from './index';
 
 describe('PopoverTable test', () => {
   it('PopoverTable renders', () => {

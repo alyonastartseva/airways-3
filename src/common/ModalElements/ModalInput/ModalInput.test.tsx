@@ -1,7 +1,7 @@
 import { describe, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
-import ModalInput from './ModalInput';
+import { ModalInput } from './index';
 
 const label = 'test';
 const fieldName = 'test';

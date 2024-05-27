@@ -1,13 +1,10 @@
 import { describe, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import { IAircraftPost } from '@/interfaces/aircraft.interfaces';
-import {
-  EModalButtonTexts,
-  EModalNames,
-} from '@/constants/modal-constants/modal-names';
+import { IAircraftPost } from '@/interfaces';
+import { EModalButtonTexts, EModalNames } from '@/constants';
 
-import ModalShape from './ModalShape';
+import { ModalShape } from './index';
 
 vi.mock('react-query', () => {
   const testData = [

@@ -1,4 +1,3 @@
-import { IGetQuery } from '@interfaces/api-interfaces';
-import { IDestination } from '@interfaces/destination.interfaces';
+import { IGetQuery, IDestination } from '@/interfaces';
 
 export type IDestinationGet = IGetQuery<IDestination>;

@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { cleanup, render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
 import { afterEach, describe, expect, vi } from 'vitest';
+import { BrowserRouter } from 'react-router-dom';
 
 import { Users } from './index';
 

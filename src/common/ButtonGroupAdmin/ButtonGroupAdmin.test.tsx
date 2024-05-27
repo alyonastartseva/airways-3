@@ -1,7 +1,7 @@
 import { describe, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import ButtonGroupAdmin from './ButtonGroupAdmin';
+import { ButtonGroupAdmin } from './index';
 
 describe('ButtonGroupAdmin test', () => {
   it('ButtonGroupAdmin renders', () => {

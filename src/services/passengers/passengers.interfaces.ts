@@ -1,4 +1,4 @@
-import { IPassenger, ISort } from '@/interfaces/search.interfaces';
+import { IPassenger, ISort } from '@/interfaces';
 
 export interface FormPassengersGet {
   content: IPassenger[];

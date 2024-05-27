@@ -1,7 +1,7 @@
 import { describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
-import WebsiteLogo from './WebsiteLogo';
+import { WebsiteLogo } from './index';
 
 describe('WebsiteLogo test', () => {
   it('WebsiteLogo renders correctly', () => {

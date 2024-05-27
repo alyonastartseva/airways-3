@@ -1,4 +1,4 @@
-import { SearchTickets } from '@/components/SearchTickets';
+import { SearchTickets } from '@/components';
 
 const FilteredTicketsPage = () => {
   const getInitialSearchData = () => {

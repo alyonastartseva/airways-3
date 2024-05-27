@@ -1,7 +1,8 @@
 import { describe, it } from 'vitest';
 
-import Full from '@common/Full/Full';
 import { fireEvent, render, screen } from '@utils/test-utils';
+
+import { Full } from './index';
 
 const testDeparture = {
   from: 'string',

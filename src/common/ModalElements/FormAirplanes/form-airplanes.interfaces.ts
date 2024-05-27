@@ -1,6 +1,5 @@
-import { EModalNames } from '@constants/modal-constants/modal-names';
-import { IAircraftPost } from '@interfaces/aircraft.interfaces';
-import { ISeatPost } from '@interfaces/seat.interfaces';
+import { EModalNames } from '@/constants';
+import { IAircraftPost, ISeatPost } from '@/interfaces';
 
 export interface IFormAirplanesProps {
   formName: EModalNames;

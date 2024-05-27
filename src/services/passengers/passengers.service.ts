@@ -1,10 +1,9 @@
-import { adminInstance } from '@/services/axios.service';
-import { ERoutes } from '@/services/constants';
-import { IPassenger, FormPassengersPost } from '@/interfaces/search.interfaces';
-import { FormPassengersGet } from '@/services/passengers/passengers.interfaces';
-import { IFormPassengers } from '@/interfaces/passenger.interfaces';
-import { mapPassengersFormData } from '@/services/passengers/form-passengers.utils';
-import { ITEMS_PER_PAGE } from '@constants/constants';
+import { IFormPassengers, IPassenger, FormPassengersPost } from '@/interfaces';
+import { adminInstance, ERoutes } from '@/services';
+import { ITEMS_PER_PAGE } from '@/constants';
+
+import { mapPassengersFormData } from './form-passengers.utils';
+import { FormPassengersGet } from './passengers.interfaces';
 
 const passengersAPI = {
   getPassengers: async (page: number, size = ITEMS_PER_PAGE) => {

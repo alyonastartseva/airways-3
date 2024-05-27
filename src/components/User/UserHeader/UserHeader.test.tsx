@@ -1,8 +1,8 @@
 import { describe, it } from 'vitest';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
 import { UserHeader } from './index';

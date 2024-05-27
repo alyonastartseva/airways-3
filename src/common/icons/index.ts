@@ -17,6 +17,7 @@ export { default as SearchIcon } from './SearchIcon';
 export { default as PlanetIcon } from './PlanetIcon';
 export { default as Details } from './Details';
 export { default as Gear } from './Gear';
+export { default as EmptyPasswordIcon } from './EmptyPasswordIcon';
 export { default as DetailsFilling } from './DetailsFilling';
 export { default as TrashCanIcon } from './TrashCanIcon';
 export { default as WarningCircleIcon } from './WarningCircleIcon';

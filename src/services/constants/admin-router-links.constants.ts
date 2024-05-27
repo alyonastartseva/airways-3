@@ -13,4 +13,4 @@ enum ELinks {
   ADMIN_FLIGHTS_SEATS = '/flight-seats',
 }
 
-export default ELinks;
+export { ELinks };

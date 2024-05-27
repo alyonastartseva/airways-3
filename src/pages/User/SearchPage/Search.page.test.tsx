@@ -4,8 +4,9 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { Layout } from '@/layout';
-import { SearchPage } from '@pages/User/SearchPage/index';
-import { PageNotFound } from '@common/PageNotFound';
+import { PageNotFound } from '@/common';
+
+import { SearchPage } from './index';
 
 describe('SearchPage renders', () => {
   afterEach(() => {

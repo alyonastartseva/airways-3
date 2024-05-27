@@ -1,5 +1,7 @@
 import { Box, Flex, Link, Text } from '@chakra-ui/react';
 
+import { IArticle } from '@/interfaces';
+import { SearchPageTabs, CovidCard, ArticleCard } from '@/common';
 import {
   InstagramIcon,
   LinkedInIcon,
@@ -7,15 +9,13 @@ import {
   YouTubeIcon,
   FacebookIcon,
 } from '@common/icons/social';
-import aSImage from '@assets/images/articles/ASImage.webp';
-import bestOffersImage from '@assets/images/articles/BestOffersImage.webp';
-import discoverImage from '@assets/images/articles/discoverImage.webp';
-import holidayImage from '@assets/images/articles/holidayImage.webp';
-import { SearchPageTabs } from '@common/SearchPageTabs';
-import background from '@images/search-page-bg.webp';
-import { IArticle } from '@interfaces/search.interfaces';
-import { ArticleCard } from '@common/ArticleCard';
-import { CovidCard } from '@common/CovidCard';
+import {
+  aSImage,
+  bestOffersImage,
+  discoverImage,
+  holidayImage,
+  background,
+} from '@/assets';
 
 const articles: IArticle[] = [
   {

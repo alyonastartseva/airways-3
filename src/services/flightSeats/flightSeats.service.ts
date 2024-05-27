@@ -1,9 +1,6 @@
-import { adminInstance } from '@services/axios.service';
-import {
-  IFlightSeat,
-  IFlightSeatsQuery,
-} from '@services/flightSeats/flightSeats.interfaces';
-import { ERoutes } from '@services/constants';
+import { adminInstance, ERoutes } from '@/services';
+
+import { IFlightSeatsQuery } from './flightSeats.interfaces';
 import { ISeats } from '@/interfaces/flightsSeats.interfaces';
 
 const flightSeatsAPI = {

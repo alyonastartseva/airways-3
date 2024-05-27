@@ -2,7 +2,7 @@ import { ChangeEvent, useMemo, useState } from 'react';
 import { Empty, Select, Spin } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
 
-import { debounce } from '@/utils/debounce.utils';
+import { debounce } from '@utils/debounce.utils';
 
 import { IDebounceSelectProps } from './debounceSelect.interface';
 

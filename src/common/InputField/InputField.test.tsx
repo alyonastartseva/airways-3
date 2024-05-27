@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { describe, vi } from 'vitest';
 
-import InputField from './InputField';
+import { InputField } from './index';
 
 describe('InputField test', () => {
   vi.mock('react-hook-form', () => ({

@@ -1,3 +1,4 @@
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Text,
   Flex,
@@ -7,10 +8,9 @@ import {
   Menu,
   IconButton,
 } from '@chakra-ui/react';
-import { Link, useNavigate } from 'react-router-dom';
 
-import { useAuth } from '@/hooks';
 import { ProfileIcon, HumburgerIcon } from '@common/icons';
+import { useAuth } from '@/hooks';
 
 const UserHeader = () => {
   const { setIsAdmin } = useAuth();

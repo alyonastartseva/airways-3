@@ -1,24 +1,21 @@
-import { FieldValues } from 'react-hook-form';
 import { UseMutationResult } from 'react-query';
+import { FieldValues } from 'react-hook-form';
 import { AxiosResponse } from 'axios';
 
-import { FormInputProps } from '@common/ModalElements/ModalInput/ModalInput';
+import { FormInputProps } from '@common/ModalElements/ModalInput';
+import { EModalButtonTexts, EModalNames } from '@/constants';
 import {
-  EModalButtonTexts,
-  EModalNames,
-} from '@/constants/modal-constants/modal-names';
-import { IFormPassengers } from '@interfaces/passenger.interfaces';
-import { IAircraftPost } from '@interfaces/aircraft.interfaces';
-import { IDestinationPost } from '@interfaces/destination.interfaces';
-import { ISeatForm } from '@interfaces/seat.interfaces';
-import { ITicketsForm } from '@interfaces/tickets.interface';
-import {
+  IFormPassengers,
+  IAircraftPost,
+  IDestinationPost,
+  ISeatForm,
+  ITicketsForm,
+  TTimeZoneForm,
+  IFormBooking,
   IFlight,
   IFlightPost,
   IFlightPostFormFields,
-} from '@interfaces/flights.interfaces';
-import { TTimeZoneForm } from '@interfaces/time-zone.interfaces';
-import { IFormBooking } from '@interfaces/booking.interfaces';
+} from '@/interfaces';
 
 export interface IModalProps {
   formName: EModalNames;

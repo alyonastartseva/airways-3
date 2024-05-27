@@ -1,4 +1,4 @@
-import IValidatePattern from '@/interfaces/validate-ptterns.interface';
+import { IValidatePattern } from '@/interfaces';
 
 const passwordPattern: Record<string, IValidatePattern> = {
   pass: {

@@ -1,6 +1,5 @@
-﻿import { FormInputProps } from '@/common/ModalElements/ModalInput/ModalInput';
-import { IAircraftPost } from '@/interfaces/aircraft.interfaces';
-import { EModalNames } from '@constants/modal-constants/modal-names';
+﻿import { IAircraftPost } from '@/interfaces';
+import { FormInputProps } from '@common/ModalElements/ModalInput';
 
 export const modalAirplanesFields: FormInputProps<IAircraftPost>[] = [
   {

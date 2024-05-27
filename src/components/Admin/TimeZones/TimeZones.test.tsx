@@ -1,7 +1,7 @@
 import { render, screen, renderHook } from '@testing-library/react';
 import { afterEach, describe, expect, vi } from 'vitest';
 
-import TimeZones from './TimeZones';
+import { TimeZones } from './index';
 
 vi.mock('react-query');
 
