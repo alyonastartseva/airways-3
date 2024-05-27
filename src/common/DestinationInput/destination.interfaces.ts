@@ -1,4 +1,4 @@
-import { TDestQuery, IFromTo } from '@/interfaces/search.interfaces';
+import { TDestQuery, IFromTo } from '@/interfaces';
 
 export interface IDestProps {
   fromOrTo: string;

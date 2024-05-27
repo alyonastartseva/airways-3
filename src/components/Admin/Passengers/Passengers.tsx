@@ -1,3 +1,4 @@
+import { useCallback, useState, useMemo, useEffect, memo } from 'react';
 import {
   Table,
   Thead,
@@ -14,31 +15,28 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useCallback, useState, useMemo, useEffect, memo } from 'react';
 import { isValidNumber } from 'libphonenumber-js';
 
-import { AlertMessage } from '@common/AlertMessage';
-import { SpinnerBlock } from '@common/SpinnerBlock';
-import { IPassenger } from '@interfaces/search.interfaces';
-import { PersonGenders } from '@/interfaces/person.interfaces';
-import { EditableCell } from '@common/EditableCell';
-import { EditableSelectCell } from '@/common/EditableSelectCell';
 import { isRowEditing } from '@utils/table.utils';
-import { FlexCell } from '@common/FlexCell';
-import { PopoverTable } from '@common/PopoverTable';
-import { HeaderTable } from '@/common/HeaderTable';
-import { FooterTable } from '@common/FooterTable';
+import { formatDateTime } from '@utils/date.utils';
+import { ITEMS_PER_PAGE, EModalNames, passportPattern } from '@/constants';
+import { IFormPassengers, IPassenger, PersonGenders } from '@/interfaces';
 import {
   usePassengersDelete,
   usePassengersPatch,
   usePassengersQuery,
   useSetCurrentPageInPagination,
 } from '@/hooks';
-import { EModalNames } from '@/constants/modal-constants/modal-names';
-import { IFormPassengers } from '@/interfaces/passenger.interfaces';
-import { ITEMS_PER_PAGE } from '@/constants/constants';
-import passportPattern from '@constants/validate-patterns/passport-pattern';
-import { formatDateTime } from '@utils/date.utils';
+import {
+  AlertMessage,
+  SpinnerBlock,
+  EditableCell,
+  EditableSelectCell,
+  FlexCell,
+  PopoverTable,
+  HeaderTable,
+  FooterTable,
+} from '@/common';
 
 const Passengers = () => {
   // индекс и размер пагинации

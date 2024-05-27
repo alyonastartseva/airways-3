@@ -1,9 +1,10 @@
 import { useCallback } from 'react';
 import { Box, Button, ButtonGroup, Flex } from '@chakra-ui/react';
 
-import { ArrowRightIcon, ArrowLeftIcon } from '@/common/icons/';
-import { IPagination } from '@components/Pagination/Pagination.interfaces';
+import { ArrowRightIcon, ArrowLeftIcon } from '@common/icons';
 import { getVisiblePages } from '@utils/pagination.utils';
+
+import { IPagination } from './Pagination.interfaces';
 
 const Pagination = <Data,>(props: IPagination<Data>) => {
   enum PaginationStyle {

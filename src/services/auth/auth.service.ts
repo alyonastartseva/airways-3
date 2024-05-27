@@ -1,9 +1,6 @@
-import {
-  ILoginRequest,
-  ILoginResponse,
-} from '@/services/auth/login.interfaces';
-import { adminInstance } from '@/services/axios.service';
-import { ERoutes } from '@/services/constants';
+import { adminInstance, ERoutes } from '@/services';
+
+import { ILoginRequest, ILoginResponse } from './login.interfaces';
 
 export const useAuthAdmin = () => {
   const loginAdmin = (params: ILoginRequest) =>

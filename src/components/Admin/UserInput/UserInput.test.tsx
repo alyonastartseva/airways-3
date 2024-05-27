@@ -2,7 +2,8 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 
-import UserInput from './UserInput';
+import { UserInput } from './index';
+
 vi.mock('@chakra-ui/react', () => ({
   Input: () => <div>input Component</div>,
   FormLabel: () => <div>FormLabel Component </div>,

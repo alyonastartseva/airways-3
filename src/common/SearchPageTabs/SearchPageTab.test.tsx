@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { PlaneTabIcon } from '@common/icons';
 
-import SearchPageTabs from './SearchPageTabs';
+import { SearchPageTabs } from './index';
 
 describe('SearchPageTabs component', () => {
   it('renders tabs', () => {

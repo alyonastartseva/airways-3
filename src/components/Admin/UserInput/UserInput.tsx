@@ -1,5 +1,5 @@
-import { Input, FormLabel } from '@chakra-ui/react';
 import { UseFormRegister, FieldValues } from 'react-hook-form';
+import { Input, FormLabel } from '@chakra-ui/react';
 
 interface IUserInputRegProps {
   name: string;

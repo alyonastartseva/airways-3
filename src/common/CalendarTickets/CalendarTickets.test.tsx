@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import CalendarTickets, { PropsCalendar } from './CalendarTickets';
+import { CalendarTickets, PropsCalendar } from './index';
 
 const defaultProps: PropsCalendar = {
   startDate: null,

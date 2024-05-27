@@ -1,8 +1,9 @@
 import { Flex } from '@chakra-ui/react';
 
-import { Pagination } from '@components/Pagination';
-import { ButtonGroupAdmin } from '@common/ButtonGroupAdmin';
-import { IFooterTable } from '@common/FooterTable/footerTable.interfaces';
+import { Pagination } from '@/components';
+import { ButtonGroupAdmin } from '@/common';
+
+import { IFooterTable } from './footerTable.interfaces';
 
 const FooterTable = <Data,>({
   data,

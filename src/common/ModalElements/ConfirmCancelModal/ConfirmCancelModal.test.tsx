@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 
-import ConfirmCancelModal from './ConfirmCancelModal';
+import { ConfirmCancelModal } from './index';
 
 describe('ConfirmCancelModal тесты', () => {
   it('проверка на наличие текста в модальном окне', () => {

@@ -1,4 +1,4 @@
-import { EModalNames } from '@/constants/modal-constants/modal-names';
+import { EModalNames } from '@/constants';
 
 export interface IHeaderAdmin {
   heading: string;

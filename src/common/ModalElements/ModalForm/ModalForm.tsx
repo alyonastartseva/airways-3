@@ -1,4 +1,4 @@
-import { IModalForm } from '@common/ModalElements/ModalForm/modalForm.interfaces';
+import { IModalForm } from './modalForm.interfaces';
 
 const ModalForm = ({ modal }: IModalForm) => {
   return <>{modal}</>;

@@ -1,6 +1,6 @@
 import { FieldValues } from 'react-hook-form';
 
-import { bookingStatuses } from '@constants/constants';
+import { bookingStatuses } from '@/constants';
 
 export interface IBooking {
   id: number;

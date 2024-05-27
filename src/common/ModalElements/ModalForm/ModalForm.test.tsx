@@ -1,7 +1,7 @@
 import { describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
-import ModalForm from './ModalForm';
+import { ModalForm } from './index';
 
 describe('ModalForm test', () => {
   it('ModalForm render', () => {

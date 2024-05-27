@@ -1,4 +1,4 @@
-import { Airplanes } from '@components/Admin/Airplanes';
+import { Airplanes } from '@/components';
 
 function AirplanesPage() {
   return (

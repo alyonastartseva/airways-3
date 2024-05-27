@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 
 import { PlaneTabIcon } from '@common/icons';
-import { SearchTabPanel } from '@common/SearchTabPanel';
+import { SearchTabPanel } from '@/common';
 import { ISearchPageTab } from '@common/SearchPageTabs/searchPageTab.interfaces';
 
 const tabs: ISearchPageTab[] = [

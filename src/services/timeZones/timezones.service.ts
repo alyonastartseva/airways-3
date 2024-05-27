@@ -1,8 +1,7 @@
-import { adminInstance } from '@/services/axios.service';
-import { ITimeZone, TTimeZoneForm } from '@interfaces/time-zone.interfaces';
-import { ITimezoneGet } from '@/services/timeZones/timeZones.interfaces';
+import { adminInstance, ERoutes } from '@/services';
+import { ITimeZone, TTimeZoneForm } from '@/interfaces';
 
-import { ERoutes } from '../constants';
+import { ITimezoneGet } from './timeZones.interfaces';
 
 const timezonesAPI = {
   getTimezones: async (page: number, size: number) => {

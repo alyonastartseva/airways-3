@@ -1,7 +1,7 @@
 import { describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
-import PhoneNumber from './PhoneNumber';
+import { PhoneNumber } from './index';
 
 describe('PhoneNumber test', () => {
   it('PhoneNumber renders correctly', () => {

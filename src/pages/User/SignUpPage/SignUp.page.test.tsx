@@ -10,7 +10,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { userApi } from '@/services/user/user.service';
 
-import SignUpPage from './SignUp.page';
+import { SignUpPage } from './index';
 
 describe('SignUpPage', () => {
   beforeEach(() => {

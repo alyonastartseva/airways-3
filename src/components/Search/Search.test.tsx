@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { describe, it } from 'vitest';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
-import Search from './Search';
+import { Search } from './index';
 
 describe('Search component', () => {
   it('renders without crashing', () => {

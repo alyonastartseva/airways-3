@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Select } from '@chakra-ui/react';
 
-import { FlexCell } from '@common/FlexCell';
+import { FlexCell } from '@/common';
+
 import {
   IEditableSelectCell,
   InitialSelectValue,
-} from '@common/EditableSelectCell/editableSelectCell.interfaces';
+} from './editableSelectCell.interfaces';
 
 const EditableSelectCell = <K,>({
   value: initialValue,

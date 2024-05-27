@@ -13,12 +13,12 @@ import {
   ArrowsClockwiseIcon,
   ArmchairIcon,
   WarningCircleIcon,
-} from '@/common/icons';
-import { seatCategory } from '@/constants/constants';
-import { pluralize } from '@/utils/string.utils';
-import { TSeatCategory } from '@/interfaces/seat.interfaces';
+} from '@common/icons';
+import { seatCategory } from '@/constants';
+import { pluralize } from '@utils/string.utils';
+import { TSeatCategory } from '@/interfaces';
 
-import { TFacilities, TTariffType } from '../TicketCard/ticketCard.interfaces';
+import { TFacilities, TTariffType } from '../TicketCard';
 
 interface ITicketTariffProps {
   tariff: TTariffType;

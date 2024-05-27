@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 
-import Airplanes from './Airplanes';
+import { Airplanes } from './index';
 
 vi.mock('react-query');
 

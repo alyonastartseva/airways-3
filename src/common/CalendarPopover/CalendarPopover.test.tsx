@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import CalendarPopover from '@common/CalendarPopover';
+import { CalendarPopover } from './index';
 
 describe('Calendar component', () => {
   it('Popover Header not completed', () => {

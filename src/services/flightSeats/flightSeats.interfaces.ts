@@ -1,5 +1,4 @@
-import { ISort } from '@interfaces/api-interfaces';
-import { TSeatCategory } from '@interfaces/seat.interfaces';
+import { ISort, TSeatCategory } from '@/interfaces';
 
 export interface IFlightSeatsQuery {
   content: IFlightSeat[];

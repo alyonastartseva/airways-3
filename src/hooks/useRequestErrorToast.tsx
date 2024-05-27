@@ -1,8 +1,8 @@
 import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 
-import { IAxiosErrResponseData } from '@/interfaces/axios-err-response-data';
-import { AxiosErrorMessage } from '@/common/AxiosErrorMessage';
+import { IAxiosErrResponseData } from '@/interfaces';
+import { AxiosErrorMessage } from '@/common';
 
 export const useRequestErrorToast = () => {
   const toast = useToast();

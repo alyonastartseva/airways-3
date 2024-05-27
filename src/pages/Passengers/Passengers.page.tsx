@@ -1,4 +1,4 @@
-import { Passengers } from '@components/Admin/Passengers';
+import { Passengers } from '@/components';
 
 const PassengersPage = () => {
   return <Passengers />;

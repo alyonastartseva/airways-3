@@ -1,7 +1,6 @@
-import { ITEMS_PER_PAGE } from '@/constants/constants';
-import { adminInstance } from '@/services/axios.service';
-import { ERoutes } from '@/services/constants';
-import { IAircraft, IAircraftPost } from '@interfaces/aircraft.interfaces';
+import { IAircraft, IAircraftPost } from '@/interfaces';
+import { adminInstance, ERoutes } from '@/services';
+import { ITEMS_PER_PAGE } from '@/constants';
 
 import { IAircraftsGet } from './aircraft.interfaces';
 

@@ -2,7 +2,7 @@ import { describe, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
-import PageNotFound from './PageNotFound';
+import { PageNotFound } from './index';
 
 const Page = () => (
   <BrowserRouter>

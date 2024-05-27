@@ -1,4 +1,4 @@
-import { IFlightPresentation } from '@/interfaces/flights.interfaces';
+import { IFlightPresentation } from '@/interfaces';
 
 export interface IFlightsUpdate extends Partial<IFlightPresentation> {
   id: number;

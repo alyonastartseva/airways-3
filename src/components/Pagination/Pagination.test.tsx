@@ -1,9 +1,9 @@
-import { describe, it, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { describe, it, vi } from 'vitest';
 
-import Pagination from './Pagination';
+import { Pagination } from './index';
 
 describe('Pagination tests', () => {
   // создание тестовых данных

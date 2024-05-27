@@ -1,4 +1,4 @@
-import { Users } from '@components/Admin/Users';
+import { Users } from '@/components';
 
 function UsersPage() {
   return <Users />;

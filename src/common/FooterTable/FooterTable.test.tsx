@@ -1,7 +1,7 @@
 import { describe, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
-import FooterTable from './FooterTable';
+import { FooterTable } from './index';
 
 describe('FooterTable test', () => {
   it('FooterTable renders with button group and pagination', () => {
