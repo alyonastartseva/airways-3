@@ -4,8 +4,8 @@ import {
   ConfigProvider,
 } from 'antd';
 
-import { ArrowRightIcon, ArrowLeftIcon } from '@/common/icons/';
-import { ITEMS_PER_PAGE } from '@constants/constants';
+import { ArrowRightIcon, ArrowLeftIcon } from '@common/icons';
+import { ITEMS_PER_PAGE } from '@/constants';
 
 import { IPagination } from './Pagination.interfaces';
 
