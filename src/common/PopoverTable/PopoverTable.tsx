@@ -15,21 +15,11 @@ import { EditIcon, CloseIcon } from '@chakra-ui/icons';
 import { IFlightPresentation } from '@/interfaces';
 import { ELinks } from '@/services';
 import { Details } from '@common/icons';
-import { IPopoverTable } from '@common/PopoverTable/popoverTable.interfaces';
 
-import { ConfirmCancelModal } from '../ModalElements/ConfirmCancelModal';
+import { ConfirmCancelModal } from '../ConfirmCancelModal';
 
-interface RouteData {
-  model?: string;
-  id?: number;
-}
-
-const mapRoutesFormData = (data: RouteData): number | undefined => {
-  const { model, id } = data;
-  if (model) {
-    return id;
-  }
-};
+import { IPopoverTable } from './popoverTable.interfaces';
+import { mapRoutesFormData } from './popoverTable.utils';
 
 const PopoverTable = ({
   row,

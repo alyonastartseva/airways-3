@@ -5,17 +5,7 @@ import dayjs from 'dayjs';
 
 import { RedButton } from '@/common';
 
-import {
-  IDeparture,
-  ITicketReturn,
-  TAdditionalServices,
-} from './footer.interfaces';
-
-interface IFullProps {
-  departure?: IDeparture;
-  ticketReturn?: ITicketReturn;
-  additional?: TAdditionalServices;
-}
+import { IFullProps } from './footer.interfaces';
 
 const Full: FC<IFullProps> = ({ additional, departure, ticketReturn }) => {
   const [details, setDetails] = useState(false);

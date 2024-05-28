@@ -1,11 +1,7 @@
 import { Box, FormLabel, Input, Text } from '@chakra-ui/react';
 import { useFormContext } from 'react-hook-form';
 
-interface IInputFieldProps {
-  name: string;
-  label: string;
-  typeField?: string;
-}
+import { IInputFieldProps } from './InputField.interfaces';
 
 function InputField({ name, label, typeField = '' }: IInputFieldProps) {
   const {

@@ -1,7 +1,6 @@
 import { Flex } from '@chakra-ui/react';
 
-import { Pagination } from '@/components';
-import { ButtonGroupAdmin } from '@/common';
+import { ButtonGroupAdmin, Pagination } from '@/common';
 
 import { IFooterTable } from './footerTable.interfaces';
 

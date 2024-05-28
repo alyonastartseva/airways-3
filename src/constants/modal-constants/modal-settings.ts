@@ -1,7 +1,7 @@
 import { UseMutationResult } from 'react-query';
 import { AxiosResponse } from 'axios';
 
-import { TSettings } from '@common/ModalElements/ModalShape/modal-shape.interfaces';
+import { TSettings } from '@/common/ModalShape/modal-shape.interfaces';
 import {
   IDestinationPost,
   IDestination,

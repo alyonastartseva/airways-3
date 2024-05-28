@@ -1,10 +1,7 @@
 import { FC } from 'react';
 import { Button } from '@chakra-ui/react';
 
-interface IRedButtonProps {
-  text: string;
-  clickHandler: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-}
+import { IRedButtonProps } from './RedButton.interfaces';
 
 const RedButton: FC<IRedButtonProps> = ({ text, clickHandler }) => (
   <Button

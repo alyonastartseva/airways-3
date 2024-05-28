@@ -9,22 +9,21 @@ export { Flights } from './Admin/Flights';
 export { Passengers } from './Admin/Passengers';
 export { Tickets } from './Admin/Tickets';
 export { TimeZones } from './Admin/TimeZones';
-export { UserInput } from './Admin/UserInput';
 export { Users } from './Admin/Users';
 
 export { Header } from './Header';
 export { Footer } from './Footer';
-export { Pagination } from './Pagination';
 
 export { LoginAdminForm } from './LoginAdminForm';
 export { LoginForm } from './LoginForm';
+export { FormAirplanes } from './FormAirplanes';
 
-export { Search } from './Search';
 export { SearchTickets } from './SearchTickets';
+export { DestinationInput } from './DestinationInput';
+export { DestinationsInputSelector } from './DestinationsInputSelector';
 
 export { TicketCard } from './Ticket/TicketCard';
 export { TicketTariff } from './Ticket/TicketTariff';
 
-export { RegisterForm } from './User/RegisterForm';
 export { SignUp } from './User/SignUp';
 export { UserHeader } from './User/UserHeader';

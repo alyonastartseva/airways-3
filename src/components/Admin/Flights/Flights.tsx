@@ -18,6 +18,7 @@ import {
 import { flightStatuses, EModalNames } from '@/constants';
 import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
+import { DestinationsInputSelector } from '@/components';
 import {
   IAircraft,
   IFlightPostFormFields,
@@ -32,7 +33,6 @@ import {
   useSetCurrentPageInPagination,
 } from '@/hooks';
 import {
-  DestinationsInputSelector,
   SpinnerBlock,
   PopoverTable,
   HeaderTable,

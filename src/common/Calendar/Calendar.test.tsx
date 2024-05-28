@@ -1,110 +1,77 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { format, addMonths, compareDesc } from 'date-fns';
 
-import { Calendar, calendarHeadingFormat } from './index';
+import { Calendar, PropsCalendar } from './index';
 
-const props = {
-  startDate: new Date(),
-  endDate: new Date(),
-
-  select: vi.fn(),
-  calendarFormat: 2,
+const defaultProps: PropsCalendar = {
+  startDate: null,
+  endDate: null,
+  select: () => {},
+  calendarFormat: 1,
 };
 
-describe('Calendar component', () => {
-  it('correct date/-s heading', () => {
-    render(<Calendar {...props} />);
+describe('CalendarMain', () => {
+  it('should render without errors', () => {
+    const { container } = render(<Calendar {...defaultProps} />);
 
-    // two headings are in the doc
+    expect(container).toBeTruthy();
+  });
 
-    const formattedDateOne = format(props.startDate, calendarHeadingFormat);
-    const formattedDateTwo = format(
-      addMonths(props.startDate, 1),
-      calendarHeadingFormat
+  it('should open popover when input is clicked', () => {
+    const { getByPlaceholderText, getByTestId } = render(
+      <Calendar {...defaultProps} />
     );
-    expect(screen.getByText(formattedDateOne)).toBeInTheDocument();
-    expect(screen.getByText(formattedDateTwo)).toBeInTheDocument();
 
-    // no past dates
-    expect(
-      screen.queryByText(
-        format(addMonths(new Date(), -1), calendarHeadingFormat)
-      )
-    ).toBeNull();
+    const input = getByPlaceholderText('Дата поездки');
+    fireEvent.click(input);
 
-    // startDate  <= endDate &&  today <= startDate
+    const popover = getByTestId('popover-content');
+    expect(popover).toBeInTheDocument();
+  });
 
-    expect(
-      compareDesc(new Date(props.startDate), new Date(props.endDate))
-    ).not.toBe(-1);
-    expect(
-      compareDesc(new Date().setHours(0, 0, 0, 0), new Date(props.startDate))
-    ).not.toBe(-1);
-  }),
-    it('switch date/-s buttons', () => {
-      render(<Calendar {...props} />);
+  it('should select a departure date and a return date', () => {
+    const selectMock = vi.fn();
 
-      let count = 0;
-      const prevButton = screen.getByText('<');
-      const nextButton = screen.getByText('>');
-      expect(prevButton).toBeInTheDocument();
-      expect(prevButton).toBeDisabled();
-      expect(nextButton).toBeInTheDocument();
+    const { getByPlaceholderText, getByText } = render(
+      <Calendar {...defaultProps} select={selectMock} />
+    );
 
-      fireEvent.click(nextButton);
-      expect(
-        screen.getByText(
-          format(
-            addMonths(props.startDate, (count += 1)),
-            calendarHeadingFormat
-          )
-        )
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(
-          format(
-            addMonths(props.startDate, (count += 1)),
-            calendarHeadingFormat
-          )
-        )
-      ).toBeInTheDocument();
-      expect(prevButton).not.toBeDisabled();
+    const input = getByPlaceholderText('Дата поездки');
+    fireEvent.click(input);
 
-      fireEvent.click(prevButton);
-      expect(
-        screen.getByText(
-          format(
-            addMonths(props.startDate, (count -= 1)),
-            calendarHeadingFormat
-          )
-        )
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(
-          format(
-            addMonths(props.startDate, (count -= 1)),
-            calendarHeadingFormat
-          )
-        )
-      ).toBeInTheDocument();
-      expect(prevButton).toBeDisabled();
+    const departureDate = getByText('1');
+    fireEvent.click(departureDate);
 
-      fireEvent.click(prevButton);
-      expect(
-        screen.getByText(format(props.startDate, calendarHeadingFormat))
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText(format(props.startDate, calendarHeadingFormat))
-      ).toBeInTheDocument();
-      expect(prevButton).toBeDisabled();
-    });
+    const returnDate = getByText('15');
+    fireEvent.click(returnDate);
 
-  it('calendar cells', () => {
-    render(<Calendar {...props} />);
+    expect(selectMock).toHaveBeenCalledTimes(2);
+  });
 
-    const tables = screen.getAllByRole('table');
-    expect(tables[0].getElementsByTagName('td')).toHaveLength(35);
-    expect(tables[0].getElementsByTagName('th')).toHaveLength(7);
+  it('should disable previous month button when current date is in the past', () => {
+    const { getByPlaceholderText, getByLabelText } = render(
+      <Calendar {...defaultProps} />
+    );
+
+    const input = getByPlaceholderText('Дата поездки');
+    fireEvent.click(input);
+
+    const previousMonthButton = getByLabelText('Предыдущий месяц');
+    expect(previousMonthButton).toBeDisabled();
+  });
+
+  it('should navigate to the next month when next month button is clicked', () => {
+    const { getByPlaceholderText, getByLabelText, getByTestId } = render(
+      <Calendar {...defaultProps} />
+    );
+
+    const input = getByPlaceholderText('Дата поездки');
+    fireEvent.click(input);
+
+    const nextMonthButton = getByLabelText('Следующий месяц');
+    fireEvent.click(nextMonthButton);
+
+    const heading = getByTestId('heading');
+    expect(heading).toHaveTextContent('Июль');
   });
 });

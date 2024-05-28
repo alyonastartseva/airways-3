@@ -1,4 +1,4 @@
-import { FormInputProps } from '@common/ModalElements/ModalInput';
+import { FormInputProps } from '@/common/ModalInput';
 import { flightStatuses, statusNames } from '@/constants';
 import { useDestinationQuery, useAircraftQuery } from '@/hooks';
 import { IFlightPostFormFields, IAircraftPost } from '@/interfaces';

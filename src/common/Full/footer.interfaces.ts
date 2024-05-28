@@ -1,4 +1,4 @@
-export interface IDeparture {
+interface IDeparture {
   from: string;
   to: string;
   time: string;
@@ -9,7 +9,7 @@ export interface IDeparture {
   price: number;
 }
 
-export interface ITicketReturn {
+interface ITicketReturn {
   from: string;
   to: string;
   time: string;
@@ -20,4 +20,12 @@ export interface ITicketReturn {
   price: number;
 }
 
-export type TAdditionalServices = [string, number][];
+type TAdditionalServices = [string, number][];
+
+interface IFullProps {
+  departure?: IDeparture;
+  ticketReturn?: ITicketReturn;
+  additional?: TAdditionalServices;
+}
+
+export type { IDeparture, ITicketReturn, TAdditionalServices, IFullProps };
