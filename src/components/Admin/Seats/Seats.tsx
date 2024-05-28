@@ -84,140 +84,129 @@ const Seats = () => {
     []
   );
 
-  const flightClass = (value: ISeatCategory): ISeatCategoryType => {
-    switch (value) {
-      case ISeatCategory.BUSINESS:
-        return 'Бизнес';
-      case ISeatCategory.ECONOM:
-        return 'Эконом';
-      case ISeatCategory.FIRST:
-        return 'Первый класс';
-      case ISeatCategory.PREMIUM_ECONOMY:
-        return 'Премиум';
-    }
-  };
-
-  const boolCheck = (str: string): string => (str === 'Да' ? 'Да' : 'Нет');
-
-  const flightClassOptions = Object.values(ISeatCategory);
-
   const columnHelper = createColumnHelper<IFlightSeat>();
 
-  const columnIds = (id: columnType, header: string) => {
-    return columnHelper.accessor(id, {
+  type columnType =
+    | 'id'
+    | 'seat.aircraftId'
+    | 'seat.id'
+    | 'fare'
+    | 'seat.category'
+    | 'isSold'
+    | 'isRegistered'
+    | 'isBooked';
+
+  const columnCreator = (
+    fieldName: columnType,
+    header: string,
+    tableType?: 'EditableCell' | 'EditableSelectCell' | 'Cell',
+    tableBool?: boolean
+  ) => {
+    const flightClass = (value: ISeatCategory): ISeatCategoryType => {
+      switch (value) {
+        case ISeatCategory.BUSINESS:
+          return 'Бизнес';
+        case ISeatCategory.ECONOM:
+          return 'Эконом';
+        case ISeatCategory.FIRST:
+          return 'Первый класс';
+        case ISeatCategory.PREMIUM_ECONOMY:
+          return 'Премиум';
+      }
+    };
+
+    const boolCheck = (str: string): string => (str === 'Да' ? 'Да' : 'Нет');
+
+    const flightClassOptions = Object.values(ISeatCategory);
+
+    if (tableType === 'EditableCell') {
+      return columnHelper.accessor(fieldName, {
+        header,
+        cell: (info) => (
+          <EditableCell
+            value={isRowEditing(
+              info.row.index,
+              info.column.id,
+              info.getValue()!.toString(),
+              editableRowState,
+              editableRowIndex
+            )}
+            index={info.row.index}
+            id={info.column.id}
+            editableRowIndex={editableRowIndex}
+            updateData={handleUpdateRow}
+          />
+        ),
+      });
+    }
+    if (tableType === 'EditableSelectCell') {
+      if (tableBool) {
+        return columnHelper.accessor(fieldName, {
+          header,
+          cell: (info) => (
+            <EditableSelectCell
+              value={isRowEditing(
+                info.row.index,
+                info.column.id,
+                info.getValue() ? 'Да' : 'Нет',
+                editableRowState,
+                editableRowIndex
+              )}
+              index={info.row.index}
+              id={info.column.id}
+              editableRowIndex={editableRowIndex}
+              updateData={handleUpdateRow}
+              selectOptions={['Да', 'Нет']}
+              getRenderValue={boolCheck}
+            />
+          ),
+        });
+      } else {
+        return columnHelper.accessor(fieldName, {
+          header,
+          cell: (info) => (
+            <EditableSelectCell
+              value={isRowEditing(
+                info.row.index,
+                info.column.id,
+                info.getValue()?.toString(),
+                editableRowState,
+                editableRowIndex
+              )}
+              index={info.row.index}
+              id={info.column.id}
+              editableRowIndex={editableRowIndex}
+              updateData={handleUpdateRow}
+              selectOptions={flightClassOptions}
+              getRenderValue={flightClass}
+            />
+          ),
+        });
+      }
+    }
+
+    return columnHelper.accessor('id', {
       header,
       cell: (info) => <FlexCell padding={24} value={info.getValue()} />,
       size: 41,
     });
   };
-  type columnType = 'id' | 'seat.aircraftId' | 'seat.id' | 'fare';
-  const columnCreator = (id: columnType, header: string) => {
-    return columnHelper.accessor(id, {
-      header,
-      cell: (info) => (
-        <EditableCell
-          value={isRowEditing(
-            info.row.index,
-            info.column.id,
-            info.getValue().toString(),
-            editableRowState,
-            editableRowIndex
-          )}
-          index={info.row.index}
-          id={info.column.id}
-          editableRowIndex={editableRowIndex}
-          updateData={handleUpdateRow}
-        />
-      ),
-    });
-  };
 
   const columns = useMemo(
     () => [
-      columnIds('id', 'ID'),
-      columnCreator('seat.aircraftId', 'ID рейса'),
-      columnCreator('seat.id', 'ID Места'),
-      columnCreator('fare', 'Цена'),
-      columnHelper.accessor('seat.category', {
-        header: 'Класс',
-        cell: (info) => (
-          <EditableSelectCell
-            value={isRowEditing(
-              info.row.index,
-              info.column.id,
-              info.getValue(),
-              editableRowState,
-              editableRowIndex
-            )}
-            index={info.row.index}
-            id={info.column.id}
-            editableRowIndex={editableRowIndex}
-            updateData={handleUpdateRow}
-            selectOptions={flightClassOptions}
-            getRenderValue={flightClass}
-          />
-        ),
-      }),
-      columnHelper.accessor('isSold', {
-        header: 'продано',
-        cell: (info) => (
-          <EditableSelectCell
-            value={isRowEditing(
-              info.row.index,
-              info.column.id,
-              info.getValue() ? 'Да' : 'Нет',
-              editableRowState,
-              editableRowIndex
-            )}
-            index={info.row.index}
-            id={info.column.id}
-            editableRowIndex={editableRowIndex}
-            updateData={handleUpdateRow}
-            selectOptions={['Да', 'Нет']}
-            getRenderValue={boolCheck}
-          />
-        ),
-      }),
-      columnHelper.accessor('isRegistered', {
-        header: 'Зарегистрировано',
-        cell: (info) => (
-          <EditableSelectCell
-            value={isRowEditing(
-              info.row.index,
-              info.column.id,
-              info.getValue() ? 'Да' : 'Нет',
-              editableRowState,
-              editableRowIndex
-            )}
-            index={info.row.index}
-            id={info.column.id}
-            editableRowIndex={editableRowIndex}
-            updateData={handleUpdateRow}
-            selectOptions={['Да', 'Нет']}
-            getRenderValue={boolCheck}
-          />
-        ),
-      }),
-      columnHelper.accessor('isBooked', {
-        header: 'Забронировано',
-        cell: (info) => (
-          <EditableSelectCell
-            value={isRowEditing(
-              info.row.index,
-              info.column.id,
-              info.getValue() ? 'Да' : 'Нет',
-              editableRowState,
-              editableRowIndex
-            )}
-            index={info.row.index}
-            id={info.column.id}
-            editableRowIndex={editableRowIndex}
-            updateData={handleUpdateRow}
-            selectOptions={['Да', 'Нет']}
-            getRenderValue={boolCheck}
-          />
-        ),
-      }),
+      columnCreator('id', 'ID', 'Cell'),
+      columnCreator('seat.aircraftId', 'ID рейса', 'EditableCell'),
+      columnCreator('seat.id', 'ID Места', 'EditableCell'),
+      columnCreator('fare', 'Цена', 'EditableCell'),
+      columnCreator('seat.category', 'Класс', 'EditableSelectCell', false),
+      columnCreator('isSold', 'Продано', 'EditableSelectCell', true),
+      columnCreator(
+        'isRegistered',
+        'Зарегестрировано',
+        'EditableSelectCell',
+        true
+      ),
+      columnCreator('isBooked', 'Забронировано', 'EditableSelectCell', true),
       columnHelper.display({
         id: 'actions',
         size: 41,
@@ -241,11 +230,9 @@ const Seats = () => {
       editableRowIndex,
       editableRowState,
       handleUpdateRow,
-      columnIds,
       columnCreator,
       dataFlightSeats?.content.length,
       deleteFlightSeats,
-      flightClassOptions,
       handleEditRow,
       pageIndex,
       setPaginationData,
