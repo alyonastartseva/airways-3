@@ -1,4 +1,4 @@
-import { FormInputProps } from '@common/ModalElements/ModalInput';
+import { FormInputProps } from '@/common/ModalInput';
 import { IFlightSeat } from '@services/flightSeats/flightSeats.interfaces';
 import { bookingStatuses } from '@/constants';
 import { IFormBooking, IPassenger } from '@/interfaces';

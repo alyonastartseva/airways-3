@@ -1,4 +1,4 @@
-import { FormInputProps } from '@common/ModalElements/ModalInput';
+import { FormInputProps } from '@/common/ModalInput';
 import { IDestinationPost } from '@/interfaces';
 import { airportCodePattern, onlyLettersPattern } from '@/constants';
 

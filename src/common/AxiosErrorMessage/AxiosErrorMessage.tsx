@@ -1,10 +1,6 @@
 import { ListItem, UnorderedList } from '@chakra-ui/react';
 
-import { IAxiosErrResponseData } from '@/interfaces';
-
-export interface IAxiosErrResDataProps {
-  resData: IAxiosErrResponseData | IAxiosErrResponseData[];
-}
+import { IAxiosErrResDataProps } from './AxiosErrorMessage.interfaces';
 
 const AxiosErrorMessage = ({ resData }: IAxiosErrResDataProps): JSX.Element => {
   const renderErrMgs = (data: typeof resData) => {

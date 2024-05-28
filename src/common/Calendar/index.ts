@@ -1,2 +1,2 @@
 export { default as Calendar } from './Calendar';
-export { calendarHeadingFormat } from './Calendar';
+export type { PropsCalendar } from './calendar.interfaces';
