@@ -4,7 +4,10 @@ import { baseURL as baseUrl } from '@/services/axios.service';
 import { ERoutes } from '@/services/constants';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 import { IDestinationGet } from '@/services/destinations/destinations.interfaces';
-import { IDestinationPost } from '@/interfaces/destination.interfaces';
+import {
+  IDestination,
+  IDestinationPost,
+} from '@/interfaces/destination.interfaces';
 
 interface GetDestionationsArgs {
   page: number;
@@ -29,8 +32,25 @@ export const destinationsApi = createApi({
       }),
       invalidatesTags: ['Destination'],
     }),
+    deleteDestination: builder.mutation<IDestination, number>({
+      query: (id) => ({
+        url: `${ERoutes.DESTINATION}${id}`,
+        method: 'DELETE',
+      }),
+    }),
+    patchDestination: builder.mutation<IDestination, IDestination>({
+      query: ({ id, ...body }) => ({
+        url: `${ERoutes.DESTINATION}${id}`,
+        method: 'PATCH',
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useGetDestionationsQuery, useAddDestinationMutation } =
-  destinationsApi;
+export const {
+  useGetDestionationsQuery,
+  useAddDestinationMutation,
+  useDeleteDestinationMutation,
+  usePatchDestinationMutation,
+} = destinationsApi;

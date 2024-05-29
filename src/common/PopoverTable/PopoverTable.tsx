@@ -135,7 +135,7 @@ const PopoverTable = ({
             if (numberElem === 1 && setPaginationIndex) {
               setPaginationIndex(indexPage - 1);
             }
-            deleteRow(id);
+            if (typeof id === 'number') deleteRow(id);
           }}
         >
           Удалить

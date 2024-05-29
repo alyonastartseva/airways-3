@@ -17,19 +17,24 @@ import {
 } from '@interfaces/flights.interfaces';
 import { TTimeZoneForm } from '@interfaces/time-zone.interfaces';
 import { IFormBooking } from '@interfaces/booking.interfaces';
-import { useDestinationPost, usePassengersPost } from '@/hooks';
+import {
+  useAircraftPost,
+  useDestinationPost,
+  usePassengersPost,
+} from '@/hooks';
 
 export interface IModalProps {
   formName: EModalNames;
   initialFormValues?: Record<string, number | string | undefined>;
 }
 
-export interface IModalSetting<T extends FieldValues, Req = T, Q = T> {
+export interface IModalSetting<T extends FieldValues, Q = T> {
   formName: EModalNames;
   fields: FormInputProps<T>[];
   hook: () =>
     | ReturnType<typeof useDestinationPost>
-    | ReturnType<typeof usePassengersPost>;
+    | ReturnType<typeof usePassengersPost>
+    | ReturnType<typeof useAircraftPost>;
   name: EModalButtonTexts;
   mapFieldValuesToRequestData?: (formData: T) => Q;
 }
@@ -37,7 +42,7 @@ export interface IModalSetting<T extends FieldValues, Req = T, Q = T> {
 export type TSettings = [
   IModalSetting<IDestinationPost>,
   IModalSetting<IAircraftPost>,
-  IModalSetting<IFlightPostFormFields, IFlight, IFlightPost>,
+  IModalSetting<IFlightPostFormFields, IFlightPost>,
   IModalSetting<IFormPassengers>,
   IModalSetting<ISeatForm>,
   IModalSetting<ITicketsForm>,

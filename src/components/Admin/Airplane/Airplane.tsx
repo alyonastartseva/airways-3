@@ -7,6 +7,7 @@ import {
   Tr,
   Th,
   Box,
+  useToast,
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
@@ -35,7 +36,6 @@ import {
   useSeatQuery,
   useSeatDelete,
   useSeatPatch,
-  useAircraftQueryById,
   useSetCurrentPageInPagination,
 } from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
@@ -43,6 +43,8 @@ import { ELinks } from '@services/constants';
 import { ITEMS_PER_PAGE, seatCategory, yesNo } from '@constants/constants';
 import { EditableSelectCell } from '@/common/EditableSelectCell';
 import { SeatCategory } from '@/common/SeatCategory';
+import { useGetAircraftByIdQuery } from '@/store/services';
+import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 
 // получение названия класса билета
 const getStatusName = (status: TSeatCategory): string => {
@@ -64,7 +66,7 @@ const getYesNo = (status: string): string => {
 const Airplane = () => {
   // получение параметра ID из роута
   const param = useParams();
-
+  const toast = useToast();
   // индекс и размер пагинации
   const [pageIndex, setPaginationData] =
     useSetCurrentPageInPagination('AIRPLANE_CURR_PAGE');
@@ -110,7 +112,11 @@ const Airplane = () => {
   const seat = dataSeat?.content;
   const totalPages = dataSeat?.totalPages;
 
-  const { data: dataAirplane } = useAircraftQueryById(Number(airplaneId));
+  const {
+    data: dataAirplane,
+    isError,
+    error,
+  } = useGetAircraftByIdQuery(Number(airplaneId));
   const planeName = dataAirplane?.model;
 
   const initialFormValues = { aircraftId: airplaneId };
@@ -162,6 +168,15 @@ const Airplane = () => {
     },
     [seat, selectedValue]
   );
+
+  useEffect(() => {
+    if (isError && isFetchBaseQueryError(error))
+      toast({
+        status: 'error',
+        title: error.data.message || 'Something went wrong',
+        position: 'top',
+      });
+  }, [isError, toast, error]);
 
   // Вызываем функцию filterData с текущим выбранным значением
   useEffect(() => {

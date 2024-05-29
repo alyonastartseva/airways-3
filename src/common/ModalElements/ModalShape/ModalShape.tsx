@@ -21,7 +21,10 @@ import { modalSettings } from '@/constants/modal-constants/modal-settings';
 import { ButtonSubmitAdmin } from '@common/ButtonSubmitAdmin';
 import { ButtonAddAdmin } from '@common/ButtonAddAdmin';
 import { HeadingAdmin } from '@common/HeadingAdmin';
-import { IModalProps } from '@/common/ModalElements/ModalShape/modal-shape.interfaces';
+import {
+  IModalProps,
+  TSettings,
+} from '@/common/ModalElements/ModalShape/modal-shape.interfaces';
 import { EModalNames } from '@constants/modal-constants/modal-names';
 import { FormAirplanes } from '@common/ModalElements/FormAirplanes/FormAirplanes';
 import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
@@ -34,7 +37,7 @@ const ModalShape = <T extends FieldValues>({
 }: IModalProps) => {
   const [currentModal] = modalSettings.filter(
     (item) => item.formName === formName
-  );
+  ) as TSettings;
   const { fields, hook, name, mapFieldValuesToRequestData } = currentModal;
 
   const methods = useForm<T>({

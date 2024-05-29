@@ -29,17 +29,17 @@ import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
 import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
-import {
-  usePassengersDelete,
-  usePassengersPatch,
-  useSetCurrentPageInPagination,
-} from '@/hooks';
+import { useSetCurrentPageInPagination } from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { IFormPassengers } from '@/interfaces/passenger.interfaces';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 import passportPattern from '@constants/validate-patterns/passport-pattern';
 import { formatDateTime } from '@utils/date.utils';
-import { useGetPassangersQuery } from '@/store/services';
+import {
+  useDeletePassengerMutation,
+  useGetPassangersQuery,
+  usePatchPassengerMutation,
+} from '@/store/services';
 import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 
 const Passengers = () => {
@@ -128,14 +128,15 @@ const Passengers = () => {
   );
 
   // изменение данных
-  const { mutate: patchPassengers } = usePassengersPatch();
+  const [patchPassengers] = usePatchPassengerMutation();
 
   // удаление данных
-  const { mutate: deletePassengers } = usePassengersDelete();
+  const [deletePassengers] = useDeletePassengerMutation();
 
   // патч данных
   const patchRow = useCallback(() => {
-    patchPassengers(editableRowState);
+    if (editableRowState) patchPassengers(editableRowState);
+
     cancelEditing();
   }, [patchPassengers, editableRowState, cancelEditing]);
 

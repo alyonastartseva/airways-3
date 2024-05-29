@@ -30,16 +30,16 @@ import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortById } from '@utils/sort.utils';
-import {
-  useDestinationPatch,
-  useDestinationDelete,
-  useSetCurrentPageInPagination,
-} from '@/hooks';
+import { useSetCurrentPageInPagination } from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import onlyLettersPattern from '@/constants/validate-patterns/only-letters-pattern';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
 import { DestinationsInputSelector } from '@/common/DestinationsInputSelector';
-import { useGetDestionationsQuery } from '@/store/services/destinations';
+import {
+  useDeleteDestinationMutation,
+  useGetDestionationsQuery,
+  usePatchDestinationMutation,
+} from '@/store/services/destinations';
 import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 
 const Destinations = () => {
@@ -87,9 +87,9 @@ const Destinations = () => {
     [editableRowState]
   );
 
-  const { mutate: patchDestination } = useDestinationPatch();
+  const [patchDestination] = usePatchDestinationMutation();
 
-  const { mutate: deleteDestination } = useDestinationDelete();
+  const [deleteDestination] = useDeleteDestinationMutation();
 
   useEffect(() => {
     if (isError && isFetchBaseQueryError(error))
@@ -101,7 +101,8 @@ const Destinations = () => {
   }, [isError, toast, error]);
 
   const patchRow = useCallback(() => {
-    patchDestination(editableRowState);
+    if (editableRowState) patchDestination(editableRowState);
+
     handleEditRow();
   }, [patchDestination, editableRowState, handleEditRow]);
 
