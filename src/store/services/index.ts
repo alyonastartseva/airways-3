@@ -20,3 +20,10 @@ export {
   useGetAircraftQuery,
   usePatchAircraftMutation,
 } from './aircraft';
+export {
+  seatsApi,
+  useAddSeatMutation,
+  useDeleteSeatMutation,
+  useGetSeatQuery,
+  usePatchSeatMutation,
+} from './seats';

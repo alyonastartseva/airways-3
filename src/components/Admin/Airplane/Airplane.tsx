@@ -7,7 +7,6 @@ import {
   Tr,
   Th,
   Box,
-  useToast,
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
@@ -18,11 +17,7 @@ import {
 import { useCallback, useMemo, useState, useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 
-import {
-  ISeatForm,
-  ISeatPost,
-  TSeatCategory,
-} from '@/interfaces/seat.interfaces';
+import { ISeatForm, ISeatPost } from '@/interfaces/seat.interfaces';
 import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
 import { PopoverTable } from '@common/PopoverTable';
@@ -32,41 +27,27 @@ import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortById } from '@utils/sort.utils';
-import {
-  useSeatQuery,
-  useSeatDelete,
-  useSeatPatch,
-  useSetCurrentPageInPagination,
-} from '@/hooks';
+import { useSetCurrentPageInPagination } from '@/hooks';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { ELinks } from '@services/constants';
-import { ITEMS_PER_PAGE, seatCategory, yesNo } from '@constants/constants';
+import { ITEMS_PER_PAGE, yesNo } from '@constants/constants';
 import { EditableSelectCell } from '@/common/EditableSelectCell';
 import { SeatCategory } from '@/common/SeatCategory';
-import { useGetAircraftByIdQuery } from '@/store/services';
+import {
+  useDeleteSeatMutation,
+  useGetAircraftByIdQuery,
+  useGetSeatQuery,
+  usePatchSeatMutation,
+} from '@/store/services';
 import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
+import { useToastHandler } from '@/hooks/useToastHandler';
 
-// получение названия класса билета
-const getStatusName = (status: TSeatCategory): string => {
-  const obj = seatCategory.find((el) => el.eng === status);
-  return obj?.ru || '';
-};
-
-const getYesNo = (status: string): string => {
-  switch (status) {
-    case 'true':
-      return 'Да';
-    case 'false':
-      return 'Нет';
-    default:
-      return '';
-  }
-};
+import { getStatusName, getYesNo } from './Airplane.utils';
 
 const Airplane = () => {
   // получение параметра ID из роута
   const param = useParams();
-  const toast = useToast();
+  const toastHandler = useToastHandler();
   // индекс и размер пагинации
   const [pageIndex, setPaginationData] =
     useSetCurrentPageInPagination('AIRPLANE_CURR_PAGE');
@@ -104,43 +85,29 @@ const Airplane = () => {
   // получение данных
   const airplaneId = param.airplane;
 
-  const { data: dataSeat, isLoading } = useSeatQuery(
-    Number(airplaneId),
-    pageIndex
-  );
+  const seatQuery = useGetSeatQuery({
+    page: pageIndex,
+    id: Number(airplaneId),
+  });
 
-  const seat = dataSeat?.content;
-  const totalPages = dataSeat?.totalPages;
+  const seat = seatQuery.data?.content;
+  const totalPages = seatQuery.data?.totalPages;
 
-  const {
-    data: dataAirplane,
-    isError,
-    error,
-  } = useGetAircraftByIdQuery(Number(airplaneId));
-  const planeName = dataAirplane?.model;
+  const seatIdQuery = useGetAircraftByIdQuery(Number(airplaneId));
+  const planeName = seatIdQuery.data?.model;
 
   const initialFormValues = { aircraftId: airplaneId };
 
-  // изменение данных НЕ ИСПОЛЬЗУЕТСЯ
-  // const { mutate: postSeat } = useSeatPost();
-
   // удаление данных
-  const { mutate: deleteSeat } = useSeatDelete();
+  const [deleteSeat, deleteSeatQuery] = useDeleteSeatMutation();
 
   // патч данных
-  const { mutate: patchSeat } = useSeatPatch();
-
-  // добавление данных НЕ ИСПОЛЬЗУЕТСЯ
-  // const postRow = useCallback(() => {
-  //   if (editableRowState) {
-  //     postSeat(editableRowState);
-  //   }
-  //   cancelEditing();
-  // }, [postSeat, cancelEditing, editableRowState]);
+  const [patchSeat, patchSeatQuery] = usePatchSeatMutation();
 
   // патч данных
   const patchRow = useCallback(() => {
-    patchSeat(editableRowState);
+    if (editableRowState) patchSeat(editableRowState);
+
     cancelEditing();
   }, [patchSeat, editableRowState, cancelEditing]);
 
@@ -170,13 +137,30 @@ const Airplane = () => {
   );
 
   useEffect(() => {
-    if (isError && isFetchBaseQueryError(error))
-      toast({
+    if (seatQuery.isError && isFetchBaseQueryError(seatQuery.error))
+      toastHandler({ status: 'error', title: seatQuery.error.data.message });
+  }, [seatQuery.isError, toastHandler, seatQuery.error]);
+
+  useEffect(() => {
+    if (seatIdQuery.isError && isFetchBaseQueryError(seatIdQuery.error))
+      toastHandler({ status: 'error', title: seatIdQuery.error.data.message });
+  }, [seatIdQuery.isError, toastHandler, seatIdQuery.error]);
+
+  useEffect(() => {
+    if (deleteSeatQuery.isError && isFetchBaseQueryError(deleteSeatQuery.error))
+      toastHandler({
         status: 'error',
-        title: error.data.message || 'Something went wrong',
-        position: 'top',
+        title: deleteSeatQuery.error.data.message,
       });
-  }, [isError, toast, error]);
+  }, [deleteSeatQuery.isError, deleteSeatQuery.error, toastHandler]);
+
+  useEffect(() => {
+    if (patchSeatQuery.isError && isFetchBaseQueryError(patchSeatQuery.error))
+      toastHandler({
+        status: 'error',
+        title: patchSeatQuery.error.data.message,
+      });
+  }, [patchSeatQuery.isError, patchSeatQuery.error, toastHandler]);
 
   // Вызываем функцию filterData с текущим выбранным значением
   useEffect(() => {
@@ -298,7 +282,7 @@ const Airplane = () => {
   // сортировка получаемых данных. ВРЕМЕННО, ПОКА ДАННЫЕ С СЕРВЕРА ПРИХОДЯТ БЕЗ СОРТИРОВКИ
   const tableData = (data?: ISeatPost[]) => {
     if (Array.isArray(data) && data.length) {
-      return sortById(data);
+      return sortById(data.slice());
     }
     return [];
   };
@@ -315,7 +299,7 @@ const Airplane = () => {
   });
 
   // спиннер при загрузке
-  if (isLoading) {
+  if (seatQuery.isLoading || seatIdQuery.isLoading) {
     return <SpinnerBlock />;
   }
 

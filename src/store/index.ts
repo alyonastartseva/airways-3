@@ -1,18 +1,25 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { passengersApi, destinationsApi, aircraftApi } from './services';
+import {
+  passengersApi,
+  destinationsApi,
+  aircraftApi,
+  seatsApi,
+} from './services';
 
 export const store = configureStore({
   reducer: {
     [passengersApi.reducerPath]: passengersApi.reducer,
     [destinationsApi.reducerPath]: destinationsApi.reducer,
     [aircraftApi.reducerPath]: aircraftApi.reducer,
+    [seatsApi.reducerPath]: seatsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       passengersApi.middleware,
       destinationsApi.middleware,
-      aircraftApi.middleware
+      aircraftApi.middleware,
+      seatsApi.middleware
     ),
 });
 
