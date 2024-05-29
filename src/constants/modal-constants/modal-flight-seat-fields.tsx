@@ -32,6 +32,14 @@ export const modalFlightSeatFields: FormInputProps<ISeatForm>[] = [
     },
   },
   {
+    fieldName: 'price',
+    typeInput: 'number',
+    label: 'Цена',
+    rules: {
+      required: 'Введите цену',
+    },
+  },
+  {
     type: 'select',
     fieldName: 'category',
     label: 'Класс',

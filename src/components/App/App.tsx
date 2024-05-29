@@ -17,7 +17,7 @@ import {
   TicketsPage,
   BookingPage,
   TimeZonesPage,
-  FlightSeatsPage
+  FlightSeatsPage,
 } from '@/pages';
 
 const App = () => {
