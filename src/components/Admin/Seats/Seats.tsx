@@ -256,7 +256,7 @@ const Seats = () => {
     <TableContainer py={45} px={9}>
       <HeaderTable<IFlightPostFormFields>
         heading="Посадочные Места"
-        formName={EModalNames.SEAT}
+        formName={EModalNames.FLIGHTS_SEATS}
       />
       <Table>
         <Thead>

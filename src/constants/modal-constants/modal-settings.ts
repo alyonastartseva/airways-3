@@ -18,6 +18,7 @@ import {
   modalDestinationsFields,
   modalFlightsFields,
   modalPassengersFields,
+  modalFlightSeatFields,
   modalSeatFields,
   modalTicketsFields,
   modalTimezonesFields,
@@ -179,5 +180,11 @@ export const modalSettings: TSettings = [
     fields: modalBookingFields,
     hook: useBookingPost,
     name: EModalButtonTexts.BOOKING,
+  },
+  {
+    formName: EModalNames.FLIGHTS_SEATS,
+    fields: modalFlightSeatFields,
+    hook: useBookingPost,
+    name: EModalButtonTexts.FLIGHTS_SEATS,
   },
 ];
