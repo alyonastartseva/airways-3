@@ -13,7 +13,10 @@ interface GetAircraftArgs {
 
 export const aircraftApi = createApi({
   reducerPath: 'aircraftApi',
-  baseQuery: fetchBaseQuery({ baseUrl }),
+  baseQuery: fetchBaseQuery({
+    baseUrl,
+    headers: { 'Content-Type': 'application/json' },
+  }),
   tagTypes: ['Aircraft'],
   endpoints: (builder) => ({
     getAircraft: builder.query<IAircraftsGet, GetAircraftArgs>({
@@ -24,8 +27,8 @@ export const aircraftApi = createApi({
     getAircraftById: builder.query<IAircraft, number>({
       query: (id) => `${ERoutes.AIRCRAFT}${id}`,
     }),
-    addAicraft: builder.mutation({
-      query: (body: IAircraftPost) => ({
+    addAicraft: builder.mutation<IAircraft, IAircraftPost>({
+      query: (body) => ({
         url: ERoutes.AIRCRAFT,
         method: 'POST',
         body,
@@ -37,6 +40,7 @@ export const aircraftApi = createApi({
         url: `${ERoutes.AIRCRAFT}${id}`,
         method: 'DELETE',
       }),
+      invalidatesTags: ['Aircraft'],
     }),
     patchAircraft: builder.mutation<IAircraft, IAircraft>({
       query: ({ id, ...body }) => ({
@@ -44,6 +48,7 @@ export const aircraftApi = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Aircraft'],
     }),
   }),
 });

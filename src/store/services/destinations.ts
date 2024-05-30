@@ -16,7 +16,10 @@ interface GetDestionationsArgs {
 
 export const destinationsApi = createApi({
   reducerPath: 'destinationsApi',
-  baseQuery: fetchBaseQuery({ baseUrl }),
+  baseQuery: fetchBaseQuery({
+    baseUrl,
+    headers: { 'Content-Type': 'application/json' },
+  }),
   tagTypes: ['Destination'],
   endpoints: (builder) => ({
     getDestionations: builder.query<IDestinationGet, GetDestionationsArgs>({
@@ -24,8 +27,8 @@ export const destinationsApi = createApi({
         `${ERoutes.DESTINATION}?page=${page}&size=${size}`,
       providesTags: ['Destination'],
     }),
-    addDestination: builder.mutation({
-      query: (body: IDestinationPost) => ({
+    addDestination: builder.mutation<IDestination, IDestinationPost>({
+      query: (body) => ({
         url: ERoutes.DESTINATION,
         method: 'POST',
         body,
@@ -37,6 +40,7 @@ export const destinationsApi = createApi({
         url: `${ERoutes.DESTINATION}${id}`,
         method: 'DELETE',
       }),
+      invalidatesTags: ['Destination'],
     }),
     patchDestination: builder.mutation<IDestination, IDestination>({
       query: ({ id, ...body }) => ({
@@ -44,6 +48,7 @@ export const destinationsApi = createApi({
         method: 'PATCH',
         body,
       }),
+      invalidatesTags: ['Destination'],
     }),
   }),
 });

@@ -15,7 +15,10 @@ interface GetPassengersArgs {
 
 export const passengersApi = createApi({
   reducerPath: 'passengeresApi',
-  baseQuery: fetchBaseQuery({ baseUrl }),
+  baseQuery: fetchBaseQuery({
+    baseUrl,
+    headers: { 'Content-Type': 'application/json' },
+  }),
   tagTypes: ['Passenger'],
   endpoints: (builder) => ({
     getPassangers: builder.query<FormPassengersGet, GetPassengersArgs>({
@@ -23,8 +26,8 @@ export const passengersApi = createApi({
         `${ERoutes.PASSENGERS}?page=${page}&size=${size}`,
       providesTags: ['Passenger'],
     }),
-    addPassenger: builder.mutation({
-      query: (body: IFormPassenger) => ({
+    addPassenger: builder.mutation<IPassenger, IFormPassenger>({
+      query: (body) => ({
         url: ERoutes.PASSENGERS,
         method: 'POST',
         body: mapPassengersFormData(body),
@@ -36,6 +39,7 @@ export const passengersApi = createApi({
         url: `${ERoutes.PASSENGERS}${id}`,
         method: 'DELETE',
       }),
+      invalidatesTags: ['Passenger'],
     }),
     patchPassenger: builder.mutation<IPassenger, IPassenger>({
       query: ({ id, ...body }) => ({
@@ -43,6 +47,7 @@ export const passengersApi = createApi({
         method: 'PATCH',
         body,
       }),
+      invalidatesTags: ['Passenger'],
     }),
   }),
 });

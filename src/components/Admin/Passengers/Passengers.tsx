@@ -7,7 +7,6 @@ import {
   Td,
   TableContainer,
   Flex,
-  useToast,
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
@@ -41,6 +40,7 @@ import {
   usePatchPassengerMutation,
 } from '@/store/services';
 import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
+import { useToastHandler } from '@/hooks/useToastHandler';
 
 const Passengers = () => {
   // индекс и размер пагинации
@@ -48,7 +48,7 @@ const Passengers = () => {
     'PASSENGERS_CURR_PAGE'
   );
 
-  const toast = useToast();
+  const toastHandler = useToastHandler();
   // получение данных
   const {
     data: dataQuery,
@@ -62,12 +62,11 @@ const Passengers = () => {
 
   useEffect(() => {
     if (isError && isFetchBaseQueryError(error))
-      toast({
+      toastHandler({
         status: 'error',
-        title: error.data.message || 'Something went wrong',
-        position: 'top',
+        title: error.data.message,
       });
-  }, [isError, toast, error]);
+  }, [isError, toastHandler, error]);
 
   // если удален последняя строка текущей страницы, то открываем предыдущую страницу
   useEffect(() => {

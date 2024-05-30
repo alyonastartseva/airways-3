@@ -60,7 +60,7 @@ export const seatsApi = createApi({
       providesTags: ['Seats'],
     }),
     addSeat: builder.mutation<ISeatPost, ISeatForm>({
-      query: (body: ISeatForm) => ({
+      query: (body) => ({
         url: ERoutes.SEAT,
         method: 'POST',
         body: mapSeatFormData(body),

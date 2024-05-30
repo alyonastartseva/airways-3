@@ -4,6 +4,7 @@ import {
   useDeleteDestinationMutation,
   useDeletePassengerMutation,
   useDeleteSeatMutation,
+  useDeleteTimezoneMutation,
 } from '@/store/services';
 
 export interface IPopoverTable<Data extends IFlightPresentation> {
@@ -17,6 +18,7 @@ export interface IPopoverTable<Data extends IFlightPresentation> {
     | ReturnType<typeof useDeleteAircraftMutation>[0]
     | ReturnType<typeof useDeleteSeatMutation>[0]
     | ReturnType<typeof useDeleteDestinationMutation>[0]
+    | ReturnType<typeof useDeleteTimezoneMutation>[0]
     | any;
   setPaginationIndex?: (pageNumber: number) => void;
   indexPage?: number; // текущий индекс

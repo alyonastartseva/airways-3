@@ -7,7 +7,6 @@ import {
   Tr,
   Th,
   Box,
-  useToast,
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
@@ -41,13 +40,14 @@ import {
   usePatchDestinationMutation,
 } from '@/store/services/destinations';
 import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
+import { useToastHandler } from '@/hooks/useToastHandler';
 
 const Destinations = () => {
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
     'DESTINATIONS_CURR_PAGE'
   );
 
-  const toast = useToast();
+  const toastHandler = useToastHandler();
   const {
     data: destinationsByPageData,
     isFetching,
@@ -93,12 +93,8 @@ const Destinations = () => {
 
   useEffect(() => {
     if (isError && isFetchBaseQueryError(error))
-      toast({
-        status: 'error',
-        title: error.data.message || 'Something went wrong',
-        position: 'top',
-      });
-  }, [isError, toast, error]);
+      toastHandler({ status: 'error', title: error.data.message });
+  }, [isError, toastHandler, error]);
 
   const patchRow = useCallback(() => {
     if (editableRowState) patchDestination(editableRowState);

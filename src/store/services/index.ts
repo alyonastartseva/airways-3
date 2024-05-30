@@ -27,3 +27,10 @@ export {
   useGetSeatQuery,
   usePatchSeatMutation,
 } from './seats';
+export {
+  timezonesApi,
+  useAddTimezoneMutation,
+  useDeleteTimezoneMutation,
+  useGetTimezonesQuery,
+  usePatchTimezoneMutation,
+} from './timezones';

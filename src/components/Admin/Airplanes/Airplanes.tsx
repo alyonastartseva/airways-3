@@ -7,7 +7,6 @@ import {
   Tr,
   Th,
   Box,
-  useToast,
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
@@ -36,6 +35,7 @@ import {
   usePatchAircraftMutation,
 } from '@/store/services';
 import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
+import { useToastHandler } from '@/hooks/useToastHandler';
 
 const Airplanes = () => {
   // индекс и размер пагинации
@@ -70,7 +70,7 @@ const Airplanes = () => {
     [editableRowState]
   );
 
-  const toast = useToast();
+  const toastHandler = useToastHandler();
   // получение данных
   const {
     data: airplanesData,
@@ -97,12 +97,11 @@ const Airplanes = () => {
 
   useEffect(() => {
     if (isError && isFetchBaseQueryError(error))
-      toast({
+      toastHandler({
         status: 'error',
-        title: error.data.message || 'Something went wrong',
-        position: 'top',
+        title: error.data.message,
       });
-  }, [isError, toast, error]);
+  }, [isError, toastHandler, error]);
 
   // создание столбцов таблицы
   const columnHelper = createColumnHelper<IAircraft>();
