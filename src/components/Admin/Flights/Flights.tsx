@@ -19,7 +19,6 @@ import { EditableSelectCell } from '@common/EditableSelectCell';
 import { flightStatuses } from '@constants/constants';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import {
-  useAircraftQuery,
   useFlightsDelete,
   useFlightsQuery,
   useFlightsPatch,
@@ -41,13 +40,14 @@ import { SpinnerBlock } from '@common/SpinnerBlock';
 import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
 import { DestinationsInputSelector } from '@/common/DestinationsInputSelector';
+import { useGetAircraftQuery } from '@/store/services';
 
 const Flights = () => {
   const [pageIndex, setPaginationData] =
     useSetCurrentPageInPagination('FLIGHTS_CURR_PAGE');
 
   const { data: airplanesData, isLoading: isAircraftLoading } =
-    useAircraftQuery();
+    useGetAircraftQuery({ page: pageIndex });
   const airplanes = airplanesData?.content;
 
   const { data: flightsData, isError, isFetching } = useFlightsQuery(pageIndex);

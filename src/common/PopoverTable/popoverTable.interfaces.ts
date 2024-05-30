@@ -1,3 +1,6 @@
+import { AxiosResponse } from 'axios';
+import { UseMutateFunction } from 'react-query';
+
 import { IFlightPresentation } from '@/interfaces/flights.interfaces';
 import {
   useDeleteAircraftMutation,
@@ -19,7 +22,12 @@ export interface IPopoverTable<Data extends IFlightPresentation> {
     | ReturnType<typeof useDeleteSeatMutation>[0]
     | ReturnType<typeof useDeleteDestinationMutation>[0]
     | ReturnType<typeof useDeleteTimezoneMutation>[0]
-    | any;
+    | UseMutateFunction<
+        AxiosResponse<Data, any> | undefined,
+        unknown,
+        number | undefined,
+        unknown
+      >;
   setPaginationIndex?: (pageNumber: number) => void;
   indexPage?: number; // текущий индекс
   numberElem?: number; // общее кол-во элементов на страннице
