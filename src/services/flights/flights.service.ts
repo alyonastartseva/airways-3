@@ -53,4 +53,3 @@ const flightsAPI: IFlightsApi = {
 
 export const { getFlights, postFlight, deleteFlight, updateFlight } =
   flightsAPI;
-//
