@@ -2,15 +2,22 @@ import { FieldValues } from 'react-hook-form';
 
 import { ISeat } from '@services/seat/seat.interfaces';
 
-export type TSeatCategory =
-  | 'BUSINESS'
-  | 'ECONOMY'
-  | 'FIRST'
-  | 'PREMIUM_ECONOMY';
+export enum ISeatCategory {
+  BUSINESS = 'BUSINESS',
+  PREMIUM_ECONOMY = 'PREMIUM_ECONOMY',
+  FIRST = 'FIRST',
+  ECONOM = 'ECONOMY',
+}
+
+export type ISeatCategoryType =
+  | 'Первый класс'
+  | 'Бизнес'
+  | 'Эконом'
+  | 'Премиум';
 
 export interface ISeatPost {
   aircraftId: number;
-  category: TSeatCategory;
+  category: ISeatCategory;
   id: number;
   isLockedBack: boolean;
   isNearEmergencyExit: boolean;
@@ -19,7 +26,7 @@ export interface ISeatPost {
 
 export interface ISeatForm extends FieldValues {
   aircraftId?: number;
-  category?: TSeatCategory;
+  category?: ISeatCategory;
   id?: number;
   isLockedBack?: boolean;
   isNearEmergencyExit?: boolean;

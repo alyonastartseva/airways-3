@@ -24,12 +24,13 @@ import { ArrowsIcon } from '@common/icons';
 import { mainsearch } from '@/assets';
 import { searchApi } from '@services/searchTickets.service';
 import { getFlights } from '@services/flights/flights.service';
-import { ISearchData, IFlightPresentation, TSeatCategory } from '@/interfaces';
+import { ISearchData, IFlightPresentation } from '@/interfaces';
 import {
   CalendarTickets,
   DestinationsInputSelector,
   SeatCategory,
 } from '@/common';
+import { ISeatCategory, ISeatCategoryType } from '@/interfaces/flightsSeats.interfaces';
 
 import { TicketCard } from '../Ticket/TicketCard';
 import { ITicketCardProps } from '../Ticket/TicketCard/ticketCard.interfaces';
@@ -53,7 +54,7 @@ const SearchTickets = ({
     airportTo: '',
     directFlightsOnly: false,
     tripType: 'roundTrip',
-    categoryOfSeats: 'BUSINESS',
+    categoryOfSeats: 'Бизнес',
   },
   onSearch,
   showImage = true,
@@ -321,7 +322,7 @@ const SearchTickets = ({
                       value={searchParams.categoryOfSeats}
                       onChange={(e) =>
                         updateSearchParam({
-                          categoryOfSeats: e.target.value as TSeatCategory,
+                          categoryOfSeats: e.target.value as ISeatCategoryType,
                         })
                       }
                       fontSize="0.87rem"

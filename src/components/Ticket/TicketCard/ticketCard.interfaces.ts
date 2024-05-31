@@ -1,4 +1,4 @@
-import { TSeatCategory } from '@/interfaces';
+import { ISeatCategory } from '@/interfaces';
 
 type TariffCategory = 'basic' | 'standard' | 'plus';
 
@@ -23,7 +23,7 @@ export interface ITicketCardProps {
   departureDateTime?: string;
   arrivalDateTime?: string;
   flightTime?: string;
-  categoryOfSeats?: TSeatCategory;
+  categoryOfSeats?: ISeatCategory;
   tariffsData?: {
     [key in TariffCategory]: Omit<TTariffType, 'name' | 'facilities'>;
   };

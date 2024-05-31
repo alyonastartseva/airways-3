@@ -1,8 +1,10 @@
 import { FieldValues } from 'react-hook-form';
 
 import { ISort } from '@interfaces/api-interfaces';
-import { TSeatCategory } from '@interfaces/seat.interfaces';
+import { ISeatCategory } from '@interfaces/seat.interfaces';
 import { IFlightSeatsPresentation } from '@/interfaces/flightsSeats.interfaces';
+
+import { ISeat } from '../seat/seat.interfaces';
 
 export interface IFlightSeatsQuery {
   content: IFlightSeat[];
@@ -26,7 +28,7 @@ export interface IFlightSeat {
   isBooked?: boolean;
   flightId: number;
   seat: Seat;
-  category: TSeatCategory;
+  category: ISeatCategory;
 }
 
 export interface Seat {

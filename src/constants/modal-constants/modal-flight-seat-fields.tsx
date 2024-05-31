@@ -10,9 +10,9 @@ const seatCategoryOptions = seatCategory.map((el) => (
 
 export const modalFlightSeatFields: FormInputProps<ISeatForm>[] = [
   {
-    fieldName: 'aircraftId',
+    fieldName: 'code',
     typeInput: 'add',
-    label: 'ID самолёта',
+    label: 'ID Рейса',
     rules: {},
   },
   {

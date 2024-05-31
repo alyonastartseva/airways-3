@@ -18,7 +18,7 @@ import {
 } from '@tanstack/react-table';
 
 import { ITEMS_PER_PAGE, seatCategory, yesNo, EModalNames } from '@/constants';
-import { ISeatForm, ISeatPost, TSeatCategory } from '@/interfaces';
+import { ISeatForm, ISeatPost, ISeatCategory } from '@/interfaces';
 import { ELinks } from '@/services';
 import { isRowEditing } from '@utils/table.utils';
 import { sortById } from '@utils/sort.utils';
@@ -42,7 +42,7 @@ import {
 } from '@/hooks';
 
 // получение названия класса билета
-const getStatusName = (status: TSeatCategory): string => {
+const getStatusName = (status: ISeatCategory): string => {
   const obj = seatCategory.find((el) => el.eng === status);
   return obj?.ru || '';
 };

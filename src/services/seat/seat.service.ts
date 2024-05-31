@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios';
 import { adminInstance, ERoutes } from '@/services';
 import { ISeatPost, ISeatForm } from '@/interfaces';
 import { ITEMS_PER_PAGE } from '@/constants';
+import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 
 import { ISeat } from './seat.interfaces';
 
@@ -29,7 +30,7 @@ const mapSeatFormData = (data: ISeatForm): ISeatPost => {
 
   const seatPostData: ISeatPost = {
     aircraftId: aircraftId || 0,
-    category: category || 'ECONOMY',
+    category: category || ISeatCategory.ECONOM,
     id: id || 0,
     isLockedBack: isLockedBack || false,
     isNearEmergencyExit: isNearEmergencyExit || false,

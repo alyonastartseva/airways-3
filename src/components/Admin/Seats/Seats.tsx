@@ -28,7 +28,7 @@ import {
   ISeatCategoryType,
 } from '@/interfaces/flightsSeats.interfaces';
 import { isRowEditing } from '@/utils/table.utils';
-import { IFlightSeat } from '@/services/flightSeats/flightSeats.interfaces';
+import { IFlightSeat, Seat } from '@/services/flightSeats/flightSeats.interfaces';
 import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
@@ -86,18 +86,8 @@ const Seats = () => {
 
   const columnHelper = createColumnHelper<IFlightSeat>();
 
-  type columnType =
-    | 'id'
-    | 'seat.aircraftId'
-    | 'seat.id'
-    | 'fare'
-    | 'seat.category'
-    | 'isSold'
-    | 'isRegistered'
-    | 'isBooked';
-
   const columnCreator = (
-    fieldName: columnType,
+    fieldName:  keyof IFlightSeat | `seat.${keyof Seat}`,
     header: string,
     tableType?: 'EditableCell' | 'EditableSelectCell' | 'Cell',
     tableBool?: boolean
@@ -196,7 +186,7 @@ const Seats = () => {
     () => [
       columnCreator('id', 'ID', 'Cell'),
       columnCreator('seat.aircraftId', 'ID рейса', 'EditableCell'),
-      columnCreator('seat.id', 'ID Места', 'EditableCell'),
+      columnCreator('seat.seatNumber', 'ID Места', 'EditableCell'),
       columnCreator('fare', 'Цена', 'EditableCell'),
       columnCreator('seat.category', 'Класс', 'EditableSelectCell', false),
       columnCreator('isSold', 'Продано', 'EditableSelectCell', true),

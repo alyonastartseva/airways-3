@@ -1,4 +1,4 @@
-import { TSeatCategory } from '@/interfaces';
+import { ISeatCategory } from '@/interfaces';
 
 export interface IBooking {
   id: number;
@@ -6,5 +6,5 @@ export interface IBooking {
   bookingData: string;
   passengerId: number;
   flightId: number;
-  categoryType: TSeatCategory;
+  categoryType: ISeatCategory;
 }

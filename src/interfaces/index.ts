@@ -14,7 +14,7 @@ export type { ITimeZone, TTimeZoneForm } from './time-zone.interfaces';
 export type { TypeInput } from './type-input.types';
 export type { IValidatePattern } from './validate-ptterns.interface';
 export type {
-  TSeatCategory,
+  ISeatCategory,
   ISeatPost,
   ISeatForm,
   ISeatContent,

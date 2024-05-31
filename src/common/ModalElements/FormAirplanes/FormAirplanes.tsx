@@ -34,6 +34,7 @@ import {
   HeadingAdmin,
   ButtonSubmitAdmin,
 } from '@/common';
+import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 
 import {
   IFormAirplanesProps,
@@ -82,7 +83,7 @@ const FormAirplanes = <T extends FieldValues>({
       id: 0,
       isLockedBack: true,
       isNearEmergencyExit: false,
-      category: 'BUSINESS',
+      category: ISeatCategory.BUSINESS,
       seatNumber: '',
     });
   };
