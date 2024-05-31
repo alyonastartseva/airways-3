@@ -1,27 +1,18 @@
 import { Box, Flex, Input, Text, InputGroup } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
-import { useQuery } from 'react-query';
 
-import { getDestinations } from '@/services/destinations/destinations.service';
 import { TDestQuery } from '@interfaces/search.interfaces';
 import { IDestProps } from '@/common/DestinationInput/destination.interfaces';
 import { IDestination } from '@interfaces/destination.interfaces';
+import { useGetDestionationsQuery } from '@/store/services';
 
 const DestinationInput: React.FC<IDestProps> = (props: IDestProps) => {
   const { fromOrTo, onSetDestination, fromTo } = props;
 
   const [inputValue, setInputValue] = useState<string>('');
 
-  const [destinationList, setDestinationList] = useState<IDestination[]>([]);
-
-  //eslint-disable-next-line no-empty-pattern
-  const {} = useQuery('destinations', getDestinations, {
-    onSuccess: (res) => {
-      // setDestinationList(res.content);
-      setDestinationList(res.content);
-    },
-    onError: (err) => err,
-  });
+  const { data } = useGetDestionationsQuery({ page: 0 });
+  const destinationList = data?.content || [];
 
   const [destInputFocus, setDestInputFocus] = useState(false);
 

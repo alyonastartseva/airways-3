@@ -12,17 +12,6 @@ import { NO_CONTENT } from '../constants/server-codes.constants';
 
 import { IDestinationGet } from './destinations.interfaces';
 
-// временное решение, пока с бека не приходят необходимы свойства
-const tempMapDestination = (data: IDestinationGet) => ({
-  ...data,
-  content: data.content.map((destination) => ({
-    ...destination,
-    countryName: '',
-    cityName: '',
-    airportName: '',
-  })),
-});
-
 const destinationsAPI = {
   getDestinationsByPage: async (pageIndex: number, size = ITEMS_PER_PAGE) => {
     return await adminInstance
@@ -31,7 +20,7 @@ const destinationsAPI = {
       )
       .then((response) => {
         if (response.status === NO_CONTENT) return response.data;
-        return tempMapDestination(response.data);
+        return response.data;
       });
   },
 
@@ -40,25 +29,23 @@ const destinationsAPI = {
 
     return await adminInstance.get<IDestinationGet>(url).then((response) => {
       if (response.status === NO_CONTENT) return response.data;
-      return tempMapDestination(response.data);
+      return response.data;
     });
   },
 
   getDestinations: async () => {
     return await adminInstance
       .get<IDestinationGet>(ERoutes.DESTINATION)
-      .then((response) => tempMapDestination(response.data));
+      .then((response) => response.data);
   },
 
   patchDestinations: async (data: IDestination | null) => {
     if (data) {
       const { id, ...rest } = data;
-      // // TODO: удалить temp когда сервер будет принимать данные
-      const temp = { airportCode: rest.airportCode, timezone: rest.timezone };
+
       return await adminInstance.patch<IDestination>(
         ERoutes.DESTINATION + id,
-        // TODO: поменять на rest когда сервер будет принимать данные
-        temp
+        rest
       );
     }
   },
