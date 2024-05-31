@@ -2,12 +2,15 @@ import { FieldValues } from 'react-hook-form';
 
 import { ISort } from '@interfaces/api-interfaces';
 import { ISeatCategory } from '@interfaces/seat.interfaces';
-import { IFlightSeatsPresentation } from '@/interfaces/flightsSeats.interfaces';
+import {
+  IFlightSeats,
+  IFlightSeatsPresentation,
+} from '@/interfaces/flightsSeats.interfaces';
 
 import { ISeat } from '../seat/seat.interfaces';
 
 export interface IFlightSeatsQuery {
-  content: IFlightSeat[];
+  content: IFlightSeats[];
   pageable: string;
   totalElements: number;
   totalPages: number;
@@ -38,6 +41,15 @@ export interface Seat {
   isLockedBack: boolean;
   category: string;
   aircraftId: number;
+}
+
+export interface IFlightSeatPost {
+  code: number;
+  seat: { seatNumber: string };
+  price: number;
+  isSold: boolean;
+  isRegistered: boolean;
+  isBooked: boolean;
 }
 
 export interface IFlightSeatsPostFormFields

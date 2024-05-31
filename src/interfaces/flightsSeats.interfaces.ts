@@ -36,11 +36,13 @@ export interface ISeats {
 }
 
 export interface IFlightSeatsPresentation {
-  seat: {
-    id: number;
-    seatNumber: string;
-    aircraftId: number;
-  };
+  seat:
+    | {
+        id: number;
+        seatNumber: string;
+        aircraftId: number;
+      }
+    | undefined;
   id: number;
   fare: number;
   category: ISeatCategory;
@@ -50,11 +52,15 @@ export interface IFlightSeatsPresentation {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IFlightPost extends Omit<IFlightSeatsPresentation, 'id'> {}
+export interface IFlightPost extends Omit<IFlightSeats, 'id'> {}
 
 export interface IFlightPostFormFields
   extends FieldValues,
     Omit<IFlightPost, 'airportFrom' | 'airportTo'> {
-  from?: string; // stringyfied IDestination
-  to?: string; // stringyfied IDestination
+  // Добавлены недостающие свойства
+  seat: ISeats;
+  price: number;
+  isSold: boolean;
+  isRegistered: boolean;
+  isBooked: boolean;
 }

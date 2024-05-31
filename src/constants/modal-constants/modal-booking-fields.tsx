@@ -3,6 +3,7 @@ import { IFlightSeat } from '@services/flightSeats/flightSeats.interfaces';
 import { bookingStatuses } from '@/constants';
 import { IFormBooking, IPassenger } from '@/interfaces';
 import { useFlightSeatsQuery, usePassengersQuery } from '@/hooks';
+import { IFlightSeats } from '@/interfaces/flightsSeats.interfaces';
 
 const PassengersOptions = () => {
   const { data } = usePassengersQuery(0, 100);
@@ -31,7 +32,7 @@ const SeatsOptions = () => {
   if (flightSeatsData)
     return (
       <>
-        {flightSeatsData.content.map((el: IFlightSeat) => {
+        {flightSeatsData.content.map((el: IFlightSeats) => {
           if (!el.isBooked && !el.isSold) {
             return (
               <option key={el.id} value={el.id}>

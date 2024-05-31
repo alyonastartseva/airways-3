@@ -32,7 +32,7 @@ export const modalFlightSeatFields: FormInputProps<ISeatForm>[] = [
     },
   },
   {
-    fieldName: 'price',
+    fieldName: 'fare',
     typeInput: 'number',
     label: 'Цена',
     rules: {
@@ -67,10 +67,3 @@ export const modalFlightSeatFields: FormInputProps<ISeatForm>[] = [
     rules: {},
   },
 ];
-
-/*
-код рейса - список всех доступных рейсов - выпадающий список (желательно с Infinity Scroll'ом)
-id сиденья - список всех доступных сидений - выпадающий список (желательно с Infinity Scroll'ом)
-цена места - числовой инпут, желательно вывод реализовать по шаблону: 1 000, 100, 20 000
-зарегистрировано, продано и забронировано - чекбоксы
-*/

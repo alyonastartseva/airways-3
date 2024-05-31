@@ -1,22 +1,54 @@
+import { Axios, AxiosResponse } from 'axios';
+
 import { adminInstance, ERoutes } from '@/services';
-import { ISeats } from '@/interfaces/flightsSeats.interfaces';
+import { IFlightSeats, ISeats } from '@/interfaces/flightsSeats.interfaces';
+import { ITEMS_PER_PAGE } from '@/constants';
 
-import { IFlightSeatsQuery } from './flightSeats.interfaces';
+import { IListResponse } from '../flights/flights.interfaces';
 
-const flightSeatsAPI = {
-  getFlightsSeats: async (pageIndex?: number, size?: number) => {
+import {
+  IFlightSeat,
+  IFlightSeatPost,
+  IFlightSeatsQuery,
+} from './flightSeats.interfaces';
+
+interface IFlightSeatsApi {
+  getFlightsSeats: (
+    pageIndex: number,
+    size: number
+  ) => Promise<IListResponse<Required<IFlightSeats>>>;
+
+  deleteFlightSeats: (
+    id: number | undefined
+  ) => Promise<AxiosResponse<IFlightSeats> | undefined>;
+
+  postFlightSeats: (
+    data: IFlightSeatPost
+  ) => Promise<AxiosResponse<IFlightSeatPost, any>>;
+}
+
+const flightSeatsAPI: IFlightSeatsApi = {
+  getFlightsSeats: async (pageIndex, size = ITEMS_PER_PAGE) => {
     return await adminInstance
-      .get<IFlightSeatsQuery>(
+      .get<IListResponse<Required<IFlightSeats>>>(
         `${ERoutes.FLIGHT_SEATS}?page=${pageIndex}&size=${size}`
       )
       .then((response) => response.data);
   },
 
-  deleteFlightSeats: async (id: number | undefined) => {
+  deleteFlightSeats: async (id) => {
     if (id) {
-      return adminInstance.delete<ISeats>(ERoutes.FLIGHT_SEATS + id);
+      return adminInstance.delete<IFlightSeats>(ERoutes.FLIGHT_SEATS + id);
     }
+  },
+
+  postFlightSeats: async (data) => {
+    return await adminInstance.post<IFlightSeatPost>(
+      ERoutes.FLIGHT_SEATS,
+      data
+    );
   },
 };
 
-export const { getFlightsSeats, deleteFlightSeats } = flightSeatsAPI;
+export const { getFlightsSeats, deleteFlightSeats, postFlightSeats } =
+  flightSeatsAPI;

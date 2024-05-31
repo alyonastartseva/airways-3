@@ -23,6 +23,7 @@ import {
   useSetCurrentPageInPagination,
 } from '@/hooks';
 import {
+  IFlightSeats,
   IFlightSeatsPresentation,
   ISeatCategory,
   ISeatCategoryType,
@@ -44,9 +45,10 @@ const Seats = () => {
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
 
   const [editableRowState, setEditableRowState] =
-    useState<Required<IFlightSeatsPresentation> | null>(null);
+    useState<Required<IFlightSeats> | null>(null);
 
   const { data: dataFlightSeats } = useFlightSeatsQuery(pageIndex);
+  
 
   const handleUpdateRow = useCallback(
     (id: string, value: string) => {
@@ -77,17 +79,17 @@ const Seats = () => {
   const { mutate: deleteFlightSeats } = useFlightSeatsDelete();
 
   const handleEditRow = useCallback(
-    (row: IFlightSeatsPresentation, index: number) => {
+    (row: IFlightSeats, index: number) => {
       setEditableRowState(row);
       setEditableRowIndex(index);
     },
     []
   );
 
-  const columnHelper = createColumnHelper<IFlightSeat>();
+  const columnHelper = createColumnHelper<IFlightSeats>();
 
   const columnCreator = (
-    fieldName:  keyof IFlightSeat | `seat.${keyof Seat}`,
+    fieldName:  keyof IFlightSeats | `seat.${keyof Seat}`,
     header: string,
     tableType?: 'EditableCell' | 'EditableSelectCell' | 'Cell',
     tableBool?: boolean
@@ -229,7 +231,7 @@ const Seats = () => {
     ]
   );
 
-  const tableData = (data?: IFlightSeat[]) => {
+  const tableData = (data?: IFlightSeats[]) => {
     if (Array.isArray(data) && data.length) {
       return data.sort((a, b) => a.id - b.id);
     }
