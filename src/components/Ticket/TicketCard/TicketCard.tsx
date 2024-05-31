@@ -15,13 +15,13 @@ import {
   AirplaneLandingIcon,
   CaretDownIcon,
   AirplaneIcon,
-} from '@common/icons';
-import { pluralize } from '@utils/string.utils';
-import { getFormattedDateTime } from '@utils/date.utils';
+} from '@/common/icons';
+import { pluralize } from '@/utils/string.utils';
 
 import { TicketTariff } from '../TicketTariff';
 
 import { ITicketCardProps, TTariffType } from './ticketCard.interfaces';
+import { getFormattedDateTime } from './TicketCard.utils';
 
 const tariffsInitial: Omit<TTariffType, 'price' | 'ticketsCount'>[] = [
   {

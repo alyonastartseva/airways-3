@@ -1,19 +1,19 @@
 import { useCallback } from 'react';
 import { Box, Button, ButtonGroup, Flex } from '@chakra-ui/react';
 
-import { ArrowRightIcon, ArrowLeftIcon } from '@common/icons';
-import { getVisiblePages } from '@utils/pagination.utils';
+import { ArrowRightIcon, ArrowLeftIcon } from '@/common/icons/';
+import { IPagination } from '@components/Pagination/Pagination.interfaces';
 
-import { IPagination } from './Pagination.interfaces';
+import { getVisiblePages } from './Pagination.utils';
+
+enum PaginationStyle {
+  BORDER_RADIUS = '0.4rem',
+  TEXT_COLOR = '#0052BD',
+  BG_COLOR = '#C2DCFF',
+  BG_COLOR_ACTIVE = '#398AEA',
+}
 
 const Pagination = <Data,>(props: IPagination<Data>) => {
-  enum PaginationStyle {
-    _borderRadius = '0.4rem',
-    _textColor = '#0052BD',
-    _bgColor = '#C2DCFF',
-    _bgColorActive = '#398AEA',
-  }
-
   const { data, setPaginationData, pageIndex, totalPages = 1 } = props;
 
   const setPagination = useCallback(
@@ -41,7 +41,7 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
           fontWeight={400}
           variant="ghost"
           w="5"
-          color={PaginationStyle._textColor}
+          color={PaginationStyle.TEXT_COLOR}
           fontSize="1rem"
           // caution: при выставлении outline: 'none' и border: 'none' - верстка прыгает
           // здесь и ниже borderColor выставлен под цвет фона (белый)
@@ -70,7 +70,7 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
           onClick={() => setPagination(pageIndex - 1)}
           fontWeight={400}
           variant="ghost"
-          color={PaginationStyle._textColor}
+          color={PaginationStyle.TEXT_COLOR}
           fontSize="1rem"
           // caution: при выставлении outline: 'none' и border: 'none' - верстка прыгает
           // здесь и ниже borderColor выставлен под цвет фона (белый)
@@ -95,24 +95,24 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
           <Button
             key={`page-${Date.now()}}+${index}`}
             onClick={() => handleToPressedPage(pageIndex, page)}
-            borderRadius={PaginationStyle._borderRadius}
+            borderRadius={PaginationStyle.BORDER_RADIUS}
             bgColor={
               page === pageIndex + 1
-                ? PaginationStyle._bgColorActive
-                : PaginationStyle._bgColor
+                ? PaginationStyle.BG_COLOR_ACTIVE
+                : PaginationStyle.BG_COLOR
             }
             color={
-              page === pageIndex + 1 ? '#FFFFFF' : PaginationStyle._textColor
+              page === pageIndex + 1 ? '#FFFFFF' : PaginationStyle.TEXT_COLOR
             }
             outline={'none'}
             w={10}
             h={39}
             _hover={{
-              backgroundColor: PaginationStyle._bgColorActive,
+              backgroundColor: PaginationStyle.BG_COLOR_ACTIVE,
               color: '#ffffff',
             }}
             _active={{
-              backgroundColor: PaginationStyle._bgColorActive,
+              backgroundColor: PaginationStyle.BG_COLOR_ACTIVE,
               color: '#ffffff',
               outline: 'none',
             }}
@@ -130,7 +130,7 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
           display={
             totalPages > 5 && pageIndex < totalPages - 2 ? 'block' : 'none'
           }
-          color={PaginationStyle._textColor}
+          color={PaginationStyle.TEXT_COLOR}
         >
           ...
         </Box>
@@ -140,18 +140,18 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
           }
           className="rounded p-1"
           onClick={() => setPagination(totalPages - 1)}
-          borderRadius={PaginationStyle._borderRadius}
-          bgColor={PaginationStyle._bgColor}
-          color={PaginationStyle._textColor}
+          borderRadius={PaginationStyle.BORDER_RADIUS}
+          bgColor={PaginationStyle.BG_COLOR}
+          color={PaginationStyle.TEXT_COLOR}
           w={10}
           h={38}
           _hover={{
-            backgroundColor: PaginationStyle._bgColorActive,
+            backgroundColor: PaginationStyle.BG_COLOR_ACTIVE,
             color: '#ffffff',
             outline: 'none',
           }}
           _active={{
-            backgroundColor: PaginationStyle._bgColorActive,
+            backgroundColor: PaginationStyle.BG_COLOR_ACTIVE,
             color: '#ffffff',
             outline: 'none',
           }}
@@ -173,7 +173,7 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
           onClick={() => setPagination(pageIndex + 1)}
           fontWeight={400}
           variant="ghost"
-          color={PaginationStyle._textColor}
+          color={PaginationStyle.TEXT_COLOR}
           _hover={{
             outline: 'none',
             borderColor: '#FFFFFF',
@@ -194,7 +194,7 @@ const Pagination = <Data,>(props: IPagination<Data>) => {
           display={pageIndex + 1 == totalPages ? 'none' : 'block'}
           onClick={() => setPagination(pageIndex - 1)}
           variant="ghost"
-          color={PaginationStyle._textColor}
+          color={PaginationStyle.TEXT_COLOR}
           pl="0"
           // caution: при выставлении outline: 'none' и border: 'none' - верстка прыгает
           // здесь и ниже borderColor выставлен под цвет фона (белый)
