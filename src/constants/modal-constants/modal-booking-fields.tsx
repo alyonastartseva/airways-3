@@ -36,7 +36,7 @@ const SeatsOptions = () => {
           if (!el.isBooked && !el.isSold) {
             return (
               <option key={el.id} value={el.id}>
-                {el.seat.seatNumber}
+                {el.seat!.seatNumber}
               </option>
             );
           }

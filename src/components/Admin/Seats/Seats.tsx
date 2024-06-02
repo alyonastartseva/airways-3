@@ -23,6 +23,7 @@ import {
   useSetCurrentPageInPagination,
 } from '@/hooks';
 import {
+  IFlightOneSeat,
   IFlightSeats,
   IFlightSeatsPresentation,
   ISeatCategory,
@@ -80,7 +81,7 @@ const Seats = () => {
 
   const { mutate: deleteFlightSeats } = useFlightSeatsDelete();
 
-  const handleEditRow = useCallback((row: IFlightSeats, index: number) => {
+  const handleEditRow = useCallback((row: IFlightSeatsPresentation, index: number) => {
     setEditableRowState(row);
     setEditableRowIndex(index);
   }, []);
@@ -88,7 +89,7 @@ const Seats = () => {
   const columnHelper = createColumnHelper<IFlightSeats>();
 
   const columnCreator = (
-    fieldName: keyof IFlightSeats | `seat.${keyof Seat}`,
+    fieldName: keyof IFlightSeats | `seat.${keyof IFlightOneSeat}`,
     header: string,
     tableType?: 'EditableCell' | 'EditableSelectCell' | 'Cell',
     tableBool?: boolean

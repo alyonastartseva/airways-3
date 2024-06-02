@@ -33,7 +33,7 @@ export const modalSeatFields: FormInputProps<ISeatForm>[] = [
   },
   {
     type: 'select',
-    fieldName: 'category',
+    fieldName: 'seat.category',
     label: 'Класс',
     rules: {
       required: 'Введите класс бронирования',

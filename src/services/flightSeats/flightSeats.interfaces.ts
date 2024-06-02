@@ -3,6 +3,7 @@ import { FieldValues } from 'react-hook-form';
 import { ISort } from '@interfaces/api-interfaces';
 import { ISeatCategory } from '@interfaces/seat.interfaces';
 import {
+  IFlightOneSeat,
   IFlightSeats,
   IFlightSeatsPresentation,
 } from '@/interfaces/flightsSeats.interfaces';
@@ -46,7 +47,9 @@ export interface Seat {
 export interface IFlightSeatPost {
   flightId: number;
   code: string;
-  seat: { seatNumber: string; category: string };
+  id: number;
+  category: ISeatCategory;
+  seat: IFlightOneSeat;
   fare: number;
   isSold: boolean;
   isRegistered: boolean;
@@ -54,12 +57,12 @@ export interface IFlightSeatPost {
 }
 
 export interface IFlightSeatForm extends FieldValues {
-  code: string;
-  id?: number;
-  fare: number;
-  isRegistered: boolean;
-  isSold: boolean;
-  isBooked: boolean;
   flightId: number;
-  seat: { seatNumber: string; category: string };
+  code: string;
+  id: number;
+  seat: IFlightOneSeat;
+  fare: number;
+  isSold: boolean;
+  isRegistered: boolean;
+  isBooked: boolean;
 }
