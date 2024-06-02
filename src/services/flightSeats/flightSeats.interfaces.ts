@@ -45,7 +45,7 @@ export interface Seat {
 
 export interface IFlightSeatPost {
   flightId: number;
-  code: number;
+  code: string;
   seat: { seatNumber: string; category: string };
   fare: number;
   isSold: boolean;
@@ -53,9 +53,13 @@ export interface IFlightSeatPost {
   isBooked: boolean;
 }
 
-export interface IFlightSeatsPostFormFields
-  extends FieldValues,
-    Omit<IFlightSeatsPresentation, 'fare' | 'airportTo'> {
-  from?: string; // stringyfied IDestination
-  to?: string; // stringyfied IDestination
+export interface IFlightSeatForm extends FieldValues {
+  code: string;
+  id?: number;
+  fare: number;
+  isRegistered: boolean;
+  isSold: boolean;
+  isBooked: boolean;
+  flightId: number;
+  seat: { seatNumber: string; category: string };
 }
