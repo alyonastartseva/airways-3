@@ -30,7 +30,10 @@ import {
   DestinationsInputSelector,
   SeatCategory,
 } from '@/common';
-import { ISeatCategory, ISeatCategoryType } from '@/interfaces/flightsSeats.interfaces';
+import {
+  ISeatCategory,
+  ISeatCategoryType,
+} from '@/interfaces/flightsSeats.interfaces';
 
 import { TicketCard } from '../Ticket/TicketCard';
 import { ITicketCardProps } from '../Ticket/TicketCard/ticketCard.interfaces';

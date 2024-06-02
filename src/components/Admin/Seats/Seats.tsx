@@ -29,7 +29,10 @@ import {
   ISeatCategoryType,
 } from '@/interfaces/flightsSeats.interfaces';
 import { isRowEditing } from '@/utils/table.utils';
-import { IFlightSeat, Seat } from '@/services/flightSeats/flightSeats.interfaces';
+import {
+  IFlightSeat,
+  Seat,
+} from '@/services/flightSeats/flightSeats.interfaces';
 import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
@@ -48,7 +51,6 @@ const Seats = () => {
     useState<Required<IFlightSeats> | null>(null);
 
   const { data: dataFlightSeats } = useFlightSeatsQuery(pageIndex);
-  
 
   const handleUpdateRow = useCallback(
     (id: string, value: string) => {
@@ -78,18 +80,15 @@ const Seats = () => {
 
   const { mutate: deleteFlightSeats } = useFlightSeatsDelete();
 
-  const handleEditRow = useCallback(
-    (row: IFlightSeats, index: number) => {
-      setEditableRowState(row);
-      setEditableRowIndex(index);
-    },
-    []
-  );
+  const handleEditRow = useCallback((row: IFlightSeats, index: number) => {
+    setEditableRowState(row);
+    setEditableRowIndex(index);
+  }, []);
 
   const columnHelper = createColumnHelper<IFlightSeats>();
 
   const columnCreator = (
-    fieldName:  keyof IFlightSeats | `seat.${keyof Seat}`,
+    fieldName: keyof IFlightSeats | `seat.${keyof Seat}`,
     header: string,
     tableType?: 'EditableCell' | 'EditableSelectCell' | 'Cell',
     tableBool?: boolean

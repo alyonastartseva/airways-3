@@ -30,9 +30,9 @@ interface IFlightSeatsApi {
 const flightSeatsAPI: IFlightSeatsApi = {
   getFlightsSeats: async (pageIndex, size = ITEMS_PER_PAGE) => {
     return await adminInstance
-      .get<IListResponse<Required<IFlightSeats>>>(
-        `${ERoutes.FLIGHT_SEATS}?page=${pageIndex}&size=${size}`
-      )
+      .get<
+        IListResponse<Required<IFlightSeats>>
+      >(`${ERoutes.FLIGHT_SEATS}?page=${pageIndex}&size=${size}`)
       .then((response) => response.data);
   },
 
