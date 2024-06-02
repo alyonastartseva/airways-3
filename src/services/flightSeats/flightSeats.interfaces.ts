@@ -44,9 +44,10 @@ export interface Seat {
 }
 
 export interface IFlightSeatPost {
+  flightId: number;
   code: number;
-  seat: { seatNumber: string };
-  price: number;
+  seat: { seatNumber: string; category: string };
+  fare: number;
   isSold: boolean;
   isRegistered: boolean;
   isBooked: boolean;

@@ -1,6 +1,7 @@
 import { FormInputProps } from '@/common/ModalElements/ModalInput';
 import { ISeatForm } from '@/interfaces';
 import { seatCategory } from '@/constants';
+import { IFlightSeatPost } from '@/services/flightSeats/flightSeats.interfaces';
 
 const seatCategoryOptions = seatCategory.map((el) => (
   <option key={el.eng} value={el.eng}>
@@ -8,15 +9,15 @@ const seatCategoryOptions = seatCategory.map((el) => (
   </option>
 ));
 
-export const modalFlightSeatFields: FormInputProps<ISeatForm>[] = [
+export const modalFlightSeatFields: FormInputProps<IFlightSeatPost>[] = [
   {
-    fieldName: 'code',
-    typeInput: 'add',
+    fieldName: 'flightId',
+    typeInput: 'text',
     label: 'ID Рейса',
     rules: {},
   },
   {
-    fieldName: 'seatNumber',
+    fieldName: 'seat.seatNumber',
     typeInput: 'text',
     label: 'Номер сиденья',
     rules: {
@@ -41,7 +42,7 @@ export const modalFlightSeatFields: FormInputProps<ISeatForm>[] = [
   },
   {
     type: 'select',
-    fieldName: 'category',
+    fieldName: 'seat.category',
     label: 'Класс',
     rules: {
       required: 'Введите класс бронирования',
