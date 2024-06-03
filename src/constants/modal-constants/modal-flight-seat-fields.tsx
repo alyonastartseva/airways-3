@@ -1,7 +1,10 @@
 import { FormInputProps } from '@/common/ModalElements/ModalInput';
-import { ISeatForm } from '@/interfaces';
 import { seatCategory } from '@/constants';
-import { IFlightSeatPost } from '@/services/flightSeats/flightSeats.interfaces';
+import {
+  IFSForm,
+  IFSpostField,
+  IFSpostField as IFlightSeatPost,
+} from '@/interfaces/flightsSeats.interfaces';
 
 const seatCategoryOptions = seatCategory.map((el) => (
   <option key={el.eng} value={el.eng}>
@@ -9,7 +12,7 @@ const seatCategoryOptions = seatCategory.map((el) => (
   </option>
 ));
 
-export const modalFlightSeatFields: FormInputProps<IFlightSeatPost>[] = [
+export const modalFlightSeatFields: FormInputProps<IFSForm>[] = [
   {
     fieldName: 'flightId',
     typeInput: 'text',

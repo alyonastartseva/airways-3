@@ -1,5 +1,7 @@
 import { FieldValues } from 'react-hook-form';
 
+import { ISort } from '@interfaces/api-interfaces';
+
 // import { IDestination } from '@interfaces/destination.interfaces';
 // import { IAircraft } from '@interfaces/aircraft.interfaces';
 
@@ -65,36 +67,53 @@ export type ISeatCategoryType =
 //   isBooked: boolean;
 // }
 
-export interface IFlightSeats {
+// для всех интерфейсов Flight Seats будет использовано сокращение FS тобишь все интерфейсы и типы будут названы IFL
+// ответ от сервера
+export interface IFSQuery {
+  content: IFSOne[];
+  pageable: string;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+  sort: ISort;
+  first: boolean;
+  numberOfElements: number;
+  size: number;
+  number: number;
+  empty: boolean;
+}
+
+// одно месте
+export interface IFSOne {
+  seat: IFSoneSeat | undefined;
   id: number;
   fare: number;
   isRegistered: boolean;
   isSold: boolean;
   isBooked: boolean;
-  seat: IFlightOneSeat | undefined;
 }
-
-export interface IFlightSeatsPresentation {
-  seat: IFlightOneSeat | undefined;
-  id: number;
-  fare: number;
-  category: ISeatCategory;
-  isSold: boolean;
-  isRegistered: boolean;
-  isBooked: boolean;
-}
-
-export interface IFlightOneSeat {
+// о кресле
+export interface IFSoneSeat {
   id: number;
   seatNumber: string;
   aircraftId: number;
   category: ISeatCategory;
 }
 
-export interface IFlightSeatPostField
-  extends FieldValues,
-    IFlightSeatsPresentation {
+// вроде бы форма для отправки и её поля
+export interface IFSpostField extends IFSOne {
   code: string;
   flightId: number;
-  seat: IFlightOneSeat;
+  seat: IFSoneSeat;
+}
+
+export interface IFSForm extends FieldValues {
+  code: string;
+  flightId: number;
+  seat: IFSoneSeat;
+  id: number;
+  fare: number;
+  isRegistered: boolean;
+  isSold: boolean;
+  isBooked: boolean;
 }

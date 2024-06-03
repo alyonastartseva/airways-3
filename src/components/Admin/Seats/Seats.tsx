@@ -23,21 +23,17 @@ import {
   useSetCurrentPageInPagination,
 } from '@/hooks';
 import {
-  IFlightOneSeat,
-  IFlightSeats,
-  IFlightSeatsPresentation,
+  IFSOne,
+  IFSoneSeat,
+  IFSpostField,
+  IFSpresentation,
   ISeatCategory,
   ISeatCategoryType,
 } from '@/interfaces/flightsSeats.interfaces';
 import { isRowEditing } from '@/utils/table.utils';
-import {
-  IFlightSeat,
-  Seat,
-} from '@/services/flightSeats/flightSeats.interfaces';
 import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
-import { IFlightPostFormFields } from '@/interfaces/flights.interfaces';
 import { PopoverTable } from '@/common/PopoverTable';
 import { useFlightSeatsDelete } from '@/hooks/flightSeats';
 import { EditableSelectCell } from '@/common/EditableSelectCell';
@@ -49,7 +45,7 @@ const Seats = () => {
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
 
   const [editableRowState, setEditableRowState] =
-    useState<Required<IFlightSeats> | null>(null);
+    useState<Required<IFSOne> | null>(null);
 
   const { data: dataFlightSeats } = useFlightSeatsQuery(pageIndex);
 
@@ -59,7 +55,7 @@ const Seats = () => {
 
       setEditableRowState({
         ...editableRowState,
-        [id as keyof IFlightSeatsPresentation]: value,
+        [id as keyof IFSpresentation]: value,
       });
     },
     [editableRowState]
@@ -81,15 +77,15 @@ const Seats = () => {
 
   const { mutate: deleteFlightSeats } = useFlightSeatsDelete();
 
-  const handleEditRow = useCallback((row: IFlightSeatsPresentation, index: number) => {
+  const handleEditRow = useCallback((row: IFSpresentation, index: number) => {
     setEditableRowState(row);
     setEditableRowIndex(index);
   }, []);
 
-  const columnHelper = createColumnHelper<IFlightSeats>();
+  const columnHelper = createColumnHelper<IFSOne>();
 
   const columnCreator = (
-    fieldName: keyof IFlightSeats | `seat.${keyof IFlightOneSeat}`,
+    fieldName: keyof IFSOne | `seat.${keyof IFSoneSeat}`,
     header: string,
     tableType?: 'EditableCell' | 'EditableSelectCell' | 'Cell',
     tableBool?: boolean
@@ -231,7 +227,7 @@ const Seats = () => {
     ]
   );
 
-  const tableData = (data?: IFlightSeats[]) => {
+  const tableData = (data?: IFSOne[]) => {
     if (Array.isArray(data) && data.length) {
       return data.sort((a, b) => a.id - b.id);
     }
@@ -246,7 +242,7 @@ const Seats = () => {
 
   return (
     <TableContainer py={45} px={9}>
-      <HeaderTable<IFlightPostFormFields>
+      <HeaderTable<IFSpostField>
         heading="Посадочные Места"
         formName={EModalNames.FLIGHTS_SEATS}
       />

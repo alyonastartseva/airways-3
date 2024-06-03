@@ -16,14 +16,7 @@ import {
   IFlightPost,
   IFlightPostFormFields,
 } from '@/interfaces';
-import {
-  IFlightSeatForm,
-  IFlightSeatPost,
-} from '@/services/flightSeats/flightSeats.interfaces';
-import {
-  IFlightSeatPostField,
-  IFlightSeats,
-} from '@/interfaces/flightsSeats.interfaces';
+import { IFSForm, IFSpostField } from '@/interfaces/flightsSeats.interfaces';
 
 export interface IModalProps {
   formName: EModalNames;
@@ -53,5 +46,5 @@ export type TSettings = [
   IModalSetting<ITicketsForm>,
   IModalSetting<TTimeZoneForm>,
   IModalSetting<IFormBooking>,
-  IModalSetting<IFlightSeatPostField>
+  IModalSetting<IFSForm>,
 ];

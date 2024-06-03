@@ -2,12 +2,7 @@ import { FieldValues } from 'react-hook-form';
 
 import { ISeat } from '@services/seat/seat.interfaces';
 
-export enum ISeatCategory {
-  BUSINESS = 'BUSINESS',
-  PREMIUM_ECONOMY = 'PREMIUM_ECONOMY',
-  FIRST = 'FIRST',
-  ECONOM = 'ECONOMY',
-}
+import { ISeatCategory } from './flightsSeats.interfaces';
 
 export type ISeatCategoryType =
   | 'Первый класс'
