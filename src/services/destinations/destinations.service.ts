@@ -1,13 +1,11 @@
-import { adminInstance } from '@/services/axios.service';
-import { ERoutes } from '@/services/constants';
-import { ITEMS_PER_PAGE } from '@/constants/constants';
+import { adminInstance, ERoutes, NO_CONTENT } from '@/services';
+import { ITEMS_PER_PAGE } from '@/constants';
 import {
   IDestination,
   IDestinationData,
   IDestinationPost,
 } from '@interfaces/destination.interfaces';
 
-import { NO_CONTENT } from '../constants/server-codes.constants';
 import { IDestinationGet } from './destinations.interfaces';
 
 const getQueryString = <T>(params?: T) => {
