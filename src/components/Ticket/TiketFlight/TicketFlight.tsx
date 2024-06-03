@@ -19,6 +19,7 @@ import {
   AirplaneLandingIcon,
   AirplaneTakeoffIcon,
 } from '@/common/icons';
+import ArrowTicket from '@/common/icons/Ticket/ArrowTicket';
 
 interface TiketFlightProps {
   flight: {
@@ -170,15 +171,19 @@ const TiketFlight: FC<TiketFlightProps> = ({
             </GridItem>
             <GridItem>
               <Center w="100%" h="100%">
-                <Box
-                  color="#4797FF"
-                  fontFamily="Roboto"
-                  fontSize={16}
-                  fontWeight="400"
-                  width="130px"
-                >
-                  Прямой рейс
-                </Box>
+                <Flex align="center" gap="10px">
+                  <Box
+                    color="#4797FF"
+                    fontFamily="Roboto"
+                    fontSize={14}
+                    fontWeight="600"
+                  >
+                    1 пересадка
+                  </Box>
+                  <Circle size="16px" backgroundColor="#D6E8FF">
+                    <ArrowTicket />
+                  </Circle>
+                </Flex>
               </Center>
             </GridItem>
             <GridItem>

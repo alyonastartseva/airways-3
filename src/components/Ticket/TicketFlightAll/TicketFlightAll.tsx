@@ -25,6 +25,11 @@ import {
 import PaidIcon from '@/common/icons/Ticket/PaidIcon';
 import EnabledIcon from '@/common/icons/Ticket/EnabledIcon';
 import UnavailableIcon from '@/common/icons/Ticket/UnavailableIcon';
+import CompanyPoints from '@/common/icons/Ticket/CompanyPoints';
+import SpinerIconTicket from '@/common/icons/Ticket/SpinerIconTicket';
+import FlyForTicket from '@/common/icons/Ticket/FlyForTicket';
+import GoToFly from '@/common/icons/Ticket/GoToFly';
+import ArrowTicket from '@/common/icons/Ticket/ArrowTicket';
 
 interface TiketFlightAllProps {
   flight: {
@@ -73,8 +78,6 @@ const TicketFlightAll: FC<TiketFlightAllProps> = ({
     'ноября',
     'декабря',
   ];
-  // eslint-disable-next-line no-console
-  console.log(flight);
 
   const dayWeekArray = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 
@@ -128,152 +131,175 @@ const TicketFlightAll: FC<TiketFlightAllProps> = ({
         align="start"
         gap="15px"
         maxW="75rem"
+        h="100%"
+        maxH="700px"
+        alignItems="stretch"
       >
-        <Flex flexDirection="column" w="500px" h="auto">
-          <Box>
-            <Grid
-              templateColumns="2fr 3fr 2fr"
-              templateRows="2fr 3fr"
-              width="100%"
-              height="100%"
-            >
-              <GridItem>
-                <Center width="100%" height="100%">
-                  <Circle size="40px" bg="#4797FF" color="white">
-                    <AirplaneIcon />
-                  </Circle>
-                  <Box
-                    ml="10px"
-                    color="#808080"
-                    fontFamily="Roboto"
-                    fontSize={16}
-                    fontWeight="400"
-                  >
-                    Globus LLC
-                  </Box>
-                </Center>
-              </GridItem>
-              <GridItem rowSpan={2} colSpan={1}>
-                <Center width="100%" height="90%">
-                  <Box>
-                    <Flex gap="10px" mb="15px">
-                      <AirplaneTakeoffIcon color="#808080" size={20} />
-                      <Box
-                        fontFamily="Roboto"
-                        fontSize={14}
-                        fontWeight="400"
-                        color="#808080"
-                      >
-                        {timeFotFly(
-                          flight.dataTo.departureDateTime,
-                          flight.dataTo.arrivalDateTime
-                        )}
-                      </Box>
-                      <AirplaneLandingIcon color="#808080" size={20} />
-                    </Flex>
-                    <Divider borderColor="#808080" variant="dashed" />
-                  </Box>
-                </Center>
-              </GridItem>
-              <GridItem>
-                <Center w="100%" h="100%">
+        <Flex flexDirection="column" w="500px">
+          <Grid
+            templateColumns="2fr 3fr 2fr"
+            templateRows="2fr 3fr"
+            width="100%"
+            height="auto"
+          >
+            <GridItem>
+              <Center width="100%" height="100%">
+                <Circle size="40px" bg="#4797FF" color="white">
+                  <AirplaneIcon />
+                </Circle>
+                <Box
+                  ml="10px"
+                  color="#808080"
+                  fontFamily="Roboto"
+                  fontSize={16}
+                  fontWeight="400"
+                >
+                  Globus LLC
+                </Box>
+              </Center>
+            </GridItem>
+            <GridItem rowSpan={2} colSpan={1}>
+              <Center width="100%" height="90%">
+                <Box>
+                  <Flex gap="10px" mb="15px">
+                    <AirplaneTakeoffIcon color="#808080" size={20} />
+                    <Box
+                      fontFamily="Roboto"
+                      fontSize={14}
+                      fontWeight="400"
+                      color="#808080"
+                    >
+                      {timeFotFly(
+                        flight.dataTo.departureDateTime,
+                        flight.dataTo.arrivalDateTime
+                      )}
+                    </Box>
+                    <AirplaneLandingIcon color="#808080" size={20} />
+                  </Flex>
+                  <Divider borderColor="#808080" variant="dashed" />
+                </Box>
+              </Center>
+            </GridItem>
+            <GridItem>
+              <Center w="100%" h="100%">
+                <Flex align="center" gap="10px">
                   <Box
                     color="#4797FF"
                     fontFamily="Roboto"
-                    fontSize={16}
-                    fontWeight="400"
-                    width="130px"
+                    fontSize={14}
+                    fontWeight="600"
                   >
-                    Прямой рейс
+                    1 пересадка
                   </Box>
-                </Center>
-              </GridItem>
-              <GridItem>
-                <Center w="100%" h="100%">
-                  <Box>
-                    <Flex align="center" gap="20px">
-                      <Box
-                        fontFamily="Roboto"
-                        fontSize={28}
-                        fontWeight="700"
-                        color="#2E2E2E"
-                      >
-                        {time(flight.dataTo.departureDateTime)}
-                      </Box>
-                      <Box
-                        fontFamily="Roboto"
-                        fontSize={16}
-                        fontWeight="400"
-                        color="#2E2E2E"
-                      >
-                        {flight.dataTo.airportFrom}
-                      </Box>
-                    </Flex>
+                  <Circle size="16px" backgroundColor="#D6E8FF">
+                    <ArrowTicket rotate="rotate(180deg)" />
+                  </Circle>
+                </Flex>
+              </Center>
+            </GridItem>
+            <GridItem>
+              <Center w="100%" h="100%">
+                <Box>
+                  <Flex align="center" gap="20px">
                     <Box
                       fontFamily="Roboto"
-                      fontSize={14}
-                      fontWeight="300"
-                      color="#808080"
+                      fontSize={28}
+                      fontWeight="700"
+                      color="#2E2E2E"
                     >
-                      {flight.dataTo.cityFrom}
+                      {time(flight.dataTo.departureDateTime)}
                     </Box>
                     <Box
                       fontFamily="Roboto"
-                      fontSize={14}
-                      fontWeight="300"
-                      color="#808080"
+                      fontSize={16}
+                      fontWeight="400"
+                      color="#2E2E2E"
                     >
-                      {dateFly(flight.dataTo.departureDateTime)}
+                      {flight.dataTo.airportFrom}
                     </Box>
+                  </Flex>
+                  <Box
+                    fontFamily="Roboto"
+                    fontSize={14}
+                    fontWeight="300"
+                    color="#808080"
+                  >
+                    {flight.dataTo.cityFrom}
                   </Box>
-                </Center>
-              </GridItem>
-              <GridItem>
-                <Center w="100%" h="100%">
-                  <Box>
-                    <Flex align="center" gap="20px">
-                      <Box
-                        fontFamily="Roboto"
-                        fontSize={16}
-                        fontWeight="400"
-                        color="#2E2E2E"
-                      >
-                        {flight.dataTo.airportTo}
-                      </Box>
-                      <Box
-                        fontFamily="Roboto"
-                        fontSize={28}
-                        fontWeight="700"
-                        color="#2E2E2E"
-                      >
-                        {time(flight.dataTo.arrivalDateTime)}
-                      </Box>
-                    </Flex>
-                    <Flex
-                      fontFamily="Roboto"
-                      fontSize={14}
-                      fontWeight="300"
-                      color="#808080"
-                      justify="end"
-                    >
-                      {flight.dataTo.cityTo}
-                    </Flex>
-                    <Flex
-                      fontFamily="Roboto"
-                      fontSize={14}
-                      fontWeight="300"
-                      color="#808080"
-                      justify="end"
-                    >
-                      {dateFly(flight.dataTo.arrivalDateTime)}
-                    </Flex>
+                  <Box
+                    fontFamily="Roboto"
+                    fontSize={14}
+                    fontWeight="300"
+                    color="#808080"
+                  >
+                    {dateFly(flight.dataTo.departureDateTime)}
                   </Box>
-                </Center>
-              </GridItem>
-            </Grid>
-          </Box>
-          <Box mt="10px">
+                </Box>
+              </Center>
+            </GridItem>
+            <GridItem>
+              <Center w="100%" h="100%">
+                <Box>
+                  <Flex align="center" gap="20px">
+                    <Box
+                      fontFamily="Roboto"
+                      fontSize={16}
+                      fontWeight="400"
+                      color="#2E2E2E"
+                    >
+                      {flight.dataTo.airportTo}
+                    </Box>
+                    <Box
+                      fontFamily="Roboto"
+                      fontSize={28}
+                      fontWeight="700"
+                      color="#2E2E2E"
+                    >
+                      {time(flight.dataTo.arrivalDateTime)}
+                    </Box>
+                  </Flex>
+                  <Flex
+                    fontFamily="Roboto"
+                    fontSize={14}
+                    fontWeight="300"
+                    color="#808080"
+                    justify="end"
+                  >
+                    {flight.dataTo.cityTo}
+                  </Flex>
+                  <Flex
+                    fontFamily="Roboto"
+                    fontSize={14}
+                    fontWeight="300"
+                    color="#808080"
+                    justify="end"
+                  >
+                    {dateFly(flight.dataTo.arrivalDateTime)}
+                  </Flex>
+                </Box>
+              </Center>
+            </GridItem>
+          </Grid>
+          <Box
+            overflow="scroll"
+            css={{
+              '&::-webkit-scrollbar': {
+                background: 'none',
+                width: '4px',
+              },
+              '&::-webkit-scrollbar-track': {
+                width: '6px',
+              },
+            }}
+            _hover={{
+              '&::-webkit-scrollbar-thumb': {
+                background: '#aaa',
+                borderRadius: '24px',
+              },
+            }}
+          >
             <Flex
+              mt="10px"
               align="center"
               justify="space-between"
               p="12px"
@@ -305,96 +331,257 @@ const TicketFlightAll: FC<TiketFlightAllProps> = ({
                 <WarningCircleIcon color="#4797FF" size={20} />
               </Flex>
             </Flex>
+            <Flex mt="20px" gap="10px" align="center">
+              <Flex flexDirection="column" align="center" gap="20px">
+                <FlyForTicket />
+                <Divider
+                  orientation="vertical"
+                  borderColor="#4797FF"
+                  variant="dashed"
+                  h="250px"
+                />
+                <GoToFly />
+              </Flex>
+              <Flex gap="40px" justify="space-between" flexDirection="column">
+                <Flex gap="8px" flexDirection="column">
+                  <Flex align="center" gap="5px">
+                    <Box fontFamily="Roboto" fontSize="16px" fontWeight="500">
+                      {time(flight.dataTo.departureDateTime)}
+                    </Box>
+                    <Box fontFamily="Roboto" fontSize="14px" fontWeight="400">
+                      {dateFly(flight.dataTo.departureDateTime)}
+                    </Box>
+                  </Flex>
+                  <Box fontFamily="Roboto" fontSize="16px" fontWeight="500">
+                    {flight.dataTo.cityFrom}
+                  </Box>
+                  <Box
+                    fontFamily="Roboto"
+                    fontSize="14px"
+                    fontWeight="400"
+                  >{`Аэропорт, терминал, ${flight.dataTo.airportFrom}`}</Box>
+                </Flex>
+                <Flex gap="8px" flexDirection="column">
+                  <Flex align="center" gap="5px">
+                    <Box
+                      color="#7a869a"
+                      fontFamily="Roboto"
+                      fontSize="14px"
+                      fontWeight="400"
+                    >
+                      637 км
+                    </Box>
+                    <Box
+                      w="4px"
+                      h="4px"
+                      borderRadius="50%"
+                      backgroundColor="#7a869a"
+                    ></Box>
+                    <Box
+                      color="#7a869a"
+                      fontFamily="Roboto"
+                      fontSize="14px"
+                      fontWeight="400"
+                    >
+                      {timeFotFly(
+                        flight.dataTo.departureDateTime,
+                        flight.dataTo.arrivalDateTime
+                      )}
+                    </Box>
+                  </Flex>
+                  <Flex>
+                    <Box></Box>
+                    <Box
+                      fontFamily="Roboto"
+                      color="#4797FF"
+                      fontSize="14px"
+                      fontWeight="600"
+                    >
+                      Меню: Напитки
+                    </Box>
+                  </Flex>
+                  <Flex>
+                    <Box></Box>
+                    <Box
+                      fontFamily="Roboto"
+                      color="#4797FF"
+                      fontSize="14px"
+                      fontWeight="600"
+                    >
+                      Питомцы: до 50 кг
+                    </Box>
+                  </Flex>
+                </Flex>
+                <Flex gap="8px" flexDirection="column">
+                  <Flex align="center" gap="5px">
+                    <Box fontFamily="Roboto" fontSize="16px" fontWeight="500">
+                      {time(flight.dataTo.arrivalDateTime)}
+                    </Box>
+                    <Box fontFamily="Roboto" fontSize="14px" fontWeight="400">
+                      {dateFly(flight.dataTo.arrivalDateTime)}
+                    </Box>
+                  </Flex>
+                  <Box fontFamily="Roboto" fontSize="16px" fontWeight="500">
+                    {flight.dataTo.cityTo}
+                  </Box>
+                  <Box
+                    fontFamily="Roboto"
+                    fontSize="14px"
+                    fontWeight="400"
+                  >{`Аэропорт, терминал, ${flight.dataTo.cityTo}`}</Box>
+                </Flex>
+              </Flex>
+            </Flex>
+            <Flex
+              align="center"
+              backgroundColor="#fff4e9"
+              borderRadius="8px"
+              width="100%"
+              h="60px"
+              gap="15px"
+              pl="20px"
+              m="30px 0"
+            >
+              <SpinerIconTicket />
+              <Box fontFamily="Roboto" fontSize="16px" fontWeight="600">
+                Пересадка 4ч 00мин
+              </Box>
+            </Flex>
+            <Flex
+              mt="10px"
+              align="center"
+              justify="space-between"
+              p="12px"
+              border="1px solid #f1f3f8"
+              borderRadius="8px"
+            >
+              <Flex align="center" gap="15px">
+                <Circle size="40px" bg="#4797FF" color="white">
+                  <AirplaneIcon />
+                </Circle>
+                <Box
+                  color="#2E2E2E"
+                  fontFamily="Roboto"
+                  fontSize={16}
+                  fontWeight="700"
+                >
+                  S7 1004
+                </Box>
+              </Flex>
+              <Flex align="center" gap="10px">
+                <Box
+                  color="#4797FF"
+                  fontFamily="Roboto"
+                  fontSize={16}
+                  fontWeight="500"
+                >
+                  Airbus A319
+                </Box>
+                <WarningCircleIcon color="#4797FF" size={20} />
+              </Flex>
+            </Flex>
+            <Flex mt="20px" gap="10px" align="center">
+              <Flex flexDirection="column" align="center" gap="20px">
+                <FlyForTicket />
+                <Divider
+                  orientation="vertical"
+                  borderColor="#4797FF"
+                  variant="dashed"
+                  h="250px"
+                />
+                <GoToFly />
+              </Flex>
+              <Flex gap="40px" justify="space-between" flexDirection="column">
+                <Flex gap="8px" flexDirection="column">
+                  <Flex align="center" gap="5px">
+                    <Box fontFamily="Roboto" fontSize="16px" fontWeight="500">
+                      {time(flight.dataTo.departureDateTime)}
+                    </Box>
+                    <Box fontFamily="Roboto" fontSize="14px" fontWeight="400">
+                      {dateFly(flight.dataTo.departureDateTime)}
+                    </Box>
+                  </Flex>
+                  <Box fontFamily="Roboto" fontSize="16px" fontWeight="500">
+                    {flight.dataTo.cityFrom}
+                  </Box>
+                  <Box
+                    fontFamily="Roboto"
+                    fontSize="14px"
+                    fontWeight="400"
+                  >{`Аэропорт, терминал, ${flight.dataTo.airportFrom}`}</Box>
+                </Flex>
+                <Flex gap="8px" flexDirection="column">
+                  <Flex align="center" gap="5px">
+                    <Box
+                      color="#7a869a"
+                      fontFamily="Roboto"
+                      fontSize="14px"
+                      fontWeight="400"
+                    >
+                      637 км
+                    </Box>
+                    <Box
+                      w="4px"
+                      h="4px"
+                      borderRadius="50%"
+                      backgroundColor="#7a869a"
+                    ></Box>
+                    <Box
+                      color="#7a869a"
+                      fontFamily="Roboto"
+                      fontSize="14px"
+                      fontWeight="400"
+                    >
+                      {timeFotFly(
+                        flight.dataTo.departureDateTime,
+                        flight.dataTo.arrivalDateTime
+                      )}
+                    </Box>
+                  </Flex>
+                  <Flex>
+                    <Box></Box>
+                    <Box
+                      fontFamily="Roboto"
+                      color="#4797FF"
+                      fontSize="14px"
+                      fontWeight="600"
+                    >
+                      Меню: Напитки
+                    </Box>
+                  </Flex>
+                  <Flex>
+                    <Box></Box>
+                    <Box
+                      fontFamily="Roboto"
+                      color="#4797FF"
+                      fontSize="14px"
+                      fontWeight="600"
+                    >
+                      Питомцы: до 50 кг
+                    </Box>
+                  </Flex>
+                </Flex>
+                <Flex gap="8px" flexDirection="column">
+                  <Flex align="center" gap="5px">
+                    <Box fontFamily="Roboto" fontSize="16px" fontWeight="500">
+                      {time(flight.dataTo.arrivalDateTime)}
+                    </Box>
+                    <Box fontFamily="Roboto" fontSize="14px" fontWeight="400">
+                      {dateFly(flight.dataTo.arrivalDateTime)}
+                    </Box>
+                  </Flex>
+                  <Box fontFamily="Roboto" fontSize="16px" fontWeight="500">
+                    {flight.dataTo.cityTo}
+                  </Box>
+                  <Box
+                    fontFamily="Roboto"
+                    fontSize="14px"
+                    fontWeight="400"
+                  >{`Аэропорт, терминал, ${flight.dataTo.cityTo}`}</Box>
+                </Flex>
+              </Flex>
+            </Flex>
           </Box>
-          <Flex mt="20px" gap={10} flexDirection="column">
-            <Flex gap="8px" flexDirection="column">
-              <Flex align="center" gap="5px">
-                <Box fontFamily="Roboto" fontSize="16px" fontWeight="500">
-                  {time(flight.dataTo.departureDateTime)}
-                </Box>
-                <Box fontFamily="Roboto" fontSize="14px" fontWeight="400">
-                  {dateFly(flight.dataTo.departureDateTime)}
-                </Box>
-              </Flex>
-              <Box fontFamily="Roboto" fontSize="16px" fontWeight="500">
-                {flight.dataTo.cityFrom}
-              </Box>
-              <Box
-                fontFamily="Roboto"
-                fontSize="14px"
-                fontWeight="400"
-              >{`Аэропорт, терминал, ${flight.dataTo.airportFrom}`}</Box>
-            </Flex>
-            <Flex gap="8px" flexDirection="column">
-              <Flex align="center" gap="5px">
-                <Box
-                  color="#7a869a"
-                  fontFamily="Roboto"
-                  fontSize="14px"
-                  fontWeight="400"
-                >
-                  637 км
-                </Box>
-                <Box
-                  w="4px"
-                  h="4px"
-                  borderRadius="50%"
-                  backgroundColor="#7a869a"
-                ></Box>
-                <Box
-                  color="#7a869a"
-                  fontFamily="Roboto"
-                  fontSize="14px"
-                  fontWeight="400"
-                >
-                  {timeFotFly(
-                    flight.dataTo.departureDateTime,
-                    flight.dataTo.arrivalDateTime
-                  )}
-                </Box>
-              </Flex>
-              <Flex>
-                <Box></Box>
-                <Box
-                  fontFamily="Roboto"
-                  color="#4797FF"
-                  fontSize="14px"
-                  fontWeight="600"
-                >
-                  Меню: Напитки
-                </Box>
-              </Flex>
-              <Flex>
-                <Box></Box>
-                <Box
-                  fontFamily="Roboto"
-                  color="#4797FF"
-                  fontSize="14px"
-                  fontWeight="600"
-                >
-                  Питомцы: до 50 кг
-                </Box>
-              </Flex>
-            </Flex>
-            <Flex gap="8px" flexDirection="column">
-              <Flex align="center" gap="5px">
-                <Box fontFamily="Roboto" fontSize="16px" fontWeight="500">
-                  {time(flight.dataTo.arrivalDateTime)}
-                </Box>
-                <Box fontFamily="Roboto" fontSize="14px" fontWeight="400">
-                  {dateFly(flight.dataTo.arrivalDateTime)}
-                </Box>
-              </Flex>
-              <Box fontFamily="Roboto" fontSize="16px" fontWeight="500">
-                {flight.dataTo.cityTo}
-              </Box>
-              <Box
-                fontFamily="Roboto"
-                fontSize="14px"
-                fontWeight="400"
-              >{`Аэропорт, терминал, ${flight.dataTo.cityTo}`}</Box>
-            </Flex>
-          </Flex>
         </Flex>
         <Flex gap="15px" justify="center">
           <Box w={225} borderRadius={8} bgColor="#EBF3FF" p="30px 10px">
@@ -491,9 +678,10 @@ const TicketFlightAll: FC<TiketFlightAllProps> = ({
                     fontWeight="400"
                     fontSize="14px"
                   >
-                    <Flex align="start" gap="7px">
+                    <Flex align="center" gap="7px">
                       <EnabledIcon color="#006FFF" />
                       Начислим 400
+                      <CompanyPoints color="#4797FF" />
                     </Flex>
                   </ListItem>
                   <ListItem
@@ -635,9 +823,10 @@ const TicketFlightAll: FC<TiketFlightAllProps> = ({
                     fontWeight="400"
                     fontSize="14px"
                   >
-                    <Flex align="start" gap="7px">
+                    <Flex align="center" gap="7px">
                       <EnabledIcon color="#006FFF" />
                       Начислим 800
+                      <CompanyPoints color="#4797FF" />
                     </Flex>
                   </ListItem>
                   <ListItem
@@ -779,9 +968,10 @@ const TicketFlightAll: FC<TiketFlightAllProps> = ({
                     fontWeight="400"
                     fontSize="14px"
                   >
-                    <Flex align="start" gap="7px">
+                    <Flex align="center" gap="7px">
                       <EnabledIcon color="#006FFF" />
                       Начислим 1200
+                      <CompanyPoints color="#4797FF" />
                     </Flex>
                   </ListItem>
                   <ListItem
