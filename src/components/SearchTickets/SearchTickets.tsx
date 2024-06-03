@@ -232,11 +232,11 @@ const MainSearch = ({
   return (
     <Flex
       justify="center"
-      minHeight="54rem"
       maxWidth="90rem"
       w="100%"
       alignItems={alignItems}
       m="auto"
+      mb="30px"
       marginTop={marginTop}
     >
       <Box>
