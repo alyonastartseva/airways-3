@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 4.685rem;
+  box-shadow: 0 1px 15px #a3a3a3;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+
+  position: relative;
+  z-index: 10;
+
+  & .buttons {
+    display: flex;
+    gap: 26px;
+
+    & .buttonAntd {
+      background-color: #ffffff;
+      border: none;
+      border-radius: 4px;
+
+      color: #006fff;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 14px;
+
+      &:hover {
+        background: #e7e7e7;
+        color: #008cff;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}

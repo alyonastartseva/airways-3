@@ -1,69 +1,59 @@
-import { Link, useLocation } from 'react-router-dom';
-import { Box, Flex, Button, Spacer } from '@chakra-ui/react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Button } from 'antd';
 
-import { useAuth } from '@/hooks';
-import { WebsiteLogo } from '@/common';
-import { ELinks } from '@/services/constants/admin-router-links.constants';
-import setParams from '@utils/set-params.utils';
 import { UserHeader, AdminHeader } from '@/components';
+import { WebsiteLogo } from '@/common';
+import { ELinks } from '@/services';
+import { useAuth } from '@/hooks';
+import setParams from '@utils/set-params.utils';
 
-const HEADER_LINKS = [
-  { path: ELinks.AUTHORIZATION, name: 'Вход' },
-  { path: ELinks.REGISTRATION, name: 'Регистрация' },
-  { path: '/', name: 'На главную' },
-];
+import styles from './Header.module.scss';
 
 const Header = () => {
   const { isAdmin: isLogged } = useAuth();
-  // TODO заглушка для отображения контента для неавторизованного пользователя
-
   const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  // TODO заглушка для отображения контента для неавторизованного пользователя
   const isSignIn = pathname === ELinks.AUTHORIZATION;
   const { backgroundColor } = setParams('header', isLogged && !isSignIn);
 
-  //Заглушка для авторизации пользователя
+  const UNAUTH_LINKS = [
+    { path: ELinks.AUTHORIZATION, name: 'Вход' },
+    { path: ELinks.REGISTRATION, name: 'Регистрация' },
+    { path: '/', name: 'На главную' },
+  ];
+
+  const unAuthContent = (
+    <div className={styles.buttons}>
+      {UNAUTH_LINKS.map(
+        ({ path, name }) =>
+          path !== pathname && (
+            <Button
+              key={name}
+              className={styles.buttonAntd}
+              size="large"
+              onClick={() => navigate(path)}
+            >
+              {name}
+            </Button>
+          )
+      )}
+    </div>
+  );
+
+  const authContent = isLogged ? <AdminHeader /> : <UserHeader />;
 
   return (
-    <Box
-      h="4.685rem"
-      display="flex"
-      bg={backgroundColor}
-      boxShadow="0 1px 15px #A3A3A3"
-      pr="1.5rem"
-      pl="1.5rem"
-      justifyContent="space-between"
-      alignItems="center"
-      position="relative"
-      zIndex={10}
+    <div
+      className={styles.container}
+      style={{ backgroundColor: backgroundColor }}
     >
       <WebsiteLogo isFooter={false} isLogged={isLogged && !isSignIn} />
-      <Spacer />
-      {!isLogged || isSignIn ? (
-        <Flex gap="1rem" color="#006FFF" alignItems="center">
-          {HEADER_LINKS.map(
-            ({ path, name }) =>
-              path !== pathname && (
-                <Link key={path} to={path}>
-                  <Button
-                    color="#006EFF"
-                    fontSize="15"
-                    fontWeight="600"
-                    _hover={{ bgColor: '#C2DCFF' }}
-                    _active={{ bgColor: '#85BAFF' }}
-                    _focus={{ outline: 'none' }}
-                  >
-                    {name}
-                  </Button>
-                </Link>
-              )
-          )}
-        </Flex>
-      ) : isLogged ? (
-        <AdminHeader />
-      ) : (
-        <UserHeader />
-      )}
-    </Box>
+
+      {isLogged && !isSignIn ? unAuthContent : authContent}
+    </div>
   );
 };
+
 export default Header;
