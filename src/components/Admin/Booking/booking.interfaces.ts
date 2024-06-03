@@ -1,4 +1,4 @@
-import { ISeatCategory } from '@/interfaces';
+import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 
 export interface IBooking {
   id: number;

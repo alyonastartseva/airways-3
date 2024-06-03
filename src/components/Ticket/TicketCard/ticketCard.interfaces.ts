@@ -1,4 +1,4 @@
-import { ISeatCategory } from '@/interfaces';
+import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 
 type TariffCategory = 'basic' | 'standard' | 'plus';
 

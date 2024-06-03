@@ -26,7 +26,6 @@ import {
   IFSOne,
   IFSoneSeat,
   IFSpostField,
-  IFSpresentation,
   ISeatCategory,
   ISeatCategoryType,
 } from '@/interfaces/flightsSeats.interfaces';
@@ -55,7 +54,7 @@ const Seats = () => {
 
       setEditableRowState({
         ...editableRowState,
-        [id as keyof IFSpresentation]: value,
+        [id as keyof IFSOne]: value,
       });
     },
     [editableRowState]
@@ -77,7 +76,7 @@ const Seats = () => {
 
   const { mutate: deleteFlightSeats } = useFlightSeatsDelete();
 
-  const handleEditRow = useCallback((row: IFSpresentation, index: number) => {
+  const handleEditRow = useCallback((row: IFSOne, index: number) => {
     setEditableRowState(row);
     setEditableRowIndex(index);
   }, []);

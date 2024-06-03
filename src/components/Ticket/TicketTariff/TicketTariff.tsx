@@ -16,7 +16,7 @@ import {
 } from '@common/icons';
 import { seatCategory } from '@/constants';
 import { pluralize } from '@utils/string.utils';
-import { ISeatCategory } from '@/interfaces';
+import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 
 import { TFacilities, TTariffType } from '../TicketCard';
 
