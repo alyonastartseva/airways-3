@@ -119,8 +119,9 @@ const TiketFlight: FC<TiketFlightProps> = ({
         align="center"
         gap="15px"
         justify="center"
-        w="90%"
+        w="100%"
         onClick={() => setStateChoice(!stateChoice)}
+        maxW="75rem"
       >
         <Box h={165} w={500}>
           <Grid
@@ -267,9 +268,9 @@ const TiketFlight: FC<TiketFlightProps> = ({
         <Flex
           direction="column"
           justify="space-between"
-          p="40px 15px"
+          p="30px 10px"
           h={165}
-          w={260}
+          w={250}
           borderRadius={8}
           boxShadow="0 4px 4px rgb(0 0 0 / 0.25)"
           bgColor="#EBF3FF"
@@ -278,7 +279,7 @@ const TiketFlight: FC<TiketFlightProps> = ({
             <Box
               color="#2E2E2E"
               fontFamily="Roboto"
-              fontSize={16}
+              fontSize={14}
               fontWeight="500"
             >
               Эконом Базовый
@@ -294,6 +295,7 @@ const TiketFlight: FC<TiketFlightProps> = ({
               fontFamily="Roboto"
               fontSize={28}
               fontWeight="700"
+              gridColumn="1/3"
             >
               3 787 ₽
             </Box>
@@ -310,12 +312,12 @@ const TiketFlight: FC<TiketFlightProps> = ({
             </Box>
           </Flex>
         </Flex>
-        <Box p="40px 15px" h={165} w={260} borderRadius={8} bgColor="#EBF3FF">
+        <Box p="30px 10px" h={165} w={250} borderRadius={8} bgColor="#EBF3FF">
           <Grid templateColumns="repeat(2, auto)" rowGap={5}>
             <Box
               fontFamily="Roboto"
               color="#2E2E2E"
-              fontSize={16}
+              fontSize={14}
               fontWeight="500"
             >
               Эконом Стандарт
@@ -331,17 +333,18 @@ const TiketFlight: FC<TiketFlightProps> = ({
               color="#2E2E2E"
               fontSize={28}
               fontWeight="700"
+              gridColumn="1/3"
             >
               5 887 ₽
             </Box>
           </Grid>
         </Box>
-        <Box p="40px 15px" h={165} w={260} borderRadius={8} bgColor="#C2DCFF">
+        <Box p="30px 10px" w={250} h={165} borderRadius={8} bgColor="#C2DCFF">
           <Grid templateColumns="repeat(2, auto)" rowGap={5}>
             <Box
               fontFamily="Roboto"
               color="#2E2E2E"
-              fontSize={16}
+              fontSize={14}
               fontWeight="500"
             >
               Эконом Плюс
@@ -357,6 +360,7 @@ const TiketFlight: FC<TiketFlightProps> = ({
               color="#2E2E2E"
               fontSize={28}
               fontWeight="700"
+              gridColumn="1/3"
             >
               12 437 ₽
             </Box>
