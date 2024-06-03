@@ -3,7 +3,7 @@ import { seatCategory } from '@/constants';
 import {
   IFSForm,
   IFSpostField,
-  IFSpostField as IFlightSeatPost,
+  IFlightSeatsPost,
 } from '@/interfaces/flightsSeats.interfaces';
 
 const seatCategoryOptions = seatCategory.map((el) => (
@@ -12,7 +12,7 @@ const seatCategoryOptions = seatCategory.map((el) => (
   </option>
 ));
 
-export const modalFlightSeatFields: FormInputProps<IFSForm>[] = [
+export const modalFlightSeatFields: FormInputProps<IFlightSeatsPost>[] = [
   {
     fieldName: 'flightId',
     typeInput: 'text',

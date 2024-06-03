@@ -2,6 +2,8 @@ import { FieldValues } from 'react-hook-form';
 
 import { ISort } from '@interfaces/api-interfaces';
 
+import { ISeatPost } from './seat.interfaces';
+
 // import { IDestination } from '@interfaces/destination.interfaces';
 // import { IAircraft } from '@interfaces/aircraft.interfaces';
 
@@ -100,6 +102,7 @@ export interface IFSoneSeat {
   category: ISeatCategory;
 }
 
+// Зачем? ниже копия
 // вроде бы форма для отправки и её поля
 export interface IFSpostField extends IFSOne {
   code: string;
@@ -107,13 +110,29 @@ export interface IFSpostField extends IFSOne {
   seat: IFSoneSeat;
 }
 
-export interface IFSForm extends FieldValues {
+export interface IFSForm extends IFSOne, FieldValues {
   code: string;
   flightId: number;
-  seat: IFSoneSeat;
+}
+
+/////////////
+
+export interface IFlightSeatBase {
+  fare?: number;
+  isRegistered?: boolean;
+  isSold?: boolean;
+  isBooked?: boolean;
+  flightId?: number;
+}
+
+export interface IFlightSeats extends IFlightSeatBase {
   id: number;
-  fare: number;
-  isRegistered: boolean;
-  isSold: boolean;
-  isBooked: boolean;
+  seat: ISeatPost;
+}
+
+export type TFormFlightSeats = IFlightSeatBase & FieldValues;
+
+export interface IFlightSeatsPost extends IFlightSeatBase, FieldValues {
+  id?: number;
+  seat?: ISeatPost;
 }

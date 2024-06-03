@@ -6,6 +6,7 @@ import {
   IFSForm,
   IFSOne,
   IFSpostField,
+  TFormFlightSeats,
 } from '@/interfaces/flightsSeats.interfaces';
 
 import { IListResponse } from '../flights/flights.interfaces';
@@ -20,7 +21,9 @@ interface IFlightSeatsApi {
     id: number | undefined
   ) => Promise<AxiosResponse<IFSOne> | undefined>;
 
-  postFlightSeats: (data: IFSForm) => Promise<AxiosResponse<IFSForm, any>>;
+  postFlightSeats: (
+    data: TFormFlightSeats
+  ) => Promise<AxiosResponse<TFormFlightSeats, any>>;
 }
 
 const flightSeatsAPI: IFlightSeatsApi = {
@@ -38,8 +41,11 @@ const flightSeatsAPI: IFlightSeatsApi = {
     }
   },
 
-  postFlightSeats: async (data) => {
-    return await adminInstance.post<IFSForm>(ERoutes.FLIGHT_SEATS, data);
+  postFlightSeats: async (data: TFormFlightSeats) => {
+    return await adminInstance.post<TFormFlightSeats>(
+      ERoutes.FLIGHT_SEATS,
+      data
+    );
   },
 };
 

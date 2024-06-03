@@ -26,8 +26,10 @@ import {
   IFSOne,
   IFSoneSeat,
   IFSpostField,
+  IFSForm,
   ISeatCategory,
   ISeatCategoryType,
+  IFlightSeatsPost,
 } from '@/interfaces/flightsSeats.interfaces';
 import { isRowEditing } from '@/utils/table.utils';
 import { HeaderTable } from '@/common/HeaderTable';
@@ -241,7 +243,7 @@ const Seats = () => {
 
   return (
     <TableContainer py={45} px={9}>
-      <HeaderTable<IFSpostField>
+      <HeaderTable<IFlightSeatsPost>
         heading="Посадочные Места"
         formName={EModalNames.FLIGHTS_SEATS}
       />
