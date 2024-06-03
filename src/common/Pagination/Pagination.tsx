@@ -1,221 +1,63 @@
-import { useCallback } from 'react';
-import { Box, Button, ButtonGroup, Flex } from '@chakra-ui/react';
+import {
+  Pagination as PaginationAntd,
+  PaginationProps as PaginationPropsAntd,
+  ConfigProvider,
+} from 'antd';
 
-import { ArrowRightIcon, ArrowLeftIcon } from '@/common/icons/';
-import { IPagination } from '@components/Pagination/Pagination.interfaces';
+import { ArrowRightIcon, ArrowLeftIcon } from '@common/icons';
+import { ITEMS_PER_PAGE } from '@/constants';
 
-import { getVisiblePages } from './Pagination.utils';
+import { IPagination } from './Pagination.interfaces';
 
-enum PaginationStyle {
-  BORDER_RADIUS = '0.4rem',
-  TEXT_COLOR = '#0052BD',
-  BG_COLOR = '#C2DCFF',
-  BG_COLOR_ACTIVE = '#398AEA',
-}
+// Причина не использования module: пагинация от antd по другому не будет дружить с нашей стилизацией
+import './Pagination.scss';
 
-const Pagination = <Data,>(props: IPagination<Data>) => {
-  const { data, setPaginationData, pageIndex, totalPages = 1 } = props;
+const Pagination = (props: IPagination) => {
+  const { setPaginationData, pageIndex, totalPages = 1 } = props;
 
-  const setPagination = useCallback(
-    (pageNumber: number) => {
-      if (data?.length && pageNumber >= 0) {
-        setPaginationData(pageNumber);
-      }
-    },
-    [data?.length, setPaginationData]
-  );
-
-  const handleToPressedPage = (currentPage: number, page: number): void => {
-    if (page - 1 !== currentPage) {
-      setPagination(page - 1);
+  const itemRender: PaginationPropsAntd['itemRender'] = (
+    _,
+    type,
+    originalElement
+  ) => {
+    if (type === 'prev') {
+      return (
+        // Документация antd требует теги <a>
+        // eslint-disable-next-line jsx-a11y/anchor-is-valid
+        <a>
+          <ArrowLeftIcon color="currentColor" />
+          Предыдущая страница
+        </a>
+      );
     }
+    if (type === 'next') {
+      return (
+        // eslint-disable-next-line jsx-a11y/anchor-is-valid
+        <a>
+          Следущая страница
+          <ArrowRightIcon color="currentColor" />
+        </a>
+      );
+    }
+    return originalElement;
   };
 
-  return data && totalPages > 1 ? (
-    <Flex my={8}>
-      <Flex>
-        <Button
-          outline={'none'}
-          display={pageIndex == 0 ? 'none' : 'block'}
-          onClick={() => setPagination(pageIndex - 1)}
-          fontWeight={400}
-          variant="ghost"
-          w="5"
-          color={PaginationStyle.TEXT_COLOR}
-          fontSize="1rem"
-          // caution: при выставлении outline: 'none' и border: 'none' - верстка прыгает
-          // здесь и ниже borderColor выставлен под цвет фона (белый)
-          _hover={{
-            outline: 'none',
-            borderColor: '#FFFFFF',
-          }}
-          _active={{
-            outline: 'none',
-            borderColor: '#FFFFFF',
-          }}
-          _focus={{
-            outline: 'none',
-            borderColor: '#FFFFFF',
-          }}
-        >
-          {<ArrowLeftIcon color="#0052BD" />}
-        </Button>
-        <Button
-          outline={'none'}
-          display={pageIndex == 0 ? 'none' : 'block'}
-          // ml={0}
-          mr={5}
-          pl={0}
-          className="rounded p-1"
-          onClick={() => setPagination(pageIndex - 1)}
-          fontWeight={400}
-          variant="ghost"
-          color={PaginationStyle.TEXT_COLOR}
-          fontSize="1rem"
-          // caution: при выставлении outline: 'none' и border: 'none' - верстка прыгает
-          // здесь и ниже borderColor выставлен под цвет фона (белый)
-          _hover={{
-            outline: 'none',
-            borderColor: '#FFFFFF',
-          }}
-          _active={{
-            outline: 'none',
-            borderColor: '#FFFFFF',
-          }}
-          _focus={{
-            outline: 'none',
-            borderColor: '#FFFFFF',
-          }}
-        >
-          {' Предыдущая страница'}
-        </Button>
-      </Flex>
-      <ButtonGroup spacing={1}>
-        {getVisiblePages(pageIndex, totalPages).map((page, index) => (
-          <Button
-            key={`page-${Date.now()}}+${index}`}
-            onClick={() => handleToPressedPage(pageIndex, page)}
-            borderRadius={PaginationStyle.BORDER_RADIUS}
-            bgColor={
-              page === pageIndex + 1
-                ? PaginationStyle.BG_COLOR_ACTIVE
-                : PaginationStyle.BG_COLOR
-            }
-            color={
-              page === pageIndex + 1 ? '#FFFFFF' : PaginationStyle.TEXT_COLOR
-            }
-            outline={'none'}
-            w={10}
-            h={39}
-            _hover={{
-              backgroundColor: PaginationStyle.BG_COLOR_ACTIVE,
-              color: '#ffffff',
-            }}
-            _active={{
-              backgroundColor: PaginationStyle.BG_COLOR_ACTIVE,
-              color: '#ffffff',
-              outline: 'none',
-            }}
-            _focus={{
-              outline: 'none',
-            }}
-          >
-            {page}
-          </Button>
-        ))}
-        <Box
-          pe={3}
-          ps={3}
-          pt={2}
-          display={
-            totalPages > 5 && pageIndex < totalPages - 2 ? 'block' : 'none'
-          }
-          color={PaginationStyle.TEXT_COLOR}
-        >
-          ...
-        </Box>
-        <Button
-          display={
-            totalPages > 5 && pageIndex < totalPages - 2 ? 'flex' : 'none'
-          }
-          className="rounded p-1"
-          onClick={() => setPagination(totalPages - 1)}
-          borderRadius={PaginationStyle.BORDER_RADIUS}
-          bgColor={PaginationStyle.BG_COLOR}
-          color={PaginationStyle.TEXT_COLOR}
-          w={10}
-          h={38}
-          _hover={{
-            backgroundColor: PaginationStyle.BG_COLOR_ACTIVE,
-            color: '#ffffff',
-            outline: 'none',
-          }}
-          _active={{
-            backgroundColor: PaginationStyle.BG_COLOR_ACTIVE,
-            color: '#ffffff',
-            outline: 'none',
-          }}
-          _focus={{
-            outline: 'none',
-            borderColor: '#FFFFFF',
-          }}
-        >
-          {totalPages}
-        </Button>
-      </ButtonGroup>
-      <Flex>
-        <Button
-          outline={'none'}
-          display={pageIndex + 1 == totalPages ? 'none' : 'block'}
-          ml={5}
-          pr={1}
-          className="rounded p-1"
-          onClick={() => setPagination(pageIndex + 1)}
-          fontWeight={400}
-          variant="ghost"
-          color={PaginationStyle.TEXT_COLOR}
-          _hover={{
-            outline: 'none',
-            borderColor: '#FFFFFF',
-          }}
-          _active={{
-            outline: 'none',
-            border: 'none',
-          }}
-          _focus={{
-            outline: 'none',
-            borderColor: '#FFFFFF',
-          }}
-        >
-          {'Следующая страница '}
-        </Button>
-        <Button
-          outline={'none'}
-          display={pageIndex + 1 == totalPages ? 'none' : 'block'}
-          onClick={() => setPagination(pageIndex - 1)}
-          variant="ghost"
-          color={PaginationStyle.TEXT_COLOR}
-          pl="0"
-          // caution: при выставлении outline: 'none' и border: 'none' - верстка прыгает
-          // здесь и ниже borderColor выставлен под цвет фона (белый)
-          _hover={{
-            outline: 'none',
-            borderColor: '#FFFFFF',
-          }}
-          _active={{
-            outline: 'none',
-            borderColor: '#FFFFFF',
-          }}
-          _focus={{
-            outline: 'none',
-            borderColor: '#FFFFFF',
-          }}
-        >
-          {<ArrowRightIcon color="#0052BD" />}
-        </Button>
-      </Flex>
-    </Flex>
-  ) : null;
+  const paginationTotal = totalPages * ITEMS_PER_PAGE;
+
+  if (totalPages === 1) return null;
+
+  return (
+    <ConfigProvider theme={{ components: { Pagination: { itemSize: 40 } } }}>
+      <PaginationAntd
+        className="paginationAntd"
+        showSizeChanger={false}
+        total={paginationTotal}
+        defaultCurrent={pageIndex}
+        onChange={setPaginationData}
+        itemRender={itemRender}
+      />
+    </ConfigProvider>
+  );
 };
 
 export default Pagination;

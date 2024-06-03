@@ -15,7 +15,6 @@ const FooterTable = <Data,>({
 }: IFooterTable<Data>) => (
   <Flex justify="space-between" alignItems="center">
     <Pagination
-      data={data}
       pageIndex={pageIndex}
       totalPages={totalPages}
       setPaginationData={setPaginationData}

@@ -45,7 +45,7 @@ const Passengers = () => {
   );
 
   // получение данных
-  const { data: dataQuery, isFetching } = usePassengersQuery(pageIndex);
+  const { data: dataQuery, isFetching } = usePassengersQuery(pageIndex - 1);
 
   const passengers = dataQuery?.content;
   const totalPages = dataQuery?.totalPages;

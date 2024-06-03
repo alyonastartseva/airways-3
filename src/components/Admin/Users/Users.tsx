@@ -266,7 +266,6 @@ const Users = () => {
             </Tbody>
           </Table>
           <Pagination
-            data={data}
             pageIndex={pageIndex}
             setPaginationData={setPaginationData}
           />

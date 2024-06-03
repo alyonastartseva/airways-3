@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { UseSetCurrentPageInPagination } from '@/interfaces';
 
 const useSetCurrentPageInPagination: UseSetCurrentPageInPagination = (key) => {
-  const [pageIndex, setPageIndex] = useState<number>(0);
+  const [pageIndex, setPageIndex] = useState<number>(1);
 
   const setPaginationData = (pageNumber: number) => {
     setPageIndex(pageNumber);

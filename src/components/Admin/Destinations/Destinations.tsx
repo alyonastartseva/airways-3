@@ -46,7 +46,7 @@ const Destinations = () => {
     data: destinationsByPageData,
     isFetching,
     isError,
-  } = useDestinationQueryByPage(pageIndex);
+  } = useDestinationQueryByPage(pageIndex - 1);
 
   const destinationsByPage = useMemo(
     () => destinationsByPageData?.content || [],
