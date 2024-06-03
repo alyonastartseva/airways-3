@@ -20,6 +20,7 @@ import { isRowEditing } from '@utils/table.utils';
 import { sortById } from '@utils/sort.utils';
 import { ITEMS_PER_PAGE, onlyLettersPattern, EModalNames } from '@/constants';
 import { IDestination, IDestinationPost } from '@/interfaces';
+import { DestinationsInputSelector } from '@/components';
 import {
   useDestinationQueryByPage,
   useDestinationPatch,
@@ -34,7 +35,6 @@ import {
   SpinnerBlock,
   HeaderTable,
   FooterTable,
-  DestinationsInputSelector,
 } from '@/common';
 
 const Destinations = () => {

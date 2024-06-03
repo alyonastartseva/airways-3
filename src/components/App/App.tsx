@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Layout } from '@/layout';
 import { PrivateRoute } from '@layout/PrivateRoute';
-import { PageNotFound } from '@/common';
 import { LoginAdminForm, LoginForm } from '@/components';
 import {
   AirplanesPage,
@@ -17,6 +16,7 @@ import {
   TicketsPage,
   BookingPage,
   TimeZonesPage,
+  PageNotFound,
 } from '@/pages';
 
 const App = () => {

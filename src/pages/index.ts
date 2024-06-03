@@ -10,6 +10,7 @@ export { UsersPage } from './Admin/Users';
 export { PassengersPage } from './Passengers';
 
 export { FilteredTicketsPage } from './User/FilteredTicketsPage';
-export { SearchPage } from './User/SearchPage';
 export { SearchTicketsPage } from './User/SearchTicketsPage';
 export { SignUpPage } from './User/SignUpPage';
+
+export { PageNotFound } from './PageNotFound';

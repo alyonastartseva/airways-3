@@ -1,4 +1,4 @@
-import { FormInputProps } from '@common/ModalElements/ModalInput';
+import { FormInputProps } from '@/common/ModalInput';
 import { IFormPassengers } from '@/interfaces';
 import {
   onlyLettersPattern,

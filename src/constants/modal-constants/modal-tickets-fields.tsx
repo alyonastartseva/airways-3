@@ -1,4 +1,4 @@
-import { FormInputProps } from '@common/ModalElements/ModalInput';
+import { FormInputProps } from '@/common/ModalInput';
 import { getDestinationsByParams } from '@services/destinations/destinations.service';
 import { ITicketsForm } from '@/interfaces';
 import { onlyLettersPattern } from '@/constants';

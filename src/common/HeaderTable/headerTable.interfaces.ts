@@ -1,6 +1,6 @@
 import { EModalNames } from '@/constants';
 
-export interface IHeaderAdmin {
+interface IHeaderAdmin {
   heading: string;
   formName: EModalNames;
   select?: boolean;
@@ -8,3 +8,5 @@ export interface IHeaderAdmin {
   handleSelectChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   initialFormValues?: Record<string, number | string | undefined>;
 }
+
+export type { IHeaderAdmin };

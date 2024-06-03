@@ -41,7 +41,7 @@ import {
 
 import { AviasalesService } from '@/services';
 import { ITEMS_PER_PAGE } from '@/constants';
-import { Pagination, UserInput } from '@/components';
+import { Pagination, UserInput } from '@/common';
 import { TPerson, IFormPassenger } from '@/interfaces';
 
 const Users = () => {

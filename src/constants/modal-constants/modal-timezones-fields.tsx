@@ -1,4 +1,4 @@
-import { FormInputProps } from '@common/ModalElements/ModalInput';
+import { FormInputProps } from '@/common/ModalInput';
 import { TTimeZoneForm } from '@/interfaces';
 import { onlyLettersPattern } from '@/constants';
 
