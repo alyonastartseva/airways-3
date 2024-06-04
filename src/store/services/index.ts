@@ -11,6 +11,7 @@ export {
   useAddDestinationMutation,
   useDeleteDestinationMutation,
   usePatchDestinationMutation,
+  useLazyGetDestionationsQuery,
 } from './destinations';
 export {
   aircraftApi,

@@ -1,14 +1,11 @@
 import { Input, Text } from '@chakra-ui/react';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 
 import { FlexCell } from '@common/FlexCell';
 import { debounce } from '@/utils/debounce.utils';
 import { IDestinationGet } from '@/services/destinations/destinations.interfaces';
 import { IDestinationList } from '@/interfaces/destination.interfaces';
-import {
-  getDestinationsByPage,
-  getDestinationsByParams,
-} from '@/services/destinations/destinations.service';
+import { useLazyGetDestionationsQuery } from '@/store/services';
 
 import { InfiniteScrollSelector } from '../InfiniteScrollSelector';
 
@@ -36,9 +33,11 @@ const InputSelector = ({
     []
   );
   const [page, setPage] = useState(0);
-  const [isLoading, setLoading] = useState(false);
   const [isFocused, setFocus] = useState(false);
   const [isHasMore, setHasMore] = useState(true);
+  const [getDestinations, { data: destinationsData, isLoading }] =
+    useLazyGetDestionationsQuery();
+  const requestType = useRef('');
 
   useEffect(() => {
     initialValue &&
@@ -50,6 +49,10 @@ const InputSelector = ({
       ]);
   }, []);
 
+  useEffect(() => {
+    if (destinationsData) setPreparedData(destinationsData);
+  }, [destinationsData]);
+
   const addDestinations = (data: IDestinationList[]) => {
     setDestinationsList([...destinationsList, ...data]);
   };
@@ -59,39 +62,39 @@ const InputSelector = ({
       getDestinationsListByPage(0);
       return;
     }
-    setLoading(true);
+
     const requestPage = previousRequestType === 'city' ? page : 0;
-    const destinations = await getDestinationsByParams({
+
+    getDestinations({
       cityName: query,
       page: requestPage,
     });
-    setPreparedData(destinations, 'city');
+
+    requestType.current = 'city';
   }
 
   async function getDestinationsListByPage(reqPage = page) {
     if ((isHasMore && !isLoading) || reqPage === 0) {
-      setLoading(true);
-      const destinations = await getDestinationsByPage(reqPage);
-      setPreparedData(destinations, 'page');
+      getDestinations({ page: reqPage });
+      requestType.current = 'page';
     }
   }
 
-  const setPreparedData = (data: IDestinationGet, type: string) => {
+  const setPreparedData = (data: IDestinationGet) => {
     const { airports, last, number } = normalizeDestinations(data);
     if (airports) {
-      if (type === 'city') {
+      if (requestType.current === 'city') {
         if (previousRequestType === 'page') setDestinationsList(airports);
         else addDestinations(airports);
-      } else if (type === 'page') {
+      } else if (requestType.current === 'page') {
         if (!destinationsList || previousRequestType === 'city')
           setDestinationsList(airports);
         else addDestinations(airports);
       }
     } else setDestinationsList([]);
     if (!last) setPage(number + 1);
-    setLoading(false);
     setHasMore(!last);
-    setPreviousRequestType(type);
+    setPreviousRequestType(requestType.current);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

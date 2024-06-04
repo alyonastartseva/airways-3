@@ -6,13 +6,10 @@ import { ITEMS_PER_PAGE } from '@/constants/constants';
 import { IDestinationGet } from '@/services/destinations/destinations.interfaces';
 import {
   IDestination,
+  IDestinationData,
   IDestinationPost,
 } from '@/interfaces/destination.interfaces';
-
-interface GetDestionationsArgs {
-  page: number;
-  size?: number;
-}
+import { getQueryString } from '@/utils/get-query-string.utils';
 
 export const destinationsApi = createApi({
   reducerPath: 'destinationsApi',
@@ -22,9 +19,9 @@ export const destinationsApi = createApi({
   }),
   tagTypes: ['Destination'],
   endpoints: (builder) => ({
-    getDestionations: builder.query<IDestinationGet, GetDestionationsArgs>({
-      query: ({ page, size = ITEMS_PER_PAGE }) =>
-        `${ERoutes.DESTINATION}?page=${page}&size=${size}`,
+    getDestionations: builder.query<IDestinationGet, IDestinationData | void>({
+      query: (query = { page: 0, size: ITEMS_PER_PAGE }) =>
+        `${ERoutes.DESTINATION}${getQueryString(query)}`,
       providesTags: ['Destination'],
     }),
     addDestination: builder.mutation<IDestination, IDestinationPost>({
@@ -58,4 +55,5 @@ export const {
   useAddDestinationMutation,
   useDeleteDestinationMutation,
   usePatchDestinationMutation,
+  useLazyGetDestionationsQuery,
 } = destinationsApi;
