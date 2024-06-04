@@ -4,7 +4,7 @@ import { useToast } from '@chakra-ui/react';
 import { getFlights } from '@/services/flights/flights.service';
 import { ITEMS_PER_PAGE } from '@/constants';
 
-const useFlightsQuery = (pageIndex: number, size: number = ITEMS_PER_PAGE) => {
+const useFlightsQuery = (pageIndex?: number, size: number = ITEMS_PER_PAGE) => {
   const toast = useToast();
 
   return useQuery(

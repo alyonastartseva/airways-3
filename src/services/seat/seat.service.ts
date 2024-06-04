@@ -8,7 +8,7 @@ import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 import { ISeat } from './seat.interfaces';
 
 interface ISeatApi {
-  getSeat: (id: number, page: number) => Promise<ISeat | undefined>;
+  getSeat: (id: number, page?: number) => Promise<ISeat | undefined>;
   postSeat: (data: ISeatPost) => Promise<AxiosResponse<ISeatPost, Error>>;
   deleteSeat: (
     id: number | undefined
@@ -41,7 +41,12 @@ const mapSeatFormData = (data: ISeatForm): ISeatPost => {
 };
 
 const seatAPI: ISeatApi = {
-  getSeat: async (id: number, page: number) => {
+  getSeat: async (id: number, page?: number) => {
+    if (!page) {
+      return await adminInstance
+        .get<ISeat>(`${ERoutes.SEAT}?aircraftId=${id}`)
+        .then((response) => response.data);
+    }
     return await adminInstance
       .get<ISeat>(
         `${ERoutes.SEAT}?page=${page}&size=${ITEMS_PER_PAGE}&aircraftId=${id}`

@@ -6,13 +6,14 @@ import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const useFlightSeatsQuery = (
   pageIndex: number,
-  size: number = ITEMS_PER_PAGE
+  size: number = ITEMS_PER_PAGE,
+  flightId?: number
 ) => {
   const toast = useToast();
 
   return useQuery(
-    ['flight-seats', pageIndex, size],
-    () => getFlightsSeats(pageIndex, size),
+    ['flight-seats', pageIndex, size, flightId],
+    () => getFlightsSeats(pageIndex, size, flightId),
     {
       onError: (error) => {
         if (error instanceof Error) {

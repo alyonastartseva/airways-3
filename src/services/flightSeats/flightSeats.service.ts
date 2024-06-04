@@ -14,7 +14,8 @@ import { IListResponse } from '../flights/flights.interfaces';
 interface IFlightSeatsApi {
   getFlightsSeats: (
     pageIndex: number,
-    size: number
+    size: number,
+    flightId?: number
   ) => Promise<IListResponse<Required<IFSOne>>>;
 
   deleteFlightSeats: (
@@ -27,7 +28,18 @@ interface IFlightSeatsApi {
 }
 
 const flightSeatsAPI: IFlightSeatsApi = {
-  getFlightsSeats: async (pageIndex, size = ITEMS_PER_PAGE) => {
+  getFlightsSeats: async (
+    pageIndex,
+    size = ITEMS_PER_PAGE,
+    flightId?: number
+  ) => {
+    if (flightId) {
+      return await adminInstance
+        .get<
+          IListResponse<Required<IFSOne>>
+        >(`${ERoutes.FLIGHT_SEATS}?flightId=${flightId}`)
+        .then((response) => response.data);
+    }
     return await adminInstance
       .get<
         IListResponse<Required<IFSOne>>
