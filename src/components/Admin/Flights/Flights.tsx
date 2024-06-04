@@ -307,15 +307,15 @@ const Flights = () => {
   );
 
   // TODO: удалить когда будет сортировка на бэке
-  /*const tableData = (data?: Required<IFlightPresentation>[]) => {
+  const tableData = (data?: Required<IFlightPresentation>[]) => {
     if (Array.isArray(data) && data.length) {
       return data.sort((a, b) => a.id - b.id);
     }
     return [];
-  };*/
+  };
 
   const table = useReactTable({
-    data: Array.isArray(flights) ? flights : [],
+    data: tableData(flights),
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
@@ -381,7 +381,7 @@ const Flights = () => {
           </Tbody>
         </Table>
         <FooterTable
-          data={Array.isArray(flights) ? flights : []}
+          data={tableData(flights)}
           pageIndex={pageIndex}
           setPaginationData={setPaginationData}
           cancelEditing={cancelEditing}

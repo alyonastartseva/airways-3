@@ -84,7 +84,6 @@ const mapFlightFormToRequestData = (
   const airportTo = (JSON.parse(to || '') as IDestination).airportCode;
 
   return {
-    id: 0,
     airportFrom,
     airportTo,
     ...rest,
