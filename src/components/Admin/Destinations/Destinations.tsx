@@ -114,14 +114,13 @@ const Destinations = () => {
             updateData={handleUpdateRow}
             info={info}
             fieldName="Страна"
-            isDisabled={true}
           />
         ),
         meta: {
           type: 'text',
           required: true,
           validate: (value: string) => {
-            const regex = new RegExp(onlyLettersPattern.letters.message);
+            const regex = new RegExp(onlyLettersPattern.letters.value);
             return regex.test(value);
           },
           validationMessage: onlyLettersPattern.letters.message,
@@ -144,14 +143,13 @@ const Destinations = () => {
             updateData={handleUpdateRow}
             info={info}
             fieldName="Город"
-            isDisabled={true}
           />
         ),
         meta: {
           type: 'text',
           required: true,
           validate: (value: string) => {
-            const regex = new RegExp(onlyLettersPattern.letters.message);
+            const regex = new RegExp(onlyLettersPattern.letters.value);
             return regex.test(value);
           },
           validationMessage: onlyLettersPattern.letters.message,
@@ -174,7 +172,6 @@ const Destinations = () => {
             updateData={handleUpdateRow}
             info={info}
             fieldName="Имя аэропорта"
-            isDisabled={true}
           />
         ),
       }),
