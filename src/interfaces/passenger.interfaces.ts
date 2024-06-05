@@ -2,6 +2,30 @@ import { FieldValues } from 'react-hook-form';
 
 import { ERolesPassenger } from '@interfaces/roles.interfaces';
 
+import { IPassenger } from './search.interfaces';
+import { ISort } from './api-interfaces';
+
+export interface FormPassengersGet {
+  content: IPassenger[];
+  totalPages: number;
+  pageable: {
+    sort: ISort;
+    pageNumber: number;
+    pageSize: number;
+    offset: number;
+    unpaged: boolean;
+    paged: boolean;
+  };
+  last: boolean;
+  totalElements: number;
+  first: boolean;
+  sort: ISort;
+  numberOfElements: number;
+  size: number;
+  number: number;
+  empty: boolean;
+}
+
 export interface IFormPassengers extends FieldValues {
   lastName?: string;
   firstName?: string;

@@ -3,15 +3,51 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { baseURL as baseUrl } from '@/services/axios.service';
 import { ERoutes } from '@/services/constants';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
-import { FormPassengersGet } from '@/services/passengers/passengers.interfaces';
-import { IFormPassenger } from '@/interfaces/passenger.interfaces';
-import { mapPassengersFormData } from '@/services/passengers/form-passengers.utils';
-import { IPassenger } from '@/interfaces/search.interfaces';
+import {
+  FormPassengersGet,
+  IFormPassenger,
+  IFormPassengers,
+} from '@/interfaces/passenger.interfaces';
+import {
+  FormPassengersPost,
+  IPassenger,
+  IPassport,
+} from '@/interfaces/search.interfaces';
+import { IGetQueryArgs } from '@/interfaces/api-interfaces';
 
-interface GetPassengersArgs {
-  page: number;
-  size?: number;
-}
+const mapPassengersFormData = (data: IFormPassengers): FormPassengersPost => {
+  const {
+    rolesName,
+    passportIssuingCountry,
+    passportIssuingDate,
+    serialNumberPassport,
+    gender,
+    middleName,
+    ...dataRest
+  } = data;
+
+  const rolesArray = rolesName ? [{ name: rolesName }] : [];
+
+  const roles = {
+    roles: rolesArray,
+  };
+
+  const passport: { passport: IPassport } = {
+    passport: {
+      passportIssuingCountry,
+      passportIssuingDate,
+      serialNumberPassport,
+      gender,
+      middleName,
+    },
+  };
+
+  const passenger = {
+    '@type': 'passenger',
+  };
+
+  return Object.assign({}, dataRest, roles, passport, passenger);
+};
 
 export const passengersApi = createApi({
   reducerPath: 'passengeresApi',
@@ -21,7 +57,7 @@ export const passengersApi = createApi({
   }),
   tagTypes: ['Passenger'],
   endpoints: (builder) => ({
-    getPassangers: builder.query<FormPassengersGet, GetPassengersArgs>({
+    getPassangers: builder.query<FormPassengersGet, IGetQueryArgs>({
       query: ({ page, size = ITEMS_PER_PAGE }) =>
         `${ERoutes.PASSENGERS}?page=${page}&size=${size}`,
       providesTags: ['Passenger'],
