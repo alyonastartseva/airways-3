@@ -21,9 +21,10 @@ export const aircraftApi = createApi({
   }),
   tagTypes: ['Aircraft'],
   endpoints: (builder) => ({
-    getAircraft: builder.query<IAircraftsGet, IGetQueryArgs>({
-      query: ({ page, size = ITEMS_PER_PAGE }) =>
-        `${ERoutes.AIRCRAFT}?page=${page}&size=${size}`,
+    getAircraft: builder.query<IAircraftsGet, IGetQueryArgs | void>({
+      query: (
+        { page = 0, size = ITEMS_PER_PAGE } = { page: 0, size: ITEMS_PER_PAGE }
+      ) => `${ERoutes.AIRCRAFT}?page=${page}&size=${size}`,
       providesTags: ['Aircraft'],
     }),
     getAircraftById: builder.query<IAircraft, number>({

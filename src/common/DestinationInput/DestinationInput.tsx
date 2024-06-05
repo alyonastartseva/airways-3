@@ -11,7 +11,7 @@ const DestinationInput: React.FC<IDestProps> = (props: IDestProps) => {
 
   const [inputValue, setInputValue] = useState<string>('');
 
-  const { data } = useGetDestionationsQuery({ page: 0 });
+  const { data } = useGetDestionationsQuery();
   const destinationList = data?.content || [];
 
   const [destInputFocus, setDestInputFocus] = useState(false);

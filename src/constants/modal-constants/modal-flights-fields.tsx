@@ -9,7 +9,7 @@ import {
 import { flightStatuses, statusNames } from '../constants';
 
 const AircraftIdOptions = () => {
-  const { data: aircraftList } = useGetAircraftQuery({ page: 0 });
+  const { data: aircraftList } = useGetAircraftQuery();
 
   if (aircraftList)
     return (
@@ -24,7 +24,7 @@ const AircraftIdOptions = () => {
 };
 
 const CityNameOptions = () => {
-  const { data: destinationsList } = useGetDestionationsQuery({ page: 0 });
+  const { data: destinationsList } = useGetDestionationsQuery();
 
   if (destinationsList)
     return (

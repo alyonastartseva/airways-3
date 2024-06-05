@@ -7,7 +7,7 @@ import { IFlightSeat } from '@services/flightSeats/flightSeats.interfaces';
 import { useGetPassangersQuery } from '@/store/services';
 
 const PassengersOptions = () => {
-  const { data } = useGetPassangersQuery({ page: 0, size: 100 });
+  const { data } = useGetPassangersQuery({ size: 100 });
 
   if (data)
     return data.content.map((el: IPassenger) => {
