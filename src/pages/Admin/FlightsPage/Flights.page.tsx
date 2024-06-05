@@ -1,4 +1,4 @@
-import { Flights } from '@/components/Admin/Flights';
+import { Flights } from '@/components';
 
 function FlightsPage() {
   return <Flights />;

@@ -1,5 +1,5 @@
-import { Box, Text } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import { Box, Text } from '@chakra-ui/react';
 
 import { Logo } from '@common/icons';
 import setParams from '@utils/set-params.utils';

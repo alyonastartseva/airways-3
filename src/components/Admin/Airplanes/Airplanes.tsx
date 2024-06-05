@@ -1,3 +1,4 @@
+import { useCallback, useMemo, useState } from 'react';
 import {
   TableContainer,
   Table,
@@ -14,26 +15,26 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { useCallback, useMemo, useState } from 'react';
 
-import { IAircraft, IAircraftPost } from '@interfaces/aircraft.interfaces';
-import { EditableCell } from '@common/EditableCell';
-import { FlexCell } from '@common/FlexCell';
-import { PopoverTable } from '@common/PopoverTable';
-import { AlertMessage } from '@common/AlertMessage';
-import { SpinnerBlock } from '@common/SpinnerBlock';
-import { HeaderTable } from '@common/HeaderTable';
-import { FooterTable } from '@common/FooterTable';
-import { isRowEditing } from '@utils/table.utils';
+import { IAircraft, IAircraftPost } from '@/interfaces';
+import { ITEMS_PER_PAGE, EModalNames } from '@/constants';
 import { sortById } from '@utils/sort.utils';
+import { isRowEditing } from '@utils/table.utils';
+import {
+  EditableCell,
+  FlexCell,
+  PopoverTable,
+  AlertMessage,
+  SpinnerBlock,
+  HeaderTable,
+  FooterTable,
+} from '@/common';
 import {
   useAircraftQuery,
   useAircraftPatch,
   useAircraftDelete,
   useSetCurrentPageInPagination,
 } from '@/hooks';
-import { EModalNames } from '@/constants/modal-constants/modal-names';
-import { ITEMS_PER_PAGE } from '@/constants/constants';
 
 const Airplanes = () => {
   // индекс и размер пагинации
@@ -69,7 +70,7 @@ const Airplanes = () => {
   );
 
   // получение данных
-  const { data: airplanesData, isFetching } = useAircraftQuery(pageIndex);
+  const { data: airplanesData, isFetching } = useAircraftQuery(pageIndex - 1);
 
   const airplanes = airplanesData?.content;
   const totalPages = airplanesData?.totalPages;

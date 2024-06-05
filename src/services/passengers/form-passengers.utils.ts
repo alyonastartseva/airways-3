@@ -1,5 +1,4 @@
-import { IFormPassengers } from '@/interfaces/passenger.interfaces';
-import { FormPassengersPost, IPassport } from '@/interfaces/search.interfaces';
+import { FormPassengersPost, IPassport, IFormPassengers } from '@/interfaces';
 
 export const mapPassengersFormData = (
   data: IFormPassengers

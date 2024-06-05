@@ -1,9 +1,7 @@
-import { FormInputProps } from '@/common/ModalElements/ModalInput/ModalInput';
-import { IFlightPostFormFields } from '@/interfaces/flights.interfaces';
+import { FormInputProps } from '@/common/ModalInput';
+import { flightStatuses, statusNames } from '@/constants';
 import { useDestinationQuery, useAircraftQuery } from '@/hooks';
-import { IAircraftPost } from '@interfaces/aircraft.interfaces';
-
-import { flightStatuses, statusNames } from '../constants';
+import { IFlightPostFormFields, IAircraftPost } from '@/interfaces';
 
 const AircraftIdOptions = () => {
   const { data: aircraftList } = useAircraftQuery();

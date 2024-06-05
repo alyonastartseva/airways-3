@@ -1,4 +1,4 @@
-import { TimeZones } from '@/components/Admin/TimeZones';
+import { TimeZones } from '@/components';
 
 const TimeZonesPage = () => {
   return <TimeZones />;

@@ -1,3 +1,4 @@
+import { useMemo, useCallback, useState, memo } from 'react';
 import {
   Box,
   TableContainer,
@@ -9,7 +10,6 @@ import {
   Tbody,
   Flex,
 } from '@chakra-ui/react';
-import { useMemo, useCallback, useState, memo } from 'react';
 import {
   createColumnHelper,
   useReactTable,
@@ -17,28 +17,34 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 
-import { useSetCurrentPageInPagination } from '@hooks/useSetCurrentPageInPagination';
-import { SpinnerBlock } from '@common/SpinnerBlock';
-import { PopoverTable } from '@common/PopoverTable';
-import { EditableCell } from '@common/EditableCell';
 import { isRowEditing } from '@utils/table.utils';
-import { HeaderTable } from '@/common/HeaderTable';
-import { FooterTable } from '@/common/FooterTable';
-import { ITimeZone, TTimeZoneForm } from '@interfaces/time-zone.interfaces';
-import { EModalNames } from '@/constants/modal-constants/modal-names';
+import { EModalNames } from '@/constants';
+import { ITimeZone, TTimeZoneForm } from '@/interfaces';
 import {
   useTimezonesQuery,
   useTimezonesDelete,
   useTimezonesPatch,
+  useSetCurrentPageInPagination,
 } from '@/hooks';
-import { AlertMessage } from '@/common/AlertMessage';
+import {
+  AlertMessage,
+  FooterTable,
+  HeaderTable,
+  EditableCell,
+  PopoverTable,
+  SpinnerBlock,
+} from '@/common';
 
 const TimeZones = () => {
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
     'TIME_ZONE_CURR_PAGE'
   );
 
-  const { data: dataQuery, isFetching, isError } = useTimezonesQuery(pageIndex);
+  const {
+    data: dataQuery,
+    isFetching,
+    isError,
+  } = useTimezonesQuery(pageIndex - 1);
 
   const timeZonesData = useMemo(() => dataQuery?.content ?? [], [dataQuery]);
   const totalPages = dataQuery?.totalPages;

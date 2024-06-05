@@ -1,5 +1,5 @@
-import { clientInstance } from '@services/axios.service';
-import { ISearchData } from '@/interfaces/search-tickets.interfaces';
+import { clientInstance } from '@/services';
+import { ISearchData } from '@/interfaces';
 
 export const searchApi = {
   async postSearch({

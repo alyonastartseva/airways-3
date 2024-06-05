@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, vi } from 'vitest';
 
-import AirplaneMorePage from './AirplaneMore.page';
+import { AirplaneMorePage } from './index';
 
 vi.mock('react-query');
 

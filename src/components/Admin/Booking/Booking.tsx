@@ -1,3 +1,5 @@
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import {
   Box,
   Container,
@@ -11,8 +13,6 @@ import {
   Tr,
   VStack,
 } from '@chakra-ui/react';
-import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
-import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   createColumnHelper,
   flexRender,
@@ -20,23 +20,25 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
+import { IBooking, IFormBooking } from '@/interfaces';
+import { EModalNames } from '@/constants';
+import { Gear } from '@common/icons';
+import { isRowEditing } from '@utils/table.utils';
+import { formatDateTime } from '@utils/date.utils';
 import {
   useSetCurrentPageInPagination,
   useBookingDelete,
   useBookingQuery,
 } from '@/hooks';
-import { Pagination } from '@components/Pagination';
-import { Gear } from '@common/icons';
-import { IBooking, IFormBooking } from '@/interfaces/booking.interfaces';
-import { SpinnerBlock } from '@common/SpinnerBlock';
-import { HeaderTable } from '@common/HeaderTable';
-import { EModalNames } from '@constants/modal-constants/modal-names';
-import { FlexCell } from '@common/FlexCell';
-import { EditableCell } from '@common/EditableCell';
-import { isRowEditing } from '@utils/table.utils';
-import { PopoverTable } from '@common/PopoverTable';
-import { formatDateTime } from '@utils/date.utils';
-import { ConfirmCancelModal } from '@/common/ModalElements/ConfirmCancelModal';
+import {
+  SpinnerBlock,
+  HeaderTable,
+  FlexCell,
+  EditableCell,
+  PopoverTable,
+  ConfirmCancelModal,
+  Pagination,
+} from '@/common';
 
 const Booking = () => {
   const [pageIndex, setPaginationData] =
@@ -316,7 +318,6 @@ const Booking = () => {
               />
 
               <Pagination
-                data={bookingData}
                 pageIndex={pageIndex}
                 totalPages={totalPages}
                 setPaginationData={setPaginationData}

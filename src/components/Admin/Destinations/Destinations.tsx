@@ -1,3 +1,4 @@
+import { memo, useCallback, useMemo, useState } from 'react';
 import {
   TableContainer,
   Table,
@@ -14,31 +15,27 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { memo, useCallback, useMemo, useState } from 'react';
 
-import {
-  IDestination,
-  IDestinationPost,
-} from '@interfaces/destination.interfaces';
-import { EditableCell } from '@common/EditableCell';
-import { FlexCell } from '@common/FlexCell';
-import { PopoverTable } from '@common/PopoverTable';
-import { AlertMessage } from '@common/AlertMessage';
-import { SpinnerBlock } from '@common/SpinnerBlock';
-import { HeaderTable } from '@/common/HeaderTable';
-import { FooterTable } from '@common/FooterTable';
 import { isRowEditing } from '@utils/table.utils';
 import { sortById } from '@utils/sort.utils';
+import { ITEMS_PER_PAGE, onlyLettersPattern, EModalNames } from '@/constants';
+import { IDestination, IDestinationPost } from '@/interfaces';
+import { DestinationsInputSelector } from '@/components';
 import {
   useDestinationQueryByPage,
   useDestinationPatch,
   useDestinationDelete,
   useSetCurrentPageInPagination,
 } from '@/hooks';
-import { EModalNames } from '@/constants/modal-constants/modal-names';
-import onlyLettersPattern from '@/constants/validate-patterns/only-letters-pattern';
-import { ITEMS_PER_PAGE } from '@/constants/constants';
-import { DestinationsInputSelector } from '@/common/DestinationsInputSelector';
+import {
+  EditableCell,
+  FlexCell,
+  PopoverTable,
+  AlertMessage,
+  SpinnerBlock,
+  HeaderTable,
+  FooterTable,
+} from '@/common';
 
 const Destinations = () => {
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
@@ -49,7 +46,7 @@ const Destinations = () => {
     data: destinationsByPageData,
     isFetching,
     isError,
-  } = useDestinationQueryByPage(pageIndex);
+  } = useDestinationQueryByPage(pageIndex - 1);
 
   const destinationsByPage = useMemo(
     () => destinationsByPageData?.content || [],
@@ -117,14 +114,13 @@ const Destinations = () => {
             updateData={handleUpdateRow}
             info={info}
             fieldName="Страна"
-            isDisabled={true}
           />
         ),
         meta: {
           type: 'text',
           required: true,
           validate: (value: string) => {
-            const regex = new RegExp(onlyLettersPattern.letters.message);
+            const regex = new RegExp(onlyLettersPattern.letters.value);
             return regex.test(value);
           },
           validationMessage: onlyLettersPattern.letters.message,
@@ -147,14 +143,13 @@ const Destinations = () => {
             updateData={handleUpdateRow}
             info={info}
             fieldName="Город"
-            isDisabled={true}
           />
         ),
         meta: {
           type: 'text',
           required: true,
           validate: (value: string) => {
-            const regex = new RegExp(onlyLettersPattern.letters.message);
+            const regex = new RegExp(onlyLettersPattern.letters.value);
             return regex.test(value);
           },
           validationMessage: onlyLettersPattern.letters.message,
@@ -177,7 +172,6 @@ const Destinations = () => {
             updateData={handleUpdateRow}
             info={info}
             fieldName="Имя аэропорта"
-            isDisabled={true}
           />
         ),
       }),

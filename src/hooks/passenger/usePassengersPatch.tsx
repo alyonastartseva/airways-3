@@ -2,9 +2,9 @@ import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 
-import { patchPassengers } from '@/services/passengers/passengers.service';
-import { IAxiosErrResponseData } from '@/interfaces/axios-err-response-data';
-import { AxiosErrorMessage } from '@/common/AxiosErrorMessage';
+import { patchPassengers } from '@services/passengers/passengers.service';
+import { IAxiosErrResponseData } from '@/interfaces';
+import { AxiosErrorMessage } from '@/common';
 
 const usePassengersPatch = () => {
   const queryClient = useQueryClient();

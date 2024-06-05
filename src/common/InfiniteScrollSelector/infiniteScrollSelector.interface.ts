@@ -1,10 +1,10 @@
 import { ReactNode } from 'react';
 
-import { IDestinationList } from '@/interfaces/destination.interfaces';
+import { IDestinationList } from '@/interfaces';
 
 declare type Fn = () => any;
 
-export interface IScrollComponent {
+interface IScrollComponent {
   targetList: IDestinationList[];
   onClick(value: string): void;
   next: Fn;
@@ -12,3 +12,5 @@ export interface IScrollComponent {
   hasMore: boolean;
   isLoading: boolean;
 }
+
+export type { IScrollComponent };

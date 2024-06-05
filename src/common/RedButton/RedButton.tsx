@@ -1,12 +1,9 @@
-import { Button } from '@chakra-ui/react';
 import { FC } from 'react';
+import { Button } from '@chakra-ui/react';
 
-interface IRedButtonProps {
-  text: string;
-  clickHandler: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-}
+import { IRedButtonProps } from './RedButton.interfaces';
 
-export const RedButton: FC<IRedButtonProps> = ({ text, clickHandler }) => (
+const RedButton: FC<IRedButtonProps> = ({ text, clickHandler }) => (
   <Button
     fontWeight="700"
     bg="#E32E22"
@@ -17,3 +14,5 @@ export const RedButton: FC<IRedButtonProps> = ({ text, clickHandler }) => (
     {text}
   </Button>
 );
+
+export default RedButton;

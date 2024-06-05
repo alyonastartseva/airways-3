@@ -1,17 +1,11 @@
 import { AxiosResponse } from 'axios';
 
-import { adminInstance } from '@/services/axios.service';
-import { ERoutes } from '@/services/constants';
-import {
-  IFlight,
-  IFlightPost,
-  IFlightPresentation,
-} from '@/interfaces/flights.interfaces';
-import {
-  IFlightsUpdate,
-  IListResponse,
-} from '@/services/flights/flights.interfaces';
-import { ITEMS_PER_PAGE } from '@constants/constants';
+import { ITEMS_PER_PAGE } from '@/constants';
+import { adminInstance, ERoutes } from '@/services';
+import { IFlight, IFlightPost, IFlightPresentation } from '@/interfaces';
+
+import { IFlightsUpdate, IListResponse } from './flights.interfaces';
+
 interface IFlightsApi {
   getFlights: (
     pageIndex?: number,

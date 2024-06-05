@@ -1,7 +1,7 @@
 import { describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
-import FlexCell from './FlexCell';
+import { FlexCell } from './index';
 
 describe('FlexCell test', () => {
   it('FlexCell render', () => {

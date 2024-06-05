@@ -1,4 +1,4 @@
-export interface IFooterTable<Data> {
+interface IFooterTable<Data> {
   data: Data[] | undefined;
   editableRowIndex: number | null;
   pageIndex: number;
@@ -7,3 +7,5 @@ export interface IFooterTable<Data> {
   patchRow(): void;
   setPaginationData(pageNumber: number): void;
 }
+
+export type { IFooterTable };

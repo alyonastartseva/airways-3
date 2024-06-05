@@ -1,4 +1,8 @@
 import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 import {
   Alert,
   AlertIcon,
@@ -18,13 +22,9 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { ViewOffIcon, ViewIcon } from '@chakra-ui/icons';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
 
-import { userApi } from '@/services/user/user.service';
-import { IFormUserCreate } from '@interfaces/account.interfaces';
+import { userApi } from '@services/user/user.service';
+import { IFormUserCreate } from '@/interfaces';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required('Введите email').email('Формат email неверен'),

@@ -1,3 +1,4 @@
+import { SearchTickets } from '@/components';
 import { SearchTickets } from '@/components/SearchTickets';
 import { TiketData } from '@/components/Ticket/TiketData';
 

@@ -1,4 +1,3 @@
-import { IGetQuery } from '@/interfaces/api-interfaces';
-import { IAircraft } from '@/interfaces/aircraft.interfaces';
+import { IGetQuery, IAircraft } from '@/interfaces';
 
 export type IAircraftsGet = IGetQuery<IAircraft>;

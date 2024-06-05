@@ -2,7 +2,7 @@ import { TPerson } from '@interfaces/person.interfaces';
 import { IDestination } from '@/interfaces/destination.interfaces';
 import { IAircraft } from '@interfaces/aircraft.interfaces';
 
-export type TTableData = TPerson | IDestination | IAircraft;
+type TTableData = TPerson | IDestination | IAircraft;
 
 export interface IsRowEditing<Data> {
   (

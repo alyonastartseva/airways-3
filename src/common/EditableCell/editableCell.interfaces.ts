@@ -1,8 +1,8 @@
 import { CellContext } from '@tanstack/react-table';
 
-import { TypeInput } from '@interfaces/type-input.types';
+import { TypeInput } from '@/interfaces';
 
-export interface IEditableCell<T> {
+interface IEditableCell<T> {
   value: string | number | undefined;
   index: number;
   id: string;
@@ -13,3 +13,5 @@ export interface IEditableCell<T> {
   isDisabled?: boolean;
   updateData(id: string, value: string): void;
 }
+
+export type { IEditableCell };

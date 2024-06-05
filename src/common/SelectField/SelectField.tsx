@@ -1,12 +1,7 @@
-import { Box, FormLabel, Select, Text } from '@chakra-ui/react';
-import { ReactElement } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { Box, FormLabel, Select, Text } from '@chakra-ui/react';
 
-interface ISelectFieldProps {
-  name: string;
-  label: string;
-  options: ReactElement[];
-}
+import { ISelectFieldProps } from './SelectField.interfaces';
 
 function SelectField({ name, label, options }: ISelectFieldProps) {
   const {

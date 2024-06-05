@@ -1,20 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { FC, useState } from 'react';
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import dayjs from 'dayjs';
-import { FC, useState } from 'react';
 
-import { RedButton } from '@common/RedButton/RedButton';
-import {
-  IDeparture,
-  ITicketReturn,
-  TAdditionalServices,
-} from '@/common/Full/footer.interfaces';
+import { RedButton } from '@/common';
 
-interface IFullProps {
-  departure?: IDeparture;
-  ticketReturn?: ITicketReturn;
-  additional?: TAdditionalServices;
-}
+import { IFullProps } from './footer.interfaces';
 
 const Full: FC<IFullProps> = ({ additional, departure, ticketReturn }) => {
   const [details, setDetails] = useState(false);

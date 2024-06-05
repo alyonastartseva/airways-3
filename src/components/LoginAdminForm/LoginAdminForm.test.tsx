@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom';
 import { cleanup, render, screen } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { afterEach, beforeEach, describe, expect, vi } from 'vitest';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 
-import { LoginAdminForm } from '@components/LoginAdminForm';
+import { LoginAdminForm } from './index';
 
 const queryClient = new QueryClient();
 beforeEach(() => {

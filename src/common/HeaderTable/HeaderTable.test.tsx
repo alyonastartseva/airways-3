@@ -1,8 +1,9 @@
 import { describe, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
-import { EModalNames } from '@constants/modal-constants/modal-names';
-import { HeaderTable } from '@common/HeaderTable';
+import { EModalNames } from '@/constants';
+
+import { HeaderTable } from './index';
 
 vi.mock('react-query', () => {
   const testData = [

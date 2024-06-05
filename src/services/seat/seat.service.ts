@@ -1,10 +1,10 @@
 import { AxiosResponse } from 'axios';
 
-import { adminInstance } from '@/services/axios.service';
-import { ERoutes } from '@/services/constants';
-import { ISeatPost, ISeatForm } from '@/interfaces/seat.interfaces';
-import { ISeat } from '@/services/seat/seat.interfaces';
-import { ITEMS_PER_PAGE } from '@/constants/constants';
+import { adminInstance, ERoutes } from '@/services';
+import { ISeatPost, ISeatForm } from '@/interfaces';
+import { ITEMS_PER_PAGE } from '@/constants';
+
+import { ISeat } from './seat.interfaces';
 
 interface ISeatApi {
   getSeat: (id: number, page: number) => Promise<ISeat | undefined>;

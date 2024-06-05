@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, vi } from 'vitest';
 
-import Destinations from './Destinations';
+import { Destinations } from './index';
 
 vi.mock('react-query');
 

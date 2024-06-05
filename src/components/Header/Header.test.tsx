@@ -1,11 +1,11 @@
-import { describe, it, vi } from 'vitest';
 import '@testing-library/jest-dom';
+import { describe, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Router } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
-import * as useAuth from '@/hooks/useAuth';
+import * as useAuth from '@hooks/useAuth';
 
 import { Header } from './index';
 

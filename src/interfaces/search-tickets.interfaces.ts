@@ -1,5 +1,4 @@
-import { IDestination } from '@interfaces/destination.interfaces';
-import { TSeatCategory } from '@interfaces/seat.interfaces';
+import { IDestination, TSeatCategory } from '@/interfaces';
 
 export type TDestQuery = Omit<IDestination, 'id'>;
 

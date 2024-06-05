@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { useQuery } from 'react-query';
+import { useForm } from 'react-hook-form';
 import {
   Alert,
   AlertDescription,
@@ -35,17 +38,11 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useState } from 'react';
-import { useQuery } from 'react-query';
-import { useForm } from 'react-hook-form';
 
-import AviasalesService from '@/services/aviasales.service';
-import { TPerson } from '@interfaces/person.interfaces';
-import { IFormPassenger } from '@/interfaces/passenger.interfaces';
-import { Pagination } from '@components/Pagination';
-import { ITEMS_PER_PAGE } from '@/constants/constants';
-
-import { UserInput } from '../UserInput';
+import { AviasalesService } from '@/services';
+import { ITEMS_PER_PAGE } from '@/constants';
+import { Pagination, UserInput } from '@/common';
+import { TPerson, IFormPassenger } from '@/interfaces';
 
 const Users = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -269,7 +266,6 @@ const Users = () => {
             </Tbody>
           </Table>
           <Pagination
-            data={data}
             pageIndex={pageIndex}
             setPaginationData={setPaginationData}
           />

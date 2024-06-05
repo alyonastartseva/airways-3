@@ -3,8 +3,8 @@ import { useToast } from '@chakra-ui/react';
 import axios from 'axios';
 
 import { patchBooking } from '@services/booking/booking.service';
-import { IAxiosErrResponseData } from '@interfaces/axios-err-response-data';
-import { AxiosErrorMessage } from '@common/AxiosErrorMessage';
+import { IAxiosErrResponseData } from '@/interfaces';
+import { AxiosErrorMessage } from '@/common';
 
 const useBookingPatch = () => {
   const queryClient = useQueryClient();
