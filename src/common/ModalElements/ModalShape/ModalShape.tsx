@@ -28,6 +28,7 @@ import {
 import { EModalNames } from '@constants/modal-constants/modal-names';
 import { FormAirplanes } from '@common/ModalElements/FormAirplanes/FormAirplanes';
 import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
+import { useToastHandler } from '@/hooks/useToastHandler';
 
 import { ModalInput } from '../ModalInput';
 
@@ -45,7 +46,7 @@ const ModalShape = <T extends FieldValues>({
   });
 
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const toast = useToast();
+  const toast = useToastHandler();
   const { mutateAsync, title } = hook();
 
   const onModalClose = () => {
@@ -63,14 +64,12 @@ const ModalShape = <T extends FieldValues>({
           toast({
             status: 'error',
             title: error.data.message,
-            position: 'top',
           });
         }
       } else {
         toast({
           status: 'success',
           title,
-          position: 'top',
         });
       }
 

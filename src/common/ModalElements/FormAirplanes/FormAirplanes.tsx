@@ -33,6 +33,7 @@ import {
   TFormAirplanesValues,
 } from '@common/ModalElements/FormAirplanes/form-airplanes.interfaces';
 import { usePostAircraftWithSeats } from '@hooks/usePostAircraftWithSeats';
+import { useToastHandler } from '@/hooks/useToastHandler';
 
 const seatCategoryOptions = seatCategory.map((el) => (
   <option key={el.eng} value={el.eng}>
@@ -80,11 +81,13 @@ const FormAirplanes = <T extends FieldValues>({
       seatNumber: '',
     });
   };
-
-  const { mutateAsync } = usePostAircraftWithSeats();
+  const toast = useToastHandler();
+  const { mutateAsync, title } = usePostAircraftWithSeats();
 
   const onSubmit: SubmitHandler<TFormAirplanesValues> = async (data) => {
-    await mutateAsync(data);
+    await mutateAsync(data)
+      .then(() => toast({ status: 'success', title }))
+      .catch((error) => toast({ status: 'error', title: error.data.message }));
     onClose();
   };
 
