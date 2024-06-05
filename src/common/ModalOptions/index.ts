@@ -1,5 +1,3 @@
-export {
-  FlightIdOptions,
-  SeatsOptions,
-  SeatCategoryOptions,
-} from './ModalOptions';
+export { FlightIdOptions } from './FlightIdOptions';
+export { SeatCategoryOptions } from './SeatCategoryOptions';
+export { SeatsOptions } from './SeatsOptions';
