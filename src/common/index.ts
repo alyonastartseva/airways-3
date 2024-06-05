@@ -35,9 +35,6 @@ export { ModalForm } from './ModalForm';
 export { ModalInput } from './ModalInput';
 export { ModalShape } from './ModalShape';
 
-export { SearchPageTabs } from './SearchPageTabs';
-export { SearchTabPanel } from './SearchTabPanel';
-
 export {
   FlightIdOptions,
   SeatsOptions,

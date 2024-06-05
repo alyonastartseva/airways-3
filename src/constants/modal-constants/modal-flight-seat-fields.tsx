@@ -1,5 +1,5 @@
 import { FlightIdOptions, SeatCategoryOptions, SeatsOptions } from '@/common';
-import { FormInputProps } from '@/common/ModalElements/ModalInput';
+import { FormInputProps } from '@/common/ModalInput';
 import { IFlightSeatsPost } from '@/interfaces/flightsSeats.interfaces';
 
 export const modalFlightSeatFields: FormInputProps<IFlightSeatsPost>[] = [

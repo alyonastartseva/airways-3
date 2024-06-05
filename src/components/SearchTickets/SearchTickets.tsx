@@ -25,13 +25,9 @@ import { mainsearch } from '@/assets';
 import { searchApi } from '@services/searchTickets.service';
 import { getFlights } from '@services/flights/flights.service';
 import { ISearchData, IFlightPresentation } from '@/interfaces';
-import {
-  DestinationsInputSelector,
-  SeatCategory,
-} from '@/common';
-import {
-  ISeatCategory,
-} from '@/interfaces/flightsSeats.interfaces';
+import { Calendar, SeatCategory } from '@/common';
+import { DestinationsInputSelector } from '@/components';
+import { ISeatCategoryType } from '@/interfaces/flightsSeats.interfaces';
 
 import { TicketCard } from '../Ticket/TicketCard';
 import { ITicketCardProps } from '../Ticket/TicketCard/ticketCard.interfaces';

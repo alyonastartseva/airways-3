@@ -17,7 +17,7 @@ import {
   AirplaneIcon,
 } from '@common/icons';
 import { pluralize } from '@utils/string.utils';
-import { getFormattedDateTime } from '@utils/date.utils';
+import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 
 import { TicketTariff } from '../TicketTariff';
 
@@ -78,10 +78,10 @@ const TicketCard = ({
 
   const linkText = transfers
     ? `${transfers.length} ${pluralize(transfers.length, [
-      'пересадка',
-      'пересадки',
-      'пересадок',
-    ])}`
+        'пересадка',
+        'пересадки',
+        'пересадок',
+      ])}`
     : 'Прямой рейс';
 
   return (
