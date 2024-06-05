@@ -14,6 +14,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { useSearchParams } from 'react-router-dom';
 
 import { flightStatuses, EModalNames } from '@/constants';
 import { DestinationsInputSelector } from '@/components';
@@ -41,9 +42,16 @@ import { formatDateTime } from '@utils/date.utils';
 import { useGetAircraftQuery } from '@/store/services';
 import { EditableSelectCell } from '@/common';
 
+const PAGE_KEY = 'FLIGHTS_CURR_PAGE';
+
 const Flights = () => {
-  const [pageIndex, setPaginationData] =
-    useSetCurrentPageInPagination('FLIGHTS_CURR_PAGE');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageParam = +(searchParams.get('page') || 1) - 1;
+  // индекс и размер пагинации
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
+    PAGE_KEY,
+    Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
+  );
 
   const { data: airplanesData, isLoading: isAircraftLoading } =
     useGetAircraftQuery({ page: pageIndex });
@@ -57,6 +65,15 @@ const Flights = () => {
 
   const flights = flightsData?.content;
   const totalPagesFlights = flightsData?.totalPages;
+
+  useEffect(() => {
+    setSearchParams({ page: String(pageIndex + 1) });
+  }, [pageIndex]);
+
+  useEffect(() => {
+    if (!isFetching && !flights && pageIndex > 0)
+      setPaginationData(pageIndex - 1);
+  }, [flights, pageIndex, setPaginationData, isFetching]);
 
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] =

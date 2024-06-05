@@ -16,6 +16,7 @@ import {
   getCoreRowModel,
   flexRender,
 } from '@tanstack/react-table';
+import { useSearchParams } from 'react-router-dom';
 
 import { isRowEditing } from '@utils/table.utils';
 import { EModalNames } from '@/constants';
@@ -37,9 +38,15 @@ import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 import { useToastHandler } from '@/hooks/useToastHandler';
 import { useSetCurrentPageInPagination } from '@/hooks';
 
+const PAGE_KEY = 'TIME_ZONE_CURR_PAGE';
+
 const TimeZones = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageParam = +(searchParams.get('page') || 1) - 1;
+  // индекс и размер пагинации
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
-    'TIME_ZONE_CURR_PAGE'
+    PAGE_KEY,
+    Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
   );
   const toastHandler = useToastHandler();
 
@@ -52,6 +59,15 @@ const TimeZones = () => {
 
   const timeZonesData = useMemo(() => dataQuery?.content ?? [], [dataQuery]);
   const totalPages = dataQuery?.totalPages;
+
+  useEffect(() => {
+    setSearchParams({ page: String(pageIndex + 1) });
+  }, [pageIndex]);
+
+  useEffect(() => {
+    if (!isFetching && !timeZonesData && pageIndex > 0)
+      setPaginationData(pageIndex - 1);
+  }, [timeZonesData, pageIndex, setPaginationData, isFetching]);
 
   useEffect(() => {
     if (isError && isFetchBaseQueryError(error))
