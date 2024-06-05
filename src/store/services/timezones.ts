@@ -3,8 +3,11 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { baseURL as baseUrl } from '@/services/axios.service';
 import { ERoutes } from '@/services/constants';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
-import { ITimeZone, TTimeZoneForm } from '@/interfaces/time-zone.interfaces';
-import { ITimezoneGet } from '@/services/timeZones/timeZones.interfaces';
+import {
+  ITimeZone,
+  ITimezoneGet,
+  TTimeZoneForm,
+} from '@/interfaces/time-zone.interfaces';
 
 interface GetTimezonesArgs {
   page: number;
