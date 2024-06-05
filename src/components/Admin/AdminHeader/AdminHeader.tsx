@@ -1,20 +1,12 @@
-import { FC } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { Flex, Button, Spacer, Text, Box } from '@chakra-ui/react';
+import { NavLink } from 'react-router-dom';
+import { Button } from 'antd';
 
-import { useAuth } from '@/hooks';
 import { ELinks } from '@/services';
 import { PhoneNumber } from '@/common';
-import setParams from '@utils/set-params.utils';
-import { ExitIcon } from '@/common/icons';
 
-const AdminHeader: FC = () => {
-  const { isAdmin: isLogged, setIsAdmin } = useAuth();
-  const navigate = useNavigate();
+import styles from './AdminHeader.module.scss';
 
-  const { color, backgroundColor, buttonBackgroundColor, buttonColor, hover } =
-    setParams('header', isLogged);
-
+const AdminHeader = () => {
   const tabs = [
     {
       tabName: 'Пассажиры',
@@ -46,70 +38,43 @@ const AdminHeader: FC = () => {
     },
   ];
 
-  const activeStyle = {
-    textDecoration: 'underline',
-    textDecorationThickness: '0.25rem',
-    textDecorationColor: '#D3EFFF',
-    textUnderlineOffset: '1.775rem',
-  };
-  // проверяем активность ссылки, если активна, добавляем стили выше для активной кнопки
   const checkActive = ({ isActive }: { isActive: boolean }) =>
-    isActive ? activeStyle : undefined;
+    isActive ? styles.active : undefined;
 
-  // удаление токена авторизации при нажатии на кнопку выхода
-  const handleClick = () => {
-    localStorage.removeItem('adminToken');
-    setIsAdmin(false);
-    navigate('/', { replace: true });
+  const handleSignOut = () => {
+    // Когда будет авторизация, реализовать выход из админа
   };
 
   return (
-    <Flex
-      justifyContent="space-between"
-      alignItems="center"
-      gap="3rem"
-      color={color}
-      data-testid="adminHeader"
-      fontWeight="semibold"
-      fontSize="0.875rem"
-    >
-      {tabs.map((tab) => {
-        return (
-          <NavLink key={tab.tabPath} to={tab.tabPath} style={checkActive}>
-            {tab.tabName}
-          </NavLink>
-        );
-      })}
-      <Spacer w="3.5rem" />
+    <div className={styles.container}>
+      <div className={styles.tabs}>
+        {tabs.map(
+          ({ tabName, tabPath }: { tabName: string; tabPath: string }) => {
+            return (
+              <NavLink
+                key={tabName}
+                to={tabPath}
+                className={(v) => checkActive(v)}
+              >
+                {tabName}
+              </NavLink>
+            );
+          }
+        )}
+      </div>
 
-      <PhoneNumber />
-      <Button
-        w="6.25rem"
-        h="2rem"
-        display="none"
-        bg={buttonBackgroundColor}
-        borderRadius="5"
-        alignSelf="right"
-        color={buttonColor}
-        _hover={{
-          backgroundColor: { backgroundColor },
-          border: { hover },
-        }}
-        _active={{
-          backgroundColor: { color },
-          border: { hover },
-        }}
-        mr="1.25rem"
-        onClick={handleClick}
-      >
-        <Flex justifyContent="space-between" alignItems="center" gap="0.725rem">
-          <Text fontSize="0.875rem">Выход</Text>
-          <Box position="relative" top="1px">
-            <ExitIcon w={4} h={5} />
-          </Box>
-        </Flex>
-      </Button>
-    </Flex>
+      <div className={styles.actions}>
+        <PhoneNumber />
+
+        <Button
+          className={styles.buttonAntd}
+          size="large"
+          onClick={handleSignOut}
+        >
+          Выход
+        </Button>
+      </div>
+    </div>
   );
 };
 

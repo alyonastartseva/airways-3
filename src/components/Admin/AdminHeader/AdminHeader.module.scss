@@ -2,20 +2,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 200px;
 
-  height: 4.685rem;
-  box-shadow: 0 1px 15px #a3a3a3;
-  padding-right: 1.5rem;
-  padding-left: 1.5rem;
+  font-weight: 600;
+  font-size: 14px;
+  color: #ffffff;
 
-  background-color: #445ebd;
-
-  position: relative;
-  z-index: 10;
-
-  & .buttons {
+  & .tabs {
     display: flex;
-    gap: 26px;
+    justify-self: center;
+    gap: 45px;
+  }
+
+  & .actions {
+    display: flex;
+    gap: 30px;
 
     & .buttonAntd {
       background-color: #ffffff;
@@ -37,16 +38,11 @@
       }
     }
   }
+}
 
-  & .actions {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-
-    & .switch {
-      &:focus {
-        outline: none;
-      }
-    }
-  }
+.active {
+  text-decoration: underline;
+  text-decoration-thickness: 4px;
+  text-decoration-color: #d3efff;
+  text-underline-offset: 28px;
 }
