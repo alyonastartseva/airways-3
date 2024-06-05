@@ -42,3 +42,9 @@ export { ModalShape } from './ModalElements/ModalShape';
 
 export { SearchPageTabs } from './SearchPageTabs';
 export { SearchTabPanel } from './SearchTabPanel';
+
+export {
+  FlightIdOptions,
+  SeatsOptions,
+  SeatCategoryOptions,
+} from './ModalOptions';
