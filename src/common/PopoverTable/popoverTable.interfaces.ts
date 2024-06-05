@@ -3,7 +3,7 @@ import { UseMutateFunction } from 'react-query';
 
 import { IFlightPresentation } from '@/interfaces';
 
-export interface IPopoverTable<Data extends IFlightPresentation> {
+interface IPopoverTable<Data extends IFlightPresentation> {
   row: Data;
   index: number;
   id: number | undefined;
@@ -19,3 +19,10 @@ export interface IPopoverTable<Data extends IFlightPresentation> {
   indexPage?: number; // текущий индекс
   numberElem?: number; // общее кол-во элементов на страннице
 }
+
+interface RouteData {
+  model?: string;
+  id?: number;
+}
+
+export type { IPopoverTable, RouteData };

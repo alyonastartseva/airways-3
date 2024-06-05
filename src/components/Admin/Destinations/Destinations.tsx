@@ -20,6 +20,7 @@ import { isRowEditing } from '@utils/table.utils';
 import { sortById } from '@utils/sort.utils';
 import { ITEMS_PER_PAGE, onlyLettersPattern, EModalNames } from '@/constants';
 import { IDestination, IDestinationPost } from '@/interfaces';
+import { DestinationsInputSelector } from '@/components';
 import {
   useDestinationQueryByPage,
   useDestinationPatch,
@@ -34,7 +35,6 @@ import {
   SpinnerBlock,
   HeaderTable,
   FooterTable,
-  DestinationsInputSelector,
 } from '@/common';
 
 const Destinations = () => {
@@ -46,7 +46,7 @@ const Destinations = () => {
     data: destinationsByPageData,
     isFetching,
     isError,
-  } = useDestinationQueryByPage(pageIndex);
+  } = useDestinationQueryByPage(pageIndex - 1);
 
   const destinationsByPage = useMemo(
     () => destinationsByPageData?.content || [],
@@ -114,14 +114,13 @@ const Destinations = () => {
             updateData={handleUpdateRow}
             info={info}
             fieldName="Страна"
-            isDisabled={true}
           />
         ),
         meta: {
           type: 'text',
           required: true,
           validate: (value: string) => {
-            const regex = new RegExp(onlyLettersPattern.letters.message);
+            const regex = new RegExp(onlyLettersPattern.letters.value);
             return regex.test(value);
           },
           validationMessage: onlyLettersPattern.letters.message,
@@ -144,14 +143,13 @@ const Destinations = () => {
             updateData={handleUpdateRow}
             info={info}
             fieldName="Город"
-            isDisabled={true}
           />
         ),
         meta: {
           type: 'text',
           required: true,
           validate: (value: string) => {
-            const regex = new RegExp(onlyLettersPattern.letters.message);
+            const regex = new RegExp(onlyLettersPattern.letters.value);
             return regex.test(value);
           },
           validationMessage: onlyLettersPattern.letters.message,
@@ -174,7 +172,6 @@ const Destinations = () => {
             updateData={handleUpdateRow}
             info={info}
             fieldName="Имя аэропорта"
-            isDisabled={true}
           />
         ),
       }),

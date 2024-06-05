@@ -40,7 +40,11 @@ const TimeZones = () => {
     'TIME_ZONE_CURR_PAGE'
   );
 
-  const { data: dataQuery, isFetching, isError } = useTimezonesQuery(pageIndex);
+  const {
+    data: dataQuery,
+    isFetching,
+    isError,
+  } = useTimezonesQuery(pageIndex - 1);
 
   const timeZonesData = useMemo(() => dataQuery?.content ?? [], [dataQuery]);
   const totalPages = dataQuery?.totalPages;

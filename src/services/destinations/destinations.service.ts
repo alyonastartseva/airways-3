@@ -1,9 +1,26 @@
-import { IDestination, IDestinationData, IDestinationPost } from '@/interfaces';
-import { getQueryString } from '@/utils/get-query-string.utils';
 import { adminInstance, ERoutes, NO_CONTENT } from '@/services';
 import { ITEMS_PER_PAGE } from '@/constants';
+import {
+  IDestination,
+  IDestinationData,
+  IDestinationPost,
+} from '@interfaces/destination.interfaces';
 
 import { IDestinationGet } from './destinations.interfaces';
+
+const getQueryString = <T>(params?: T) => {
+  const defaultParams = {
+    page: 0,
+    size: ITEMS_PER_PAGE,
+  };
+  const entries = Object.entries({ ...defaultParams, ...params });
+
+  return entries.reduce((acc, [name, value], index) => {
+    const separator = index === 0 ? '?' : '&';
+    const isValueExist = value || value === 0;
+    return isValueExist ? `${acc}${separator}${name}=${value}` : acc;
+  }, '');
+};
 
 // временное решение, пока с бека не приходят необходимы свойства
 const tempMapDestination = (data: IDestinationGet) => ({

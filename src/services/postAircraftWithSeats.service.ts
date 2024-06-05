@@ -1,4 +1,4 @@
-import { TFormAirplanesValues } from '@common/ModalElements/FormAirplanes/form-airplanes.interfaces';
+import { TFormAirplanesValues } from '@/components/FormAirplanes/form-airplanes.interfaces';
 import { postAircraft } from '@services/aircraft/aircrafts.service';
 import { postSeat } from '@services/seat/seat.service';
 

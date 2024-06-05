@@ -21,7 +21,6 @@ import {
 } from '@tanstack/react-table';
 
 import { IBooking, IFormBooking } from '@/interfaces';
-import { Pagination } from '@/components';
 import { EModalNames } from '@/constants';
 import { Gear } from '@common/icons';
 import { isRowEditing } from '@utils/table.utils';
@@ -38,6 +37,7 @@ import {
   EditableCell,
   PopoverTable,
   ConfirmCancelModal,
+  Pagination,
 } from '@/common';
 
 const Booking = () => {
@@ -318,7 +318,6 @@ const Booking = () => {
               />
 
               <Pagination
-                data={bookingData}
                 pageIndex={pageIndex}
                 totalPages={totalPages}
                 setPaginationData={setPaginationData}

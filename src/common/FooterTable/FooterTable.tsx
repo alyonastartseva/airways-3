@@ -1,7 +1,6 @@
 import { Flex } from '@chakra-ui/react';
 
-import { Pagination } from '@/components';
-import { ButtonGroupAdmin } from '@/common';
+import { ButtonGroupAdmin, Pagination } from '@/common';
 
 import { IFooterTable } from './footerTable.interfaces';
 
@@ -16,7 +15,6 @@ const FooterTable = <Data,>({
 }: IFooterTable<Data>) => (
   <Flex justify="space-between" alignItems="center">
     <Pagination
-      data={data}
       pageIndex={pageIndex}
       totalPages={totalPages}
       setPaginationData={setPaginationData}

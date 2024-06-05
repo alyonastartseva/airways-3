@@ -26,13 +26,11 @@ import { searchApi } from '@services/searchTickets.service';
 import { getFlights } from '@services/flights/flights.service';
 import { ISearchData, IFlightPresentation } from '@/interfaces';
 import {
-  CalendarTickets,
   DestinationsInputSelector,
   SeatCategory,
 } from '@/common';
 import {
   ISeatCategory,
-  ISeatCategoryType,
 } from '@/interfaces/flightsSeats.interfaces';
 
 import { TicketCard } from '../Ticket/TicketCard';
@@ -346,7 +344,7 @@ const SearchTickets = ({
                 <Flex direction="column" height="100%" position="relative">
                   <FormControl>
                     <FormLabel fontSize={14}>Дата</FormLabel>
-                    <CalendarTickets
+                    <Calendar
                       select={(day: Date) => getDates(day)}
                       startDate={calendarDates.startDate}
                       endDate={calendarDates.endDate}

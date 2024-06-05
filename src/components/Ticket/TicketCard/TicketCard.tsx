@@ -18,11 +18,11 @@ import {
 } from '@common/icons';
 import { pluralize } from '@utils/string.utils';
 import { getFormattedDateTime } from '@utils/date.utils';
-import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 
 import { TicketTariff } from '../TicketTariff';
 
 import { ITicketCardProps, TTariffType } from './ticketCard.interfaces';
+import { getFormattedDateTime } from './TicketCard.utils';
 
 const tariffsInitial: Omit<TTariffType, 'price' | 'ticketsCount'>[] = [
   {
@@ -78,10 +78,10 @@ const TicketCard = ({
 
   const linkText = transfers
     ? `${transfers.length} ${pluralize(transfers.length, [
-        'пересадка',
-        'пересадки',
-        'пересадок',
-      ])}`
+      'пересадка',
+      'пересадки',
+      'пересадок',
+    ])}`
     : 'Прямой рейс';
 
   return (
