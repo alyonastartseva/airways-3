@@ -1,6 +1,8 @@
 import { FieldValues } from 'react-hook-form';
 
-import { ISeat } from '@services/seat/seat.interfaces';
+import { IGetQuery } from './api-interfaces';
+
+export type ISeat = IGetQuery<ISeatPost>;
 
 export type TSeatCategory =
   | 'BUSINESS'

@@ -3,13 +3,12 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { baseURL as baseUrl } from '@/services/axios.service';
 import { ERoutes } from '@/services/constants';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
-import { ISeat } from '@/services/seat/seat.interfaces';
-import { ISeatForm, ISeatPost } from '@/interfaces/seat.interfaces';
+import { ISeat, ISeatForm, ISeatPost } from '@/interfaces/seat.interfaces';
+import { IGetQueryArgs } from '@/interfaces/api-interfaces';
+import { mapSeatFormData } from '@/utils/aircraft.utils';
 
-interface GetSeatsArgs {
-  page: number;
+interface GetSeatsArgs extends IGetQueryArgs {
   id: number;
-  size?: number;
 }
 
 const formatPatchBody = (data: ISeatPost) => {
@@ -28,24 +27,6 @@ const formatPatchBody = (data: ISeatPost) => {
   };
 };
 
-const mapSeatFormData = ({
-  aircraftId,
-  category,
-  id,
-  isLockedBack,
-  isNearEmergencyExit,
-  seatNumber,
-}: ISeatForm): ISeatPost => {
-  return {
-    aircraftId: Number(aircraftId || 0),
-    category: category || 'ECONOMY',
-    id: id || 0,
-    isLockedBack: isLockedBack || false,
-    isNearEmergencyExit: isNearEmergencyExit || false,
-    seatNumber: seatNumber || '',
-  };
-};
-
 export const seatsApi = createApi({
   reducerPath: 'seatsApi',
   baseQuery: fetchBaseQuery({
@@ -55,7 +36,7 @@ export const seatsApi = createApi({
   tagTypes: ['Seats'],
   endpoints: (builder) => ({
     getSeat: builder.query<ISeat, GetSeatsArgs>({
-      query: ({ page, size = ITEMS_PER_PAGE, id }) =>
+      query: ({ page = 0, size = ITEMS_PER_PAGE, id }) =>
         `${ERoutes.SEAT}?page=${page}&size=${size}&aircraftId=${id}`,
       providesTags: ['Seats'],
     }),

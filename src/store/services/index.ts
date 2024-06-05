@@ -20,6 +20,7 @@ export {
   useGetAircraftByIdQuery,
   useGetAircraftQuery,
   usePatchAircraftMutation,
+  useAddAircraftWithSeatsMutation,
 } from './aircraft';
 export {
   seatsApi,
