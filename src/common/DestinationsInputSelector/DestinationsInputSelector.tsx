@@ -3,8 +3,10 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 
 import { FlexCell } from '@common/FlexCell';
 import { debounce } from '@/utils/debounce.utils';
-import { IDestinationGet } from '@/services/destinations/destinations.interfaces';
-import { IDestinationList } from '@/interfaces/destination.interfaces';
+import {
+  IDestinationGet,
+  IDestinationList,
+} from '@/interfaces/destination.interfaces';
 import { useLazyGetDestionationsQuery } from '@/store/services';
 
 import { InfiniteScrollSelector } from '../InfiniteScrollSelector';

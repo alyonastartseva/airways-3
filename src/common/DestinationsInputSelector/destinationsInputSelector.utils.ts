@@ -1,4 +1,4 @@
-import { IDestinationGet } from '@/services/destinations/destinations.interfaces';
+import { IDestinationGet } from '@/interfaces/destination.interfaces';
 
 export const normalizeDestinations = (destinations: IDestinationGet) => {
   const { content, last, number } = destinations;

@@ -3,10 +3,10 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { baseURL as baseUrl } from '@/services/axios.service';
 import { ERoutes } from '@/services/constants';
 import { ITEMS_PER_PAGE } from '@/constants/constants';
-import { IDestinationGet } from '@/services/destinations/destinations.interfaces';
 import {
   IDestination,
   IDestinationData,
+  IDestinationGet,
   IDestinationPost,
 } from '@/interfaces/destination.interfaces';
 import { getQueryString } from '@/utils/get-query-string.utils';

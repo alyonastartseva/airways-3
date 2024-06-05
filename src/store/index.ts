@@ -5,6 +5,7 @@ import {
   destinationsApi,
   aircraftApi,
   seatsApi,
+  timezonesApi,
 } from './services';
 
 export const store = configureStore({
@@ -13,13 +14,15 @@ export const store = configureStore({
     [destinationsApi.reducerPath]: destinationsApi.reducer,
     [aircraftApi.reducerPath]: aircraftApi.reducer,
     [seatsApi.reducerPath]: seatsApi.reducer,
+    [timezonesApi.reducerPath]: timezonesApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       passengersApi.middleware,
       destinationsApi.middleware,
       aircraftApi.middleware,
-      seatsApi.middleware
+      seatsApi.middleware,
+      timezonesApi.middleware
     ),
 });
 
