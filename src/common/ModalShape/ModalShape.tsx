@@ -14,17 +14,21 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
+  useToast,
 } from '@chakra-ui/react';
 
-import { EModalNames, modalSettings } from '@/constants';
-import { IModalProps } from '@/common/ModalShape/modal-shape.interfaces';
 import { FormAirplanes } from '@/components';
-import {
-  ButtonSubmitAdmin,
-  ButtonAddAdmin,
-  HeadingAdmin,
-  ModalInput,
-} from '@/common';
+import { modalSettings } from '@/constants/modal-constants/modal-settings';
+import { ButtonSubmitAdmin } from '@common/ButtonSubmitAdmin';
+import { ButtonAddAdmin } from '@common/ButtonAddAdmin';
+import { HeadingAdmin } from '@common/HeadingAdmin';
+import { EModalNames } from '@constants/modal-constants/modal-names';
+import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
+import { useToastHandler } from '@/hooks/useToastHandler';
+
+import { ModalInput } from '../ModalInput';
+
+import { IModalProps, TSettings } from './modal-shape.interfaces';
 
 const ModalShape = <T extends FieldValues>({
   formName,
@@ -32,7 +36,7 @@ const ModalShape = <T extends FieldValues>({
 }: IModalProps) => {
   const [currentModal] = modalSettings.filter(
     (item) => item.formName === formName
-  );
+  ) as TSettings;
   const { fields, hook, name, mapFieldValuesToRequestData } = currentModal;
 
   const methods = useForm<T>({
@@ -40,8 +44,8 @@ const ModalShape = <T extends FieldValues>({
   });
 
   const { isOpen, onClose, onOpen } = useDisclosure();
-
-  const { mutateAsync } = hook();
+  const toast = useToastHandler();
+  const { mutateAsync, title } = hook();
 
   const onModalClose = () => {
     methods.reset();
@@ -52,10 +56,22 @@ const ModalShape = <T extends FieldValues>({
     const requestData = mapFieldValuesToRequestData
       ? mapFieldValuesToRequestData?.(data)
       : data;
-    await mutateAsync(requestData).then((response: { status: number }) => {
-      if (response.status < 400) {
-        onModalClose();
+    await mutateAsync(requestData).then(({ error }) => {
+      if (error) {
+        if (isFetchBaseQueryError(error)) {
+          toast({
+            status: 'error',
+            title: error.data.message,
+          });
+        }
+      } else {
+        toast({
+          status: 'success',
+          title,
+        });
       }
+
+      onModalClose();
     });
   };
 

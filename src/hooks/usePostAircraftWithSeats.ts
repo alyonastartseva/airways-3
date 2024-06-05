@@ -1,31 +1,12 @@
-import { useMutation, useQueryClient } from 'react-query';
-import { useToast } from '@chakra-ui/react';
-
-import { postAircraftWithSeats } from '@services/postAircraftWithSeats.service';
+import { useAddAircraftWithSeatsMutation } from '@/store/services';
 
 const usePostAircraftWithSeats = () => {
-  const queryClient = useQueryClient();
-  const toast = useToast();
+  const [addAircraftWithSeats] = useAddAircraftWithSeatsMutation();
 
-  return useMutation(postAircraftWithSeats, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('aircraftWithSeats');
-      toast({
-        status: 'success',
-        title: 'Самолет успешно добавлен',
-        position: 'top',
-      });
-    },
-    onError: (error) => {
-      if (error instanceof Error) {
-        toast({
-          status: 'error',
-          title: error.message,
-          position: 'top',
-        });
-      }
-    },
-  });
+  return {
+    mutateAsync: addAircraftWithSeats,
+    title: 'Самолёт успешно добавлен',
+  };
 };
 
 export { usePostAircraftWithSeats };

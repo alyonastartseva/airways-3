@@ -34,6 +34,7 @@ import {
   HeadingAdmin,
   ButtonSubmitAdmin,
 } from '@/common';
+import { useToastHandler } from '@/hooks/useToastHandler';
 
 import {
   IFormAirplanesProps,
@@ -86,11 +87,13 @@ const FormAirplanes = <T extends FieldValues>({
       seatNumber: '',
     });
   };
-
-  const { mutateAsync } = usePostAircraftWithSeats();
+  const toast = useToastHandler();
+  const { mutateAsync, title } = usePostAircraftWithSeats();
 
   const onSubmit: SubmitHandler<TFormAirplanesValues> = async (data) => {
-    await mutateAsync(data);
+    await mutateAsync(data)
+      .then(() => toast({ status: 'success', title }))
+      .catch((error) => toast({ status: 'error', title: error.data.message }));
     onClose();
   };
 
