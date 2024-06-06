@@ -25,8 +25,6 @@ import {
 import {
   IFSOne,
   IFSoneSeat,
-  IFSpostField,
-  IFSForm,
   ISeatCategory,
   ISeatCategoryType,
   IFlightSeatsPost,
@@ -45,8 +43,9 @@ const Seats = () => {
   );
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
 
-  const [editableRowState, setEditableRowState] =
-    useState<Required<IFSOne & IFSoneSeat> | null>(null);
+  const [editableRowState, setEditableRowState] = useState<Required<
+    IFSOne & IFSoneSeat
+  > | null>(null);
 
   const { data: dataFlightSeats } = useFlightSeatsQuery(pageIndex);
 
@@ -54,20 +53,17 @@ const Seats = () => {
     (id: string, value: string, categor?: boolean) => {
       if (!editableRowState) return;
       if (categor) {
-        const seat = { category: value }
-        const newState = { ...editableRowState, }
-        console.log(newState, editableRowState.seat?.category);
+        const seat = { category: value };
+        const newState = { ...editableRowState };
         return setEditableRowState({
           ...editableRowState,
           [id as keyof IFSOne]: value,
-        })
-      };
+        });
+      }
       setEditableRowState({
         ...editableRowState,
         [id as keyof IFSOne]: value,
-      }),
-
-        console.log(value, editableRowState);
+      });
     },
     [editableRowState]
   );
@@ -88,10 +84,13 @@ const Seats = () => {
 
   const { mutate: deleteFlightSeats } = useFlightSeatsDelete();
 
-  const handleEditRow = useCallback((row: Required<IFSOne & IFSoneSeat>, index: number) => {
-    setEditableRowState(row);
-    setEditableRowIndex(index);
-  }, []);
+  const handleEditRow = useCallback(
+    (row: Required<IFSOne & IFSoneSeat>, index: number) => {
+      setEditableRowState(row);
+      setEditableRowIndex(index);
+    },
+    []
+  );
 
   const flightClass = (value: ISeatCategory): ISeatCategoryType => {
     switch (value) {
@@ -117,8 +116,6 @@ const Seats = () => {
     tableType?: 'EditableCell' | 'EditableSelectCell' | 'Cell',
     tableBool?: boolean
   ) => {
-
-
     if (tableType === 'EditableCell') {
       return columnHelper.accessor(fieldName, {
         header,
@@ -155,9 +152,11 @@ const Seats = () => {
               index={info.row.index}
               id={info.column.id}
               editableRowIndex={editableRowIndex}
-              updateData={(id, value) => handleUpdateRow(id, value === 'true' ? 'true' : 'false')}
+              updateData={(id, value) =>
+                handleUpdateRow(id, value === 'true' ? 'true' : 'false')
+              }
               selectOptions={['true', 'false']}
-              getRenderValue={(value) => value === 'true' ? 'Да' : 'Нет'}
+              getRenderValue={(value) => (value === 'true' ? 'Да' : 'Нет')}
             />
           ),
         });
@@ -276,9 +275,9 @@ const Seats = () => {
                   {header.isPlaceholder
                     ? null
                     : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                 </Th>
               ))}
             </Tr>

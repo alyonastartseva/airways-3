@@ -1,16 +1,21 @@
 import { useFlightSeatsQuery } from '@/hooks';
 
-export const SeatsOptions = (props: { id: number }) => {
-  const { data } = useFlightSeatsQuery(0, 10, props.id);
-  if (data) {
-    return data.content.map(({ id, seat }) => {
-      if (seat)
-        return (
-          <option key={id} value={id}>
-            {seat.seatNumber}
-          </option>
-        );
-    });
+import { useStore } from './store/store';
+
+export const SeatsOptions = () => {
+  const { id: ids } = useStore();
+  const { data } = useFlightSeatsQuery(0, 10, ids);
+  if (ids !== 0) {
+    if (data) {
+      return data.content.map(({ id, seat }) => {
+        if (seat)
+          return (
+            <option key={id} value={id}>
+              {seat.seatNumber}
+            </option>
+          );
+      });
+    }
   }
   return (
     <option key={66} value={66}>

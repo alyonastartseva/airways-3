@@ -5,7 +5,7 @@ import { IFlightSeatsPost } from '@/interfaces/flightsSeats.interfaces';
 export const modalFlightSeatFields: FormInputProps<IFlightSeatsPost>[] = [
   {
     fieldName: 'flightId',
-    type: 'select',
+    type: 'customSelect',
     label: 'ID Рейса',
     rules: {},
     children: <FlightIdOptions />,
@@ -15,7 +15,7 @@ export const modalFlightSeatFields: FormInputProps<IFlightSeatsPost>[] = [
     type: 'select',
     label: 'Номер сиденья',
     rules: {},
-    children: <SeatsOptions id={10} />,
+    children: <SeatsOptions />,
   },
   {
     fieldName: 'fare',
