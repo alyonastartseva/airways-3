@@ -4,11 +4,12 @@ export const SeatsOptions = (props: { id: number }) => {
   const { data } = useFlightSeatsQuery(0, 10, props.id);
   if (data) {
     return data.content.map(({ id, seat }) => {
-      return (
-        <option key={id} value={id}>
-          {seat!.seatNumber}
-        </option>
-      );
+      if (seat)
+        return (
+          <option key={id} value={id}>
+            {seat.seatNumber}
+          </option>
+        );
     });
   }
   return (

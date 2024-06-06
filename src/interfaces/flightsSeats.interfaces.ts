@@ -14,6 +14,7 @@ export enum ISeatCategory {
   ECONOM = 'ECONOMY',
 }
 
+
 export type ISeatCategoryType =
   | 'Первый класс'
   | 'Бизнес'

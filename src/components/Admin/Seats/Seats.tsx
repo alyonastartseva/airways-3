@@ -36,7 +36,7 @@ import { HeaderTable } from '@/common/HeaderTable';
 import { FooterTable } from '@common/FooterTable';
 import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { PopoverTable } from '@/common/PopoverTable';
-import { useFlightSeatsDelete } from '@/hooks/flightSeats';
+import { useFlightSeatsDelete, useFlightSeatsPatch } from '@/hooks/flightSeats';
 import { EditableSelectCell } from '@/common/EditableSelectCell';
 
 const Seats = () => {
@@ -46,18 +46,28 @@ const Seats = () => {
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
 
   const [editableRowState, setEditableRowState] =
-    useState<Required<IFSOne> | null>(null);
+    useState<Required<IFSOne & IFSoneSeat> | null>(null);
 
   const { data: dataFlightSeats } = useFlightSeatsQuery(pageIndex);
 
   const handleUpdateRow = useCallback(
-    (id: string, value: string) => {
+    (id: string, value: string, categor?: boolean) => {
       if (!editableRowState) return;
-
+      if (categor) {
+        const seat = { category: value }
+        const newState = { ...editableRowState, }
+        console.log(newState, editableRowState.seat?.category);
+        return setEditableRowState({
+          ...editableRowState,
+          [id as keyof IFSOne]: value,
+        })
+      };
       setEditableRowState({
         ...editableRowState,
         [id as keyof IFSOne]: value,
-      });
+      }),
+
+        console.log(value, editableRowState);
     },
     [editableRowState]
   );
@@ -69,20 +79,36 @@ const Seats = () => {
     setEditableRowState(null);
   }, []);
 
-  const { mutate: patchFlights } = useFlightsPatch();
+  const { mutate: patchFlightSeats } = useFlightSeatsPatch();
 
   const patchRow = useCallback(() => {
-    patchFlights(editableRowState);
+    patchFlightSeats(editableRowState!);
     cancelEditing();
-  }, [patchFlights, editableRowState, cancelEditing]);
+  }, [patchFlightSeats, editableRowState, cancelEditing]);
 
   const { mutate: deleteFlightSeats } = useFlightSeatsDelete();
 
-  const handleEditRow = useCallback((row: IFSOne, index: number) => {
+  const handleEditRow = useCallback((row: Required<IFSOne & IFSoneSeat>, index: number) => {
     setEditableRowState(row);
     setEditableRowIndex(index);
   }, []);
 
+  const flightClass = (value: ISeatCategory): ISeatCategoryType => {
+    switch (value) {
+      case ISeatCategory.BUSINESS:
+        return 'Бизнес';
+      case ISeatCategory.ECONOM:
+        return 'Эконом';
+      case ISeatCategory.FIRST:
+        return 'Первый класс';
+      case ISeatCategory.PREMIUM_ECONOMY:
+        return 'Премиум';
+    }
+  };
+
+  const boolCheck = (str: string): string => (str === 'Да' ? 'Да' : 'Нет');
+
+  const flightClassOptions = Object.values(ISeatCategory);
   const columnHelper = createColumnHelper<IFSOne>();
 
   const columnCreator = (
@@ -91,22 +117,7 @@ const Seats = () => {
     tableType?: 'EditableCell' | 'EditableSelectCell' | 'Cell',
     tableBool?: boolean
   ) => {
-    const flightClass = (value: ISeatCategory): ISeatCategoryType => {
-      switch (value) {
-        case ISeatCategory.BUSINESS:
-          return 'Бизнес';
-        case ISeatCategory.ECONOM:
-          return 'Эконом';
-        case ISeatCategory.FIRST:
-          return 'Первый класс';
-        case ISeatCategory.PREMIUM_ECONOMY:
-          return 'Премиум';
-      }
-    };
 
-    const boolCheck = (str: string): string => (str === 'Да' ? 'Да' : 'Нет');
-
-    const flightClassOptions = Object.values(ISeatCategory);
 
     if (tableType === 'EditableCell') {
       return columnHelper.accessor(fieldName, {
@@ -116,7 +127,7 @@ const Seats = () => {
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              info.getValue()!.toString(),
+              String(info.getValue()),
               editableRowState,
               editableRowIndex
             )}
@@ -137,16 +148,16 @@ const Seats = () => {
               value={isRowEditing(
                 info.row.index,
                 info.column.id,
-                info.getValue() ? 'Да' : 'Нет',
+                String(info.getValue()),
                 editableRowState,
                 editableRowIndex
               )}
               index={info.row.index}
               id={info.column.id}
               editableRowIndex={editableRowIndex}
-              updateData={handleUpdateRow}
-              selectOptions={['Да', 'Нет']}
-              getRenderValue={boolCheck}
+              updateData={(id, value) => handleUpdateRow(id, value === 'true' ? 'true' : 'false')}
+              selectOptions={['true', 'false']}
+              getRenderValue={(value) => value === 'true' ? 'Да' : 'Нет'}
             />
           ),
         });
@@ -165,7 +176,7 @@ const Seats = () => {
               index={info.row.index}
               id={info.column.id}
               editableRowIndex={editableRowIndex}
-              updateData={handleUpdateRow}
+              updateData={(id, value) => handleUpdateRow(id, value, true)}
               selectOptions={flightClassOptions}
               getRenderValue={flightClass}
             />
@@ -265,9 +276,9 @@ const Seats = () => {
                   {header.isPlaceholder
                     ? null
                     : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
                 </Th>
               ))}
             </Tr>

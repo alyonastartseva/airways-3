@@ -32,12 +32,14 @@ const SeatsOptions = () => {
     return (
       <>
         {flightSeatsData.content.map((el: IFlightSeats) => {
-          if (!el.isBooked && !el.isSold) {
-            return (
-              <option key={el.id} value={el.id}>
-                {el.seat!.seatNumber}
-              </option>
-            );
+          if (el.seat) {
+            if (!el.isBooked && !el.isSold) {
+              return (
+                <option key={el.id} value={el.id}>
+                  {el.seat.seatNumber}
+                </option>
+              );
+            }
           }
         })}
       </>
