@@ -1,7 +1,5 @@
 import { FieldValues } from 'react-hook-form';
 
-import { IGetQuery } from './api-interfaces';
-
 export interface IAircraft {
   id: number;
   aircraftNumber: number;
@@ -17,5 +15,3 @@ export interface IAircraftPost extends FieldValues {
   modelYear?: number;
   flightRange?: number;
 }
-
-export type IAircraftsGet = IGetQuery<IAircraft>;

@@ -1,12 +1,31 @@
-import { useAddDestinationMutation } from '@/store/services';
+import { useMutation, useQueryClient } from 'react-query';
+import { useToast } from '@chakra-ui/react';
+
+import { postDestinations } from '@/services';
 
 const useDestinationPost = () => {
-  const [addDestination] = useAddDestinationMutation();
+  const queryClient = useQueryClient();
+  const toast = useToast();
 
-  return {
-    mutateAsync: addDestination,
-    title: 'Пункт назначения успешно добавлен',
-  };
+  return useMutation(postDestinations, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('destinations');
+      toast({
+        status: 'success',
+        title: 'Пункт назначения успешно добавлен',
+        position: 'top',
+      });
+    },
+    onError: (error) => {
+      if (error instanceof Error) {
+        toast({
+          status: 'error',
+          title: error.message,
+          position: 'top',
+        });
+      }
+    },
+  });
 };
 
 export { useDestinationPost };

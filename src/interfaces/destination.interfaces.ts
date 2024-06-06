@@ -1,7 +1,5 @@
 import { FieldValues } from 'react-hook-form';
 
-import { IGetQuery, IGetQueryArgs } from './api-interfaces';
-
 export interface IDestination {
   id: number;
   airportCode?: string;
@@ -24,10 +22,10 @@ export interface IDestinationList {
   name?: string;
 }
 
-export interface IDestinationData extends IGetQueryArgs {
+export interface IDestinationData {
+  page?: number;
+  size?: number;
   cityName?: string;
   countryName?: string;
   timezone?: string;
 }
-
-export type IDestinationGet = IGetQuery<IDestination>;

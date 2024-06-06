@@ -20,24 +20,22 @@ import { useSearchParams } from 'react-router-dom';
 import { IAircraft, IAircraftPost } from '@/interfaces';
 import { ITEMS_PER_PAGE, EModalNames } from '@/constants';
 import { sortById } from '@utils/sort.utils';
-import { useSetCurrentPageInPagination } from '@/hooks';
+import { isRowEditing } from '@utils/table.utils';
 import {
-  useDeleteAircraftMutation,
-  useGetAircraftQuery,
-  usePatchAircraftMutation,
-} from '@/store/services';
-import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
-import { useToastHandler } from '@/hooks/useToastHandler';
-import {
-  AlertMessage,
   EditableCell,
   FlexCell,
-  FooterTable,
-  HeaderTable,
   PopoverTable,
+  AlertMessage,
   SpinnerBlock,
+  HeaderTable,
+  FooterTable,
 } from '@/common';
-import { isRowEditing } from '@/utils/table.utils';
+import {
+  useAircraftQuery,
+  useAircraftPatch,
+  useAircraftDelete,
+  useSetCurrentPageInPagination,
+} from '@/hooks';
 
 const PAGE_KEY = 'AIRPLANES_CURR_PAGE';
 
@@ -77,14 +75,8 @@ const Airplanes = () => {
     [editableRowState]
   );
 
-  const toastHandler = useToastHandler();
   // получение данных
-  const {
-    data: airplanesData,
-    isFetching,
-    isError,
-    error,
-  } = useGetAircraftQuery({ page: pageIndex });
+  const { data: airplanesData, isFetching } = useAircraftQuery(pageIndex - 1);
 
   const airplanes = airplanesData?.content;
   const totalPages = airplanesData?.totalPages;
@@ -99,25 +91,16 @@ const Airplanes = () => {
   }, [airplanes, pageIndex, setPaginationData, isFetching]);
 
   // изменение данных
-  const [patchAircraft] = usePatchAircraftMutation();
+  const { mutate: patchAircraft } = useAircraftPatch();
 
   // удаление данных
-  const [deleteAircraft] = useDeleteAircraftMutation();
+  const { mutate: deleteAircraft } = useAircraftDelete();
 
   // патч данных
   const patchRow = useCallback(() => {
-    if (editableRowState) patchAircraft(editableRowState);
-
+    patchAircraft(editableRowState);
     cancelEditing();
   }, [patchAircraft, cancelEditing, editableRowState]);
-
-  useEffect(() => {
-    if (isError && isFetchBaseQueryError(error))
-      toastHandler({
-        status: 'error',
-        title: error.data.message,
-      });
-  }, [isError, toastHandler, error]);
 
   // создание столбцов таблицы
   const columnHelper = createColumnHelper<IAircraft>();
@@ -278,7 +261,7 @@ const Airplanes = () => {
   // сортировка получаемых данных. ВРЕМЕННО, ПОКА ДАННЫЕ С СЕРВЕРА ПРИХОДЯТ БЕЗ СОРТИРОВКИ
   const tableData = (data?: IAircraft[]) => {
     if (Array.isArray(data) && data.length) {
-      return sortById(data.slice());
+      return sortById(data);
     }
     return [];
   };
