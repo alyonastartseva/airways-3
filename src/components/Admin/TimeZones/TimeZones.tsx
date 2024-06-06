@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useState, memo } from 'react';
+import { useMemo, useCallback, useState, memo, useEffect } from 'react';
 import {
   Box,
   TableContainer,
@@ -16,6 +16,7 @@ import {
   getCoreRowModel,
   flexRender,
 } from '@tanstack/react-table';
+import { useSearchParams } from 'react-router-dom';
 
 import { isRowEditing } from '@utils/table.utils';
 import { EModalNames } from '@/constants';
@@ -35,9 +36,15 @@ import {
   SpinnerBlock,
 } from '@/common';
 
+const PAGE_KEY = 'TIME_ZONE_CURR_PAGE';
+
 const TimeZones = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageParam = +(searchParams.get('page') || 1) - 1;
+  // индекс и размер пагинации
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
-    'TIME_ZONE_CURR_PAGE'
+    PAGE_KEY,
+    Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
   );
 
   const {
@@ -48,6 +55,10 @@ const TimeZones = () => {
 
   const timeZonesData = useMemo(() => dataQuery?.content ?? [], [dataQuery]);
   const totalPages = dataQuery?.totalPages;
+
+  useEffect(() => {
+    setSearchParams({ page: String(pageIndex + 1) });
+  }, [pageIndex]);
 
   const { mutate: patchTimezones } = useTimezonesPatch();
   const { mutate: deleteTimezones } = useTimezonesDelete();

@@ -16,6 +16,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { isValidNumber } from 'libphonenumber-js';
+import { useSearchParams } from 'react-router-dom';
 
 import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
@@ -38,10 +39,15 @@ import {
   FooterTable,
 } from '@/common';
 
+const PAGE_KEY = 'PASSENGERS_CURR_PAGE';
+
 const Passengers = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageParam = +(searchParams.get('page') || 1) - 1;
   // индекс и размер пагинации
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
-    'PASSENGERS_CURR_PAGE'
+    PAGE_KEY,
+    Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
   );
 
   // получение данных
@@ -50,15 +56,15 @@ const Passengers = () => {
   const passengers = dataQuery?.content;
   const totalPages = dataQuery?.totalPages;
 
+  useEffect(() => {
+    setSearchParams({ page: String(pageIndex + 1) });
+  }, [pageIndex]);
+
   // если удален последняя строка текущей страницы, то открываем предыдущую страницу
   useEffect(() => {
-    if (!passengers && pageIndex > 0) setPaginationData(pageIndex - 1);
-  }, [passengers, pageIndex, setPaginationData]);
-
-  useEffect(() => {
-    const currPage = Number(localStorage.getItem('PASSENGERS_CURR_PAGE'));
-    if (currPage > 0) setPaginationData(currPage);
-  }, [setPaginationData]);
+    if (!isFetching && !passengers && pageIndex > 0)
+      setPaginationData(pageIndex - 1);
+  }, [passengers, pageIndex, setPaginationData, isFetching]);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);

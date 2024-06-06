@@ -2,12 +2,16 @@ import { useState } from 'react';
 
 import { UseSetCurrentPageInPagination } from '@/interfaces';
 
-const useSetCurrentPageInPagination: UseSetCurrentPageInPagination = (key) => {
-  const [pageIndex, setPageIndex] = useState<number>(1);
+const useSetCurrentPageInPagination: UseSetCurrentPageInPagination = (
+  key,
+  initialPage = 0
+) => {
+  const [pageIndex, setPageIndex] = useState<number>(Math.max(initialPage, 0));
 
   const setPaginationData = (pageNumber: number) => {
-    setPageIndex(pageNumber);
-    localStorage.setItem(key, String(pageNumber));
+    const maxPageNumber = Math.max(pageNumber, 0);
+    setPageIndex(maxPageNumber);
+    localStorage.setItem(key, String(maxPageNumber));
   };
 
   return [pageIndex, setPaginationData];
