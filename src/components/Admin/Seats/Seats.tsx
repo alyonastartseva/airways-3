@@ -17,11 +17,7 @@ import {
 
 import { EditableCell } from '@/common/EditableCell';
 import { FlexCell } from '@/common/FlexCell';
-import {
-  useFlightSeatsQuery,
-  useFlightsPatch,
-  useSetCurrentPageInPagination,
-} from '@/hooks';
+import { useFlightSeatsQuery, useSetCurrentPageInPagination } from '@/hooks';
 import {
   IFSOne,
   IFSoneSeat,
@@ -36,6 +32,7 @@ import { EModalNames } from '@/constants/modal-constants/modal-names';
 import { PopoverTable } from '@/common/PopoverTable';
 import { useFlightSeatsDelete, useFlightSeatsPatch } from '@/hooks/flightSeats';
 import { EditableSelectCell } from '@/common/EditableSelectCell';
+import { SpinnerBlock } from '@/common';
 
 const Seats = () => {
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
@@ -47,7 +44,7 @@ const Seats = () => {
     IFSOne & IFSoneSeat
   > | null>(null);
 
-  const { data: dataFlightSeats } = useFlightSeatsQuery(pageIndex);
+  const { data: dataFlightSeats, isFetching } = useFlightSeatsQuery(pageIndex);
 
   const handleUpdateRow = useCallback(
     (id: string, value: string, categor?: boolean) => {
@@ -104,8 +101,6 @@ const Seats = () => {
         return 'Премиум';
     }
   };
-
-  const boolCheck = (str: string): string => (str === 'Да' ? 'Да' : 'Нет');
 
   const flightClassOptions = Object.values(ISeatCategory);
   const columnHelper = createColumnHelper<IFSOne>();
@@ -251,6 +246,10 @@ const Seats = () => {
     manualPagination: true,
   });
 
+  if (isFetching) {
+    return <SpinnerBlock />;
+  }
+
   return (
     <TableContainer py={45} px={9}>
       <HeaderTable<IFlightSeatsPost>
@@ -312,7 +311,7 @@ const Seats = () => {
         cancelEditing={cancelEditing}
         patchRow={patchRow}
         editableRowIndex={editableRowIndex}
-        totalPages={totalPagesFlights}
+        totalPages={totalPagesFlights ? totalPagesFlights - 1 : 1}
       />
     </TableContainer>
   );
