@@ -1,6 +1,13 @@
 import { FlightIdOptions, SeatCategoryOptions, SeatsOptions } from '@/common';
 import { FormInputProps } from '@/common/ModalInput';
+// import { useStore } from '@/common/ModalOptions/store/store';
 import { IFlightSeatsPost } from '@/interfaces/flightsSeats.interfaces';
+// const Selector = () => {
+//   const { id } = useStore();
+//   return (
+//     <option key={id} value={id}>{id}</option>
+//   )
+// }
 
 export const modalFlightSeatFields: FormInputProps<IFlightSeatsPost>[] = [
   {
@@ -38,18 +45,51 @@ export const modalFlightSeatFields: FormInputProps<IFlightSeatsPost>[] = [
     checkbox: true,
     fieldName: 'isSold',
     label: 'Продано',
-    rules: {},
   },
   {
     checkbox: true,
     fieldName: 'isRegistered',
     label: 'Зарегистрировано',
-    rules: {},
   },
   {
     checkbox: true,
     fieldName: 'isBooked',
     label: 'Забронировано',
-    rules: {},
+  },
+  {
+    fieldName: 'seat.aircraftId',
+    label: 'id',
+    typeInput: 'hidden',
+    value: 10,
+  },
+  {
+    fieldName: 'seat.id',
+    label: 'id',
+    typeInput: 'hidden',
+    value: 10,
+  },
+  {
+    fieldName: 'seat.isNearEmergencyExit',
+    label: 'id',
+    typeInput: 'hidden',
+    value: 'true',
+  },
+  {
+    fieldName: 'seat.isLockedBack',
+    label: 'id',
+    typeInput: 'hidden',
+    value: 'true',
+  },
+  {
+    fieldName: 'seat.id',
+    label: 'id',
+    typeInput: 'hidden',
+    value: 10,
+  },
+  {
+    fieldName: 'id',
+    label: '',
+    typeInput: 'hidden',
+    value: 10,
   },
 ];

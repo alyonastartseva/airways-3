@@ -1,6 +1,7 @@
 import { FieldValues } from 'react-hook-form';
 
 import { ISort } from '@interfaces/api-interfaces';
+import { ISeat } from '@/services/seat/seat.interfaces';
 
 import { ISeatPost } from './seat.interfaces';
 
@@ -13,7 +14,6 @@ export enum ISeatCategory {
   FIRST = 'FIRST',
   ECONOM = 'ECONOMY',
 }
-
 
 export type ISeatCategoryType =
   | 'Первый класс'
@@ -124,6 +124,7 @@ export interface IFlightSeatBase {
   isSold?: boolean;
   isBooked?: boolean;
   flightId?: number;
+  seat?: ISeatPost;
 }
 
 export interface IFlightSeats extends IFlightSeatBase {
@@ -135,5 +136,10 @@ export type TFormFlightSeats = IFlightSeatBase & FieldValues;
 
 export interface IFlightSeatsPost extends IFlightSeatBase, FieldValues {
   id?: number;
+  fare?: number;
+  isRegistered?: boolean;
+  isSold?: boolean;
+  isBooked?: boolean;
+  flightId?: number;
   seat?: ISeatPost;
 }

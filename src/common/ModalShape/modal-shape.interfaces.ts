@@ -49,5 +49,5 @@ export type TSettings = [
   IModalSetting<ITicketsForm>,
   IModalSetting<TTimeZoneForm>,
   IModalSetting<IFormBooking>,
-  IModalSetting<TFormFlightSeats, IFlightSeatsPost>,
+  IModalSetting<IFlightSeatsPost, TFormFlightSeats>,
 ];

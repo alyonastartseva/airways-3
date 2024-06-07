@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios';
 import { adminInstance, ERoutes } from '@/services';
 import { ITEMS_PER_PAGE } from '@/constants';
 import {
+  IFlightSeatsPost,
   IFSOne,
   TFormFlightSeats,
 } from '@/interfaces/flightsSeats.interfaces';
@@ -21,8 +22,8 @@ interface IFlightSeatsApi {
   ) => Promise<AxiosResponse<IFSOne> | undefined>;
 
   postFlightSeats: (
-    data: TFormFlightSeats
-  ) => Promise<AxiosResponse<TFormFlightSeats, any>>;
+    data: IFlightSeatsPost
+  ) => Promise<AxiosResponse<IFlightSeatsPost, any>>;
 
   updateFlightSeats: (
     data: IFSOne | undefined
@@ -57,17 +58,21 @@ const flightSeatsAPI: IFlightSeatsApi = {
 
   updateFlightSeats: async (data) => {
     if (!data) return;
-    const {id, ...body} = data;
+    const { id, ...body } = data;
     return await adminInstance.patch<IFSOne>(ERoutes.FLIGHT_SEATS + id, body);
   },
 
-  postFlightSeats: async (data: TFormFlightSeats) => {
-    return await adminInstance.post<TFormFlightSeats>(
+  postFlightSeats: async (data: IFlightSeatsPost) => {
+    return await adminInstance.post<IFlightSeatsPost>(
       ERoutes.FLIGHT_SEATS,
       data
     );
   },
 };
 
-export const { getFlightsSeats, deleteFlightSeats, postFlightSeats, updateFlightSeats } =
-  flightSeatsAPI;
+export const {
+  getFlightsSeats,
+  deleteFlightSeats,
+  postFlightSeats,
+  updateFlightSeats,
+} = flightSeatsAPI;
