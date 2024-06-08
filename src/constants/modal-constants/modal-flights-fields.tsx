@@ -1,10 +1,15 @@
+import { IFlightPostFormFields } from '@/interfaces/flights.interfaces';
+import { IAircraftPost } from '@interfaces/aircraft.interfaces';
+import {
+  useGetAircraftQuery,
+  useGetDestionationsQuery,
+} from '@/store/services';
 import { FormInputProps } from '@/common/ModalInput';
-import { flightStatuses, statusNames } from '@/constants';
-import { useDestinationQuery, useAircraftQuery } from '@/hooks';
-import { IFlightPostFormFields, IAircraftPost } from '@/interfaces';
+
+import { flightStatuses, statusNames } from '../constants';
 
 const AircraftIdOptions = () => {
-  const { data: aircraftList } = useAircraftQuery();
+  const { data: aircraftList } = useGetAircraftQuery();
 
   if (aircraftList)
     return (
@@ -19,7 +24,7 @@ const AircraftIdOptions = () => {
 };
 
 const CityNameOptions = () => {
-  const { data: destinationsList } = useDestinationQuery();
+  const { data: destinationsList } = useGetDestionationsQuery();
 
   if (destinationsList)
     return (

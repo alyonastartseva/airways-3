@@ -4,8 +4,7 @@ import { adminInstance, ERoutes } from '@/services';
 import { ISeatPost, ISeatForm } from '@/interfaces';
 import { ITEMS_PER_PAGE } from '@/constants';
 import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
-
-import { ISeat } from './seat.interfaces';
+import { ISeat } from '@/interfaces/seat.interfaces';
 
 interface ISeatApi {
   getSeat: (id: number, page?: number) => Promise<ISeat | undefined>;

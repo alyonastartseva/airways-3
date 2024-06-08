@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from 'react-query';
-import { useToast } from '@chakra-ui/react';
 
 import { postTickets } from '@/services/tickets/tickets.service';
 
+import { useToastHandler } from '../useToastHandler';
+
 const useTicketsPost = () => {
   const queryClient = useQueryClient();
-  const toast = useToast();
+  const toast = useToastHandler();
 
   return useMutation(postTickets, {
     onSuccess: () => {
@@ -13,7 +14,6 @@ const useTicketsPost = () => {
       toast({
         status: 'success',
         title: 'Билет успешно добавлен',
-        position: 'top',
       });
     },
     onError: (error) => {
@@ -21,11 +21,10 @@ const useTicketsPost = () => {
         toast({
           status: 'error',
           title: error.message,
-          position: 'top',
         });
       }
     },
-  });
+  }).mutateAsync;
 };
 
 export { useTicketsPost };

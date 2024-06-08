@@ -9,10 +9,10 @@ import {
   Select,
 } from '@chakra-ui/react';
 import { ErrorMessage } from '@hookform/error-message';
+import { useDispatch } from 'react-redux';
 
 import { DebounceSelect } from '@/common';
-
-import { useStore } from '../ModalOptions/store/store';
+import { setId } from '@/store/slices/flightSeatsSlice';
 
 import { ISelectValue, FormInputProps } from './ModalInput.interfaces';
 
@@ -36,7 +36,7 @@ const ModalInput = <TFormValues extends Record<string, unknown>>({
   } = useFormContext();
 
   const [selectValue, setSelectValue] = useState<ISelectValue>();
-  const { setId } = useStore();
+  const dispatch = useDispatch();
 
   const onChange = (newSelectValue: ISelectValue) => {
     setValue(fieldName, newSelectValue.value);
@@ -100,7 +100,7 @@ const ModalInput = <TFormValues extends Record<string, unknown>>({
         mb={1}
         id={fieldName}
         {...defaultProps}
-        onChange={(e) => setId(Number(e.target.value))}
+        onChange={(e) => dispatch(setId(Number(e.target.value)))}
       >
         {children}
       </Select>

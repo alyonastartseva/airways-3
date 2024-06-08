@@ -24,3 +24,8 @@ export interface IGetQuery<T> {
   number: number;
   empty: boolean;
 }
+
+export interface IGetQueryArgs {
+  page?: number;
+  size?: number;
+}

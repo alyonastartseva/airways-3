@@ -1,9 +1,10 @@
-import { useFlightSeatsQuery } from '@/hooks';
+import { useSelector } from 'react-redux';
 
-import { useStore } from './store/store';
+import { useFlightSeatsQuery } from '@/hooks';
+import { selectedId } from '@/store/slices/flightSeatsSlice';
 
 export const SeatsOptions = () => {
-  const { id: ids } = useStore();
+  const ids = useSelector(selectedId);
   const { data } = useFlightSeatsQuery(0, 10, ids);
   if (ids !== 0) {
     if (data) {

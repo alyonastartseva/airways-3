@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import {
   FieldValues,
   FormProvider,
@@ -19,15 +18,10 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
+import { useEffect, useMemo } from 'react';
 
-import { usePostAircraftWithSeats } from '@/hooks';
-import {
-  seatCategory,
-  EModalButtonTexts,
-  modalSettings,
-  // modalSeatFields,
-} from '@/constants';
-import { modalSeatFields } from '@/constants/modal-constants/modal-seat-fields'; // Cannot access 'modalSeatFields' before initialization
+import { seatCategory, EModalButtonTexts, modalSettings } from '@/constants';
+import { modalSeatFields } from '@/constants/modal-constants/modal-seat-fields';
 import {
   ButtonAddAdmin,
   ModalInput,
@@ -35,6 +29,9 @@ import {
   ButtonSubmitAdmin,
 } from '@/common';
 import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
+import { useToastHandler } from '@/hooks/useToastHandler';
+import { useAddAircraftWithSeatsMutation } from '@/store/services';
+import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 
 import {
   IFormAirplanesProps,
@@ -87,13 +84,24 @@ const FormAirplanes = <T extends FieldValues>({
       seatNumber: '',
     });
   };
+  const toast = useToastHandler();
+  const [addAircraft, { isError, error, isSuccess }] =
+    useAddAircraftWithSeatsMutation();
 
-  const { mutateAsync } = usePostAircraftWithSeats();
-
-  const onSubmit: SubmitHandler<TFormAirplanesValues> = async (data) => {
-    await mutateAsync(data);
+  const onSubmit: SubmitHandler<TFormAirplanesValues> = (data) => {
+    addAircraft(data);
     onClose();
   };
+
+  useEffect(() => {
+    if (isError && isFetchBaseQueryError(error))
+      toast({ status: 'error', title: error.data.message });
+  }, [isError, toast, error]);
+
+  useEffect(() => {
+    if (isSuccess)
+      toast({ status: 'success', title: 'Самолёт успешно добавлен' });
+  }, [isSuccess, toast]);
 
   return (
     <FormProvider {...methods}>

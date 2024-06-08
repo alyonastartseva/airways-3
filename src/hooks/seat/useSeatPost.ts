@@ -1,31 +1,25 @@
-import { useMutation, useQueryClient } from 'react-query';
-import { useToast } from '@chakra-ui/react';
+import { useEffect } from 'react';
 
-import { postSeat } from '@/services/seat/seat.service';
+import { useAddSeatMutation } from '@/store/services';
+import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
+
+import { useToastHandler } from '../useToastHandler';
 
 const useSeatPost = () => {
-  const queryClient = useQueryClient();
-  const toast = useToast();
+  const [addSeat, { error, isError, isSuccess }] = useAddSeatMutation();
+  const toast = useToastHandler();
 
-  return useMutation(postSeat, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('seats');
-      toast({
-        status: 'success',
-        title: 'Сиденье успешно добавлено',
-        position: 'top',
-      });
-    },
-    onError: (error) => {
-      if (error instanceof Error) {
-        toast({
-          status: 'error',
-          title: error.message,
-          position: 'top',
-        });
-      }
-    },
-  });
+  useEffect(() => {
+    if (isError && isFetchBaseQueryError(error))
+      toast({ status: 'error', title: error.data.message });
+  }, [isError, toast, error]);
+
+  useEffect(() => {
+    if (isSuccess)
+      toast({ status: 'success', title: 'Сиденье успешно добавлено' });
+  }, [isSuccess, toast]);
+
+  return addSeat;
 };
 
 export { useSeatPost };

@@ -17,8 +17,6 @@ import {
 import { useSearchParams } from 'react-router-dom';
 
 import { flightStatuses, EModalNames } from '@/constants';
-import { isRowEditing } from '@utils/table.utils';
-import { formatDateTime } from '@utils/date.utils';
 import { DestinationsInputSelector } from '@/components';
 import {
   IAircraft,
@@ -27,22 +25,22 @@ import {
   TFlightsStatus,
 } from '@/interfaces';
 import {
-  useAircraftQuery,
   useFlightsDelete,
   useFlightsQuery,
   useFlightsPatch,
   useSetCurrentPageInPagination,
 } from '@/hooks';
-import {
-  SpinnerBlock,
-  PopoverTable,
-  HeaderTable,
-  FooterTable,
-  FlexCell,
-  EditableCell,
-  AlertMessage,
-  EditableSelectCell,
-} from '@/common';
+import { AlertMessage } from '@common/AlertMessage';
+import { EditableCell } from '@common/EditableCell';
+import { FlexCell } from '@common/FlexCell';
+import { FooterTable } from '@common/FooterTable';
+import { HeaderTable } from '@/common/HeaderTable';
+import { PopoverTable } from '@common/PopoverTable';
+import { SpinnerBlock } from '@common/SpinnerBlock';
+import { isRowEditing } from '@utils/table.utils';
+import { formatDateTime } from '@utils/date.utils';
+import { useGetAircraftQuery } from '@/store/services';
+import { EditableSelectCell } from '@/common';
 
 const PAGE_KEY = 'FLIGHTS_CURR_PAGE';
 
@@ -56,7 +54,7 @@ const Flights = () => {
   );
 
   const { data: airplanesData, isLoading: isAircraftLoading } =
-    useAircraftQuery();
+    useGetAircraftQuery({ page: pageIndex });
   const airplanes = airplanesData?.content;
 
   const {

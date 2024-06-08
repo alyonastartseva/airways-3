@@ -16,15 +16,15 @@ import {
   ModalBody,
 } from '@chakra-ui/react';
 
-import { EModalNames, modalSettings } from '@/constants';
-import { IModalProps } from '@/common/ModalShape/modal-shape.interfaces';
 import { FormAirplanes } from '@/components';
-import {
-  ButtonSubmitAdmin,
-  ButtonAddAdmin,
-  HeadingAdmin,
-  ModalInput,
-} from '@/common';
+import { modalSettings, EModalNames } from '@/constants';
+import { ButtonSubmitAdmin } from '@common/ButtonSubmitAdmin';
+import { ButtonAddAdmin } from '@common/ButtonAddAdmin';
+import { HeadingAdmin } from '@common/HeadingAdmin';
+
+import { ModalInput } from '../ModalInput';
+
+import { IModalProps, TSettings } from './modal-shape.interfaces';
 
 const ModalShape = <T extends FieldValues>({
   formName,
@@ -32,7 +32,7 @@ const ModalShape = <T extends FieldValues>({
 }: IModalProps) => {
   const [currentModal] = modalSettings.filter(
     (item) => item.formName === formName
-  );
+  ) as TSettings;
   const { fields, hook, name, mapFieldValuesToRequestData } = currentModal;
 
   const methods = useForm<T>({
@@ -40,8 +40,7 @@ const ModalShape = <T extends FieldValues>({
   });
 
   const { isOpen, onClose, onOpen } = useDisclosure();
-
-  const { mutateAsync } = hook();
+  const mutate = hook();
 
   const onModalClose = () => {
     methods.reset();
@@ -52,11 +51,9 @@ const ModalShape = <T extends FieldValues>({
     const requestData = mapFieldValuesToRequestData
       ? mapFieldValuesToRequestData?.(data)
       : data;
-    await mutateAsync(requestData).then((response: { status: number }) => {
-      if (response.status < 400) {
-        onModalClose();
-      }
-    });
+
+    // mutate(requestData);
+    onModalClose();
   };
 
   return (

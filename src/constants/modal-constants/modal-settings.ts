@@ -1,13 +1,9 @@
-import { UseMutationResult } from 'react-query';
-import { AxiosResponse } from 'axios';
-
-import { TSettings } from '@/common/ModalShape/modal-shape.interfaces';
+import { TTimeZoneForm } from '@/interfaces/time-zone.interfaces';
 import {
   IDestinationPost,
   IDestination,
   IFlightPost,
   IFlightPostFormFields,
-  TTimeZoneForm,
   ITicketsPost,
   ISeatForm,
 } from '@/interfaces';
@@ -24,6 +20,7 @@ import {
   modalTimezonesFields,
   modalBookingFields,
 } from '@/constants';
+import { TSettings } from '@/common/ModalShape/modal-shape.interfaces';
 import {
   useDestinationPost,
   useAircraftPost,
@@ -35,6 +32,7 @@ import {
   useBookingPost,
 } from '@/hooks';
 import { useFlightSeatsPost } from '@/hooks/flightSeats/useFlightSeatsPost';
+
 interface FormTicketsPost {
   ticketNumber?: string;
   passengerId?: string;
@@ -50,7 +48,7 @@ interface FormTicketsPost {
   seatNumber?: string;
 }
 
-export const mapEditAircraftFormData = (formData: ISeatForm) => {
+const mapEditAircraftFormData = (formData: ISeatForm) => {
   const aircraftId = Number(formData.aircraftId);
   return { aircraftId, ...formData } as ISeatForm;
 };
@@ -153,12 +151,7 @@ export const modalSettings: TSettings = [
   {
     formName: EModalNames.SEAT,
     fields: modalSeatFields,
-    hook: useSeatPost as () => UseMutationResult<
-      AxiosResponse<ISeatForm, unknown>,
-      unknown,
-      ISeatForm,
-      unknown
-    >,
+    hook: useSeatPost,
     name: EModalButtonTexts.SEAT,
     mapFieldValuesToRequestData: mapEditAircraftFormData,
   },

@@ -1,7 +1,6 @@
 import { FieldValues } from 'react-hook-form';
 
 import { ISort } from '@interfaces/api-interfaces';
-import { ISeat } from '@/services/seat/seat.interfaces';
 
 import { ISeatPost } from './seat.interfaces';
 
