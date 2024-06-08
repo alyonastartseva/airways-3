@@ -1,5 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import { themeReducer } from '@store/slices';
+
 import {
   passengersApi,
   destinationsApi,
@@ -10,6 +12,7 @@ import {
 
 export const store = configureStore({
   reducer: {
+    theme: themeReducer,
     [passengersApi.reducerPath]: passengersApi.reducer,
     [destinationsApi.reducerPath]: destinationsApi.reducer,
     [aircraftApi.reducerPath]: aircraftApi.reducer,
