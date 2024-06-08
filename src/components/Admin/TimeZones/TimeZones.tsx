@@ -22,12 +22,6 @@ import { isRowEditing } from '@utils/table.utils';
 import { EModalNames } from '@/constants';
 import { ITimeZone, TTimeZoneForm } from '@/interfaces';
 import {
-  useTimezonesQuery,
-  useTimezonesDelete,
-  useTimezonesPatch,
-  useSetCurrentPageInPagination,
-} from '@/hooks';
-import {
   AlertMessage,
   FooterTable,
   HeaderTable,
@@ -35,6 +29,14 @@ import {
   PopoverTable,
   SpinnerBlock,
 } from '@/common';
+import {
+  useDeleteTimezoneMutation,
+  useGetTimezonesQuery,
+  usePatchTimezoneMutation,
+} from '@/store/services';
+import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
+import { useToastHandler } from '@/hooks/useToastHandler';
+import { useSetCurrentPageInPagination } from '@/hooks';
 
 const PAGE_KEY = 'TIME_ZONE_CURR_PAGE';
 
@@ -46,12 +48,14 @@ const TimeZones = () => {
     PAGE_KEY,
     Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
   );
+  const toastHandler = useToastHandler();
 
   const {
     data: dataQuery,
     isFetching,
     isError,
-  } = useTimezonesQuery(pageIndex - 1);
+    error,
+  } = useGetTimezonesQuery({ page: pageIndex });
 
   const timeZonesData = useMemo(() => dataQuery?.content ?? [], [dataQuery]);
   const totalPages = dataQuery?.totalPages;
@@ -60,8 +64,21 @@ const TimeZones = () => {
     setSearchParams({ page: String(pageIndex + 1) });
   }, [pageIndex]);
 
-  const { mutate: patchTimezones } = useTimezonesPatch();
-  const { mutate: deleteTimezones } = useTimezonesDelete();
+  useEffect(() => {
+    if (!isFetching && !timeZonesData && pageIndex > 0)
+      setPaginationData(pageIndex - 1);
+  }, [timeZonesData, pageIndex, setPaginationData, isFetching]);
+
+  useEffect(() => {
+    if (isError && isFetchBaseQueryError(error))
+      toastHandler({
+        status: 'error',
+        title: error.data.message,
+      });
+  }, [isError, toastHandler, error]);
+
+  const [patchTimezone] = usePatchTimezoneMutation();
+  const [deleteTimezone] = useDeleteTimezoneMutation();
 
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<ITimeZone | null>(
@@ -79,9 +96,10 @@ const TimeZones = () => {
   }, []);
 
   const patchRow = useCallback(() => {
-    patchTimezones(editableRowState);
+    if (editableRowState) patchTimezone(editableRowState);
+
     handleEditRow();
-  }, [patchTimezones, editableRowState, handleEditRow]);
+  }, [patchTimezone, editableRowState, handleEditRow]);
 
   const handleUpdateRow = useCallback(
     (id: string, value: string) => {
@@ -197,7 +215,7 @@ const TimeZones = () => {
               index={info.row.index}
               id={info.row.original.id}
               handleEditRow={handleEditRow}
-              deleteRow={deleteTimezones}
+              deleteRow={deleteTimezone}
               setPaginationIndex={setPaginationData}
               indexPage={pageIndex}
               numberElem={timeZonesData?.length}
@@ -213,7 +231,7 @@ const TimeZones = () => {
       setPaginationData,
       pageIndex,
       handleEditRow,
-      deleteTimezones,
+      deleteTimezone,
       editableRowIndex,
       editableRowState,
       handleUpdateRow,

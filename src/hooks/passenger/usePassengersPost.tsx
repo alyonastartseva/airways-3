@@ -1,31 +1,26 @@
-import { useMutation, useQueryClient } from 'react-query';
-import { useToast } from '@chakra-ui/react';
+import { useEffect } from 'react';
 
-import { postPassengers } from '@/services/passengers/passengers.service';
+import { useAddPassengerMutation } from '@/store/services';
+import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
+
+import { useToastHandler } from '../useToastHandler';
 
 const usePassengersPost = () => {
-  const queryClient = useQueryClient();
-  const toast = useToast();
+  const [addPassenger, { error, isError, isSuccess }] =
+    useAddPassengerMutation();
+  const toast = useToastHandler();
 
-  return useMutation(postPassengers, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('passengers');
-      toast({
-        status: 'success',
-        title: 'Пассажир успешно добавлен',
-        position: 'top',
-      });
-    },
-    onError: (error) => {
-      if (error instanceof Error) {
-        toast({
-          status: 'error',
-          title: error.message,
-          position: 'top',
-        });
-      }
-    },
-  });
+  useEffect(() => {
+    if (isError && isFetchBaseQueryError(error))
+      toast({ status: 'error', title: error.data.message });
+  }, [isError, toast, error]);
+
+  useEffect(() => {
+    if (isSuccess)
+      toast({ status: 'success', title: 'Пассажир успешно добавлен' });
+  }, [isSuccess, toast]);
+
+  return addPassenger;
 };
 
 export { usePassengersPost };

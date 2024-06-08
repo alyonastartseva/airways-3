@@ -1,3 +1,5 @@
+import { IGetQuery } from './api-interfaces';
+
 export interface ITimeZone {
   id: number;
   countryName: string;
@@ -7,3 +9,5 @@ export interface ITimeZone {
 }
 
 export type TTimeZoneForm = Partial<Omit<ITimeZone, 'id'>>;
+
+export type ITimezoneGet = IGetQuery<ITimeZone>;

@@ -39,7 +39,7 @@ const PopoverTable = ({
       setPaginationIndex(indexPage - 1);
     }
 
-    deleteRow(id);
+    if (typeof id === 'number') deleteRow(id);
   };
 
   return (

@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import { getBookings } from '@services/booking/booking.service';
 import { ITEMS_PER_PAGE } from '@/constants';
 
-const useBookingQuery = (page: number, size = ITEMS_PER_PAGE) => {
+const useBookingQuery = (page = 0, size = ITEMS_PER_PAGE) => {
   const toast = useToast();
 
   return useQuery(['booking', page, size], () => getBookings(page, size), {

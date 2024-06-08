@@ -19,24 +19,28 @@ import { useSearchParams } from 'react-router-dom';
 
 import { isRowEditing } from '@utils/table.utils';
 import { sortById } from '@utils/sort.utils';
-import { ITEMS_PER_PAGE, onlyLettersPattern, EModalNames } from '@/constants';
-import { IDestination, IDestinationPost } from '@/interfaces';
-import { DestinationsInputSelector } from '@/components';
+import { useSetCurrentPageInPagination } from '@/hooks';
+import { EModalNames } from '@/constants/modal-constants/modal-names';
+import onlyLettersPattern from '@/constants/validate-patterns/only-letters-pattern';
+import { ITEMS_PER_PAGE } from '@/constants/constants';
 import {
-  useDestinationQueryByPage,
-  useDestinationPatch,
-  useDestinationDelete,
-  useSetCurrentPageInPagination,
-} from '@/hooks';
+  useDeleteDestinationMutation,
+  useGetDestionationsQuery,
+  usePatchDestinationMutation,
+} from '@/store/services/destinations';
+import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
+import { useToastHandler } from '@/hooks/useToastHandler';
 import {
-  EditableCell,
   FlexCell,
+  EditableCell,
   PopoverTable,
-  AlertMessage,
   SpinnerBlock,
   HeaderTable,
   FooterTable,
+  AlertMessage,
 } from '@/common';
+import { IDestination, IDestinationPost } from '@/interfaces';
+import { DestinationsInputSelector } from '@/components/DestinationsInputSelector';
 
 const PAGE_KEY = 'DESTINATIONS_CURR_PAGE';
 
@@ -49,11 +53,13 @@ const Destinations = () => {
     Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
   );
 
+  const toastHandler = useToastHandler();
   const {
     data: destinationsByPageData,
     isFetching,
     isError,
-  } = useDestinationQueryByPage(pageIndex - 1);
+    error,
+  } = useGetDestionationsQuery({ page: pageIndex });
 
   const destinationsByPage = useMemo(
     () => destinationsByPageData?.content || [],
@@ -96,12 +102,18 @@ const Destinations = () => {
     [editableRowState]
   );
 
-  const { mutate: patchDestination } = useDestinationPatch();
+  const [patchDestination] = usePatchDestinationMutation();
 
-  const { mutate: deleteDestination } = useDestinationDelete();
+  const [deleteDestination] = useDeleteDestinationMutation();
+
+  useEffect(() => {
+    if (isError && isFetchBaseQueryError(error))
+      toastHandler({ status: 'error', title: error.data.message });
+  }, [isError, toastHandler, error]);
 
   const patchRow = useCallback(() => {
-    patchDestination(editableRowState);
+    if (editableRowState) patchDestination(editableRowState);
+
     handleEditRow();
   }, [patchDestination, editableRowState, handleEditRow]);
 
@@ -263,7 +275,7 @@ const Destinations = () => {
 
   const tableData = (data?: IDestination[]) => {
     if (Array.isArray(data) && data.length) {
-      return sortById(data);
+      return sortById(data.slice());
     }
     return [];
   };

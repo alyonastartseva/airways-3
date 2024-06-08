@@ -1,11 +1,13 @@
-import { FormInputProps } from '@/common/ModalInput';
+import { IFormBooking } from '@interfaces/booking.interfaces';
+import { useFlightSeatsQuery } from '@/hooks';
+import { bookingStatuses } from '@constants/constants';
+import { IPassenger } from '@interfaces/search.interfaces';
 import { IFlightSeat } from '@services/flightSeats/flightSeats.interfaces';
-import { bookingStatuses } from '@/constants';
-import { IFormBooking, IPassenger } from '@/interfaces';
-import { useFlightSeatsQuery, usePassengersQuery } from '@/hooks';
+import { useGetPassangersQuery } from '@/store/services';
+import { FormInputProps } from '@/common/ModalInput';
 
 const PassengersOptions = () => {
-  const { data } = usePassengersQuery(0, 100);
+  const { data } = useGetPassangersQuery({ size: 100 });
 
   if (data)
     return data.content.map((el: IPassenger) => {

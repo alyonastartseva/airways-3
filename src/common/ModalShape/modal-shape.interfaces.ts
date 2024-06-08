@@ -1,5 +1,5 @@
-import { UseMutationResult } from 'react-query';
 import { FieldValues } from 'react-hook-form';
+import { UseMutateAsyncFunction } from 'react-query';
 import { AxiosResponse } from 'axios';
 
 import { FormInputProps } from '@/common/ModalInput';
@@ -12,26 +12,40 @@ import {
   ITicketsForm,
   TTimeZoneForm,
   IFormBooking,
-  IFlight,
   IFlightPost,
   IFlightPostFormFields,
 } from '@/interfaces';
+import {
+  useAircraftPost,
+  useDestinationPost,
+  usePassengersPost,
+  useSeatPost,
+  useTimezonePost,
+} from '@/hooks';
+
+// удалить при миграции на RTK query
+export type UseQueryPostHook = UseMutateAsyncFunction<
+  AxiosResponse<any, any>,
+  unknown,
+  any,
+  unknown
+>;
 
 export interface IModalProps {
   formName: EModalNames;
   initialFormValues?: Record<string, number | string | undefined>;
 }
 
-// AxiosResponse<T, any> - требуемый тип в библиотеке
-export interface IModalSetting<T extends FieldValues, Req = T, Q = T> {
+export interface IModalSetting<T extends FieldValues, Q = T> {
   formName: EModalNames;
   fields: FormInputProps<T>[];
-  hook: () => UseMutationResult<
-    AxiosResponse<Req, unknown>,
-    unknown,
-    Q,
-    unknown
-  >;
+  hook: () =>
+    | ReturnType<typeof useAircraftPost>
+    | ReturnType<typeof useDestinationPost>
+    | ReturnType<typeof usePassengersPost>
+    | ReturnType<typeof useSeatPost>
+    | ReturnType<typeof useTimezonePost>
+    | UseQueryPostHook;
   name: EModalButtonTexts;
   mapFieldValuesToRequestData?: (formData: T) => Q;
 }
@@ -39,7 +53,7 @@ export interface IModalSetting<T extends FieldValues, Req = T, Q = T> {
 export type TSettings = [
   IModalSetting<IDestinationPost>,
   IModalSetting<IAircraftPost>,
-  IModalSetting<IFlightPostFormFields, IFlight, IFlightPost>,
+  IModalSetting<IFlightPostFormFields, IFlightPost>,
   IModalSetting<IFormPassengers>,
   IModalSetting<ISeatForm>,
   IModalSetting<ITicketsForm>,

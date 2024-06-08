@@ -8,4 +8,4 @@ export { modalTimezonesFields } from './modal-timezones-fields';
 export { modalBookingFields } from './modal-booking-fields';
 
 export { EModalNames, EModalButtonTexts } from './modal-names';
-export { mapEditAircraftFormData, modalSettings } from './modal-settings';
+export { modalSettings } from './modal-settings';
