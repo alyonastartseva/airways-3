@@ -133,12 +133,17 @@ export interface IFlightSeats extends IFlightSeatBase {
 
 export type TFormFlightSeats = IFlightSeatBase & FieldValues;
 
-export interface IFlightSeatsPost extends IFlightSeatBase, FieldValues {
-  id?: number;
-  fare?: number;
-  isRegistered?: boolean;
-  isSold?: boolean;
-  isBooked?: boolean;
-  flightId?: number;
-  seat?: ISeatPost;
+export interface IFlightSeatsPost extends FieldValues {
+  id: number;
+  aircraftId: number;
+  seat: {
+    seatNumber: string;
+    isSold: boolean;
+    isRegistered: boolean;
+    isBooked: boolean;
+    flightId: number;
+  };
+  isSold: boolean;
+  flightId: number | string;
+  isRegistered: boolean;
 }

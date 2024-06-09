@@ -52,7 +52,7 @@ const ModalShape = <T extends FieldValues>({
       ? mapFieldValuesToRequestData?.(data)
       : data;
 
-    // mutate(requestData);
+    mutate(requestData);
     onModalClose();
   };
 

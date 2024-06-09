@@ -30,8 +30,8 @@ import {
   useTicketsPost,
   useTimezonePost,
   useBookingPost,
+  useFlightSeatPost,
 } from '@/hooks';
-import { useFlightSeatsPost } from '@/hooks/flightSeats/useFlightSeatsPost';
 
 interface FormTicketsPost {
   ticketNumber?: string;
@@ -178,7 +178,7 @@ export const modalSettings: TSettings = [
   {
     formName: EModalNames.FLIGHTS_SEATS,
     fields: modalFlightSeatFields,
-    hook: useFlightSeatsPost,
+    hook: useFlightSeatPost,
     name: EModalButtonTexts.FLIGHTS_SEATS,
   },
 ];

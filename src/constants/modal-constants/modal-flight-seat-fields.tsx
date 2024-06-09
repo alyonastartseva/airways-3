@@ -43,18 +43,21 @@ export const modalFlightSeatFields: FormInputProps<IFlightSeatsPost>[] = [
   },
   {
     checkbox: true,
-    fieldName: 'isSold',
+    fieldName: 'seat.isSold',
     label: 'Продано',
+    value: 'true',
   },
   {
     checkbox: true,
-    fieldName: 'isRegistered',
+    fieldName: 'seat.isRegistered',
     label: 'Зарегистрировано',
+    value: 'true',
   },
   {
     checkbox: true,
-    fieldName: 'isBooked',
+    fieldName: 'seat.isBooked',
     label: 'Забронировано',
+    value: 'true',
   },
   {
     fieldName: 'seat.aircraftId',
@@ -79,12 +82,6 @@ export const modalFlightSeatFields: FormInputProps<IFlightSeatsPost>[] = [
     label: 'id',
     typeInput: 'hidden',
     value: 'true',
-  },
-  {
-    fieldName: 'seat.id',
-    label: 'id',
-    typeInput: 'hidden',
-    value: 10,
   },
   {
     fieldName: 'id',
