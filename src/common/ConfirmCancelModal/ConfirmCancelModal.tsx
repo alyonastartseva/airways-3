@@ -23,7 +23,6 @@ const ConfirmCancelModal = ({
   <Modal isOpen={isOpen} onClose={onClose}>
     <ModalOverlay />
     <ModalContent
-      fontFamily="second-family"
       width="406px"
       height="216px"
       borderRadius="16px"
