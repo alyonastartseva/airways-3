@@ -5,17 +5,15 @@ import { ITEMS_PER_PAGE } from '@/constants';
 import {
   IFlightSeatsPost,
   IFSOne,
-  TFormFlightSeats,
+  IFSQuery,
 } from '@/interfaces/flightsSeats.interfaces';
-
-import { IListResponse } from '../flights/flights.interfaces';
 
 interface IFlightSeatsApi {
   getFlightsSeats: (
     pageIndex: number,
     size: number,
     flightId?: number
-  ) => Promise<IListResponse<Required<IFSOne>>>;
+  ) => Promise<IFSQuery>;
 
   deleteFlightSeats: (
     id: number | undefined
@@ -38,15 +36,13 @@ const flightSeatsAPI: IFlightSeatsApi = {
   ) => {
     if (flightId) {
       return await adminInstance
-        .get<
-          IListResponse<Required<IFSOne>>
-        >(`${ERoutes.FLIGHT_SEATS}?flightId=${flightId}`)
+        .get<Promise<IFSQuery>>(`${ERoutes.FLIGHT_SEATS}?flightId=${flightId}`)
         .then((response) => response.data);
     }
     return await adminInstance
-      .get<
-        IListResponse<Required<IFSOne>>
-      >(`${ERoutes.FLIGHT_SEATS}?page=${pageIndex}&size=${size}`)
+      .get<Promise<IFSQuery>>(
+        `${ERoutes.FLIGHT_SEATS}?page=${pageIndex}&size=${size}`
+      )
       .then((response) => response.data);
   },
 

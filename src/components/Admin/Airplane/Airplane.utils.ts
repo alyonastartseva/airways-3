@@ -2,7 +2,7 @@ import { seatCategory } from '@/constants/constants';
 import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 
 // получение названия класса билета
-export const getStatusName = (status: ISeatCategory): string => {
+export const gitTicketClassName = (status: ISeatCategory): string => {
   const obj = seatCategory.find((el) => el.eng === status);
   return obj?.ru || '';
 };

@@ -2,7 +2,7 @@ import { FormInputProps } from '@common/ModalInput';
 import { bookingStatuses } from '@/constants';
 import { IFormBooking, IPassenger } from '@/interfaces';
 import { useFlightSeatsQuery } from '@/hooks';
-import { IFSOne as IFlightSeats } from '@/interfaces/flightsSeats.interfaces';
+import { IFSOne } from '@/interfaces/flightsSeats.interfaces';
 import { useGetPassangersQuery } from '@/store/services';
 
 const PassengersOptions = () => {
@@ -32,12 +32,12 @@ const SeatsOptions = () => {
   if (flightSeatsData)
     return (
       <>
-        {flightSeatsData.content.map((el: IFlightSeats) => {
-          if (el.seat) {
+        {flightSeatsData.content.map((el: IFSOne) => {
+          if (el) {
             if (!el.isBooked && !el.isSold) {
               return (
                 <option key={el.id} value={el.id}>
-                  {el.seat.seatNumber}
+                  {el.seat?.seatNumber}
                 </option>
               );
             }

@@ -29,7 +29,6 @@ import {
   SeatCategory,
 } from '@/common';
 import { useSetCurrentPageInPagination } from '@/hooks';
-import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 import {
   useDeleteSeatMutation,
   useGetAircraftByIdQuery,
@@ -39,27 +38,12 @@ import {
 import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 import { useToastHandler } from '@/hooks/useToastHandler';
 import { ELinks } from '@/services';
-import { EModalNames, ITEMS_PER_PAGE, seatCategory, yesNo } from '@/constants';
+import { EModalNames, ITEMS_PER_PAGE, yesNo } from '@/constants';
 import { ISeatForm, ISeatPost } from '@/interfaces';
 import { isRowEditing } from '@/utils/table.utils';
 import { sortById } from '@/utils/sort.utils';
 
-// получение названия класса билета
-const getStatusName = (status: ISeatCategory): string => {
-  const obj = seatCategory.find((el) => el.eng === status);
-  return obj?.ru || '';
-};
-
-const getYesNo = (status: string): string => {
-  switch (status) {
-    case 'true':
-      return 'Да';
-    case 'false':
-      return 'Нет';
-    default:
-      return '';
-  }
-};
+import { getYesNo, gitTicketClassName } from './Airplane.utils';
 
 const Airplane = () => {
   // получение параметра ID из роута
@@ -228,7 +212,7 @@ const Airplane = () => {
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
             selectOptions={<SeatCategory />}
-            getRenderValue={getStatusName}
+            getRenderValue={gitTicketClassName}
           />
         ),
       }),
