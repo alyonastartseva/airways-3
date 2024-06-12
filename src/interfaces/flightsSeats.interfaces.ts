@@ -80,6 +80,6 @@ export interface IFlightSeatsPost extends FieldValues {
     flightId: number;
   };
   isSold: boolean;
-  flightId: number | string;
+  flightId?: number | string;
   isRegistered: boolean;
 }

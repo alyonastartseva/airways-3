@@ -5,24 +5,15 @@ import { ERoutes } from '@/services';
 import { IGetQueryArgs } from '@/interfaces/api-interfaces';
 import { getQueryString } from '@/utils/get-query-string.utils';
 import {
-  IFlightSeatBase,
+  IFSOne,
+  IFSQuery,
   IFlightSeatsPost,
 } from '@/interfaces/flightsSeats.interfaces';
 import { mapFlightSeatFormData } from '@/utils/flightSeats.utils';
 
 interface GetSeatsArgs extends IGetQueryArgs {
-  id: number;
+  page: number;
 }
-
-const formatPatchBody = (data: IFlightSeatsPost) => {
-  const { id, ...rest } = data;
-  let categoryPatch = '';
-
-  if (typeof rest.category === 'object') categoryPatch = rest.category;
-  else categoryPatch = rest.category;
-
-  return data;
-};
 
 export const flightSeatsApi = createApi({
   reducerPath: 'flightSeatsApi',
@@ -31,11 +22,11 @@ export const flightSeatsApi = createApi({
     headers: { 'Content-Type': 'application/json' },
   }),
 
-  tagTypes: ['flight-Seats'],
+  tagTypes: ['flight-seats'],
   endpoints: (builder) => ({
-    getFlightSeats: builder.query<IFlightSeatBase, GetSeatsArgs>({
-      query: (query) => `${ERoutes.SEAT}${getQueryString(query)}`,
-      providesTags: ['flight-Seats'],
+    getFlightSeats: builder.query<IFSQuery, GetSeatsArgs>({
+      query: (query) => `${ERoutes.FLIGHT_SEATS}${getQueryString(query)}`,
+      providesTags: ['flight-seats'],
     }),
 
     addFlightSeats: builder.mutation<IFlightSeatsPost, IFlightSeatsPost>({
@@ -44,7 +35,7 @@ export const flightSeatsApi = createApi({
         method: 'POST',
         body: mapFlightSeatFormData(body),
       }),
-      invalidatesTags: ['flight-Seats'],
+      invalidatesTags: ['flight-seats'],
     }),
 
     deleteFlightSeats: builder.mutation<IFlightSeatsPost, number>({
@@ -52,15 +43,15 @@ export const flightSeatsApi = createApi({
         url: `${ERoutes.FLIGHT_SEATS}${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['flight-Seats'],
+      invalidatesTags: ['flight-seats'],
     }),
-    patchFlightSeats: builder.mutation<IFlightSeatsPost, IFlightSeatsPost>({
-      query: (body) => ({
-        url: `${ERoutes.FLIGHT_SEATS}${body.id}`,
+    patchFlightSeats: builder.mutation<IFSOne, IFSOne>({
+      query: ({ id, ...body }) => ({
+        url: `${ERoutes.FLIGHT_SEATS}${id}`,
         method: 'PATCH',
-        body: formatPatchBody(body),
+        body,
       }),
-      invalidatesTags: ['flight-Seats'],
+      invalidatesTags: ['flight-seats'],
     }),
   }),
 });

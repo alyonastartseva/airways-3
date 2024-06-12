@@ -5,7 +5,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { Component, useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import {
   EditableCell,
@@ -14,14 +14,16 @@ import {
   FooterTable,
   PopoverTable,
 } from '@/common';
-import { useFlightSeatsDelete, useFlightSeatsPatch } from '@/hooks/flightSeats';
 import {
   IFSOne,
-  IFSQuery,
   IFSoneSeat,
   ISeatCategory,
 } from '@/interfaces/flightsSeats.interfaces';
 import { isRowEditing } from '@/utils/table.utils';
+import {
+  useDeleteFlightSeatsMutation,
+  usePatchFlightSeatsMutation,
+} from '@/store/services';
 
 import { gitTicketClassName } from '../Airplane/Airplane.utils';
 
@@ -43,8 +45,8 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
   totalPages: number;
   setPaginationData: (v: number) => void;
 }) => {
-  const { mutate: patchFlightSeats } = useFlightSeatsPatch();
-  const { mutate: deleteFlightSeats } = useFlightSeatsDelete();
+  const [patchFlightSeats] = usePatchFlightSeatsMutation();
+  const [deleteFlightSeats] = useDeleteFlightSeatsMutation();
 
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<Required<
@@ -53,11 +55,28 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
 
   const handleUpdateRow = useCallback(
     (id: string, value: string) => {
-      if (!editableRowState) return;
-      setEditableRowState({
-        ...editableRowState,
-        [id as keyof IFSOne]: value,
-      });
+      if (editableRowState) {
+        if (id.indexOf('_') !== -1) {
+          const key1 = id.slice(0, id.indexOf('_'));
+          const key2 = id.slice(id.indexOf('_') + 1);
+          const nestedObject = editableRowState[key1 as keyof IFSOne];
+
+          if (nestedObject && typeof nestedObject === 'object') {
+            setEditableRowState({
+              ...editableRowState,
+              [key1 as keyof IFSOne]: {
+                ...nestedObject,
+                [key2 as keyof typeof nestedObject]: value,
+              },
+            });
+          }
+        } else {
+          setEditableRowState({
+            ...editableRowState,
+            [id as keyof IFSOne]: value,
+          });
+        }
+      }
     },
     [editableRowState]
   );
@@ -215,9 +234,9 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
     ]
   );
 
-  const tableData = (deat?: IFSOne[]) => {
-    if (Array.isArray(deat) && deat.length) {
-      return deat.sort((a, b) => a.id - b.id);
+  const tableData = (seat?: IFSOne[]) => {
+    if (Array.isArray(seat) && seat.length) {
+      return seat;
     }
     return [];
   };

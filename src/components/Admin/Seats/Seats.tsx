@@ -1,7 +1,8 @@
 import { TableContainer } from '@chakra-ui/react';
 
-import { useFlightSeatsQuery, useSetCurrentPageInPagination } from '@/hooks';
+import { useSetCurrentPageInPagination } from '@/hooks';
 import { SpinnerBlock } from '@/common';
+import { useGetFlightSeatsQuery } from '@/store/services';
 
 import { SeatTableHeader } from './SeatsTableHeader';
 import { SeatsTable } from './SeatsTable';
@@ -11,7 +12,9 @@ const Seats = () => {
     'FLIGHTSSEATS_CURR_PAGE'
   );
 
-  const { data: dataFlightSeats, isFetching } = useFlightSeatsQuery(pageIndex);
+  const { data: dataFlightSeats, isFetching } = useGetFlightSeatsQuery({
+    page: pageIndex,
+  });
 
   if (isFetching || dataFlightSeats === undefined) {
     return <SpinnerBlock />;
