@@ -1,22 +1,7 @@
 import { FormInputProps } from '@/common/ModalInput';
-import { getDestinationsByParams } from '@services/destinations/destinations.service';
-import { ITicketsForm } from '@/interfaces';
-import { onlyLettersPattern } from '@/constants';
+import { ITicketsForm } from '@/interfaces/tickets.interface';
 
-const getCityNameOptions = async (query = { page: 0, searchValue: '' }) => {
-  const { page, searchValue: cityName } = query;
-
-  return getDestinationsByParams({ page, cityName }).then((data) => ({
-    optionsPart: data
-      ? data.content.map((el) => ({
-          key: el.id,
-          label: `${el.airportCode}, ${el.timezone}`,
-          value: JSON.stringify(el),
-        }))
-      : [],
-    last: !!data?.last,
-  }));
-};
+import { onlyLettersPattern } from '../validate-patterns';
 
 export const modalTicketsFields: FormInputProps<ITicketsForm>[] = [
   {
@@ -125,7 +110,6 @@ export const modalTicketsFields: FormInputProps<ITicketsForm>[] = [
     rules: {
       required: 'Выберите место назначения',
     },
-    getOptions: getCityNameOptions,
   },
   {
     type: 'input-with-select',
@@ -135,7 +119,6 @@ export const modalTicketsFields: FormInputProps<ITicketsForm>[] = [
     rules: {
       required: 'Выберите место отправления',
     },
-    getOptions: getCityNameOptions,
   },
   {
     fieldName: 'departureDateTime',

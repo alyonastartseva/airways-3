@@ -24,4 +24,4 @@ export { modalTimezonesFields } from './modal-constants';
 export { modalBookingFields } from './modal-constants';
 
 export { EModalNames, EModalButtonTexts } from './modal-constants';
-export { mapEditAircraftFormData, modalSettings } from './modal-constants';
+export { modalSettings } from './modal-constants';

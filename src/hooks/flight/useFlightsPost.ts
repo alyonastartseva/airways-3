@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from 'react-query';
-import { useToast } from '@chakra-ui/react';
 
 import { postFlight } from '@/services/flights/flights.service';
 
+import { useToastHandler } from '../useToastHandler';
+
 const useFlightsPost = () => {
   const queryClient = useQueryClient();
-  const toast = useToast();
+  const toast = useToastHandler();
 
   return useMutation(postFlight, {
     onSuccess: () => {
@@ -13,7 +14,6 @@ const useFlightsPost = () => {
       toast({
         status: 'success',
         title: 'Рейс успешно добавлен',
-        position: 'top',
       });
     },
     onError: (error) => {
@@ -21,11 +21,10 @@ const useFlightsPost = () => {
         toast({
           status: 'error',
           title: error.message,
-          position: 'top',
         });
       }
     },
-  });
+  }).mutateAsync;
 };
 
 export { useFlightsPost };

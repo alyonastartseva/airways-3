@@ -1,9 +1,9 @@
 import { Box, Flex, Input, Text, InputGroup } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
-import { useQuery } from 'react-query';
 
-import { getDestinations } from '@/services';
-import { TDestQuery, IDestination } from '@/interfaces';
+import { TDestQuery } from '@interfaces/search.interfaces';
+import { IDestination } from '@interfaces/destination.interfaces';
+import { useGetDestionationsQuery } from '@/store/services';
 
 import { IDestProps } from './destination.interfaces';
 
@@ -12,16 +12,8 @@ const DestinationInput: React.FC<IDestProps> = (props: IDestProps) => {
 
   const [inputValue, setInputValue] = useState<string>('');
 
-  const [destinationList, setDestinationList] = useState<IDestination[]>([]);
-
-  //eslint-disable-next-line no-empty-pattern
-  const {} = useQuery('destinations', getDestinations, {
-    onSuccess: (res) => {
-      // setDestinationList(res.content);
-      setDestinationList(res.content);
-    },
-    onError: (err) => err,
-  });
+  const { data } = useGetDestionationsQuery();
+  const destinationList = data?.content || [];
 
   const [destInputFocus, setDestInputFocus] = useState(false);
 
@@ -93,9 +85,8 @@ const DestinationInput: React.FC<IDestProps> = (props: IDestProps) => {
         {destInputFocus &&
           destinationList &&
           destinationList
-            .filter(
-              (item) =>
-                item.cityName?.toLowerCase()?.includes(inputValue.toLowerCase())
+            .filter((item) =>
+              item.cityName?.toLowerCase()?.includes(inputValue.toLowerCase())
             )
             .map((item) => (
               <Box
