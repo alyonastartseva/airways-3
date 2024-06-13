@@ -11,6 +11,8 @@ import {
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import s from './SignUp.module.scss';
+
 type registerForm = {
   email: string;
   password: string;
@@ -19,6 +21,7 @@ type registerForm = {
 
 const { Title } = Typography;
 const { Option } = Select;
+const { Item } = Form;
 
 const SignUp = () => {
   const [secretQuestion, setSecretQuestion] = useState('');
@@ -41,18 +44,13 @@ const SignUp = () => {
       scrollToFirstError
     >
       <Flex vertical align="center" justify="center">
-        <Card style={{ width: '40rem', margin: '1rem' }}>
-          <Title style={{ textAlign: 'center' }} level={2}>
+        <Card className={s.formContainer}>
+          <Title className={s.title} level={2}>
             Регистрация
           </Title>
-          <Flex
-            style={{ marginBottom: '1rem' }}
-            vertical
-            align="start"
-            gap="large"
-          >
-            <Form.Item
-              style={{ width: '100%' }}
+          <Flex vertical gap={'1rem'}>
+            <Item
+              className={s.inputField}
               name="email"
               label="E-mail"
               rules={[
@@ -67,9 +65,9 @@ const SignUp = () => {
               ]}
             >
               <Input />
-            </Form.Item>
-            <Form.Item
-              style={{ width: '100%' }}
+            </Item>
+            <Item
+              className={s.inputField}
               name="secretQuestion"
               label="Секретный вопрос"
               rules={[
@@ -85,14 +83,11 @@ const SignUp = () => {
               >
                 <Option value="1">Как звали вашего первого питона?</Option>
                 <Option value="2">Любовь = ?</Option>
-                <Option value="3">
-                  Ваш первый учитель?,Замечательная задача, намного лучше
-                  flightSeats.
-                </Option>
+                <Option value="3">Ваш первый учитель?</Option>
               </Select>
-            </Form.Item>
-            <Form.Item
-              style={{ width: '100%' }}
+            </Item>
+            <Item
+              className={s.inputField}
               name="secretAnswer"
               label="Ответ на секретный вопрос"
               rules={[
@@ -103,11 +98,11 @@ const SignUp = () => {
               ]}
             >
               <Input onChange={(e) => setSecretAnswer(e.target.value)} />
-            </Form.Item>
-            <Form.Item
-              style={{ width: '100%' }}
+            </Item>
+            <Item
+              className={s.inputField}
               name="password"
-              label="Password"
+              label="Пароль"
               rules={[
                 {
                   required: true,
@@ -117,10 +112,10 @@ const SignUp = () => {
               hasFeedback
             >
               <Input.Password />
-            </Form.Item>
+            </Item>
 
-            <Form.Item
-              style={{ width: '100%' }}
+            <Item
+              className={s.inputField}
               name="confirm"
               label="Потвердите пароль"
               dependencies={['password']}
@@ -141,8 +136,8 @@ const SignUp = () => {
               ]}
             >
               <Input.Password />
-            </Form.Item>
-            <Form.Item
+            </Item>
+            <Item
               name="acceptRules"
               valuePropName="checked"
               rules={[
@@ -158,10 +153,10 @@ const SignUp = () => {
                 },
               ]}
             >
-              <Checkbox>
+              <Checkbox className={s.centredText}>
                 я прочитал(-а){' '}
                 <button
-                  style={{ border: 'none' }}
+                  className={s.navigateBtn}
                   onClick={(e) => {
                     e.preventDefault();
                     navigate('/sign-in');
@@ -171,18 +166,14 @@ const SignUp = () => {
                 </button>{' '}
                 и согласен(-сна) с ними
               </Checkbox>
-            </Form.Item>
+            </Item>
           </Flex>
           <Flex vertical justify="center" align="center">
-            <Form.Item>
-              <Button
-                style={{ background: '#445ebd' }}
-                type="primary"
-                htmlType="submit"
-              >
+            <Item>
+              <Button className={s.submitBtn} type="primary" htmlType="submit">
                 Зарегистрироваться
               </Button>
-            </Form.Item>
+            </Item>
           </Flex>
         </Card>
       </Flex>

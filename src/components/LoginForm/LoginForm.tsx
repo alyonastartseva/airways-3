@@ -1,14 +1,7 @@
-import {
-  Button,
-  Card,
-  Checkbox,
-  Flex,
-  Form,
-  Input,
-  Select,
-  Typography,
-} from 'antd';
-import { useState } from 'react';
+import { Button, Card, Flex, Form, Input, Typography } from 'antd';
+import { useNavigate } from 'react-router-dom';
+
+import s from './LoginForm.module.scss';
 
 type LoginForm = {
   email: string;
@@ -16,10 +9,11 @@ type LoginForm = {
   acceptRules: boolean;
 };
 
-const { Title } = Typography;
-const { Option } = Select;
+const { Title, Text } = Typography;
+const { Item } = Form;
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const onFinish = (values: LoginForm) => {
     // eslint-disable-next-line no-console
     console.log('log fields', { ...values });
@@ -35,18 +29,13 @@ const LoginForm = () => {
       scrollToFirstError
     >
       <Flex vertical align="center" justify="center">
-        <Card style={{ width: '40rem', margin: '1rem' }}>
-          <Title style={{ textAlign: 'center' }} level={2}>
+        <Card className={s.loginContainer}>
+          <Title className={s.title} level={2}>
             Регистрация
           </Title>
-          <Flex
-            style={{ marginBottom: '1rem' }}
-            vertical
-            align="start"
-            gap="large"
-          >
-            <Form.Item
-              style={{ width: '100%' }}
+          <Flex vertical align="start" gap="large">
+            <Item
+              className={s.inputField}
               name="email"
               label="E-mail"
               rules={[
@@ -61,9 +50,9 @@ const LoginForm = () => {
               ]}
             >
               <Input />
-            </Form.Item>
-            <Form.Item
-              style={{ width: '100%' }}
+            </Item>
+            <Item
+              className={s.inputField}
               name="password"
               label="Пароль"
               rules={[
@@ -75,18 +64,26 @@ const LoginForm = () => {
               hasFeedback
             >
               <Input.Password />
-            </Form.Item>
+            </Item>
+            <Text className={s.centredText}>
+              У вас ещё нет аккаунта?{' '}
+              <button
+                className={s.navigateBtn}
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/sign-up');
+                }}
+              >
+                Зарегистрируйтесь
+              </button>{' '}
+            </Text>
           </Flex>
           <Flex vertical justify="center" align="center">
-            <Form.Item>
-              <Button
-                style={{ background: '#445ebd' }}
-                type="primary"
-                htmlType="submit"
-              >
+            <Item>
+              <Button className={s.submitBtn} type="primary" htmlType="submit">
                 Войти
               </Button>
-            </Form.Item>
+            </Item>
           </Flex>
         </Card>
       </Flex>
