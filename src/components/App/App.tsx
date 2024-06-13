@@ -26,10 +26,8 @@ const App = () => {
         <Route index element={<SearchTicketsPage />} />
         <Route path="filter-tickets" element={<FilteredTicketsPage />} />
         <Route path="admin" element={<LoginAdminForm />} />
-        {/* вот эти две */}
         <Route path="sign-in" element={<LoginForm />} />
         <Route path="sign-up" element={<SignUpPage />} />
-        {/* divider */}
         <Route element={<PrivateRoute />}>
           <Route path="users" element={<UsersPage />} />
           <Route path="airplanes" element={<AirplanesPage />} />
