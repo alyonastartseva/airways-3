@@ -17,21 +17,18 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 
-import { ISeatForm, ISeatPost } from '@/interfaces/seat.interfaces';
-import { EditableCell } from '@common/EditableCell';
-import { FlexCell } from '@common/FlexCell';
-import { PopoverTable } from '@common/PopoverTable';
-import { AlertMessage } from '@common/AlertMessage';
-import { SpinnerBlock } from '@common/SpinnerBlock';
-import { HeaderTable } from '@/common/HeaderTable';
-import { FooterTable } from '@common/FooterTable';
-import { isRowEditing } from '@utils/table.utils';
-import { sortById } from '@utils/sort.utils';
+import {
+  EditableCell,
+  FlexCell,
+  PopoverTable,
+  AlertMessage,
+  SpinnerBlock,
+  HeaderTable,
+  FooterTable,
+  EditableSelectCell,
+  SeatCategory,
+} from '@/common';
 import { useSetCurrentPageInPagination } from '@/hooks';
-import { EModalNames } from '@/constants/modal-constants/modal-names';
-import { ITEMS_PER_PAGE, yesNo } from '@constants/constants';
-import { EditableSelectCell } from '@/common/EditableSelectCell';
-import { SeatCategory } from '@/common/SeatCategory';
 import {
   useDeleteSeatMutation,
   useGetAircraftByIdQuery,
@@ -41,8 +38,12 @@ import {
 import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 import { useToastHandler } from '@/hooks/useToastHandler';
 import { ELinks } from '@/services';
+import { EModalNames, ITEMS_PER_PAGE, yesNo } from '@/constants';
+import { ISeatForm, ISeatPost } from '@/interfaces';
+import { isRowEditing } from '@/utils/table.utils';
+import { sortById } from '@/utils/sort.utils';
 
-import { getStatusName, getYesNo } from './Airplane.utils';
+import { getYesNo, gitTicketClassName } from './Airplane.utils';
 
 const Airplane = () => {
   // получение параметра ID из роута
@@ -211,7 +212,7 @@ const Airplane = () => {
             editableRowIndex={editableRowIndex}
             updateData={handleUpdateRow}
             selectOptions={<SeatCategory />}
-            getRenderValue={getStatusName}
+            getRenderValue={gitTicketClassName}
           />
         ),
       }),

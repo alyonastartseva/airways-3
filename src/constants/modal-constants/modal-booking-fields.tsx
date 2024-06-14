@@ -1,10 +1,9 @@
-import { IFormBooking } from '@interfaces/booking.interfaces';
+import { FormInputProps } from '@common/ModalInput';
+import { bookingStatuses } from '@/constants';
+import { IFormBooking, IPassenger } from '@/interfaces';
 import { useFlightSeatsQuery } from '@/hooks';
-import { bookingStatuses } from '@constants/constants';
-import { IPassenger } from '@interfaces/search.interfaces';
-import { IFlightSeat } from '@services/flightSeats/flightSeats.interfaces';
+import { IFSOne } from '@/interfaces/flightsSeats.interfaces';
 import { useGetPassangersQuery } from '@/store/services';
-import { FormInputProps } from '@/common/ModalInput';
 
 const PassengersOptions = () => {
   const { data } = useGetPassangersQuery({ size: 100 });
@@ -28,18 +27,20 @@ const PassengersOptions = () => {
 };
 
 const SeatsOptions = () => {
-  const { data: flightSeatsData } = useFlightSeatsQuery();
+  const { data: flightSeatsData } = useFlightSeatsQuery(1);
 
   if (flightSeatsData)
     return (
       <>
-        {flightSeatsData.content.map((el: IFlightSeat) => {
-          if (!el.isBooked && !el.isSold) {
-            return (
-              <option key={el.id} value={el.id}>
-                {el.seat.seatNumber}
-              </option>
-            );
+        {flightSeatsData.content.map((el: IFSOne) => {
+          if (el) {
+            if (!el.isBooked && !el.isSold) {
+              return (
+                <option key={el.id} value={el.id}>
+                  {el.seat?.seatNumber}
+                </option>
+              );
+            }
           }
         })}
       </>

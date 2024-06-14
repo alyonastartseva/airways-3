@@ -14,7 +14,7 @@ type FormInputProps<TFormValues extends FieldValues> = {
   typeInput?: TypeInput;
   fieldName: Path<TFormValues>;
   rules?: RegisterOptions;
-  type?: 'input' | 'select' | 'input-with-select';
+  type?: 'input' | 'select' | 'input-with-select' | 'customSelect';
   mask?: string;
   checkbox?: boolean;
   value?: number | string;

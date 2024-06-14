@@ -5,6 +5,7 @@ import { IFlightPresentation } from '@/interfaces/flights.interfaces';
 import {
   useDeleteAircraftMutation,
   useDeleteDestinationMutation,
+  useDeleteFlightSeatsMutation,
   useDeletePassengerMutation,
   useDeleteSeatMutation,
   useDeleteTimezoneMutation,
@@ -22,6 +23,7 @@ interface IPopoverTable<Data extends IFlightPresentation> {
     | ReturnType<typeof useDeleteSeatMutation>[0]
     | ReturnType<typeof useDeleteDestinationMutation>[0]
     | ReturnType<typeof useDeleteTimezoneMutation>[0]
+    | ReturnType<typeof useDeleteFlightSeatsMutation>[0]
     | UseMutateFunction<
         AxiosResponse<Data, any> | undefined,
         unknown,

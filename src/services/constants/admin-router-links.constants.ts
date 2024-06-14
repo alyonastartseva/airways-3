@@ -10,6 +10,7 @@ enum ELinks {
   ADMIN_SEAT = '/airplane-more',
   ADMIN_TICKETS = '/tickets',
   ADMIN_BOOKING = '/booking',
+  ADMIN_FLIGHTS_SEATS = '/flight-seats',
 }
 
 export { ELinks };

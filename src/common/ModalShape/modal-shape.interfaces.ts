@@ -16,8 +16,13 @@ import {
   IFlightPostFormFields,
 } from '@/interfaces';
 import {
+  TFormFlightSeats,
+  IFlightSeatsPost,
+} from '@/interfaces/flightsSeats.interfaces';
+import {
   useAircraftPost,
   useDestinationPost,
+  useFlightSeatPost,
   usePassengersPost,
   useSeatPost,
   useTimezonePost,
@@ -45,6 +50,7 @@ export interface IModalSetting<T extends FieldValues, Q = T> {
     | ReturnType<typeof usePassengersPost>
     | ReturnType<typeof useSeatPost>
     | ReturnType<typeof useTimezonePost>
+    | ReturnType<typeof useFlightSeatPost>
     | UseQueryPostHook;
   name: EModalButtonTexts;
   mapFieldValuesToRequestData?: (formData: T) => Q;
@@ -59,4 +65,5 @@ export type TSettings = [
   IModalSetting<ITicketsForm>,
   IModalSetting<TTimeZoneForm>,
   IModalSetting<IFormBooking>,
+  IModalSetting<IFlightSeatsPost, TFormFlightSeats>,
 ];
