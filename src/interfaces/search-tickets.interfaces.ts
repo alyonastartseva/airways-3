@@ -1,4 +1,6 @@
-import { IDestination, TSeatCategory } from '@/interfaces';
+import { IDestination } from '@/interfaces';
+
+import { ISeatCategoryType } from './seat.interfaces';
 
 export type TDestQuery = Omit<IDestination, 'id'>;
 
@@ -8,7 +10,7 @@ export interface ISearchData {
   numberOfPassengers: number | null;
   returnDate?: string;
   airportTo: string;
-  categoryOfSeats: TSeatCategory;
+  categoryOfSeats: ISeatCategoryType;
   directFlightsOnly: boolean;
   tripType: string;
 }

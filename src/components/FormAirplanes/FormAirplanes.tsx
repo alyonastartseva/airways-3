@@ -28,6 +28,7 @@ import {
   HeadingAdmin,
   ButtonSubmitAdmin,
 } from '@/common';
+import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 import { useToastHandler } from '@/hooks/useToastHandler';
 import { useAddAircraftWithSeatsMutation } from '@/store/services';
 import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
@@ -79,7 +80,7 @@ const FormAirplanes = <T extends FieldValues>({
       id: 0,
       isLockedBack: true,
       isNearEmergencyExit: false,
-      category: 'BUSINESS',
+      category: ISeatCategory.BUSINESS,
       seatNumber: '',
     });
   };

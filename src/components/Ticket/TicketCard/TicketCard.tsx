@@ -15,8 +15,9 @@ import {
   AirplaneLandingIcon,
   CaretDownIcon,
   AirplaneIcon,
-} from '@/common/icons';
-import { pluralize } from '@/utils/string.utils';
+} from '@common/icons';
+import { pluralize } from '@utils/string.utils';
+import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 
 import { TicketTariff } from '../TicketTariff';
 
@@ -49,7 +50,7 @@ const TicketCard = ({
   departureDateTime = '2024-04-20T20:15:00',
   arrivalDateTime = '2024-04-20T21:20:00',
   flightTime = '1ч 5м',
-  categoryOfSeats = 'FIRST',
+  categoryOfSeats = ISeatCategory.FIRST,
   transfers,
   tariffsData = {
     basic: {

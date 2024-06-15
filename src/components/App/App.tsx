@@ -16,6 +16,7 @@ import {
   TicketsPage,
   BookingPage,
   TimeZonesPage,
+  FlightSeatsPage,
   PageNotFound,
 } from '@/pages';
 
@@ -35,11 +36,11 @@ const App = () => {
             path="airplanes/airplane-more"
             element={<AirplaneMorePage />}
           />
-
           <Route
             path="airplanes/airplane-more/:airplane"
             element={<AirplaneMorePage />}
           />
+          <Route path="flight-seats" element={<FlightSeatsPage />} />
           <Route path="passengers" element={<PassengersPage />} />
           <Route path="destinations" element={<DestinationsPage />} />
           <Route path="flights" element={<FlightsPage />} />

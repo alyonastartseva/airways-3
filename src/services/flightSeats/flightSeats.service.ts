@@ -1,13 +1,74 @@
+import { AxiosResponse } from 'axios';
+
 import { adminInstance, ERoutes } from '@/services';
+import { ITEMS_PER_PAGE } from '@/constants';
+import {
+  IFlightSeatsPost,
+  IFSOne,
+  IFSQuery,
+} from '@/interfaces/flightsSeats.interfaces';
 
-import { IFlightSeatsQuery } from './flightSeats.interfaces';
+interface IFlightSeatsApi {
+  getFlightsSeats: (
+    pageIndex: number,
+    size: number,
+    flightId?: number
+  ) => Promise<IFSQuery>;
 
-const flightSeatsAPI = {
-  getFlightsSeats: async () => {
+  deleteFlightSeats: (
+    id: number | undefined
+  ) => Promise<AxiosResponse<IFSOne> | undefined>;
+
+  postFlightSeats: (
+    data: IFlightSeatsPost
+  ) => Promise<AxiosResponse<IFlightSeatsPost, any>>;
+
+  updateFlightSeats: (
+    data: IFSOne | undefined
+  ) => Promise<AxiosResponse<IFSOne> | undefined>;
+}
+
+const flightSeatsAPI: IFlightSeatsApi = {
+  getFlightsSeats: async (
+    pageIndex,
+    size = ITEMS_PER_PAGE,
+    flightId?: number
+  ) => {
+    if (flightId) {
+      return await adminInstance
+        .get<Promise<IFSQuery>>(`${ERoutes.FLIGHT_SEATS}?flightId=${flightId}`)
+        .then((response) => response.data);
+    }
     return await adminInstance
-      .get<IFlightSeatsQuery>(ERoutes.FLIGHT_SEATS)
+      .get<
+        Promise<IFSQuery>
+      >(`${ERoutes.FLIGHT_SEATS}?page=${pageIndex}&size=${size}`)
       .then((response) => response.data);
+  },
+
+  deleteFlightSeats: async (id) => {
+    if (id) {
+      return adminInstance.delete<IFSOne>(ERoutes.FLIGHT_SEATS + id);
+    }
+  },
+
+  updateFlightSeats: async (data) => {
+    if (!data) return;
+    const { id, ...body } = data;
+    return await adminInstance.patch<IFSOne>(ERoutes.FLIGHT_SEATS + id, body);
+  },
+
+  postFlightSeats: async (data: IFlightSeatsPost) => {
+    return await adminInstance.post<IFlightSeatsPost>(
+      ERoutes.FLIGHT_SEATS,
+      data
+    );
   },
 };
 
-export const { getFlightsSeats } = flightSeatsAPI;
+export const {
+  getFlightsSeats,
+  deleteFlightSeats,
+  postFlightSeats,
+  updateFlightSeats,
+} = flightSeatsAPI;

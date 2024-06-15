@@ -13,12 +13,7 @@ export type { ITickets, ITicketsPost, ITicketsForm } from './tickets.interface';
 export type { ITimeZone, TTimeZoneForm } from './time-zone.interfaces';
 export type { TypeInput } from './type-input.types';
 export type { IValidatePattern } from './validate-ptterns.interface';
-export type {
-  TSeatCategory,
-  ISeatPost,
-  ISeatForm,
-  ISeatContent,
-} from './seat.interfaces';
+export type { ISeatPost, ISeatForm, ISeatContent } from './seat.interfaces';
 export type {
   IArticle,
   IPassenger,

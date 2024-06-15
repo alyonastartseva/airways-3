@@ -36,3 +36,11 @@ export {
   useGetTimezonesQuery,
   usePatchTimezoneMutation,
 } from './timezones';
+
+export {
+  flightSeatsApi,
+  useAddFlightSeatsMutation,
+  useDeleteFlightSeatsMutation,
+  useGetFlightSeatsQuery,
+  usePatchFlightSeatsMutation,
+} from './flightSeats';

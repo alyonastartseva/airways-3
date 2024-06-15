@@ -1,18 +1,19 @@
 import { FieldValues } from 'react-hook-form';
 
 import { IGetQuery } from './api-interfaces';
+import { ISeatCategory } from './flightsSeats.interfaces';
 
 export type ISeat = IGetQuery<ISeatPost>;
 
-export type TSeatCategory =
-  | 'BUSINESS'
-  | 'ECONOMY'
-  | 'FIRST'
-  | 'PREMIUM_ECONOMY';
+export type ISeatCategoryType =
+  | 'Первый класс'
+  | 'Бизнес'
+  | 'Эконом'
+  | 'Премиум';
 
 export interface ISeatPost {
   aircraftId: number;
-  category: TSeatCategory;
+  category: ISeatCategory;
   id: number;
   isLockedBack: boolean;
   isNearEmergencyExit: boolean;
@@ -21,7 +22,7 @@ export interface ISeatPost {
 
 export interface ISeatForm extends FieldValues {
   aircraftId?: number;
-  category?: TSeatCategory;
+  category?: ISeatCategory;
   id?: number;
   isLockedBack?: boolean;
   isNearEmergencyExit?: boolean;
