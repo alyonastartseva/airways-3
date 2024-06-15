@@ -232,90 +232,96 @@ const Booking = () => {
           Array.isArray(bookingData) && bookingData?.length ? (
             <>
               <TableContainer mb="22px">
-                <Table variant="unstyled" border="1px solid #dedede" bg="#fff">
-                  <Thead>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                      <Tr
-                        key={headerGroup.id}
-                        bg="#F5F5F5"
-                        border="1px solid #dedede"
-                      >
-                        {headerGroup.headers.map((header, i) => (
-                          <Th
-                            textAlign={
-                              headerGroup.headers.length === i + 1
-                                ? 'center'
-                                : 'left'
-                            }
-                            textTransform="none"
-                            border="1px solid #dedede"
-                            py="18px"
-                            key={header.id}
-                          >
-                            {header.isPlaceholder &&
-                              flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
+                <div style={{ overflowX: 'scroll' }}>
+                  <Table
+                    variant="unstyled"
+                    border="1px solid #dedede"
+                    bg="#fff"
+                  >
+                    <Thead>
+                      {table.getHeaderGroups().map((headerGroup) => (
+                        <Tr
+                          key={headerGroup.id}
+                          bg="#F5F5F5"
+                          border="1px solid #dedede"
+                        >
+                          {headerGroup.headers.map((header, i) => (
+                            <Th
+                              textAlign={
+                                headerGroup.headers.length === i + 1
+                                  ? 'center'
+                                  : 'left'
+                              }
+                              textTransform="none"
+                              border="1px solid #dedede"
+                              py="18px"
+                              key={header.id}
+                            >
+                              {header.isPlaceholder &&
+                                flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext()
+                                )}
+                              {header.column.getCanSort() && (
+                                <VStack gap={0} ml="6px" display="inline-flex">
+                                  <IconButton
+                                    w="20px"
+                                    h="10px"
+                                    px="4px"
+                                    minW={0}
+                                    border="none"
+                                    borderRadius={0}
+                                    bg="none"
+                                    color="#808080"
+                                    aria-label="Сортировка по возростанию"
+                                    icon={<ChevronUpIcon />}
+                                    _focus={{ outline: 0, bg: '#e2e8f0' }}
+                                  />
+                                  <IconButton
+                                    w="20px"
+                                    h="10px"
+                                    px="4px"
+                                    minW={0}
+                                    border="none"
+                                    borderRadius={0}
+                                    bg="none"
+                                    color="#808080"
+                                    aria-label="Сортировка по убыванию"
+                                    icon={<ChevronDownIcon />}
+                                    _focus={{ outline: 0, bg: '#e2e8f0' }}
+                                  />
+                                </VStack>
                               )}
-                            {header.column.getCanSort() && (
-                              <VStack gap={0} ml="6px" display="inline-flex">
-                                <IconButton
-                                  w="20px"
-                                  h="10px"
-                                  px="4px"
-                                  minW={0}
-                                  border="none"
-                                  borderRadius={0}
-                                  bg="none"
-                                  color="#808080"
-                                  aria-label="Сортировка по возростанию"
-                                  icon={<ChevronUpIcon />}
-                                  _focus={{ outline: 0, bg: '#e2e8f0' }}
-                                />
-                                <IconButton
-                                  w="20px"
-                                  h="10px"
-                                  px="4px"
-                                  minW={0}
-                                  border="none"
-                                  borderRadius={0}
-                                  bg="none"
-                                  color="#808080"
-                                  aria-label="Сортировка по убыванию"
-                                  icon={<ChevronDownIcon />}
-                                  _focus={{ outline: 0, bg: '#e2e8f0' }}
-                                />
-                              </VStack>
-                            )}
-                          </Th>
-                        ))}
-                      </Tr>
-                    ))}
-                  </Thead>
-                  <Tbody fontSize="14px" fontWeight={600}>
-                    {table.getRowModel().rows.map((row) => (
-                      <Tr key={row.id}>
-                        {row.getVisibleCells().map((cell, i) => (
-                          <Td
-                            key={cell.id}
-                            borderRight="1px solid #dedede"
-                            py="13px"
-                            textAlign={
-                              row.getVisibleCells().length === i + 1
-                                ? 'center'
-                                : 'left'
-                            }
-                          >
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </Td>
-                        ))}
-                      </Tr>
-                    ))}
-                  </Tbody>
-                </Table>
+                            </Th>
+                          ))}
+                        </Tr>
+                      ))}
+                    </Thead>
+                    <Tbody fontSize="14px" fontWeight={600}>
+                      {table.getRowModel().rows.map((row) => (
+                        <Tr key={row.id}>
+                          {row.getVisibleCells().map((cell, i) => (
+                            <Td
+                              key={cell.id}
+                              borderRight="1px solid #dedede"
+                              py="13px"
+                              textAlign={
+                                row.getVisibleCells().length === i + 1
+                                  ? 'center'
+                                  : 'left'
+                              }
+                            >
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext()
+                              )}
+                            </Td>
+                          ))}
+                        </Tr>
+                      ))}
+                    </Tbody>
+                  </Table>
+                </div>
               </TableContainer>
 
               <ConfirmCancelModal
