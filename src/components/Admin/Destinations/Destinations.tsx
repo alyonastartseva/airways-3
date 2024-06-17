@@ -41,6 +41,7 @@ import {
 } from '@/common';
 import { IDestination, IDestinationPost } from '@/interfaces';
 import { DestinationsInputSelector } from '@/components/DestinationsInputSelector';
+import { scrollTable } from '@/constants';
 
 const PAGE_KEY = 'DESTINATIONS_CURR_PAGE';
 
@@ -306,7 +307,7 @@ const Destinations = () => {
             heading="Места назначения"
             formName={EModalNames.DESTINATIONS}
           />
-          <div style={{ overflowX: 'hidden' }}>
+          <div {...scrollTable}>
             <Table>
               <Thead>
                 {table.getHeaderGroups().map((headerGroup) => (

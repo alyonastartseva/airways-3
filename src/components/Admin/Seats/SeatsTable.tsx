@@ -24,6 +24,7 @@ import {
   useDeleteFlightSeatsMutation,
   usePatchFlightSeatsMutation,
 } from '@/store/services';
+import { scrollTable } from '@/constants';
 
 import { gitTicketClassName } from '../Airplane/Airplane.utils';
 
@@ -249,7 +250,7 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
 
   return (
     <div>
-      <div style={{ overflowX: 'scroll' }}>
+      <div {...scrollTable}>
         <Table>
           <Thead>
             {table.getHeaderGroups().map((headerGroup) => (

@@ -43,6 +43,7 @@ import {
 import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 import { useToastHandler } from '@/hooks/useToastHandler';
 import { IPassenger, PersonGenders } from '@/interfaces';
+import { scrollTable } from '@/constants';
 
 const PAGE_KEY = 'PASSENGERS_CURR_PAGE';
 
@@ -418,7 +419,7 @@ const Passengers = () => {
             heading="Пассажиры"
             formName={EModalNames.PASSENGERS}
           />
-          <div style={{ overflowX: 'scroll' }}>
+          <div {...scrollTable}>
             <Table>
               <Thead>
                 {table.getHeaderGroups().map((headerGroup) => (

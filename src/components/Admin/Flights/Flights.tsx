@@ -16,7 +16,7 @@ import {
 } from '@tanstack/react-table';
 import { useSearchParams } from 'react-router-dom';
 
-import { flightStatuses, EModalNames } from '@/constants';
+import { flightStatuses, EModalNames, scrollTable } from '@/constants';
 import { DestinationsInputSelector } from '@/components';
 import {
   IAircraft,
@@ -352,7 +352,7 @@ const Flights = () => {
           heading="Рейсы"
           formName={EModalNames.FLIGHTS}
         />
-        <div style={{ overflowX: 'scroll' }}>
+        <div {...scrollTable}>
           <Table>
             <Thead>
               {table.getHeaderGroups().map((headerGroup) => (

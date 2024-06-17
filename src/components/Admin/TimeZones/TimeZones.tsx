@@ -19,7 +19,7 @@ import {
 import { useSearchParams } from 'react-router-dom';
 
 import { isRowEditing } from '@utils/table.utils';
-import { EModalNames } from '@/constants';
+import { EModalNames, scrollTable } from '@/constants';
 import { ITimeZone, TTimeZoneForm } from '@/interfaces';
 import {
   AlertMessage,
@@ -263,7 +263,7 @@ const TimeZones = () => {
             heading="Часовые пояса"
             formName={EModalNames.TIME_ZONES}
           />
-          <div style={{ overflowX: 'scroll' }}>
+          <div {...scrollTable}>
             <Table>
               <Thead>
                 {table.getHeaderGroups().map((headerGroup) => (

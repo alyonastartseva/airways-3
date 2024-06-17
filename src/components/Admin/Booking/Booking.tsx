@@ -22,7 +22,7 @@ import {
 import { useSearchParams } from 'react-router-dom';
 
 import { IBooking, IFormBooking } from '@/interfaces';
-import { EModalNames } from '@/constants';
+import { EModalNames, scrollTable } from '@/constants';
 import { Gear } from '@common/icons';
 import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
@@ -232,7 +232,7 @@ const Booking = () => {
           Array.isArray(bookingData) && bookingData?.length ? (
             <>
               <TableContainer mb="22px">
-                <div style={{ overflowX: 'scroll' }}>
+                <div {...scrollTable}>
                   <Table
                     variant="unstyled"
                     border="1px solid #dedede"

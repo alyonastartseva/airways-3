@@ -21,7 +21,7 @@ import { useSearchParams } from 'react-router-dom';
 import { sortById } from '@utils/sort.utils';
 import { formatDateTime } from '@utils/date.utils';
 import { isRowEditing } from '@utils/table.utils';
-import { ITEMS_PER_PAGE, EModalNames } from '@/constants';
+import { ITEMS_PER_PAGE, EModalNames, scrollTable } from '@/constants';
 import { ITickets, ITicketsPost } from '@/interfaces';
 import {
   useTicketsQuery,
@@ -320,57 +320,59 @@ const Tickets = () => {
             heading="Билеты"
             formName={EModalNames.TICKETS}
           />
-          <Table>
-            <Thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <Tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <Th
-                      border="0.0625rem solid #DEDEDE"
-                      color="#000000"
-                      key={header.id}
-                      fontSize="0.875rem"
-                      lineHeight="1.125rem"
-                      textTransform="none"
-                      fontWeight="semibold"
-                      width={header.getSize()}
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </Th>
-                  ))}
-                </Tr>
-              ))}
-            </Thead>
-            <Tbody>
-              {table.getRowModel().rows.map((row) => (
-                <Tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <Td
-                      border="0.0625rem solid #DEDEDE"
-                      color="#393939"
-                      fontSize="0.875rem"
-                      lineHeight="1.125rem"
-                      key={cell.id}
-                      textTransform="none"
-                      fontWeight="normal"
-                      paddingX="0.25rem"
-                      paddingY="0.125rem"
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Td>
-                  ))}
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
+          <div {...scrollTable}>
+            <Table>
+              <Thead>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <Tr key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => (
+                      <Th
+                        border="0.0625rem solid #DEDEDE"
+                        color="#000000"
+                        key={header.id}
+                        fontSize="0.875rem"
+                        lineHeight="1.125rem"
+                        textTransform="none"
+                        fontWeight="semibold"
+                        width={header.getSize()}
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </Th>
+                    ))}
+                  </Tr>
+                ))}
+              </Thead>
+              <Tbody>
+                {table.getRowModel().rows.map((row) => (
+                  <Tr key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <Td
+                        border="0.0625rem solid #DEDEDE"
+                        color="#393939"
+                        fontSize="0.875rem"
+                        lineHeight="1.125rem"
+                        key={cell.id}
+                        textTransform="none"
+                        fontWeight="normal"
+                        paddingX="0.25rem"
+                        paddingY="0.125rem"
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </Td>
+                    ))}
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </div>
           <FooterTable
             data={tableData(tickets)}
             pageIndex={pageIndex}
