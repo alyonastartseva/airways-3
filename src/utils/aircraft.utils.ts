@@ -1,3 +1,4 @@
+import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 import { ISeatForm, ISeatPost } from '@/interfaces/seat.interfaces';
 
 export const mapSeatFormData = ({
@@ -10,7 +11,7 @@ export const mapSeatFormData = ({
 }: ISeatForm): ISeatPost => {
   return {
     aircraftId: Number(aircraftId || 0),
-    category: category || 'ECONOMY',
+    category: category || ISeatCategory.ECONOM,
     id: id || 0,
     isLockedBack: isLockedBack || false,
     isNearEmergencyExit: isNearEmergencyExit || false,

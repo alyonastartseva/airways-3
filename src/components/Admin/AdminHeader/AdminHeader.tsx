@@ -36,6 +36,10 @@ const AdminHeader = () => {
       tabName: 'Бронирование',
       tabPath: ELinks.ADMIN_BOOKING,
     },
+    {
+      tabName: 'Посадочные места',
+      tabPath: ELinks.ADMIN_FLIGHTS_SEATS,
+    },
   ];
 
   const checkActive = ({ isActive }: { isActive: boolean }) =>

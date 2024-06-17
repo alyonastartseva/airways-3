@@ -15,6 +15,7 @@ export { useTicketsPost } from '@hooks/ticket';
 export { useTicketsQuery } from '@hooks/ticket';
 
 export { useSeatPost } from '@hooks/seat';
+export { useFlightSeatPost } from '@hooks/flightSeats';
 
 export { useFlightSeatsQuery } from '@hooks/flightSeats';
 

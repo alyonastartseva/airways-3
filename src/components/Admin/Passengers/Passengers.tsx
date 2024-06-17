@@ -74,7 +74,7 @@ const Passengers = () => {
         title: error.data.message,
       });
   }, [isError, toastHandler, error]);
-  
+
   useEffect(() => {
     setSearchParams({ page: String(pageIndex + 1) });
   }, [pageIndex]);

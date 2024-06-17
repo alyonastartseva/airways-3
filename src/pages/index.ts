@@ -6,6 +6,7 @@ export { FlightsPage } from './Admin/FlightsPage';
 export { TicketsPage } from './Admin/Tickets';
 export { TimeZonesPage } from './Admin/TimeZonesPage';
 export { UsersPage } from './Admin/Users';
+export { FlightSeatsPage } from './Admin/FlightSeats';
 
 export { PassengersPage } from './Passengers';
 

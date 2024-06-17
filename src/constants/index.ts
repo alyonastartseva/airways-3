@@ -22,6 +22,7 @@ export { modalSeatFields } from './modal-constants';
 export { modalTicketsFields } from './modal-constants';
 export { modalTimezonesFields } from './modal-constants';
 export { modalBookingFields } from './modal-constants';
+export { modalFlightSeatFields } from './modal-constants';
 
 export { EModalNames, EModalButtonTexts } from './modal-constants';
 export { modalSettings } from './modal-constants';
