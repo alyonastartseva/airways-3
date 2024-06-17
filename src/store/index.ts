@@ -1,5 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import { themeReducer } from '@store/slices';
+
 import {
   passengersApi,
   destinationsApi,
@@ -12,6 +14,7 @@ import { selectedAircraftReducer } from './slices/flightSeatsSlice';
 
 export const store = configureStore({
   reducer: {
+    theme: themeReducer,
     selectedAircraft: selectedAircraftReducer,
     [flightSeatsApi.reducerPath]: flightSeatsApi.reducer,
     [passengersApi.reducerPath]: passengersApi.reducer,

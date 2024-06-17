@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 80px;
+  padding-right: 30px;
+  padding-left: 30px;
+
+  background-color: #445ebd;
+
+  & .links {
+    display: flex;
+    gap: 35px;
+
+    & .link {
+      color: #fff;
+      font-size: 0.9rem;
+
+      &:hover {
+        opacity: 0.8;
+        text-decoration: underline;
+      }
+    }
+  }
+}

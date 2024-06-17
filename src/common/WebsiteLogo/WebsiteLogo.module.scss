@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  border: none;
+
+  & .text {
+    font-weight: 500;
+    line-height: 1.125rem;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
