@@ -5,6 +5,7 @@ export {
   yesNo,
   seatCategory,
   ITEMS_PER_PAGE,
+  objFlight,
 } from './constants';
 
 export { onlyLettersPattern } from './validate-patterns';

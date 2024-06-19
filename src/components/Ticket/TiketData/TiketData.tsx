@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
-import { TicketChoice } from '../TicketChoice';
+import { TiketDataProps } from '@/interfaces';
 
-import { TiketDataProps } from './TiketData.interfaces';
+import { TicketChoice } from '../TicketChoice';
 
 const TiketData: FC<TiketDataProps> = ({ flights }) => {
   return flights.flights.map((flight) => {
