@@ -65,6 +65,7 @@ const SearchTickets = ({
   const [ticketCardProps, setTicketCardProps] = useState<
     ITicketCardProps & { flightSeatId: number }[]
   >([]);
+  const [fromToPosition, setFromToPosition] = useState(true);
 
   const updateSearchParam = (param: Partial<ISearchData>) => {
     setSearchParams((prev) => ({ ...prev, ...param }));
@@ -210,10 +211,12 @@ const SearchTickets = ({
   };
 
   const handleReverse = () => {
-    updateSearchParam({ airportTo: searchParams.airportTo });
-    updateSearchParam({ airportFrom: searchParams.airportFrom });
+    updateSearchParam({
+      airportTo: searchParams.airportFrom,
+      airportFrom: searchParams.airportTo,
+    });
+    setFromToPosition(!fromToPosition);
   };
-
   const calendarDates = useMemo(() => {
     const startDate = searchParams.departureDate
       ? parseISO(searchParams.departureDate)
@@ -224,6 +227,58 @@ const SearchTickets = ({
 
     return { startDate, endDate };
   }, [searchParams.departureDate, searchParams.returnDate]);
+
+  const FirstGridContainter = () => {
+    const From = () => {
+      return (
+        <Flex direction="column">
+          <FormControl>
+            <FormLabel fontSize={14}>Откуда</FormLabel>
+            <DestinationsInputSelector
+              value={searchParams.airportFrom}
+              placeholder="Город отправления"
+              setValue={(value) => updateSearchParam({ airportFrom: value })}
+            />
+          </FormControl>
+        </Flex>
+      );
+    };
+    const To = () => {
+      return (
+        <Flex direction="column">
+          <FormControl>
+            <FormLabel fontSize={14}>Куда</FormLabel>
+            <DestinationsInputSelector
+              value={searchParams.airportTo}
+              placeholder="Город прибытия"
+              setValue={(value) => updateSearchParam({ airportTo: value })}
+            />
+          </FormControl>
+        </Flex>
+      );
+    };
+    const SwitcherFirstContainer = () => {
+      return (
+        <Box
+          data-testid="Reverse"
+          textAlign="center"
+          mt="0.3rem"
+          cursor="pointer"
+          onClick={handleReverse}
+        >
+          <ArrowsIcon />
+        </Box>
+      );
+    };
+
+    return (
+      <GridItem>
+        {fromToPosition ? <From /> : <To />}
+        <SwitcherFirstContainer />
+        {fromToPosition ? <To /> : <From />}
+      </GridItem>
+    );
+  };
 
   return (
     <Flex
@@ -254,44 +309,7 @@ const SearchTickets = ({
           </Text>
           <Box>
             <Grid templateColumns="17rem 17rem 17rem 9rem" gap="2rem">
-              <GridItem>
-                <Flex direction="column">
-                  <FormControl>
-                    <FormLabel fontSize={14}>Откуда</FormLabel>
-                    <DestinationsInputSelector
-                      value={searchParams.airportFrom}
-                      placeholder="Город отправления"
-                      setValue={(value) =>
-                        updateSearchParam({ airportFrom: value })
-                      }
-                    />
-                  </FormControl>
-                </Flex>
-
-                <Box
-                  data-testid="Reverse"
-                  textAlign="center"
-                  mt="0.3rem"
-                  cursor="pointer"
-                  onClick={handleReverse}
-                >
-                  <ArrowsIcon />
-                </Box>
-
-                <Flex direction="column">
-                  <FormControl>
-                    <FormLabel fontSize={14}>Куда</FormLabel>
-                    <DestinationsInputSelector
-                      value={searchParams.airportTo}
-                      placeholder="Город прибытия"
-                      setValue={(value) =>
-                        updateSearchParam({ airportTo: value })
-                      }
-                    />
-                  </FormControl>
-                </Flex>
-              </GridItem>
-
+              <FirstGridContainter />
               <GridItem position="relative">
                 <Flex direction="column" height="100%">
                   <FormControl>
