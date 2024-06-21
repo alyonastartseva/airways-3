@@ -1,0 +1,25 @@
+.container,
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  color: #ffffff;
+}
+
+.container {
+  & .menu {
+    transition: transform 0.2s ease-in;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.2);
+    }
+
+    &-active {
+      transform: scale(1.2) rotate(90deg);
+
+      transition: transform 0.2s ease-in;
+    }
+  }
+}

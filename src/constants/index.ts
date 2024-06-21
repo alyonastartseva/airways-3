@@ -6,6 +6,7 @@ export {
   seatCategory,
   ITEMS_PER_PAGE,
   secretQuestions,
+  objFlight,
 } from './constants';
 
 export { onlyLettersPattern } from './validate-patterns';
@@ -27,3 +28,4 @@ export { modalFlightSeatFields } from './modal-constants';
 
 export { EModalNames, EModalButtonTexts } from './modal-constants';
 export { modalSettings } from './modal-constants';
+export { styles as scrollTable } from './tableScroll';

@@ -1,69 +1,91 @@
-import { Link, useLocation } from 'react-router-dom';
-import { Box, Flex, Button, Spacer } from '@chakra-ui/react';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ConfigProvider, Button, Switch } from 'antd';
 
-import { useAuth } from '@/hooks';
-import { WebsiteLogo } from '@/common';
-import { ELinks } from '@/services/constants/admin-router-links.constants';
-import setParams from '@utils/set-params.utils';
 import { UserHeader, AdminHeader } from '@/components';
+import { WebsiteLogo } from '@/common';
+import { ELinks } from '@/services';
+import { useAuth } from '@/hooks';
+import { themeValue, set } from '@store/slices';
 
-const HEADER_LINKS = [
-  { path: ELinks.AUTHORIZATION, name: 'Вход' },
-  { path: ELinks.REGISTRATION, name: 'Регистрация' },
-  { path: '/', name: 'На главную' },
-];
+import styles from './Header.module.scss';
 
 const Header = () => {
-  const { isAdmin: isLogged } = useAuth();
-  // TODO заглушка для отображения контента для неавторизованного пользователя
-
+  const { isAdmin } = useAuth();
   const { pathname } = useLocation();
-  const isSignIn = pathname === ELinks.AUTHORIZATION;
-  const { backgroundColor } = setParams('header', isLogged && !isSignIn);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  //Заглушка для авторизации пользователя
+  const theme = useSelector(themeValue);
+  const setTheme = (value: string) => dispatch(set(value));
+
+  // TODO заглушка для отображения контента для неавторизованного пользователя
+  const isSignIn = pathname === ELinks.AUTHORIZATION;
+
+  const UNAUTH_LINKS = [
+    { path: ELinks.AUTHORIZATION, name: 'Вход' },
+    { path: ELinks.REGISTRATION, name: 'Регистрация' },
+    { path: '/', name: 'На главную' },
+  ];
+
+  const handleChangeTheme = () => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+  };
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const unAuthContent = (
+    <div className={styles.buttons}>
+      {UNAUTH_LINKS.map(
+        ({ path, name }) =>
+          path !== pathname && (
+            <Button
+              key={name}
+              className={styles.buttonAntd}
+              size="large"
+              onClick={() => navigate(path)}
+            >
+              {name}
+            </Button>
+          )
+      )}
+    </div>
+  );
+
+  const authContent = isAdmin ? <AdminHeader /> : <UserHeader />;
 
   return (
-    <Box
-      h="4.685rem"
-      display="flex"
-      bg={backgroundColor}
-      boxShadow="0 1px 15px #A3A3A3"
-      pr="1.5rem"
-      pl="1.5rem"
-      justifyContent="space-between"
-      alignItems="center"
-      position="relative"
-      zIndex={10}
-    >
-      <WebsiteLogo isFooter={false} isLogged={isLogged && !isSignIn} />
-      <Spacer />
-      {!isLogged || isSignIn ? (
-        <Flex gap="1rem" color="#006FFF" alignItems="center">
-          {HEADER_LINKS.map(
-            ({ path, name }) =>
-              path !== pathname && (
-                <Link key={path} to={path}>
-                  <Button
-                    color="#006EFF"
-                    fontSize="15"
-                    fontWeight="600"
-                    _hover={{ bgColor: '#C2DCFF' }}
-                    _active={{ bgColor: '#85BAFF' }}
-                    _focus={{ outline: 'none' }}
-                  >
-                    {name}
-                  </Button>
-                </Link>
-              )
-          )}
-        </Flex>
-      ) : isLogged ? (
-        <AdminHeader />
-      ) : (
-        <UserHeader />
-      )}
-    </Box>
+    <div className={styles.container}>
+      <WebsiteLogo isFooter={false} isLogged={isAdmin && !isSignIn} />
+
+      <div className={styles.actions}>
+        {isSignIn ? unAuthContent : authContent}
+
+        <ConfigProvider
+          theme={{
+            components: {
+              Switch: {
+                colorPrimary: '#000000',
+                colorPrimaryHover: '#ffffff2a',
+              },
+            },
+          }}
+        >
+          <Switch
+            className={styles.switch}
+            checkedChildren="Темная тема"
+            unCheckedChildren="Светлая тема"
+            checked={theme === 'dark'}
+            onClick={handleChangeTheme}
+          />
+        </ConfigProvider>
+      </div>
+    </div>
   );
 };
+
 export default Header;

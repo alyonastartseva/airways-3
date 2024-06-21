@@ -1,63 +1,67 @@
-import { Link, useNavigate } from 'react-router-dom';
-import {
-  Text,
-  Flex,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Menu,
-  IconButton,
-} from '@chakra-ui/react';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ConfigProvider, Dropdown } from 'antd';
+import type { MenuProps } from 'antd';
 
 import { ProfileIcon, HumburgerIcon } from '@common/icons';
-import { useAuth } from '@/hooks';
+
+import styles from './UserHeader.module.scss';
 
 const UserHeader = () => {
-  const { setIsAdmin } = useAuth();
-  const navigate = useNavigate();
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
 
-  // удаление токена авторизации при нажатии на кнопку выхода
-  const handleClick = () => {
-    localStorage.removeItem('adminToken');
-    setIsAdmin(false);
-    navigate('/', { replace: true });
+  const items: MenuProps['items'] = [
+    {
+      label: 'menu-item',
+      key: 'other',
+    },
+
+    {
+      label: 'menu-item2',
+      key: 'other2',
+    },
+
+    {
+      label: 'Выход',
+      key: 'signOut',
+    },
+  ];
+
+  const onClick: MenuProps['onClick'] = ({ key }) => {
+    if (key === 'signOut') {
+      // Реализовать выход из юсера, когда будет авторизация
+    }
   };
 
   return (
-    <Flex gap="0.5rem" data-testid="userHeader">
-      <Link to="/search" data-testid="userProfileLink">
-        <Flex
-          gap="1rem"
-          alignItems="center"
-          _hover={{ transform: 'scale(1.01)', textDecoration: '2px underline' }}
-        >
-          <Text color="white" fontWeight="500" data-testid="userName">
-            Анна
-          </Text>
-          <ProfileIcon />
-        </Flex>
+    <div className={styles.container}>
+      <Link to="/" className={styles.profile}>
+        <span>--Name--</span>
+
+        <ProfileIcon />
       </Link>
-      <Menu isLazy>
-        <MenuButton
-          as={IconButton}
-          icon={<HumburgerIcon />}
-          variant="outline"
-          border="none"
-          _hover={{ bgColor: 'transparent', transform: 'scale(1.2)' }}
-          _active={{
-            bgColor: 'transparent',
-            transform: 'scale(1.2) rotate(90deg)',
-          }}
-          _focus={{ outline: 'none' }}
-          data-testid="menuBtn"
-        />
-        <MenuList>
-          <MenuItem>Option placeholder</MenuItem>
-          <MenuItem>Option placeholder</MenuItem>
-          <MenuItem onClick={handleClick}>Выход</MenuItem>
-        </MenuList>
-      </Menu>
-    </Flex>
+
+      <ConfigProvider
+        theme={{
+          components: {
+            Dropdown: { fontSize: 16, controlItemBgHover: '#445ebd7e' },
+          },
+        }}
+      >
+        <Dropdown
+          menu={{ items, onClick }}
+          trigger={['click']}
+          open={isOpenMenu}
+          onOpenChange={setIsOpenMenu}
+          placement="bottom"
+        >
+          <a className={isOpenMenu ? styles['menu-active'] : styles.menu}>
+            <HumburgerIcon />
+          </a>
+        </Dropdown>
+      </ConfigProvider>
+    </div>
   );
 };
 

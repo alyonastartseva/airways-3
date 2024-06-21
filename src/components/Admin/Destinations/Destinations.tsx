@@ -41,6 +41,7 @@ import {
 } from '@/common';
 import { IDestination, IDestinationPost } from '@/interfaces';
 import { DestinationsInputSelector } from '@/components/DestinationsInputSelector';
+import { scrollTable } from '@/constants';
 
 const PAGE_KEY = 'DESTINATIONS_CURR_PAGE';
 
@@ -306,57 +307,59 @@ const Destinations = () => {
             heading="Места назначения"
             formName={EModalNames.DESTINATIONS}
           />
-          <Table>
-            <Thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <Tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <Th
-                      border="0.0625rem solid #DEDEDE"
-                      color="#000000"
-                      key={header.id}
-                      fontSize="0.875rem"
-                      lineHeight="1.125rem"
-                      textTransform="none"
-                      fontWeight="semibold"
-                      width={header.getSize()}
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </Th>
-                  ))}
-                </Tr>
-              ))}
-            </Thead>
-            <Tbody>
-              {table.getRowModel().rows.map((row) => (
-                <Tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <Td
-                      border="0.0625rem solid #DEDEDE"
-                      color="#393939"
-                      fontSize="0.875rem"
-                      lineHeight="1.125rem"
-                      key={cell.id}
-                      textTransform="none"
-                      fontWeight="normal"
-                      paddingX="0.25rem"
-                      paddingY="0.125rem"
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Td>
-                  ))}
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
+          <div {...scrollTable}>
+            <Table>
+              <Thead>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <Tr key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => (
+                      <Th
+                        border="0.0625rem solid #DEDEDE"
+                        color="#000000"
+                        key={header.id}
+                        fontSize="0.875rem"
+                        lineHeight="1.125rem"
+                        textTransform="none"
+                        fontWeight="semibold"
+                        width={header.getSize()}
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </Th>
+                    ))}
+                  </Tr>
+                ))}
+              </Thead>
+              <Tbody>
+                {table.getRowModel().rows.map((row) => (
+                  <Tr key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <Td
+                        border="0.0625rem solid #DEDEDE"
+                        color="#393939"
+                        fontSize="0.875rem"
+                        lineHeight="1.125rem"
+                        key={cell.id}
+                        textTransform="none"
+                        fontWeight="normal"
+                        paddingX="0.25rem"
+                        paddingY="0.125rem"
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </Td>
+                    ))}
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </div>
         </Box>
         <FooterTable
           data={tableData(destinationsByPage)}
