@@ -8,8 +8,9 @@ import {
   Select,
   Typography,
 } from 'antd';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { secretQuestions } from '@/constants';
 
 import s from './SignUp.module.scss';
 
@@ -24,12 +25,9 @@ const { Option } = Select;
 const { Item } = Form;
 
 const SignUp = () => {
-  const [secretQuestion, setSecretQuestion] = useState('');
-  const [secretAnswer, setSecretAnswer] = useState('');
-
   const onFinish = (values: registerForm) => {
     // eslint-disable-next-line no-console
-    console.log('log fields', { ...values, secretAnswer, secretQuestion });
+    console.log('log fields', { ...values });
   };
 
   const [form] = Form.useForm();
@@ -77,13 +75,12 @@ const SignUp = () => {
                 },
               ]}
             >
-              <Select
-                placeholder="Выберите вопрос"
-                onChange={setSecretQuestion}
-              >
-                <Option value="1">Как звали вашего первого питона?</Option>
-                <Option value="2">Любовь = ?</Option>
-                <Option value="3">Ваш первый учитель?</Option>
+              <Select placeholder="Выберите вопрос">
+                {secretQuestions.map(({ value, question }) => (
+                  <Option key={value} value={value}>
+                    {question}
+                  </Option>
+                ))}
               </Select>
             </Item>
             <Item
@@ -97,7 +94,7 @@ const SignUp = () => {
                 },
               ]}
             >
-              <Input onChange={(e) => setSecretAnswer(e.target.value)} />
+              <Input />
             </Item>
             <Item
               className={s.inputField}

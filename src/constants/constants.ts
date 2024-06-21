@@ -34,4 +34,10 @@ export const seatCategory = [
   { ru: 'Премиум', eng: 'PREMIUM_ECONOMY' },
 ];
 
+export const secretQuestions = [
+  { value: 1, question: 'Как звали вашего первого питона?' },
+  { value: 2, question: 'Любовь = ?' },
+  { value: 3, question: 'Ваш первый учитель?' },
+];
+
 export const ITEMS_PER_PAGE = 10;
