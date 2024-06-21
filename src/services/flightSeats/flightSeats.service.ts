@@ -40,9 +40,9 @@ const flightSeatsAPI: IFlightSeatsApi = {
         .then((response) => response.data);
     }
     return await adminInstance
-      .get<Promise<IFSQuery>>(
-        `${ERoutes.FLIGHT_SEATS}?page=${pageIndex}&size=${size}`
-      )
+      .get<
+        Promise<IFSQuery>
+      >(`${ERoutes.FLIGHT_SEATS}?page=${pageIndex}&size=${size}`)
       .then((response) => response.data);
   },
 

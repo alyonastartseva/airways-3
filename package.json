@@ -11,7 +11,7 @@
     "format": "npx prettier --write ./src",
     "lint": "npx eslint src --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint ./src --fix",
-    "prepare": "husky install && chmod ug+x .husky/* && chmod ug+x .git/hooks/*",
+    "prepare": "husky install",
     "preview": "vite preview",
     "test": "vitest",
     "release": "standard-version"

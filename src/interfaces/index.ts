@@ -49,3 +49,9 @@ export type {
   IFormBooking,
   TBookingStatus,
 } from './booking.interfaces';
+export type {
+  ISearch,
+  IFlightTest,
+  TiketDataProps,
+  ITicketFlightProps,
+} from './ticketsForTest.interfaces';

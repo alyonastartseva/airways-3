@@ -1,4 +1,6 @@
 import { SearchTickets } from '@/components';
+import { TiketData } from '@/components/Ticket/TiketData';
+import { objFlight } from '@/constants';
 
 const FilteredTicketsPage = () => {
   const getInitialSearchData = () => {
@@ -19,6 +21,7 @@ const FilteredTicketsPage = () => {
         alignItems={'start'}
         marginTop={'20px'}
       />
+      <TiketData flights={objFlight} />
     </div>
   );
 };
