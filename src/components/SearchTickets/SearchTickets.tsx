@@ -271,20 +271,11 @@ const SearchTickets = ({
       );
     };
 
-    if (fromToPosition)
-      return (
-        <GridItem>
-          <From />
-          <SwitcherFirstContainer />
-          <To />
-        </GridItem>
-      );
-
     return (
       <GridItem>
-        <To />
+        {fromToPosition ? <From /> : <To />}
         <SwitcherFirstContainer />
-        <From />
+        {fromToPosition ? <To /> : <From />}
       </GridItem>
     );
   };
