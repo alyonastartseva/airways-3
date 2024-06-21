@@ -1,229 +1,180 @@
-import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
 import {
-  Alert,
-  AlertIcon,
-  Box,
   Button,
+  Card,
   Checkbox,
   Flex,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
+  Form,
   Input,
-  InputGroup,
-  InputRightElement,
-  Link,
   Select,
-  Spinner,
-  Text,
-} from '@chakra-ui/react';
-import { ViewOffIcon, ViewIcon } from '@chakra-ui/icons';
+  Typography,
+} from 'antd';
+import { useNavigate } from 'react-router-dom';
 
-import { userApi } from '@services/user/user.service';
-import { IFormUserCreate } from '@/interfaces';
+import { secretQuestions } from '@/constants';
 
-const validationSchema = Yup.object().shape({
-  email: Yup.string().required('Введите email').email('Формат email неверен'),
-  securityQuestion: Yup.string(),
-  answerQuestion: Yup.string().required('Введите ответ на секретный вопрос'),
-  password: Yup.string()
-    .required('Введите пароль')
-    .min(5, 'Пароль должен быть длиннее 5 символов'),
-  repeatPassword: Yup.string()
-    .required('Введите пароль')
-    .min(5, 'Пароль должен быть длиннее 5 символов')
-    .oneOf([Yup.ref('password')], 'Пароль не совпадает'),
-  checkbox: Yup.boolean()
-    .oneOf([true], 'Примите условия пользовательского соглашения')
-    .required('Примите условия пользовательского соглашения'),
-});
+import s from './SignUp.module.scss';
+
+type registerForm = {
+  email: string;
+  password: string;
+  acceptRules: boolean;
+};
+
+const { Title } = Typography;
+const { Option } = Select;
+const { Item } = Form;
 
 const SignUp = () => {
-  const [show, setShow] = useState(false);
-  const handleClick = () => setShow(!show);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    mode: 'onBlur',
-    resolver: yupResolver(validationSchema),
-  });
-
-  const handleFormSubmit: SubmitHandler<IFormUserCreate> = async (
-    data: IFormUserCreate
-  ) => {
-    try {
-      setIsLoading(true);
-      const response = await userApi.postUser(data);
-      if (response && response.error) {
-        setError(response.error);
-      } else {
-        reset();
-        navigate('/login');
-      }
-    } catch (err) {
-      setError('Ошибка при регистрации');
-    } finally {
-      setIsLoading(false);
-    }
+  const onFinish = (values: registerForm) => {
+    // eslint-disable-next-line no-console
+    console.log('log fields', { ...values });
   };
 
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
+
   return (
-    <Flex bg="#EFEFEF" pt="5rem" pb="5rem" justify="center">
-      <Box bg="#FFFFFF" w="38rem" h="auto" p="1.5rem 3rem" borderRadius="1rem">
-        <form data-testid="form-reg" onSubmit={handleSubmit(handleFormSubmit)}>
-          <Text fontSize="2rem" as="b">
+    <Form
+      layout="vertical"
+      form={form}
+      name="register"
+      onFinish={onFinish}
+      scrollToFirstError
+    >
+      <Flex vertical align="center" justify="center">
+        <Card className={s.formContainer}>
+          <Title className={s.title} level={2}>
             Регистрация
-          </Text>
-          <FormControl mt="1.75rem" isInvalid={errors?.email !== undefined}>
-            <FormLabel htmlFor="email" fontSize="0.8rem" color="#4A4A4A">
-              Email
-            </FormLabel>
-            <Input
-              placeholder="Email"
-              type="email"
-              id="email"
-              {...register('email')}
-            />
-            <FormErrorMessage>
-              {errors?.email?.message?.toString()}
-            </FormErrorMessage>
-          </FormControl>
-          <FormControl mt="1.75rem">
-            <FormLabel fontSize="0.8rem" color="#4A4A4A">
-              Секретный вопрос
-            </FormLabel>
-            <Select
-              data-testid="securityQuestion"
-              {...register('securityQuestion')}
+          </Title>
+          <Flex vertical gap={'1rem'}>
+            <Item
+              className={s.inputField}
+              name="email"
+              label="E-mail"
+              rules={[
+                {
+                  type: 'email',
+                  message: 'неправильный email',
+                },
+                {
+                  required: true,
+                  message: 'Введите ваш email',
+                },
+              ]}
             >
-              <option value="Как звали Вашего первого питомца?">
-                Как звали Вашего первого питомца?
-              </option>
-              <option value="Имя Вашей матери?">Имя Вашей матери?</option>
-              <option value="Какой Ваш любимый цвет?">
-                Какой Ваш любимый цвет?
-              </option>
-            </Select>
-          </FormControl>
-          <FormControl
-            mt="1.75rem"
-            isInvalid={errors?.answerQuestion !== undefined}
-          >
-            <FormLabel
-              fontSize="0.8rem"
-              color="#4A4A4A"
-              htmlFor="answerQuestion"
+              <Input />
+            </Item>
+            <Item
+              className={s.inputField}
+              name="secretQuestion"
+              label="Секретный вопрос"
+              rules={[
+                {
+                  required: true,
+                  message: 'Пожалуйста, выберите секретный вопрос!',
+                },
+              ]}
             >
-              Ответ на секретный вопрос
-            </FormLabel>
-            <Input
-              type="text"
-              id="answerQuestion"
-              placeholder="Ответ на секретный вопрос"
-              {...register('answerQuestion')}
-            />
-            <FormErrorMessage>
-              {errors?.answerQuestion?.message?.toString()}
-            </FormErrorMessage>
-          </FormControl>
-          <FormControl mt="1.75rem" isInvalid={errors?.password !== undefined}>
-            <FormLabel fontSize="0.8rem" color="#4A4A4A" htmlFor="password">
-              Пароль
-            </FormLabel>
-            <InputGroup>
-              <Input
-                placeholder="Пароль"
-                type={show ? 'text' : 'password'}
-                id="password"
-                {...register('password', {
-                  pattern: /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,}/,
-                })}
-              />
-              <InputRightElement>
-                <Text h="1.75rem" onClick={handleClick}>
-                  {show ? <ViewOffIcon /> : <ViewIcon />}
-                </Text>
-              </InputRightElement>
-            </InputGroup>
-            <FormErrorMessage>
-              {errors?.password?.message?.toString()}
-            </FormErrorMessage>
-          </FormControl>
-          <FormControl
-            mt="1.75rem"
-            isInvalid={errors?.repeatPassword !== undefined}
-          >
-            <FormLabel
-              fontSize="0.8rem"
-              color="#4A4A4A"
-              htmlFor="repeatPassword"
+              <Select placeholder="Выберите вопрос">
+                {secretQuestions.map(({ value, question }) => (
+                  <Option key={value} value={value}>
+                    {question}
+                  </Option>
+                ))}
+              </Select>
+            </Item>
+            <Item
+              className={s.inputField}
+              name="secretAnswer"
+              label="Ответ на секретный вопрос"
+              rules={[
+                {
+                  required: true,
+                  message: 'Пожалуйста, введите ответ на секретный вопрос!',
+                },
+              ]}
             >
-              Повторить пароль
-            </FormLabel>
-            <InputGroup>
-              <Input
-                placeholder="Повторить пароль"
-                type={show ? 'text' : 'password'}
-                id="repeatPassword"
-                {...register('repeatPassword', {
-                  pattern: /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,}/,
-                })}
-              />
-            </InputGroup>
-            <FormErrorMessage>
-              {errors?.repeatPassword?.message?.toString()}
-            </FormErrorMessage>
-          </FormControl>
-          <FormControl mt="2rem" isInvalid={errors?.checkbox !== undefined}>
-            <Checkbox id="checkbox" {...register('checkbox')}>
-              <FormLabel
-                htmlFor="checkbox"
-                mb="0"
-                ml="0.75rem"
-                fontSize="0.75rem"
-                cursor="pointer"
-                whiteSpace="nowrap"
-              >
-                Я прочитал(-а){' '}
-                <Link color="#1DA1F2" textDecoration="underline">
+              <Input />
+            </Item>
+            <Item
+              className={s.inputField}
+              name="password"
+              label="Пароль"
+              rules={[
+                {
+                  required: true,
+                  message: 'Введите ваш пароль',
+                },
+              ]}
+              hasFeedback
+            >
+              <Input.Password />
+            </Item>
+
+            <Item
+              className={s.inputField}
+              name="confirm"
+              label="Потвердите пароль"
+              dependencies={['password']}
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: 'Пожалуйста потвердите пароль',
+                },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error('Пароли не совпадают'));
+                  },
+                }),
+              ]}
+            >
+              <Input.Password />
+            </Item>
+            <Item
+              name="acceptRules"
+              valuePropName="checked"
+              rules={[
+                {
+                  validator: (_, value) =>
+                    value
+                      ? Promise.resolve()
+                      : Promise.reject(
+                          new Error(
+                            'для регистрации вам нужно согласиться с условиями пользовательского соглашения'
+                          )
+                        ),
+                },
+              ]}
+            >
+              <Checkbox className={s.centredText}>
+                я прочитал(-а){' '}
+                <button
+                  className={s.navigateBtn}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate('/sign-in');
+                  }}
+                >
                   условия пользовательского соглашения
-                </Link>{' '}
-                и согласен(-на) с ними
-              </FormLabel>
-            </Checkbox>
-            <FormErrorMessage>
-              {errors?.checkbox?.message?.toString()}
-            </FormErrorMessage>
-          </FormControl>
-          {error && (
-            <Alert status="error" mb="1rem">
-              <AlertIcon />
-              {error}
-            </Alert>
-          )}
-          <Flex justifyContent="center" mt="1rem">
-            <Button bg="#006FFF" color="#FFFFFF" type="submit">
-              {isLoading ? (
-                <Spinner size="sm" color="white" />
-              ) : (
-                'Зарегистрироваться'
-              )}
-            </Button>
+                </button>{' '}
+                и согласен(-сна) с ними
+              </Checkbox>
+            </Item>
           </Flex>
-        </form>
-      </Box>
-    </Flex>
+          <Flex vertical justify="center" align="center">
+            <Item>
+              <Button className={s.submitBtn} type="primary" htmlType="submit">
+                Зарегистрироваться
+              </Button>
+            </Item>
+          </Flex>
+        </Card>
+      </Flex>
+    </Form>
   );
 };
 

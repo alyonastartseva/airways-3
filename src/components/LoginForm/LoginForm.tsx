@@ -1,136 +1,93 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import {
-  Box,
-  Button,
-  Flex,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Link,
-  Text,
-} from '@chakra-ui/react';
-import { ViewOffIcon, ViewIcon } from '@chakra-ui/icons';
+import { Button, Card, Flex, Form, Input, Typography } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
-import { ELinks } from '@/services';
-import { emailPattern } from '@/constants';
-import { EmptyPasswordIcon } from '@common/icons';
+import s from './LoginForm.module.scss';
 
-interface IUserForm {
-  username: string;
+type LoginForm = {
+  email: string;
   password: string;
-}
+  acceptRules: boolean;
+};
+
+const { Title, Text } = Typography;
+const { Item } = Form;
 
 const LoginForm = () => {
-  const [show, setShow] = useState(false);
-  const handleClick = () => setShow(!show);
+  const navigate = useNavigate();
+  const onFinish = (values: LoginForm) => {
+    // eslint-disable-next-line no-console
+    console.log('log fields', { ...values });
+  };
 
-  const {
-    register,
-    formState: { errors },
-  } = useForm<IUserForm>({
-    mode: 'onBlur',
-  });
-
+  const [form] = Form.useForm();
   return (
-    <Box minHeight="100vh" display="flex" flexDirection="column">
-      <Flex
-        flex={1}
-        alignItems="center"
-        justifyContent="center"
-        backgroundColor="#efefef"
-      >
-        <Box
-          width="550px"
-          p={10}
-          pb={4}
-          backgroundColor="white"
-          borderRadius="xl"
-          boxShadow="md"
-        >
-          <Heading mb={4} size="lg">
-            Вход
-          </Heading>
-          <form>
-            <FormControl id="email" mb={4} isInvalid={errors.username != null}>
-              <FormLabel>Email</FormLabel>
-              <Input
-                borderColor="blue.500"
-                size="md"
-                type="email"
-                id="username"
-                {...register('username', {
-                  pattern: emailPattern.email,
-                  required: 'Поле обязательно к заполнению',
-                })}
-              />
-              {errors.username && (
-                <Text color="red.500" marginTop="0.25rem" fontSize="sm">
-                  Введите email
-                </Text>
-              )}
-            </FormControl>
-
-            <FormControl
-              id="password"
-              mb={6}
-              isInvalid={errors.password != null}
+    <Form
+      layout="vertical"
+      form={form}
+      name="register"
+      onFinish={onFinish}
+      scrollToFirstError
+    >
+      <Flex vertical align="center" justify="center">
+        <Card className={s.loginContainer}>
+          <Title className={s.title} level={2}>
+            Регистрация
+          </Title>
+          <Flex vertical align="start" gap="large">
+            <Item
+              className={s.inputField}
+              name="email"
+              label="E-mail"
+              rules={[
+                {
+                  type: 'email',
+                  message: 'неправильный email',
+                },
+                {
+                  required: true,
+                  message: 'Введите ваш email',
+                },
+              ]}
             >
-              <FormLabel>Пароль</FormLabel>
-              <InputGroup>
-                <Input
-                  borderColor="blue.500"
-                  type={show ? 'text' : 'password'}
-                  id="password"
-                  {...register('password', {
-                    required: 'Поле обязательно к заполнению',
-                  })}
-                />
-                <InputRightElement width="3rem">
-                  <Text h="1.75rem" onClick={handleClick}>
-                    {show ? <ViewOffIcon /> : <ViewIcon />}
-                  </Text>
-                </InputRightElement>
-              </InputGroup>
-              {errors.password && (
-                <Flex>
-                  <EmptyPasswordIcon />
-                  <Text
-                    color="red.500"
-                    marginTop="0.25rem"
-                    marginLeft="-0.5rem"
-                    fontSize="sm"
-                  >
-                    Введите пароль
-                  </Text>
-                </Flex>
-              )}
-            </FormControl>
-
-            <Text mb={4} textAlign="center">
-              Ещё нет аккаунта?{' '}
-              <Link color="gray.700" href={ELinks.REGISTRATION}>
-                Зарегистрируйтесь
-              </Link>
-            </Text>
-
-            <Flex justifyContent="center">
-              <Button
-                colorScheme="blue"
-                width="70px"
-                backgroundColor="#006FFF"
-                type="submit"
+              <Input />
+            </Item>
+            <Item
+              className={s.inputField}
+              name="password"
+              label="Пароль"
+              rules={[
+                {
+                  required: true,
+                  message: 'Введите ваш пароль',
+                },
+              ]}
+              hasFeedback
+            >
+              <Input.Password />
+            </Item>
+            <Text className={s.centredText}>
+              У вас ещё нет аккаунта?{' '}
+              <button
+                className={s.navigateBtn}
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/sign-up');
+                }}
               >
+                Зарегистрируйтесь
+              </button>{' '}
+            </Text>
+          </Flex>
+          <Flex vertical justify="center" align="center">
+            <Item>
+              <Button className={s.submitBtn} type="primary" htmlType="submit">
                 Войти
               </Button>
-            </Flex>
-          </form>
-        </Box>
+            </Item>
+          </Flex>
+        </Card>
       </Flex>
-    </Box>
+    </Form>
   );
 };
 

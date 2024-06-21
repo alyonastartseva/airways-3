@@ -5,6 +5,7 @@ export {
   yesNo,
   seatCategory,
   ITEMS_PER_PAGE,
+  secretQuestions,
   objFlight,
 } from './constants';
 
