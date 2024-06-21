@@ -20,7 +20,7 @@ const Header = () => {
   const theme = useSelector(themeValue);
   const setTheme = (value: string) => dispatch(set(value));
 
-  // TODO заглушка для отображения контента для неавторизованного пользователя
+  // Определение контента для неавторизованных пользователей
   const isSignIn = pathname === ELinks.AUTHORIZATION;
 
   const UNAUTH_LINKS = [
@@ -29,6 +29,7 @@ const Header = () => {
     { path: '/', name: 'На главную' },
   ];
 
+  //  изменения темы
   const handleChangeTheme = () => {
     const next = theme === 'dark' ? 'light' : 'dark';
     setTheme(next);
@@ -59,7 +60,11 @@ const Header = () => {
   const authContent = isAdmin ? <AdminHeader /> : <UserHeader />;
 
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        theme === 'dark' ? styles['dark-theme'] : ''
+      }`}
+    >
       <WebsiteLogo isFooter={false} isLogged={isAdmin && !isSignIn} />
 
       <div className={styles.actions}>

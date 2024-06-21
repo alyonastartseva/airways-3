@@ -2,16 +2,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   height: 4.685rem;
   box-shadow: 0 1px 15px #a3a3a3;
   padding-right: 1.5rem;
   padding-left: 1.5rem;
-
-  background-color: #445ebd;
-
   position: relative;
   z-index: 10;
+
+  // Стили для светлой темы
+  background-color: #445ebd;
+  color: #ffffff;
+
+  &.dark-theme {
+    // Стили для темной темы
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
 
   & .buttons {
     display: flex;
@@ -21,7 +27,6 @@
       background-color: #ffffff;
       border: none;
       border-radius: 4px;
-
       color: #006fff;
       font-family: inherit;
       font-weight: 600;
