@@ -67,7 +67,7 @@ const Flights = () => {
   const totalPagesFlights = flightsData?.totalPages;
 
   useEffect(() => {
-    setSearchParams({ page: String(pageIndex + 1) });
+    setSearchParams({ page: String(pageIndex) });
   }, [pageIndex]);
 
   useEffect(() => {

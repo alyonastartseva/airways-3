@@ -387,6 +387,11 @@ const Tickets = () => {
     );
   }
 
+  // алерт при отсутствии билетов
+  if (Array.isArray(tickets) && !tickets?.length) {
+    return <AlertMessage status="info" message="No tickets were found" />;
+  }
+
   // алерт при ошибке
   return <AlertMessage />;
 };

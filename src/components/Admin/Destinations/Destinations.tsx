@@ -72,7 +72,7 @@ const Destinations = () => {
   );
 
   useEffect(() => {
-    setSearchParams({ page: String(pageIndex + 1) });
+    setSearchParams({ page: String(pageIndex) });
   }, [pageIndex]);
 
   useEffect(() => {

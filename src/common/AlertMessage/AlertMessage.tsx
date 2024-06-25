@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import {
   Flex,
   Alert,
@@ -6,12 +7,14 @@ import {
   AlertDescription,
 } from '@chakra-ui/react';
 
-const AlertMessage = () => (
+import { IAlertMessageProps } from './AlertMessage.interfaces';
+
+const AlertMessage: FC<IAlertMessageProps> = ({ status, message }) => (
   <Flex minHeight="81vh" justifyContent="center" alignItems="center">
-    <Alert status="error" justifyContent="center" width="20rem" height="6rem">
+    <Alert status={status} justifyContent="center" width="20rem" height="6rem">
       <AlertIcon />
       <AlertTitle>Error</AlertTitle>
-      <AlertDescription>Something went wrong</AlertDescription>
+      <AlertDescription>{message}</AlertDescription>
     </Alert>
   </Flex>
 );

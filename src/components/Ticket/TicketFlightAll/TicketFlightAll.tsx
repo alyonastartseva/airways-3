@@ -5,7 +5,6 @@ import {
   Grid,
   GridItem,
   Circle,
-  Divider,
   Button,
   List,
   ListItem,
@@ -23,8 +22,6 @@ import {
   UnavailableIcon,
   CompanyPoints,
   SpinerIconTicket,
-  FlyForTicket,
-  GoToFly,
   ArrowTicket,
 } from '@/common/icons';
 import { ITicketFlightProps } from '@/interfaces';
