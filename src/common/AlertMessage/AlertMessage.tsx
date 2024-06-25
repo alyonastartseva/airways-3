@@ -13,7 +13,9 @@ const AlertMessage: FC<IAlertMessageProps> = ({ status, message }) => (
   <Flex minHeight="81vh" justifyContent="center" alignItems="center">
     <Alert status={status} justifyContent="center" width="20rem" height="6rem">
       <AlertIcon />
-      <AlertTitle>Error</AlertTitle>
+      <AlertTitle>
+        {status ? status.charAt(0).toUpperCase() + status.slice(1) : 'Error'}
+      </AlertTitle>
       <AlertDescription>{message}</AlertDescription>
     </Alert>
   </Flex>
