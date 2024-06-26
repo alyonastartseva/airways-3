@@ -25,11 +25,34 @@ const flightsAPI: IFlightsApi = {
     return await adminInstance
       .get<
         IListResponse<Required<IFlightPresentation>>
-      >(ERoutes.GET_FLIGHTS + `?page=${pageIndex ?? ''}&size=${size}`)
+      >(ERoutes.GET_FLIGHTS + `?page=${pageIndex?+pageIndex+1:''}&size=${size}`)
       .then((response) => response.data);
   },
 
   postFlight: async (data) => {
+    // console.log(data);
+    // return fetch('http://92.118.114.29:8080/api/flights', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     "id": 2727,
+    //     "code": "string",
+    //     "airportFrom": "AAQ",
+    //     "airportTo": "AAQ",
+    //     "departureDateTime": "2024-06-26T17:00:32.925Z",
+    //     "arrivalDateTime": "2024-06-27T17:00:32.925Z",
+    //     "aircraftId": 7,
+    //     "flightStatus": "DELAYED"
+    //   }),
+    // }).then((res) => {
+    //   console.log(res)
+    //   return res.json()
+    // }).then((res) => {
+    //   console.log(res)
+    //   return res
+    // })
     return await adminInstance.post<IFlight>(ERoutes.FLIGHTS, data);
   },
 

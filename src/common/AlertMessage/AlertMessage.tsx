@@ -16,7 +16,7 @@ const AlertMessage: FC<IAlertMessageProps> = ({ status, message }) => (
       <AlertTitle>
         {status ? status.charAt(0).toUpperCase() + status.slice(1) : 'Error'}
       </AlertTitle>
-      <AlertDescription>{ message ? message : 'Something went wrong'}</AlertDescription>
+      <AlertDescription>{ message ?? 'Something went wrong'}</AlertDescription>
     </Alert>
   </Flex>
 );
