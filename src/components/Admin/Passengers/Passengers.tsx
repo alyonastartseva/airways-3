@@ -44,7 +44,7 @@ import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 import { useToastHandler } from '@/hooks/useToastHandler';
 import { IPassenger, PersonGenders } from '@/interfaces';
 import { scrollTable } from '@/constants';
-
+import { useTheme } from '@context/:ThemeProvider';
 const PAGE_KEY = 'PASSENGERS_CURR_PAGE';
 
 const Passengers = () => {
@@ -55,6 +55,8 @@ const Passengers = () => {
     PAGE_KEY,
     Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
   );
+
+  const { theme } = useTheme();
 
   const toastHandler = useToastHandler();
   // получение данных
@@ -427,7 +429,7 @@ const Passengers = () => {
                     {headerGroup.headers.map((header) => (
                       <Th
                         border="1px solid #DEDEDE"
-                        color="#000000"
+                        color={theme === 'dark' ? '#FFFFFF' : '#000000'}
                         key={header.id}
                         fontSize="14px"
                         lineHeight="18px"
@@ -452,7 +454,7 @@ const Passengers = () => {
                     {row.getVisibleCells().map((cell) => (
                       <Td
                         border="1px solid #DEDEDE"
-                        color="#393939"
+                        color={theme === 'dark' ? '#FFFFFF' : '#393939'}
                         fontSize="14px"
                         lineHeight="18px"
                         key={cell.id}

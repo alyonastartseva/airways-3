@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import { ELinks } from '@/services';
 import { useAuth } from '@/hooks';
 import { WebsiteLogo } from '@/common';
+import { useTheme } from '@context/:ThemeProvider';
 
 import styles from './Footer.module.scss';
 
-const Footer = () => {
+const Footer: React.FC = () => {
   const { isAdmin: isLogged } = useAuth();
+  const { theme } = useTheme();
 
   // TODO заглушка для отображения контента для неавторизованного пользователя
   const { pathname } = window.location;
@@ -34,7 +36,11 @@ const Footer = () => {
   );
 
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        theme === 'dark' ? styles['dark-theme'] : ''
+      }`}
+    >
       <div className={styles.links}>
         {isLogged && !isSignIn ? unAuthContent : authContent}
       </div>

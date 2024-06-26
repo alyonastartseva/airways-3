@@ -9,12 +9,18 @@
 
   background-color: #445ebd;
 
+  &.dark-theme {
+    background-color: #3b3a3a;
+    color: #ffffff;
+  }
+
   & .links {
     display: flex;
     gap: 35px;
 
     & .link {
       color: #fff;
+
       font-size: 0.9rem;
 
       &:hover {

@@ -37,10 +37,12 @@ import {
 import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 import { useToastHandler } from '@/hooks/useToastHandler';
 import { useSetCurrentPageInPagination } from '@/hooks';
+import { useTheme } from '@context/:ThemeProvider';
 
 const PAGE_KEY = 'TIME_ZONE_CURR_PAGE';
 
 const TimeZones = () => {
+  const { theme } = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
   const pageParam = +(searchParams.get('page') || 1) - 1;
   // индекс и размер пагинации
@@ -271,7 +273,7 @@ const TimeZones = () => {
                     {headerGroup.headers.map((header) => (
                       <Th
                         border="0.0625rem solid #DEDEDE"
-                        color="#000000"
+                        color={theme === 'dark' ? '#FFFFFF' : '#000000'}
                         key={header.id}
                         fontSize="0.875rem"
                         lineHeight="1.125rem"
@@ -296,7 +298,7 @@ const TimeZones = () => {
                     {row.getVisibleCells().map((cell) => (
                       <Td
                         border="0.0625rem solid #DEDEDE"
-                        color="#393939"
+                        color={theme === 'dark' ? '#FFFFFF' : '#393939'}
                         fontSize="0.875rem"
                         lineHeight="1.125rem"
                         key={cell.id}

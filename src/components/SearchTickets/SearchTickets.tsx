@@ -28,6 +28,7 @@ import { ISearchData, IFlightPresentation } from '@/interfaces';
 import { Calendar, SeatCategory } from '@/common';
 import { DestinationsInputSelector } from '@/components';
 import { ISeatCategoryType } from '@/interfaces/flightsSeats.interfaces';
+import { useTheme } from '@context/:ThemeProvider';
 
 import { TicketCard } from '../Ticket/TicketCard';
 import { ITicketCardProps } from '../Ticket/TicketCard/ticketCard.interfaces';
@@ -66,6 +67,9 @@ const SearchTickets = ({
     ITicketCardProps & { flightSeatId: number }[]
   >([]);
   const [fromToPosition, setFromToPosition] = useState(true);
+
+  const { theme } = useTheme();
+  const borderColor = theme === 'light' ? '#D3EFFF' : '#444';
 
   const updateSearchParam = (param: Partial<ISearchData>) => {
     setSearchParams((prev) => ({ ...prev, ...param }));
@@ -287,24 +291,34 @@ const SearchTickets = ({
       w="100%"
       alignItems={alignItems}
       m="auto"
-      mb="30px"
-      marginTop={marginTop}
+      mt={marginTop}
+      flexDirection="column"
     >
       <Box>
         {showImage && (
           <Flex justify="center" h="31.25rem" mb="0.7rem" alignItems="center">
-            <Image src={mainsearch} alt="Main-search" />
+            <Image
+              src={mainsearch}
+              alt="mainsearch"
+              borderRadius="0.5rem"
+              filter={theme === 'dark' ? 'brightness(60%)' : 'none'}
+            />
           </Flex>
         )}
         <Box
-          border="0.9rem solid #D3EFFF"
+          border="0.9rem solid"
+          borderColor={borderColor}
           borderRadius="1rem"
           w="100%"
           maxWidth="75rem"
           h="18.75rem"
           p="0.9rem 3.1rem 2.2rem"
         >
-          <Text color="#445EBD" fontWeight="700" fontSize={36}>
+          <Text
+            color={theme === 'light' ? '#445EBD' : '#FFFFFF'}
+            fontWeight="700"
+            fontSize={36}
+          >
             Найти билеты
           </Text>
           <Box>

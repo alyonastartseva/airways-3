@@ -6,6 +6,7 @@ import {
 
 import { ArrowRightIcon, ArrowLeftIcon } from '@common/icons';
 import { ITEMS_PER_PAGE } from '@/constants';
+import { useTheme } from '@context/:ThemeProvider';
 
 import { IPagination } from './Pagination.interfaces';
 
@@ -14,7 +15,7 @@ import './Pagination.scss';
 
 const Pagination = (props: IPagination) => {
   const { setPaginationData, pageIndex, totalPages = 1 } = props;
-
+  const { theme } = useTheme();
   const itemRender: PaginationPropsAntd['itemRender'] = (
     _,
     type,
@@ -49,7 +50,7 @@ const Pagination = (props: IPagination) => {
   return (
     <ConfigProvider theme={{ components: { Pagination: { itemSize: 40 } } }}>
       <PaginationAntd
-        className="paginationAntd"
+        className={`paginationAntd ${theme}`}
         showSizeChanger={false}
         total={paginationTotal}
         defaultCurrent={pageIndex}

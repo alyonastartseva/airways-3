@@ -38,7 +38,7 @@ import {
   SpinnerBlock,
 } from '@/common';
 import { isRowEditing } from '@/utils/table.utils';
-
+import { useTheme } from '@context/:ThemeProvider';
 const PAGE_KEY = 'AIRPLANES_CURR_PAGE';
 
 const Airplanes = () => {
@@ -85,7 +85,7 @@ const Airplanes = () => {
     isError,
     error,
   } = useGetAircraftQuery({ page: pageIndex });
-
+  const { theme } = useTheme();
   const airplanes = airplanesData?.content;
   const totalPages = airplanesData?.totalPages;
 
@@ -320,7 +320,7 @@ const Airplanes = () => {
                     {headerGroup.headers.map((header) => (
                       <Th
                         border="0.0625rem solid #DEDEDE"
-                        color="#000000"
+                        color={theme === 'dark' ? '#FFFFFF' : '#000000'}
                         key={header.id}
                         fontSize="0.875rem"
                         lineHeight="1.125rem"
@@ -345,7 +345,7 @@ const Airplanes = () => {
                     {row.getVisibleCells().map((cell) => (
                       <Td
                         border="0.0625rem solid #DEDEDE"
-                        color="#393939"
+                        color={theme === 'dark' ? '#FFFFFF' : '#393939'}
                         fontSize="0.875rem"
                         lineHeight="1.125rem"
                         key={cell.id}

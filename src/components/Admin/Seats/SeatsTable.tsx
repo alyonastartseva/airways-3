@@ -25,6 +25,7 @@ import {
   usePatchFlightSeatsMutation,
 } from '@/store/services';
 import { scrollTable } from '@/constants';
+import { useTheme } from '@context/:ThemeProvider';
 
 import { gitTicketClassName } from '../Airplane/Airplane.utils';
 
@@ -48,7 +49,7 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
 }) => {
   const [patchFlightSeats] = usePatchFlightSeatsMutation();
   const [deleteFlightSeats] = useDeleteFlightSeatsMutation();
-
+  const { theme } = useTheme();
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<Required<
     IFSOne & IFSoneSeat
@@ -258,7 +259,7 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
                 {headerGroup.headers.map((header) => (
                   <Th
                     border="1px solid #DEDEDE"
-                    color="#000000"
+                    color={theme === 'dark' ? '#FFFFFF' : '#000000'}
                     key={header.id}
                     fontSize="14px"
                     lineHeight="18px"
@@ -283,7 +284,7 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
                 {row.getVisibleCells().map((cell) => (
                   <Td
                     border="0.0625rem solid #DEDEDE"
-                    color="#393939"
+                    color={theme === 'dark' ? '#FFFFFF' : '#393939'}
                     fontSize="0.875rem"
                     lineHeight="1.125rem"
                     key={cell.id}
