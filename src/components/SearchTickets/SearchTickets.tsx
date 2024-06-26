@@ -28,6 +28,7 @@ import { ISearchData, IFlightPresentation } from '@/interfaces';
 import { Calendar, SeatCategory } from '@/common';
 import { DestinationsInputSelector } from '@/components';
 import { ISeatCategoryType } from '@/interfaces/flightsSeats.interfaces';
+import { useTheme } from '@context/:ThemeProvider';
 
 import { TicketCard } from '../Ticket/TicketCard';
 import { ITicketCardProps } from '../Ticket/TicketCard/ticketCard.interfaces';
@@ -62,6 +63,7 @@ const SearchTickets = ({
   const [passengerWarning, setPassengerWarning] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const { theme } = useTheme();
   const [ticketCardProps, setTicketCardProps] = useState<
     ITicketCardProps & { flightSeatId: number }[]
   >([]);
@@ -369,7 +371,9 @@ const SearchTickets = ({
                     <Alert
                       data-testid="alert-error"
                       status="error"
-                      color="red"
+                      colorScheme={theme === 'dark' ? 'red' : 'white'}
+                      bg={theme === 'dark' ? 'gray.700' : 'red'}
+                      color={theme === 'dark' ? 'white' : 'black'}
                       fontSize={15}
                       mt="2.75rem"
                       position="absolute"
