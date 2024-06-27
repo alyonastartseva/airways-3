@@ -33,7 +33,7 @@ const CardTicket: React.FC<ITicketsPost> = ({ ticket }) => {
             <h3 className={scss['ticket__carrier-name']}>S7 Airlines</h3>
           </div>
           <div className={scss['ticket__stops']}>
-            <p className={scss['ticket__stops-text']}>Прямой рейс</p>
+            <span className={scss['ticket__stops-text']}>Прямой рейс</span>
             {/* стрелка вниз icon */}
             <ArrowTicket />
           </div>
@@ -42,8 +42,10 @@ const CardTicket: React.FC<ITicketsPost> = ({ ticket }) => {
         <div className={scss['ticket__info']}>
           <div className={scss['ticket__segments']}>
             <div className={scss['ticket__info-block-time']}>
-              <p className={scss['ticket__time']}>19:30</p>
-              <p className={scss['ticket__airport-code']}>{ticket.from}</p>
+              <span className={scss['ticket__time']}>19:30</span>
+              <span className={scss['ticket__airport-code']}>
+                {ticket.from}
+              </span>
             </div>
             <div className={scss['ticket__info-block-location']}>
               <p className={scss['ticket__location']}>Санк-Петербург</p>
@@ -59,8 +61,8 @@ const CardTicket: React.FC<ITicketsPost> = ({ ticket }) => {
 
           <div className={scss['ticket__segments']}>
             <div className={scss['ticket__info-block-time']}>
-              <p className={scss['ticket__time']}>23:30</p>
-              <p className={scss['ticket__airport-code']}>{ticket.to}</p>
+              <span className={scss['ticket__time']}>23:30</span>
+              <span className={scss['ticket__airport-code']}>{ticket.to}</span>
             </div>
             <div className={scss['ticket__info-block-location']}>
               <p className={scss['ticket__location']}>Москва</p>
