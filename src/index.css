@@ -11,6 +11,7 @@
   font-size: 1rem;
   line-height: 1.5rem;
   font-weight: 400;
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -69,12 +70,13 @@ body.light a:hover {
 }
 
 body.dark {
-  color: rgba(255, 255, 255, 0.87);
+  color: rgb(177, 162, 162);
+  /* color: rgba(255, 255, 255, 0.87); */
   background-color: #242424;
 }
 
 body.dark a:hover {
-  color: #d3efff;
+  color: #83898c;
 }
 
 @media (prefers-color-scheme: light) {
