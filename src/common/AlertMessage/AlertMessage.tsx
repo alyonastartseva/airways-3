@@ -9,14 +9,14 @@ import {
 
 import { IAlertMessageProps } from './AlertMessage.interfaces';
 
-const AlertMessage: FC<IAlertMessageProps> = ({ status, message }) => (
+const AlertMessage: FC<IAlertMessageProps> = ({ status = 'error', message = 'Something went wrong' }) => (
   <Flex minHeight="81vh" justifyContent="center" alignItems="center">
-    <Alert status={ status ? status : 'error' } justifyContent="center" width="20rem" height="6rem">
+    <Alert status={ status } justifyContent="center" width="20rem" height="6rem">
       <AlertIcon />
       <AlertTitle>
-        {status ? status.charAt(0).toUpperCase() + status.slice(1) : 'Error'}
+        { status.charAt(0).toUpperCase() + status.slice(1) }
       </AlertTitle>
-      <AlertDescription>{ message ?? 'Something went wrong'}</AlertDescription>
+      <AlertDescription>{ message }</AlertDescription>
     </Alert>
   </Flex>
 );

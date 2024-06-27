@@ -25,7 +25,7 @@ const flightsAPI: IFlightsApi = {
     return await adminInstance
       .get<
         IListResponse<Required<IFlightPresentation>>
-      >(ERoutes.GET_FLIGHTS + `?page=${pageIndex?+pageIndex+1:''}&size=${size}`)
+      >(ERoutes.FLIGHTS + `?page=${pageIndex ?? '0'}&size=${size}`)
       .then((response) => response.data);
   },
 
@@ -53,6 +53,9 @@ const flightsAPI: IFlightsApi = {
     //   console.log(res)
     //   return res
     // })
+    //   .catch(e=>{
+    //     console.log(e);
+    //   })
     return await adminInstance.post<IFlight>(ERoutes.FLIGHTS, data);
   },
 
