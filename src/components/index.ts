@@ -26,5 +26,8 @@ export { DestinationsInputSelector } from './DestinationsInputSelector';
 export { TicketCard } from './Ticket/TicketCard';
 export { TicketTariff } from './Ticket/TicketTariff';
 
+export { CardTicketList } from './Ticket/CardTicketList';
+export { CardTicket } from './Ticket/CardTicket';
+
 export { SignUp } from './User/SignUp';
 export { UserHeader } from './User/UserHeader';

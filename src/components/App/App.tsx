@@ -13,14 +13,12 @@ import {
   SignUpPage,
   SearchTicketsPage,
   FilteredTicketsPage,
-  // TicketsPage,
+  TicketsPage,
   BookingPage,
   TimeZonesPage,
   FlightSeatsPage,
   PageNotFound,
 } from '@/pages';
-
-import CardTicketList from '../../pages/User/CardTicketList/CardTicketList';
 
 const App = () => {
   return (
@@ -51,9 +49,8 @@ const App = () => {
         </Route>
         {/* вернуть внутрь после связики страницы с кнопоко подбронее */}
         <Route path="airplane-more" element={<AirplaneMorePage />} />
-        {/* вернуть внутрь после проверки верстки */}
-        {/* <Route path="tickets" element={<TicketsPage />} /> */}
-        <Route path="tickets" element={<CardTicketList />} />
+
+        <Route path="tickets" element={<TicketsPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>
