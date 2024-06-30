@@ -17,7 +17,9 @@ vi.mock('@chakra-ui/react', () => ({
 
 describe('AlertMessage test', () => {
   it('AlertMessage renders', () => {
-    const screen = render(<AlertMessage />);
+    const status = 'error';
+    const message = 'Something went wrong';
+    const screen = render(<AlertMessage status={status} message={message} />);
     expect(screen.getByText('Flex component')).toBeInTheDocument();
     expect(screen.getByText('Alert component')).toBeInTheDocument();
     expect(screen.getByText('AlertIcon component')).toBeInTheDocument();
