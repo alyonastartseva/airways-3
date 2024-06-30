@@ -214,11 +214,11 @@ const SearchTickets = ({
   };
 
   const handleReverse = () => {
+    const { airportFrom, airportTo } = searchParams;
     updateSearchParam({
-      airportTo: searchParams.airportFrom,
-      airportFrom: searchParams.airportTo,
+      airportFrom: airportTo,
+      airportTo: airportFrom,
     });
-    setFromToPosition(!fromToPosition);
   };
   const calendarDates = useMemo(() => {
     const startDate = searchParams.departureDate
