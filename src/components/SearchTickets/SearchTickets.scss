@@ -1,0 +1,42 @@
+$buttonColor: #006fff;
+$textColor: #ffffff;
+
+.formItem-wrapper {
+  height: 60px;
+}
+.formItem,
+.formItem-seatCategory {
+  margin-top: auto;
+  .ant-form-item-label {
+    font-weight: bold;
+    width: 175px;
+    text-align: start;
+  }
+}
+.formItem-seatCategory {
+  margin-top: 3rem;
+}
+.checkboxSearch {
+  padding: 8px 0;
+  margin-top: 2.5rem;
+}
+.searchButton {
+  width: 8rem;
+  height: 3rem;
+  margin-top: -2rem;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: $buttonColor;
+  color: $textColor;
+  font-weight: bold;
+  border: none;
+
+  :hover {
+    cursor: pointer;
+    border: none;
+  }
+}
+
+.colSearch {
+  text-align: start;
+}

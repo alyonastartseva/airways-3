@@ -1,31 +1,27 @@
 import { useState, useMemo } from 'react';
 import {
   Alert,
-  AlertIcon,
-  Box,
-  Flex,
+  Row,
+  Col,
   Image,
-  Text,
-  FormControl,
-  FormLabel,
+  Typography,
+  Form,
   Input,
   Checkbox,
   Button,
-  RadioGroup,
   Radio,
-  Grid,
-  GridItem,
-  Spinner,
-  Select,
-} from '@chakra-ui/react';
-import { formatISO, parseISO, isPast, isToday, compareDesc } from 'date-fns';
+  Spin,
+  DatePicker,
+} from 'antd';
+import { formatISO, isPast, isToday, compareDesc } from 'date-fns';
+import dayjs from 'dayjs';
 
 import { ArrowsIcon } from '@common/icons';
 import { mainsearch } from '@/assets';
 import { searchApi } from '@services/searchTickets.service';
 import { getFlights } from '@services/flights/flights.service';
 import { ISearchData, IFlightPresentation } from '@/interfaces';
-import { Calendar, SeatCategory } from '@/common';
+import { SeatCategory } from '@/common';
 import { DestinationsInputSelector } from '@/components';
 import { ISeatCategoryType } from '@/interfaces/flightsSeats.interfaces';
 
@@ -33,6 +29,10 @@ import { TicketCard } from '../Ticket/TicketCard';
 import { ITicketCardProps } from '../Ticket/TicketCard/ticketCard.interfaces';
 
 import { DataToType, ISearchRadioData } from './SearchTickets.interfaces';
+import './SearchTickets.scss';
+
+const { Title, Text } = Typography;
+const { Item: FormItem } = Form;
 
 interface Props {
   initialValues?: ISearchData;
@@ -55,7 +55,6 @@ const SearchTickets = ({
   },
   onSearch,
   showImage = true,
-  alignItems = 'center',
   marginTop,
 }: Props) => {
   const [searchParams, setSearchParams] = useState(initialValues);
@@ -217,12 +216,21 @@ const SearchTickets = ({
     });
     setFromToPosition(!fromToPosition);
   };
-  const calendarDates = useMemo(() => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      handleReverse();
+    }
+  };
+
+  const calendarDates: {
+    startDate: dayjs.Dayjs | null;
+    endDate: dayjs.Dayjs | null;
+  } = useMemo(() => {
     const startDate = searchParams.departureDate
-      ? parseISO(searchParams.departureDate)
+      ? dayjs(searchParams.departureDate)
       : null;
     const endDate = searchParams.returnDate
-      ? parseISO(searchParams.returnDate)
+      ? dayjs(searchParams.returnDate)
       : null;
 
     return { startDate, endDate };
@@ -231,207 +239,232 @@ const SearchTickets = ({
   const FirstGridContainter = () => {
     const From = () => {
       return (
-        <Flex direction="column">
-          <FormControl>
-            <FormLabel fontSize={14}>Откуда</FormLabel>
+        <FormItem className="formItem-wrapper">
+          <FormItem className="formItem" label="Откуда">
             <DestinationsInputSelector
               value={searchParams.airportFrom}
               placeholder="Город отправления"
               setValue={(value) => updateSearchParam({ airportFrom: value })}
             />
-          </FormControl>
-        </Flex>
+          </FormItem>
+        </FormItem>
       );
     };
     const To = () => {
       return (
-        <Flex direction="column">
-          <FormControl>
-            <FormLabel fontSize={14}>Куда</FormLabel>
+        <FormItem className="formItem-wrapper">
+          <FormItem className="formItem" label="Куда">
             <DestinationsInputSelector
               value={searchParams.airportTo}
               placeholder="Город прибытия"
               setValue={(value) => updateSearchParam({ airportTo: value })}
             />
-          </FormControl>
-        </Flex>
+          </FormItem>
+        </FormItem>
       );
     };
     const SwitcherFirstContainer = () => {
       return (
-        <Box
+        <div
           data-testid="Reverse"
-          textAlign="center"
-          mt="0.3rem"
-          cursor="pointer"
           onClick={handleReverse}
+          onKeyDown={handleKeyDown}
+          role="button"
+          tabIndex={0}
+          style={{
+            textAlign: 'center',
+            marginTop: '0.3rem',
+            cursor: 'pointer',
+          }}
         >
           <ArrowsIcon />
-        </Box>
+        </div>
       );
     };
 
     return (
-      <GridItem>
+      <Col span={6}>
         {fromToPosition ? <From /> : <To />}
         <SwitcherFirstContainer />
         {fromToPosition ? <To /> : <From />}
-      </GridItem>
+      </Col>
     );
   };
 
   return (
-    <Flex
+    <Row
       justify="center"
-      maxWidth="90rem"
-      w="100%"
-      alignItems={alignItems}
-      m="auto"
-      mb="30px"
-      marginTop={marginTop}
+      align="middle"
+      style={{
+        maxWidth: '90rem',
+        width: '100%',
+        margin: 'auto',
+        marginBottom: '30px',
+        marginTop,
+      }}
     >
-      <Box>
+      <Col>
         {showImage && (
-          <Flex justify="center" h="31.25rem" mb="0.7rem" alignItems="center">
+          <Row
+            justify="center"
+            style={{ height: '31.25rem', marginBottom: '0.7rem' }}
+            align="middle"
+          >
             <Image src={mainsearch} alt="Main-search" />
-          </Flex>
+          </Row>
         )}
-        <Box
-          border="0.9rem solid #D3EFFF"
-          borderRadius="1rem"
-          w="100%"
-          maxWidth="75rem"
-          h="18.75rem"
-          p="0.9rem 3.1rem 2.2rem"
+        <div
+          style={{
+            border: '0.9rem solid #D3EFFF',
+            borderRadius: '1rem',
+            width: '100%',
+            maxWidth: '75rem',
+            height: '18.75rem',
+            padding: '0.9rem 3.1rem 2.2rem',
+          }}
         >
-          <Text color="#445EBD" fontWeight="700" fontSize={36}>
+          <Title level={3} style={{ color: '#445EBD' }}>
             Найти билеты
-          </Text>
-          <Box>
-            <Grid templateColumns="17rem 17rem 17rem 9rem" gap="2rem">
+          </Title>
+          <div>
+            <Row gutter={32}>
               <FirstGridContainter />
-              <GridItem position="relative">
-                <Flex direction="column" height="100%">
-                  <FormControl>
-                    <FormLabel fontSize={14}>Количество пассажиров</FormLabel>
+              <Col span={6}>
+                <FormItem>
+                  <FormItem className="formItem" label="Количество пассажиров">
                     <Input
                       type="number"
                       value={searchParams.numberOfPassengers ?? ''}
                       onChange={handlePassengerChange}
                       placeholder="Количество пассажиров"
-                      isInvalid={
+                      status={
                         passengerWarning &&
                         (!searchParams.numberOfPassengers ||
                           searchParams.numberOfPassengers < 1)
+                          ? 'error'
+                          : ''
                       }
+                      style={{ padding: '5px 5px' }}
                     />
                     {passengerWarning && (
-                      <Text color="red" fontSize={12} mt={1}>
+                      <Text
+                        type="danger"
+                        style={{ fontSize: 12, marginTop: 8 }}
+                      >
                         Количество пассажиров должно быть больше 0
                       </Text>
                     )}
-                  </FormControl>
-                  <FormControl mt="auto">
-                    <FormLabel fontSize={14}>Категория сиденья</FormLabel>
-                    <Select
-                      value={searchParams.categoryOfSeats}
-                      onChange={(e) =>
-                        updateSearchParam({
-                          categoryOfSeats: e.target.value as ISeatCategoryType,
-                        })
-                      }
-                      fontSize="0.87rem"
-                      _hover={{
-                        borderColor: '#cbd5e0',
-                      }}
-                      _active={{
-                        borderColor: '#398AEA',
-                      }}
-                    >
-                      <SeatCategory />
-                    </Select>
-                  </FormControl>
-                </Flex>
-              </GridItem>
+                  </FormItem>
 
-              <GridItem>
-                <Flex direction="column" height="100%" position="relative">
-                  <FormControl>
-                    <FormLabel fontSize={14}>Дата</FormLabel>
-                    <Calendar
-                      select={(day: Date) => getDates(day)}
-                      startDate={calendarDates.startDate}
-                      endDate={calendarDates.endDate}
-                      calendarFormat={2}
+                  <FormItem
+                    className="formItem-seatCategory"
+                    label={
+                      <span style={{ display: 'block' }}>
+                        Категория сиденья
+                      </span>
+                    }
+                    style={{
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    <SeatCategory
+                      value={searchParams.categoryOfSeats as ISeatCategoryType}
+                      onChange={(value) =>
+                        updateSearchParam({ categoryOfSeats: value })
+                      }
                     />
-                  </FormControl>
+                  </FormItem>
+                </FormItem>
+              </Col>
+
+              <Col span={6}>
+                <FormItem>
+                  <FormItem className="formItem" label="Дата">
+                    <DatePicker.RangePicker
+                      value={[
+                        calendarDates.startDate
+                          ? dayjs(calendarDates.startDate)
+                          : null,
+                        calendarDates.endDate
+                          ? dayjs(calendarDates.endDate)
+                          : null,
+                      ]}
+                      onChange={(dates) => {
+                        const [start, end] = dates ?? [null, null];
+                        if (start) getDates(start.toDate());
+                        if (end) getDates(end.toDate());
+                      }}
+                      format="YYYY-MM-DD"
+                      style={{ padding: '5px 5px' }}
+                    />
+                  </FormItem>
                   {error && (
                     <Alert
                       data-testid="alert-error"
-                      status="error"
-                      color="red"
-                      fontSize={15}
-                      mt="2.75rem"
-                      position="absolute"
-                      top="35px"
-                    >
-                      <AlertIcon mr={1} />
-                      {error}
-                    </Alert>
+                      type="error"
+                      message={error}
+                      showIcon
+                      style={{
+                        fontSize: 15,
+                        marginTop: '2.75rem',
+                        position: 'absolute',
+                        top: 35,
+                      }}
+                    />
                   )}
                   <Checkbox
-                    py="8px"
-                    mt="auto"
-                    isChecked={searchParams.directFlightsOnly}
+                    className="checkboxSearch"
+                    checked={searchParams.directFlightsOnly}
                     onChange={(e) =>
                       updateSearchParam({ directFlightsOnly: e.target.checked })
                     }
                   >
                     Искать билеты без пересадок
                   </Checkbox>
-                </Flex>
-              </GridItem>
+                </FormItem>
+              </Col>
 
-              <GridItem>
-                <Flex direction="column">
-                  <FormControl>
-                    <RadioGroup
+              <Col className="colSearch" span={6}>
+                <FormItem>
+                  <FormItem className="formItem" label="Тип поездки">
+                    <Radio.Group
                       value={searchParams.tripType}
-                      onChange={(value) =>
-                        updateSearchParam({ tripType: value })
+                      onChange={(e) =>
+                        updateSearchParam({ tripType: e.target.value })
                       }
                     >
                       <Radio value="roundTrip">Туда и обратно</Radio>
-                      <Radio value="oneWay" mt="1rem">
+                      <Radio value="oneWay" style={{ marginTop: '1rem' }}>
                         В одну сторону
                       </Radio>
-                    </RadioGroup>
-                  </FormControl>
-                </Flex>
-
-                <Flex justify="center" mt="3rem">
+                    </Radio.Group>
+                  </FormItem>
+                </FormItem>
+                <Row justify="center" style={{ marginTop: '3rem' }}>
                   <Button
-                    w="8rem"
-                    h="3rem"
-                    bg="#006FFF"
-                    color="#FFFFFF"
+                    className="searchButton"
                     onClick={handleSearch}
+                    style={{ backgroundColor: '#006fff' }}
                   >
-                    {isLoading ? <Spinner size="sm" color="white" /> : 'Найти'}
+                    {isLoading ? (
+                      <Spin size="small" style={{ color: 'white' }} />
+                    ) : (
+                      'Найти'
+                    )}
                   </Button>
-                </Flex>
-              </GridItem>
-            </Grid>
-          </Box>
-        </Box>
+                </Row>
+              </Col>
+            </Row>
+          </div>
+        </div>
         {ticketCardProps &&
           ticketCardProps.map(({ flightSeatId, ...ticketProps }) => (
-            <Box key={flightSeatId} my={8}>
+            <div key={flightSeatId} style={{ margin: '8px 0' }}>
               <TicketCard {...ticketProps} />
-            </Box>
+            </div>
           ))}
-      </Box>
-    </Flex>
+      </Col>
+    </Row>
   );
 };
 
