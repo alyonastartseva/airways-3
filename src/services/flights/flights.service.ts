@@ -25,24 +25,23 @@ const flightsAPI: IFlightsApi = {
     return await adminInstance
       .get<
         IListResponse<Required<IFlightPresentation>>
-      >(`${ERoutes.FLIGHTS}?page=${pageIndex ?? '0'}&size=${size}`)
+      >(ERoutes.FLIGHTS + `?page=${pageIndex ?? '0'}&size=${size}`)
       .then((response) => response.data);
   },
 
-  postFlight: async (data: IFlightPost) => {
+  postFlight: async (data) => {
     return await adminInstance.post<IFlight>(ERoutes.FLIGHTS, data);
   },
 
   deleteFlight: async (id: number | undefined) => {
     if (id) {
-      return await adminInstance.delete<IFlight>(`${ERoutes.FLIGHTS}/${id}`);
+      return await adminInstance.delete<IFlight>(ERoutes.FLIGHTS + id);
     }
   },
-
-  updateFlight: async (data: IFlightsUpdate | null) => {
+  updateFlight: async (data) => {
     if (!data) return;
     const { id, ...body } = data;
-    return await adminInstance.patch<IFlight>(`${ERoutes.FLIGHTS}/${id}`, body);
+    return await adminInstance.patch<IFlight>(ERoutes.FLIGHTS + id, body);
   },
 };
 
