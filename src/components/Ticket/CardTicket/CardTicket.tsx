@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import {
   AirplaneLandingIcon,
   AirplaneTakeoffIcon,
@@ -6,7 +5,6 @@ import {
   ArrowsClockwiseIcon,
   ArrowTicket,
   BackpackIcon,
-  //   PaidIcon,
   SuitcaseIcon,
   WarningCircleIcon,
   AirplaneIcon,
@@ -14,12 +12,14 @@ import {
 import { ITicketsPost } from 'src/interfaces/tickets.interface';
 
 import scss from './CardTicket.module.scss';
-const CardTicket: React.FC<ITicketsPost> = ({ ticket }) => {
+
+interface Props {
+  ticket: ITicketsPost;
+}
+
+const CardTicket: React.FC<Props> = ({ ticket }) => {
   return (
     <li className={scss.ticket}>
-      {/* Рубль icon */}
-      {/* <PaidIcon /> */}
-
       <div className={`${scss['ticket__tag']} ${scss['ticket__tag--fastest']}`}>
         Самый быстрый
       </div>

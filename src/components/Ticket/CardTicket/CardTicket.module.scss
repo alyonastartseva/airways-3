@@ -25,7 +25,7 @@ $color-grey: #808080;
     height: 165px;
     padding: 10px 22px;
   }
-  // Header
+
   &__header {
     display: flex;
     justify-content: space-between;
@@ -67,7 +67,6 @@ $color-grey: #808080;
     }
   }
 
-  // Info
   &__info {
     display: flex;
     gap: 15px;
@@ -115,7 +114,6 @@ $color-grey: #808080;
     }
   }
 
-  // Pricing
   &__pricing {
     display: flex;
     gap: 15px;

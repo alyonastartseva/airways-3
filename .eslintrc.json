@@ -127,6 +127,7 @@
         ],
         "newlines-between": "always"
       }
-    ]
+    ],
+    "react/prop-types": "off"
   }
 }
