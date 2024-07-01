@@ -49,6 +49,7 @@ const App = () => {
         </Route>
         {/* вернуть внутрь после связики страницы с кнопоко подбронее */}
         <Route path="airplane-more" element={<AirplaneMorePage />} />
+
         <Route path="tickets" element={<TicketsPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
