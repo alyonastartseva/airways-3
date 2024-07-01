@@ -1,4 +1,4 @@
-import { Input, Text } from '@chakra-ui/react';
+import { Input, Typography } from 'antd';
 import { useState, useCallback, useEffect, useRef } from 'react';
 
 import { debounce } from '@/utils/debounce.utils';
@@ -12,9 +12,11 @@ import { InfiniteScrollSelector, FlexCell } from '@/common';
 import { IInputSelector } from './destinationsInputSelector.interface';
 import { normalizeDestinations } from './destinationsInputSelector.utils';
 
+const { Text } = Typography;
+
 const InputSelector = ({
   value: initialValue,
-  setValue,
+  setValue = () => {},
   index,
   id,
   updateData,
@@ -27,6 +29,7 @@ const InputSelector = ({
     debounce(getDestinationsListByCityName, 500),
     []
   );
+
   const [value, setInputValue] = useState(initialValue);
   const [previousRequestType, setPreviousRequestType] = useState('page');
   const [destinationsList, setDestinationsList] = useState<IDestinationList[]>(
@@ -39,22 +42,43 @@ const InputSelector = ({
     useLazyGetDestionationsQuery();
   const requestType = useRef('');
 
+  const setPreparedData = useCallback(
+    (data: IDestinationGet) => {
+      const { airports, last, number } = normalizeDestinations(data);
+      if (airports) {
+        if (requestType.current === 'city') {
+          if (previousRequestType === 'page') setDestinationsList(airports);
+          else addDestinations(airports);
+        } else if (requestType.current === 'page') {
+          if (!destinationsList.length || previousRequestType === 'city')
+            setDestinationsList(airports);
+          else addDestinations(airports);
+        }
+      } else setDestinationsList([]);
+      if (!last) setPage(number + 1);
+      setHasMore(!last);
+      setPreviousRequestType(requestType.current);
+    },
+    [previousRequestType, destinationsList.length]
+  );
+
   useEffect(() => {
-    initialValue &&
+    if (initialValue) {
       setDestinationsList([
         {
           name: '',
           code: String(initialValue),
         },
       ]);
-  }, []);
+    }
+  }, [initialValue]);
 
   useEffect(() => {
     if (destinationsData) setPreparedData(destinationsData);
-  }, [destinationsData]);
+  }, [destinationsData, setPreparedData]);
 
   const addDestinations = (data: IDestinationList[]) => {
-    setDestinationsList([...destinationsList, ...data]);
+    setDestinationsList((prev) => [...prev, ...data]);
   };
 
   async function getDestinationsListByCityName(query: string) {
@@ -80,23 +104,6 @@ const InputSelector = ({
     }
   }
 
-  const setPreparedData = (data: IDestinationGet) => {
-    const { airports, last, number } = normalizeDestinations(data);
-    if (airports) {
-      if (requestType.current === 'city') {
-        if (previousRequestType === 'page') setDestinationsList(airports);
-        else addDestinations(airports);
-      } else if (requestType.current === 'page') {
-        if (!destinationsList || previousRequestType === 'city')
-          setDestinationsList(airports);
-        else addDestinations(airports);
-      }
-    } else setDestinationsList([]);
-    if (!last) setPage(number + 1);
-    setHasMore(!last);
-    setPreviousRequestType(requestType.current);
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     changeValue(newValue);
@@ -104,7 +111,7 @@ const InputSelector = ({
   };
 
   const changeValue = (inputValue: string) => {
-    setValue && setValue(inputValue);
+    setValue(inputValue);
     setInputValue(inputValue);
   };
 
@@ -134,48 +141,30 @@ const InputSelector = ({
           htmlFor={label.name}
           style={{ marginBottom: '0.5rem', display: 'block' }}
         >
-          {
-            <Text as="i" fontSize={14}>
-              {label.value}
-            </Text>
-          }
+          <Text italic style={{ fontSize: 14 }}>
+            {label.value}
+          </Text>
         </label>
       )}
       <Input
         type="text"
-        fontSize={'100%'}
+        style={{
+          fontSize: '100%',
+          width: '100%',
+          padding: '5px 5px',
+          ...(isFocused && {
+            borderBottomLeftRadius: 0,
+            borderBottomRightRadius: 0,
+            borderBottomColor: 'transparent',
+          }),
+        }}
         value={String(value)}
         onChange={handleChange}
         onClick={handleClick}
         onBlur={onBlur}
         onFocus={() => setFocus(true)}
         placeholder={placeholder}
-        style={{
-          position: 'relative',
-        }}
-        {...(isFocused && {
-          style: {
-            borderBottomLeftRadius: 0,
-            borderBottomRightRadius: 0,
-            borderBottomColor: 'transparent',
-          },
-        })}
-        border={
-          inputType === 'editable' ? '1px solid #242424' : '1px solid #e5e7eb'
-        }
-        backgroundColor={inputType === 'modal' ? '#F9F9F9' : 'inherit'}
-        borderRadius={inputType === 'modal' ? 'none' : '0.375rem'}
-        _active={{
-          borderColor: '#398AEA',
-        }}
-        _hover={
-          inputType === 'editable'
-            ? {
-                borderColor: '#398AEA',
-              }
-            : undefined
-        }
-        autoComplete="off"
+        variant={inputType !== 'editable' ? 'outlined' : 'borderless'}
       />
       {isFocused && (
         <InfiniteScrollSelector
