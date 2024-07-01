@@ -13,11 +13,7 @@ import { ITicketsPost } from 'src/interfaces/tickets.interface';
 
 import scss from './CardTicket.module.scss';
 
-interface Props {
-  ticket: ITicketsPost;
-}
-
-const CardTicket: React.FC<Props> = ({ ticket }) => {
+const CardTicket: React.FC<ITicketsPost> = ({ ticket }) => {
   return (
     <li className={scss.ticket}>
       <div className={`${scss['ticket__tag']} ${scss['ticket__tag--fastest']}`}>
