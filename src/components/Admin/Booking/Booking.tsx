@@ -38,7 +38,8 @@ import {
   EditableCell,
   PopoverTable,
   ConfirmCancelModal,
-  Pagination, AlertMessage,
+  Pagination,
+  AlertMessage,
 } from '@/common';
 
 const PAGE_KEY = 'BOOKING_CURR_PAGE';
