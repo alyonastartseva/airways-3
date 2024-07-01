@@ -1,13 +1,4 @@
-:root {
-  --box-shadow-color: #a3a3a3;
-  --container-bg-color: #445ebd;
-  --container-color: #ffffff;
-  --dark-theme-bg-color: #3b3a3a;
-  --button-bg-color: #ffffff;
-  --button-text-color: #006fff;
-  --button-hover-bg-color: #e7e7e7;
-  --button-hover-text-color: #008cff;
-}
+@import '../../variables.scss';
 
 .container {
   display: flex;

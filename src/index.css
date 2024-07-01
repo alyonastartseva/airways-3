@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 @import '@fontsource/roboto/400.css';
 @import '@fontsource/roboto/400-italic.css';
 @import '@fontsource/roboto/500.css';
@@ -6,29 +8,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --primary-color: #4797ff;
-  --hover-light-color: #d3efff;
-  --hover-dark-color: #83898c;
-  --dark-bg-color: #1a1a1a;
-  --light-text-color: #213547;
-  --light-bg-color: #ffffff;
-  --dark-text-color: rgb(177, 162, 162);
-  --focus-outline-color: -webkit-focus-ring-color;
-  --border-light-color: #dedede;
-  --button-light-bg-color: #f9f9f9;
-
-  font-family: 'Roboto', sans-serif;
-  font-size: 1rem;
-  line-height: 1.5rem;
-  font-weight: 400;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
 
 #root {
   width: 100%;
