@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import { TDestQuery } from '@interfaces/search.interfaces';
 import { IDestination } from '@interfaces/destination.interfaces';
 import { useGetDestionationsQuery } from '@/store/services';
+import { useTheme } from '@context/:ThemeProvider';
 
 import { IDestProps } from './destination.interfaces';
-
 const DestinationInput: React.FC<IDestProps> = (props: IDestProps) => {
   const { fromOrTo, onSetDestination, fromTo } = props;
 
@@ -18,7 +18,7 @@ const DestinationInput: React.FC<IDestProps> = (props: IDestProps) => {
   const [destInputFocus, setDestInputFocus] = useState(false);
 
   const destInputInfo = fromOrTo === 'From' ? fromTo.from : fromTo.to;
-
+  const { theme } = useTheme();
   const onchangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
@@ -55,6 +55,7 @@ const DestinationInput: React.FC<IDestProps> = (props: IDestProps) => {
             cursor="pointer"
             w="12.5rem"
             boxShadow={'0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25)'}
+            color={theme === 'dark' ? 'white' : 'black'}
           />
           {!destInputFocus && Object.keys(destInputInfo).length > 0 && (
             <Box

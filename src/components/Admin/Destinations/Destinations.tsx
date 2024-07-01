@@ -42,10 +42,12 @@ import {
 import { IDestination, IDestinationPost } from '@/interfaces';
 import { DestinationsInputSelector } from '@/components/DestinationsInputSelector';
 import { scrollTable } from '@/constants';
+import { useTheme } from '@context/:ThemeProvider';
 
 const PAGE_KEY = 'DESTINATIONS_CURR_PAGE';
 
 const Destinations = () => {
+  const { theme } = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
   const pageParam = +(searchParams.get('page') || 1) - 1;
   // индекс и размер пагинации
@@ -53,7 +55,6 @@ const Destinations = () => {
     PAGE_KEY,
     Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
   );
-
   const toastHandler = useToastHandler();
   const {
     data: destinationsByPageData,
@@ -61,7 +62,6 @@ const Destinations = () => {
     isError,
     error,
   } = useGetDestionationsQuery({ page: pageIndex });
-
   const destinationsByPage = useMemo(
     () => destinationsByPageData?.content || [],
     [destinationsByPageData]
@@ -70,21 +70,17 @@ const Destinations = () => {
     () => destinationsByPageData?.totalPages || 0,
     [destinationsByPageData]
   );
-
   useEffect(() => {
     setSearchParams({ page: String(pageIndex + 1) });
   }, [pageIndex]);
-
   useEffect(() => {
     if (!isFetching && !destinationsByPage && pageIndex > 0)
       setPaginationData(pageIndex - 1);
   }, [destinationsByPage, pageIndex, setPaginationData, isFetching]);
-
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IDestination | null>(
     null
   );
-
   const handleEditRow = useCallback((row = null, index = -1) => {
     if (index >= 0) {
       setEditableRowState(row);
@@ -94,7 +90,6 @@ const Destinations = () => {
       setEditableRowIndex(null);
     }
   }, []);
-
   const handleUpdateRow = useCallback(
     (id: string, value: string) => {
       if (editableRowState)
@@ -102,22 +97,16 @@ const Destinations = () => {
     },
     [editableRowState]
   );
-
   const [patchDestination] = usePatchDestinationMutation();
-
   const [deleteDestination] = useDeleteDestinationMutation();
-
   useEffect(() => {
     if (isError && isFetchBaseQueryError(error))
       toastHandler({ status: 'error', title: error.data.message });
   }, [isError, toastHandler, error]);
-
   const patchRow = useCallback(() => {
     if (editableRowState) patchDestination(editableRowState);
-
     handleEditRow();
   }, [patchDestination, editableRowState, handleEditRow]);
-
   const columnHelper = createColumnHelper<IDestination>();
   const columns = useMemo(
     () => [
@@ -273,25 +262,21 @@ const Destinations = () => {
       destinationsByPage,
     ]
   );
-
   const tableData = (data?: IDestination[]) => {
     if (Array.isArray(data) && data.length) {
       return sortById(data.slice());
     }
     return [];
   };
-
   const table = useReactTable({
     data: tableData(destinationsByPage).slice(0, ITEMS_PER_PAGE),
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
   });
-
   if (isFetching) {
     return <SpinnerBlock />;
   }
-
   if (!isError) {
     return (
       <TableContainer
@@ -315,7 +300,7 @@ const Destinations = () => {
                     {headerGroup.headers.map((header) => (
                       <Th
                         border="0.0625rem solid #DEDEDE"
-                        color="#000000"
+                        color={theme === 'dark' ? '#FFFFFF' : '#000000'}
                         key={header.id}
                         fontSize="0.875rem"
                         lineHeight="1.125rem"
@@ -340,7 +325,7 @@ const Destinations = () => {
                     {row.getVisibleCells().map((cell) => (
                       <Td
                         border="0.0625rem solid #DEDEDE"
-                        color="#393939"
+                        color={theme === 'dark' ? '#FFFFFF' : '#393939'}
                         fontSize="0.875rem"
                         lineHeight="1.125rem"
                         key={cell.id}
@@ -373,9 +358,7 @@ const Destinations = () => {
       </TableContainer>
     );
   }
-
   return <AlertMessage />;
 };
-
 const memoizedDestinations = memo(Destinations);
 export default memoizedDestinations;

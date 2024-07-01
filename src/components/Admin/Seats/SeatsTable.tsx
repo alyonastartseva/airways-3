@@ -25,6 +25,7 @@ import {
   usePatchFlightSeatsMutation,
 } from '@/store/services';
 import { scrollTable } from '@/constants';
+import { useTheme } from '@context/:ThemeProvider';
 
 import { gitTicketClassName } from '../Airplane/Airplane.utils';
 
@@ -34,7 +35,6 @@ interface SeatsTableProps {
   totalPages: number;
   setPaginationData: (v: number) => void;
 }
-
 export const SeatsTable: React.FC<SeatsTableProps> = ({
   data,
   page,
@@ -49,11 +49,11 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
   const [patchFlightSeats] = usePatchFlightSeatsMutation();
   const [deleteFlightSeats] = useDeleteFlightSeatsMutation();
 
+  const { theme } = useTheme();
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<Required<
     IFSOne & IFSoneSeat
   > | null>(null);
-
   const handleUpdateRow = useCallback(
     (id: string, value: string) => {
       if (editableRowState) {
@@ -61,7 +61,6 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
           const key1 = id.slice(0, id.indexOf('_'));
           const key2 = id.slice(id.indexOf('_') + 1);
           const nestedObject = editableRowState[key1 as keyof IFSOne];
-
           if (nestedObject && typeof nestedObject === 'object') {
             setEditableRowState({
               ...editableRowState,
@@ -81,17 +80,14 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
     },
     [editableRowState]
   );
-
   const cancelEditing = useCallback(() => {
     setEditableRowIndex(null);
     setEditableRowState(null);
   }, []);
-
   const patchRow = useCallback(() => {
     patchFlightSeats(editableRowState!);
     cancelEditing();
   }, [patchFlightSeats, editableRowState, cancelEditing]);
-
   const handleEditRow = useCallback(
     (row: Required<IFSOne & IFSoneSeat>, index: number) => {
       setEditableRowState(row);
@@ -99,10 +95,8 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
     },
     []
   );
-
   const flightClassOptions = Object.values(ISeatCategory);
   const columnHelper = createColumnHelper<IFSOne>();
-
   const columnCreator = (
     fieldName: keyof IFSOne | `seat.${keyof IFSoneSeat}`,
     header?: string,
@@ -176,7 +170,6 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
         });
       }
     }
-
     if (tableType === 'actions') {
       return columnHelper.display({
         id: 'actions',
@@ -196,14 +189,12 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
         ),
       });
     }
-
     return columnHelper.accessor('id', {
       header,
       cell: (info) => <FlexCell padding={24} value={info.getValue()} />,
       size: 41,
     });
   };
-
   const columns = useMemo(
     () => [
       columnCreator('id', 'ID', 'Cell'),
@@ -234,7 +225,6 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
       setPaginationData,
     ]
   );
-
   const tableData = (seat?: IFSOne[]) => {
     if (Array.isArray(seat) && seat.length) {
       return seat;
@@ -247,7 +237,6 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
   });
-
   return (
     <div>
       <div {...scrollTable}>
@@ -258,7 +247,7 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
                 {headerGroup.headers.map((header) => (
                   <Th
                     border="1px solid #DEDEDE"
-                    color="#000000"
+                    color={theme === 'dark' ? '#FFFFFF' : '#000000'}
                     key={header.id}
                     fontSize="14px"
                     lineHeight="18px"
@@ -283,7 +272,7 @@ export const SeatsTable: React.FC<SeatsTableProps> = ({
                 {row.getVisibleCells().map((cell) => (
                   <Td
                     border="0.0625rem solid #DEDEDE"
-                    color="#393939"
+                    color={theme === 'dark' ? '#FFFFFF' : '#393939'}
                     fontSize="0.875rem"
                     lineHeight="1.125rem"
                     key={cell.id}

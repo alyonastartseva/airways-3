@@ -1,6 +1,8 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Box, Spinner } from '@chakra-ui/react';
 
+import { useTheme } from '@context/:ThemeProvider';
+
 import { IScrollComponent } from './infiniteScrollSelector.interface';
 
 const InfiniteScrollSelector = ({
@@ -11,6 +13,11 @@ const InfiniteScrollSelector = ({
   loader = null,
   isLoading,
 }: IScrollComponent) => {
+  const { theme } = useTheme();
+
+  const backgroundColor = theme === 'dark' ? 'gray.800' : 'white';
+  const textColor = theme === 'dark' ? 'white' : 'black';
+  const hoverBackgroundColor = theme === 'dark' ? 'gray.600' : '#ebedf0';
   return (
     <div
       id="scrollable"
@@ -22,7 +29,7 @@ const InfiniteScrollSelector = ({
         overflowY: 'auto',
         overflowX: 'hidden',
         zIndex: 9999,
-        backgroundColor: 'white',
+        backgroundColor: backgroundColor,
         border: '1px solid #3182ce',
         outline: '1px solid #3182ce',
         borderTop: 'none',
@@ -40,13 +47,12 @@ const InfiniteScrollSelector = ({
         <div className="container">
           <div className="row">
             {targetList &&
-              targetList?.map((el) => {
+              targetList.map((el, index) => {
                 const { name, code } = el;
                 return (
                   <Box
-                    // TODO: сменить code на name когда будут приходить данные с сервера
-                    onMouseDown={() => onClick((code && code) || '')}
-                    key={code}
+                    key={index}
+                    onMouseDown={() => onClick(code || '')}
                     style={{
                       padding: '4px 16px',
                       cursor: 'pointer',
@@ -54,8 +60,9 @@ const InfiniteScrollSelector = ({
                       height: '100%',
                       borderBottom: '1px solid lightgray',
                       textAlign: 'left',
+                      color: textColor,
                     }}
-                    _hover={{ bg: '#ebedf0' }}
+                    _hover={{ bg: hoverBackgroundColor }}
                   >
                     {`${name} - ${code}`}
                   </Box>

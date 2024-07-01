@@ -1,4 +1,4 @@
-import { Input, Text } from '@chakra-ui/react';
+import { Input, Text, useColorMode } from '@chakra-ui/react';
 import { useState, useCallback, useEffect, useRef } from 'react';
 
 import { debounce } from '@/utils/debounce.utils';
@@ -23,6 +23,7 @@ const InputSelector = ({
   type: inputType = 'default',
   label,
 }: IInputSelector) => {
+  const { colorMode } = useColorMode();
   const debouncedGetDestinationsByCityName = useCallback(
     debounce(getDestinationsListByCityName, 500),
     []
@@ -152,14 +153,14 @@ const InputSelector = ({
         placeholder={placeholder}
         style={{
           position: 'relative',
-        }}
-        {...(isFocused && {
-          style: {
+          backgroundColor: colorMode === 'dark' ? '#333' : 'inherit',
+          color: colorMode === 'dark' ? '#FFFFFF' : '#333333',
+          ...(isFocused && {
             borderBottomLeftRadius: 0,
             borderBottomRightRadius: 0,
             borderBottomColor: 'transparent',
-          },
-        })}
+          }),
+        }}
         border={
           inputType === 'editable' ? '1px solid #242424' : '1px solid #e5e7eb'
         }
