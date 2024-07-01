@@ -6,29 +6,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 :root {
+  --primary-color: #4797ff;
+  --hover-light-color: #d3efff;
+  --hover-dark-color: #83898c;
+  --dark-bg-color: #1a1a1a;
+  --light-text-color: #213547;
+  --light-bg-color: #ffffff;
+  --dark-text-color: rgb(177, 162, 162);
+  --focus-outline-color: -webkit-focus-ring-color;
+  --border-light-color: #dedede;
+  --button-light-bg-color: #f9f9f9;
+
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   line-height: 1.5rem;
   font-weight: 400;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
 #root {
   width: 100%;
 }
+
 a {
   font-weight: 500;
-  color: #4797ff;
+  color: var(--primary-color);
   text-decoration: inherit;
 }
+
 a:hover {
-  color: #d3efff;
+  color: var(--hover-light-color);
 }
+
 body {
   margin: 0;
   display: flex;
@@ -37,10 +52,12 @@ body {
   min-width: 20rem;
   min-height: 100vh;
 }
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+
 button {
   border-radius: 0.5rem;
   border: 0.0625rem solid transparent;
@@ -48,49 +65,53 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--dark-bg-color);
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
-  border-color: #4797ff;
+  border-color: var(--primary-color);
 }
+
 button:focus,
 button:focus-visible {
-  outline: 0.25rem auto -webkit-focus-ring-color;
+  outline: 0.25rem auto var(--focus-outline-color);
 }
 
 body.light {
-  color: #213547;
-  background-color: #ffffff;
+  color: var(--light-text-color);
+  background-color: var(--light-bg-color);
 }
 
 body.light a:hover {
-  color: #4797ff;
+  color: var(--primary-color);
 }
 
 body.dark {
-  color: rgb(177, 162, 162);
-  /* color: rgba(255, 255, 255, 0.87); */
-  background-color: #242424;
+  color: var(--dark-text-color);
+  background-color: var(--dark-bg-color);
 }
 
 body.dark a:hover {
-  color: #83898c;
+  color: var(--hover-dark-color);
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: var(--light-text-color);
+    background-color: var(--light-bg-color);
   }
+
   a:hover {
-    color: #4797ff;
+    color: var(--primary-color);
   }
+
   button {
-    background-color: #f9f9f9;
+    background-color: var(--button-light-bg-color);
   }
 }
+
 .ant-select-item:not(:last-child) {
-  border-bottom: 1px solid #dedede;
+  border-bottom: 1px solid var(--border-light-color);
 }
