@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { themeReducer } from '@store/slices';
 
+import { apiSlice } from './services/apiSlice';
 import {
   passengersApi,
   destinationsApi,
@@ -22,6 +23,7 @@ export const store = configureStore({
     [aircraftApi.reducerPath]: aircraftApi.reducer,
     [seatsApi.reducerPath]: seatsApi.reducer,
     [timezonesApi.reducerPath]: timezonesApi.reducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -30,7 +32,8 @@ export const store = configureStore({
       aircraftApi.middleware,
       seatsApi.middleware,
       timezonesApi.middleware,
-      flightSeatsApi.middleware
+      flightSeatsApi.middleware,
+      apiSlice.middleware
     ),
 });
 

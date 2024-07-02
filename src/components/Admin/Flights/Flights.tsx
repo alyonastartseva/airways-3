@@ -39,7 +39,12 @@ import { PopoverTable } from '@common/PopoverTable';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
-import { useGetAircraftQuery } from '@/store/services';
+import {
+  useGetAircraftQuery,
+  useGetFlightsQuery,
+  useDeleteFlightMutation,
+  usePatchFlightMutation,
+} from '@/store/services/apiSlice';
 import { EditableSelectCell } from '@/common';
 
 const PAGE_KEY = 'FLIGHTS_CURR_PAGE';
@@ -61,7 +66,7 @@ const Flights = () => {
     data: flightsData,
     isError,
     isFetching,
-  } = useFlightsQuery(pageIndex);
+  } = useGetFlightsQuery(pageIndex);
 
   const flights = flightsData?.content;
   const totalPagesFlights = flightsData?.totalPages;
@@ -104,8 +109,8 @@ const Flights = () => {
     [editableRowState]
   );
 
-  const { mutate: deleteFlight } = useFlightsDelete();
-  const { mutate: patchFlights } = useFlightsPatch();
+  const [deleteFlight] = useDeleteFlightMutation();
+  const [patchFlights] = usePatchFlightMutation();
 
   const patchRow = useCallback(() => {
     patchFlights(editableRowState);
@@ -115,7 +120,9 @@ const Flights = () => {
   const getAircraftModel = useCallback(
     (id: string) => {
       if (airplanes) {
-        const aircraftInfo = airplanes.find((el) => el.id.toString() === id);
+        const aircraftInfo = airplanes.find(
+          (el: IAircraft) => el.id.toString() === id
+        );
         if (aircraftInfo) {
           return aircraftInfo.model;
         } else return id.toString();
