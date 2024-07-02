@@ -1,11 +1,18 @@
-import { Flex } from '@chakra-ui/react';
+import { Row, Col } from 'antd';
 
 import { IFlexCell } from './flex.interfaces';
 
 const FlexCell = ({ padding, value }: IFlexCell) => (
-  <Flex paddingLeft={`${padding / 16}rem`} height="2.5rem" alignItems="center">
-    {value}
-  </Flex>
+  <Row
+    style={{
+      paddingLeft: `${padding / 16}rem`,
+      height: '2.5rem',
+      alignItems: 'center',
+      display: 'flex',
+    }}
+  >
+    <Col>{value}</Col>
+  </Row>
 );
 
 export default FlexCell;

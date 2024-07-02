@@ -152,6 +152,7 @@ const InputSelector = ({
           fontSize: '100%',
           width: '100%',
           padding: '5px 5px',
+          backgroundColor: '#f5f5f5',
           ...(isFocused && {
             borderBottomLeftRadius: 0,
             borderBottomRightRadius: 0,

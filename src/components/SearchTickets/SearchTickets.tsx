@@ -323,7 +323,7 @@ const SearchTickets = ({
             padding: '0.9rem 3.1rem 2.2rem',
           }}
         >
-          <Title level={3} style={{ color: '#445EBD' }}>
+          <Title level={2} style={{ color: '#445EBD', fontWeight: 'bold' }}>
             Найти билеты
           </Title>
           <div>
@@ -344,7 +344,10 @@ const SearchTickets = ({
                           ? 'error'
                           : ''
                       }
-                      style={{ padding: '5px 5px' }}
+                      style={{
+                        padding: '5px 5px',
+                        backgroundColor: '#f5f5f5',
+                      }}
                     />
                     {passengerWarning && (
                       <Text
@@ -395,7 +398,10 @@ const SearchTickets = ({
                         if (end) getDates(end.toDate());
                       }}
                       format="YYYY-MM-DD"
-                      style={{ padding: '5px 5px' }}
+                      style={{
+                        padding: '5px 5px',
+                        backgroundColor: '#F5F5F5',
+                      }}
                     />
                   </FormItem>
                   {error && (
@@ -433,8 +439,17 @@ const SearchTickets = ({
                         updateSearchParam({ tripType: e.target.value })
                       }
                     >
-                      <Radio value="roundTrip">Туда и обратно</Radio>
-                      <Radio value="oneWay" style={{ marginTop: '1rem' }}>
+                      <Radio value="roundTrip" className="tripType-radioButton">
+                        Туда и обратно
+                      </Radio>
+                      <Radio
+                        value="oneWay"
+                        className="tripType-radioButton"
+                        style={{
+                          marginTop: '1rem',
+                          backgroundColor: '#f5f5f5',
+                        }}
+                      >
                         В одну сторону
                       </Radio>
                     </Radio.Group>

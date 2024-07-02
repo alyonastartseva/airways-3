@@ -14,11 +14,15 @@ const SeatCategory: React.FC<SeatCategoryProps> = ({ value, onChange }) => (
   <Select
     value={value}
     onChange={(v) => onChange?.(v as ISeatCategoryType)}
-    className="custom-select"
+    className="seatCategory-select"
     style={{ width: '100%' }}
   >
     {seatCategory.map((option) => (
-      <Select.Option key={option.eng} value={option.eng}>
+      <Select.Option
+        style={{ backgroundColor: '#f5f5f5' }}
+        key={option.eng}
+        value={option.eng}
+      >
         {option.ru}
       </Select.Option>
     ))}

@@ -1,5 +1,5 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Box, Spinner } from '@chakra-ui/react';
+import { Card, Spin } from 'antd';
 
 import { IScrollComponent } from './infiniteScrollSelector.interface';
 
@@ -22,7 +22,7 @@ const InfiniteScrollSelector = ({
         overflowY: 'auto',
         overflowX: 'hidden',
         zIndex: 9999,
-        backgroundColor: 'white',
+        backgroundColor: '#f5f5f5',
         border: '1px solid #3182ce',
         outline: '1px solid #3182ce',
         borderTop: 'none',
@@ -43,7 +43,7 @@ const InfiniteScrollSelector = ({
               targetList?.map((el) => {
                 const { name, code } = el;
                 return (
-                  <Box
+                  <Card
                     // TODO: сменить code на name когда будут приходить данные с сервера
                     onMouseDown={() => onClick((code && code) || '')}
                     key={code}
@@ -55,23 +55,24 @@ const InfiniteScrollSelector = ({
                       borderBottom: '1px solid lightgray',
                       textAlign: 'left',
                     }}
-                    _hover={{ bg: '#ebedf0' }}
+                    hoverable
+                    bodyStyle={{ padding: 0 }}
                   >
                     {`${name} - ${code}`}
-                  </Box>
+                  </Card>
                 );
               })}
           </div>
         </div>
       </InfiniteScroll>
       {isLoading && (
-        <Box style={{ width: '15px', height: '30px', margin: '0 auto' }}>
-          <Spinner
+        <div style={{ width: '15px', height: '30px', margin: '0 auto' }}>
+          <Spin
             style={{ width: 15, height: 15, marginTop: 8 }}
-            size={'sm'}
-            color="lightgray"
+            size="small"
+            tip="Loading..."
           />
-        </Box>
+        </div>
       )}
     </div>
   );

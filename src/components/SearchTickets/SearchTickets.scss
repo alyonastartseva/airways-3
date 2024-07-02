@@ -1,5 +1,6 @@
 $buttonColor: #006fff;
 $textColor: #ffffff;
+$backgroundCheckbox-color: #f5f5f5;
 
 .formItem-wrapper {
   height: 60px;
@@ -14,11 +15,20 @@ $textColor: #ffffff;
   }
 }
 .formItem-seatCategory {
-  margin-top: 3rem;
+  margin-top: 2.8rem;
 }
 .checkboxSearch {
   padding: 8px 0;
-  margin-top: 2.5rem;
+  margin-top: 2.8rem;
+  background-color: $backgroundCheckbox-color;
+  .ant-checkbox-inner {
+    background-color: $backgroundCheckbox-color;
+  }
+}
+.tripType-radioButton {
+  .ant-radio-inner {
+    background-color: $backgroundCheckbox-color;
+  }
 }
 .searchButton {
   width: 8rem;
@@ -36,7 +46,9 @@ $textColor: #ffffff;
     border: none;
   }
 }
-
+// .tripTyp-radioButton {
+//   background-color: gray;
+// }
 .colSearch {
   text-align: start;
 }
