@@ -313,7 +313,9 @@ const SearchTickets = ({
             <Image src={mainsearch} alt="Main-search" />
           </Row>
         )}
+
         <div
+          className="searchTickets-block"
           style={{
             border: '0.9rem solid #D3EFFF',
             borderRadius: '1rem',
@@ -327,7 +329,7 @@ const SearchTickets = ({
             Найти билеты
           </Title>
           <div>
-            <Row gutter={32}>
+            <Row gutter={32} justify="space-between">
               <FirstGridContainter />
               <Col span={6}>
                 <FormItem>
@@ -402,6 +404,7 @@ const SearchTickets = ({
                         padding: '5px 5px',
                         backgroundColor: '#F5F5F5',
                       }}
+                      placeholder={['Туда', 'Обратно']}
                     />
                   </FormItem>
                   {error && (
@@ -430,10 +433,11 @@ const SearchTickets = ({
                 </FormItem>
               </Col>
 
-              <Col className="colSearch" span={6}>
+              <Col className="colSearch" span={4}>
                 <FormItem>
-                  <FormItem className="formItem" label="Тип поездки">
+                  <FormItem className="formItem">
                     <Radio.Group
+                      className="radioGroup"
                       value={searchParams.tripType}
                       onChange={(e) =>
                         updateSearchParam({ tripType: e.target.value })
@@ -447,7 +451,6 @@ const SearchTickets = ({
                         className="tripType-radioButton"
                         style={{
                           marginTop: '1rem',
-                          backgroundColor: '#f5f5f5',
                         }}
                       >
                         В одну сторону
@@ -457,12 +460,21 @@ const SearchTickets = ({
                 </FormItem>
                 <Row justify="center" style={{ marginTop: '3rem' }}>
                   <Button
-                    className="searchButton"
+                    className="searchTIcketsButton"
                     onClick={handleSearch}
-                    style={{ backgroundColor: '#006fff' }}
+                    style={{
+                      backgroundColor: '#006fff',
+                      border: 'none',
+                      width: '8rem',
+                      height: '3rem',
+                      marginTop: '-3.5rem',
+                    }}
                   >
                     {isLoading ? (
-                      <Spin size="small" style={{ color: 'white' }} />
+                      <Spin
+                        size="small"
+                        style={{ color: 'white', zIndex: '99' }}
+                      />
                     ) : (
                       'Найти'
                     )}
