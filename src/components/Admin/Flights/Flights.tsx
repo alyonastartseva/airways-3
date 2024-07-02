@@ -24,12 +24,7 @@ import {
   IFlightPresentation,
   TFlightsStatus,
 } from '@/interfaces';
-import {
-  useFlightsDelete,
-  useFlightsQuery,
-  useFlightsPatch,
-  useSetCurrentPageInPagination,
-} from '@/hooks';
+import { useFlightsQuery, useSetCurrentPageInPagination } from '@/hooks';
 import { AlertMessage } from '@common/AlertMessage';
 import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
@@ -41,7 +36,6 @@ import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
 import {
   useGetAircraftQuery,
-  useGetFlightsQuery,
   useDeleteFlightMutation,
   usePatchFlightMutation,
 } from '@/store/services/apiSlice';
@@ -62,11 +56,7 @@ const Flights = () => {
     useGetAircraftQuery({ page: pageIndex });
   const airplanes = airplanesData?.content;
 
-  const {
-    data: flightsData,
-    isError,
-    isFetching,
-  } = useGetFlightsQuery(pageIndex);
+  const { data: flightsData, isError, isFetching } = useFlightsQuery(pageIndex);
 
   const flights = flightsData?.content;
   const totalPagesFlights = flightsData?.totalPages;
@@ -336,7 +326,8 @@ const Flights = () => {
   // TODO: удалить когда будет сортировка на бэке
   const tableData = (data?: Required<IFlightPresentation>[]) => {
     if (Array.isArray(data) && data.length) {
-      return data.sort((a, b) => a.id - b.id);
+      // Создаем копию массива перед сортировкой
+      return [...data].sort((a, b) => a.id - b.id);
     }
     return [];
   };
