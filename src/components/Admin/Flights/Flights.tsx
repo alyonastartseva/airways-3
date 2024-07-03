@@ -326,7 +326,6 @@ const Flights = () => {
   // TODO: удалить когда будет сортировка на бэке
   const tableData = (data?: Required<IFlightPresentation>[]) => {
     if (Array.isArray(data) && data.length) {
-      // Создаем копию массива перед сортировкой
       return [...data].sort((a, b) => a.id - b.id);
     }
     return [];
