@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Select } from 'antd';
 
 import { seatCategory } from '@/constants';
@@ -18,11 +17,7 @@ const SeatCategory: React.FC<SeatCategoryProps> = ({ value, onChange }) => (
     style={{ width: '100%' }}
   >
     {seatCategory.map((option) => (
-      <Select.Option
-        style={{ backgroundColor: '#f5f5f5' }}
-        key={option.eng}
-        value={option.eng}
-      >
+      <Select.Option key={option.eng} value={option.eng}>
         {option.ru}
       </Select.Option>
     ))}

@@ -12,9 +12,11 @@ import {
   Radio,
   Spin,
   DatePicker,
+  ConfigProvider,
 } from 'antd';
 import { formatISO, isPast, isToday, compareDesc } from 'date-fns';
 import dayjs from 'dayjs';
+import ruRU from 'antd/es/locale/ru_RU';
 
 import { ArrowsIcon } from '@common/icons';
 import { mainsearch } from '@/assets';
@@ -384,29 +386,31 @@ const SearchTickets = ({
 
               <Col span={6}>
                 <FormItem>
-                  <FormItem className="formItem" label="Дата">
-                    <DatePicker.RangePicker
-                      value={[
-                        calendarDates.startDate
-                          ? dayjs(calendarDates.startDate)
-                          : null,
-                        calendarDates.endDate
-                          ? dayjs(calendarDates.endDate)
-                          : null,
-                      ]}
-                      onChange={(dates) => {
-                        const [start, end] = dates ?? [null, null];
-                        if (start) getDates(start.toDate());
-                        if (end) getDates(end.toDate());
-                      }}
-                      format="YYYY-MM-DD"
-                      style={{
-                        padding: '5px 5px',
-                        backgroundColor: '#F5F5F5',
-                      }}
-                      placeholder={['Туда', 'Обратно']}
-                    />
-                  </FormItem>
+                  <ConfigProvider locale={ruRU}>
+                    <FormItem className="formItem" label="Дата">
+                      <DatePicker.RangePicker
+                        value={[
+                          calendarDates.startDate
+                            ? dayjs(calendarDates.startDate)
+                            : null,
+                          calendarDates.endDate
+                            ? dayjs(calendarDates.endDate)
+                            : null,
+                        ]}
+                        onChange={(dates) => {
+                          const [start, end] = dates ?? [null, null];
+                          if (start) getDates(start.toDate());
+                          if (end) getDates(end.toDate());
+                        }}
+                        format="YYYY-MM-DD"
+                        style={{
+                          padding: '5px 5px',
+                          backgroundColor: '#F5F5F5',
+                        }}
+                        placeholder={['Туда', 'Обратно']}
+                      />
+                    </FormItem>
+                  </ConfigProvider>
                   {error && (
                     <Alert
                       data-testid="alert-error"

@@ -58,3 +58,23 @@ $backgroundCheckbox-color: #f5f5f5;
     cursor: pointer;
   }
 }
+.ant-picker-panel {
+  background-color: $backgroundCheckbox-color !important;
+}
+
+.ant-picker-cell-inner {
+  background-color: $backgroundCheckbox-color;
+}
+
+.ant-picker-header,
+.ant-picker-footer,
+.ant-picker-content {
+  background-color: $backgroundCheckbox-color;
+}
+
+.ant-picker-cell-inner:hover,
+.ant-picker-cell-selected .ant-picker-cell-inner,
+.ant-picker-cell-in-view.ant-picker-cell-range-start .ant-picker-cell-inner,
+.ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner {
+  background-color: $backgroundCheckbox-color;
+}

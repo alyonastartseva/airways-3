@@ -11,6 +11,7 @@ import { InfiniteScrollSelector, FlexCell } from '@/common';
 
 import { IInputSelector } from './destinationsInputSelector.interface';
 import { normalizeDestinations } from './destinationsInputSelector.utils';
+import './DestinationsInputSelector.scss';
 
 const { Text } = Typography;
 
