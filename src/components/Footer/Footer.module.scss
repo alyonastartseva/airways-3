@@ -1,3 +1,4 @@
+@import '../../styles/variables.scss';
 .container {
   display: flex;
   justify-content: space-between;
@@ -6,11 +7,11 @@
   padding-right: 30px;
   padding-left: 30px;
 
-  background-color: #445ebd;
+  background-color: var(--container-bg-color);
 
   &.dark-theme {
-    background-color: #3b3a3a;
-    color: #ffffff;
+    background-color: var(--dark-theme-bg-color);
+    color: var(--container-color);
   }
 
   & .links {
@@ -18,8 +19,7 @@
     gap: 35px;
 
     & .link {
-      color: #fff;
-
+      color: var(--container-color);
       font-size: 0.9rem;
 
       &:hover {

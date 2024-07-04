@@ -1,3 +1,4 @@
+@import '../../../styles/variables.scss';
 .container {
   display: flex;
   justify-content: space-between;
@@ -8,11 +9,11 @@
   font-size: 14px;
 
   &.dark {
-    color: #ffffff;
+    color: var(--container-color);
   }
 
   &.light {
-    color: #fcfcfc;
+    color: var(--light-bg-color);
   }
 
   & .tabs {
@@ -32,22 +33,22 @@
       font-size: 14px;
 
       &.darkButton {
-        background-color: #444141;
-        color: #ffffff;
+        background-color: var(--dark-theme-bg-color);
+        color: var(--container-color);
 
         &:hover {
-          background: #333333;
-          color: #ffffff;
+          background: var(--dark-bg-color);
+          color: var(--container-color);
         }
       }
 
       &.lightButton {
-        background-color: #ffffff;
-        color: #006fff;
+        background-color: var(--button-bg-color);
+        color: var(--button-text-color);
 
         &:hover {
-          background: #e7e7e7;
-          color: #008cff;
+          background: var(--button-hover-bg-color);
+          color: var(--button-hover-text-color);
         }
       }
 
@@ -60,6 +61,6 @@
 .active {
   text-decoration: underline;
   text-decoration-thickness: 4px;
-  text-decoration-color: #d3efff;
+  text-decoration-color: var(--hover-light-color);
   text-underline-offset: 28px;
 }
