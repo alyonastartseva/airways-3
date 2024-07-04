@@ -2,6 +2,7 @@ import { Select } from 'antd';
 
 import { seatCategory } from '@/constants';
 import { ISeatCategoryType } from '@/interfaces/flightsSeats.interfaces';
+
 import './SeatCategory.scss';
 
 interface SeatCategoryProps {
@@ -14,7 +15,6 @@ const SeatCategory: React.FC<SeatCategoryProps> = ({ value, onChange }) => (
     value={value}
     onChange={(v) => onChange?.(v as ISeatCategoryType)}
     className="seatCategory-select"
-    style={{ width: '100%' }}
   >
     {seatCategory.map((option) => (
       <Select.Option key={option.eng} value={option.eng}>

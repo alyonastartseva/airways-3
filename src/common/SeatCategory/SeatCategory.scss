@@ -6,6 +6,7 @@ $hover-bg-color: #e6f7ff;
 $selected-bg-color: #bae7ff;
 
 .seatCategory-select {
+  width: 100%;
   .ant-select-selector {
     background-color: $background-color !important;
     border-radius: 4px;

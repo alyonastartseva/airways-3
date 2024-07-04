@@ -354,10 +354,7 @@ const SearchTickets = ({
                       }}
                     />
                     {passengerWarning && (
-                      <Text
-                        type="danger"
-                        style={{ fontSize: 12, marginTop: 8 }}
-                      >
+                      <Text className="errorNumber" type="danger">
                         Количество пассажиров должно быть больше 0
                       </Text>
                     )}
