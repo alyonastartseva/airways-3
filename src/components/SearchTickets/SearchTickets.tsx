@@ -426,7 +426,9 @@ const SearchTickets = ({
                     className="checkboxSearch"
                     checked={searchParams.directFlightsOnly}
                     onChange={(e) =>
-                      updateSearchParam({ directFlightsOnly: e.target.checked })
+                      updateSearchParam({
+                        directFlightsOnly: e.target.checked,
+                      })
                     }
                   >
                     Искать билеты без пересадок

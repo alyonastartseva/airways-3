@@ -32,13 +32,19 @@ $backgroundCheckbox-color: #f5f5f5;
   top: 100%;
   font-size: 12px;
 }
+
 .checkboxSearch {
   margin-top: 3.5rem;
-  background-color: $backgroundCheckbox-color;
+
   .ant-checkbox-inner {
     background-color: $backgroundCheckbox-color;
+
+    &:after {
+      border-color: #006fff;
+    }
   }
 }
+
 .radioGroup,
 .colSearch {
   display: flex;
