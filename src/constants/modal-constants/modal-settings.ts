@@ -78,7 +78,7 @@ const mapDestinationFormData = (data: IDestinationPost): IDestinationPost => {
 const mapFlightFormToRequestData = (
   formData: IFlightPostFormFields
 ): IFlightPost => {
-  const { from, to, ...rest } = formData;
+  const { from, to, id, ...rest } = formData;
   const airportFrom = (JSON.parse(from || '') as IDestination).airportCode;
   const airportTo = (JSON.parse(to || '') as IDestination).airportCode;
 
