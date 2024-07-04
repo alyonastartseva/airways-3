@@ -1,15 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { baseURL } from '../../services/axios.service';
-export const apiSlice = createApi({
-  reducerPath: 'api',
+
+export const flightSlice = createApi({
+  reducerPath: 'flightApi',
   baseQuery: fetchBaseQuery({ baseUrl: baseURL }),
   endpoints: (builder) => ({
-    getAircraft: builder.query({
-      query: ({ page }) => `aircraft?page=${page}`,
-    }),
     getFlights: builder.query({
-      query: (page) => `flights?page=${page}`,
+      query: ({ page, size }) => `flights?page=${page}&size=${size}`,
     }),
     deleteFlight: builder.mutation({
       query: (id) => ({
@@ -28,8 +26,7 @@ export const apiSlice = createApi({
 });
 
 export const {
-  useGetAircraftQuery,
   useGetFlightsQuery,
   useDeleteFlightMutation,
   usePatchFlightMutation,
-} = apiSlice;
+} = flightSlice;

@@ -16,7 +16,12 @@ import {
 } from '@tanstack/react-table';
 import { useSearchParams } from 'react-router-dom';
 
-import { flightStatuses, EModalNames, scrollTable } from '@/constants';
+import {
+  flightStatuses,
+  EModalNames,
+  scrollTable,
+  ITEMS_PER_PAGE,
+} from '@/constants';
 import { DestinationsInputSelector } from '@/components';
 import {
   IAircraft,
@@ -24,7 +29,7 @@ import {
   IFlightPresentation,
   TFlightsStatus,
 } from '@/interfaces';
-import { useFlightsQuery, useSetCurrentPageInPagination } from '@/hooks';
+import { useSetCurrentPageInPagination } from '@/hooks';
 import { AlertMessage } from '@common/AlertMessage';
 import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
@@ -34,11 +39,12 @@ import { PopoverTable } from '@common/PopoverTable';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
+import { useGetAircraftQuery } from '@/store/services/aircraftSlice';
 import {
-  useGetAircraftQuery,
+  useGetFlightsQuery,
   useDeleteFlightMutation,
   usePatchFlightMutation,
-} from '@/store/services/apiSlice';
+} from '@/store/services/flightSlice';
 import { EditableSelectCell } from '@/common';
 
 const PAGE_KEY = 'FLIGHTS_CURR_PAGE';
@@ -56,7 +62,11 @@ const Flights = () => {
     useGetAircraftQuery({ page: pageIndex });
   const airplanes = airplanesData?.content;
 
-  const { data: flightsData, isError, isFetching } = useFlightsQuery(pageIndex);
+  const {
+    data: flightsData,
+    isError,
+    isFetching,
+  } = useGetFlightsQuery({ page: pageIndex, size: ITEMS_PER_PAGE });
 
   const flights = flightsData?.content;
   const totalPagesFlights = flightsData?.totalPages;
