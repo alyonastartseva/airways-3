@@ -16,7 +16,6 @@ import {
   getCoreRowModel,
   flexRender,
 } from '@tanstack/react-table';
-import { useSearchParams } from 'react-router-dom';
 
 import { isRowEditing } from '@utils/table.utils';
 import { EModalNames, scrollTable } from '@/constants';
@@ -41,11 +40,12 @@ import { useSetCurrentPageInPagination } from '@/hooks';
 const PAGE_KEY = 'TIME_ZONE_CURR_PAGE';
 
 const TimeZones = () => {
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
 
   useEffect(() => {
-    setPaginationData(undefined)
-  }, []);
+    setPaginationData(undefined);
+  }, [setPaginationData]);
 
   const toastHandler = useToastHandler();
 
@@ -62,7 +62,7 @@ const TimeZones = () => {
   useEffect(() => {
     if (!isFetching && !timeZonesData && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [timeZonesData]);
+  }, [isFetching, pageIndex, setPaginationData, timeZonesData]);
 
   useEffect(() => {
     if (isError && isFetchBaseQueryError(error))

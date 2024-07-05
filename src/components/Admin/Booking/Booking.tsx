@@ -19,7 +19,6 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useSearchParams } from 'react-router-dom';
 
 import { IBooking, IFormBooking } from '@/interfaces';
 import { EModalNames, scrollTable } from '@/constants';
@@ -45,11 +44,12 @@ import {
 const PAGE_KEY = 'BOOKING_CURR_PAGE';
 
 const Booking = () => {
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
 
   useEffect(() => {
-    setPaginationData(undefined)
-  }, []);
+    setPaginationData(undefined);
+  }, [setPaginationData]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deletingBookingId, setDeletingBookingId] = useState<number | null>(
@@ -74,7 +74,7 @@ const Booking = () => {
     [isModalOpen]
   );
 
-  const { data: dataQuery, isFetching } = useBookingQuery(pageIndex - 1 );
+  const { data: dataQuery, isFetching } = useBookingQuery(pageIndex - 1);
 
   const bookingData = useMemo(() => {
     return dataQuery?.content ? dataQuery.content : [];
@@ -85,7 +85,7 @@ const Booking = () => {
   useEffect(() => {
     if (!isFetching && !bookingData && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [bookingData]);
+  }, [bookingData, isFetching, pageIndex, setPaginationData]);
 
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IBooking | null>(

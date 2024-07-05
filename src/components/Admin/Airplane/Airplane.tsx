@@ -48,11 +48,12 @@ import { getYesNo, gitTicketClassName } from './Airplane.utils';
 const PAGE_KEY = 'AIRPLANE_CURR_PAGE';
 
 const Airplane = () => {
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
 
   useEffect(() => {
-    setPaginationData(undefined)
-  }, []);
+    setPaginationData(undefined);
+  }, [setPaginationData]);
 
   // получение параметра ID из роута
   const param = useParams();

@@ -15,7 +15,6 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { useSearchParams } from 'react-router-dom';
 
 import { IAircraft, IAircraftPost } from '@/interfaces';
 import { ITEMS_PER_PAGE, EModalNames, scrollTable } from '@/constants';
@@ -42,11 +41,12 @@ import { isRowEditing } from '@/utils/table.utils';
 const PAGE_KEY = 'AIRPLANES_CURR_PAGE';
 
 const Airplanes = () => {
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
 
   useEffect(() => {
-    setPaginationData(undefined)
-  }, []);
+    setPaginationData(undefined);
+  }, [setPaginationData]);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -90,7 +90,7 @@ const Airplanes = () => {
   useEffect(() => {
     if (!isFetching && !airplanes && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [airplanes]);
+  }, [airplanes, isFetching, pageIndex, setPaginationData]);
 
   // изменение данных
   const [patchAircraft] = usePatchAircraftMutation();
