@@ -42,34 +42,45 @@ import { formatDateTime } from '@utils/date.utils';
 import { useGetAircraftQuery } from '@/store/services';
 import { EditableSelectCell } from '@/common';
 
+import { useDispatch } from 'react-redux';
+import { setPageIndex as setPageIndexInStore } from '@/store/slices/pageIndexesSlice';
+
+import { useSelector } from 'react-redux';
+import { pageIndexValue } from '@/store/slices/pageIndexesSlice';
+
 const PAGE_KEY = 'FLIGHTS_CURR_PAGE';
 
 const Flights = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageParam = +(searchParams.get('page') || 1) - 1;
-  // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
-    PAGE_KEY,
-    Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
-  );
+  // const dispatch = useDispatch();
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // const pageParam = +(searchParams.get('page') || 1);
+  // const initPageIndex= Number(pageParam || (useSelector(pageIndexValue) as any)[PAGE_KEY] || 1)
+  // const [pageIndex, setPaginationData] = useState(initPageIndex);
+  //
+  // useEffect(() => {
+  //   dispatch(setPageIndexInStore({ [PAGE_KEY]: pageIndex }));
+  //   setSearchParams({ page: String(pageIndex) });
+  // }, [pageIndex]);
+
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+
+  useEffect(() => {
+    setPaginationData(undefined)
+  }, []);
 
   const { data: airplanesData, isLoading: isAircraftLoading } =
     useGetAircraftQuery({ page: pageIndex });
   const airplanes = airplanesData?.content;
 
-  const { data: flightsData, isError, isFetching } = useFlightsQuery(pageIndex);
+  const { data: flightsData, isError, isFetching } = useFlightsQuery(pageIndex - 1);
 
   const flights = flightsData?.content;
   const totalPagesFlights = flightsData?.totalPages;
 
   useEffect(() => {
-    setSearchParams({ page: String(pageIndex + 1) });
-  }, [pageIndex]);
-
-  useEffect(() => {
     if (!isFetching && !flights && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [flights, pageIndex, setPaginationData, isFetching]);
+  }, [flights]);
 
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] =

@@ -6,14 +6,19 @@ import { useGetFlightSeatsQuery } from '@/store/services';
 
 import { SeatTableHeader } from './SeatsTableHeader';
 import { SeatsTable } from './SeatsTable';
+import { useEffect } from 'react';
+
+const PAGE_KEY = 'FLIGHTSSEATS_CURR_PAGE';
 
 const Seats = () => {
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
-    'FLIGHTSSEATS_CURR_PAGE'
-  );
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+
+  useEffect(() => {
+    setPaginationData(undefined)
+  }, []);
 
   const { data: dataFlightSeats, isFetching } = useGetFlightSeatsQuery({
-    page: pageIndex,
+    page: pageIndex - 1,
   });
 
   if (isFetching || dataFlightSeats === undefined) {

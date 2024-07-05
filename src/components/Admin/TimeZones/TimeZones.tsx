@@ -41,13 +41,12 @@ import { useSetCurrentPageInPagination } from '@/hooks';
 const PAGE_KEY = 'TIME_ZONE_CURR_PAGE';
 
 const TimeZones = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageParam = +(searchParams.get('page') || 1) - 1;
-  // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
-    PAGE_KEY,
-    Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
-  );
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+
+  useEffect(() => {
+    setPaginationData(undefined)
+  }, []);
+
   const toastHandler = useToastHandler();
 
   const {
@@ -55,19 +54,15 @@ const TimeZones = () => {
     isFetching,
     isError,
     error,
-  } = useGetTimezonesQuery({ page: pageIndex });
+  } = useGetTimezonesQuery({ page: pageIndex - 1 });
 
   const timeZonesData = useMemo(() => dataQuery?.content ?? [], [dataQuery]);
   const totalPages = dataQuery?.totalPages;
 
   useEffect(() => {
-    setSearchParams({ page: String(pageIndex + 1) });
-  }, [pageIndex]);
-
-  useEffect(() => {
     if (!isFetching && !timeZonesData && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [timeZonesData, pageIndex, setPaginationData, isFetching]);
+  }, [timeZonesData]);
 
   useEffect(() => {
     if (isError && isFetchBaseQueryError(error))

@@ -42,28 +42,22 @@ import {
 const PAGE_KEY = 'TICKETS_CURR_PAGE';
 
 const Tickets = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageParam = +(searchParams.get('page') || 1) - 1;
-  // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
-    PAGE_KEY,
-    Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
-  );
-
-  // получение данных
-  const { data: ticketsData, isFetching } = useTicketsQuery(pageIndex);
-  const tickets = ticketsData?.content;
-  const totalPages = ticketsData?.totalPages;
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
 
   useEffect(() => {
-    setSearchParams({ page: String(pageIndex + 1) });
-  }, [pageIndex]);
+    setPaginationData(undefined)
+  }, []);
+
+  // получение данных
+  const { data: ticketsData, isFetching } = useTicketsQuery(pageIndex - 1);
+  const tickets = ticketsData?.content;
+  const totalPages = ticketsData?.totalPages;
 
   // если удален последняя строка текущей страницы, то открываем предыдущую страницу
   useEffect(() => {
     if (!isFetching && !tickets && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [isFetching, tickets, pageIndex, setPaginationData]);
+  }, [tickets]);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);

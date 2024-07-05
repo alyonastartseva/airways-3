@@ -48,13 +48,11 @@ import { scrollTable } from '@/constants';
 const PAGE_KEY = 'PASSENGERS_CURR_PAGE';
 
 const Passengers = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageParam = +(searchParams.get('page') || 1) - 1;
-  // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
-    PAGE_KEY,
-    Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
-  );
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+
+  useEffect(() => {
+    setPaginationData(undefined)
+  }, []);
 
   const toastHandler = useToastHandler();
   // получение данных
@@ -63,7 +61,7 @@ const Passengers = () => {
     isFetching,
     error,
     isError,
-  } = useGetPassangersQuery({ page: pageIndex });
+  } = useGetPassangersQuery({ page: pageIndex - 1 });
 
   const passengers = dataQuery?.content;
   const totalPages = dataQuery?.totalPages;
@@ -76,15 +74,11 @@ const Passengers = () => {
       });
   }, [isError, toastHandler, error]);
 
-  useEffect(() => {
-    setSearchParams({ page: String(pageIndex + 1) });
-  }, [pageIndex]);
-
   // если удален последняя строка текущей страницы, то открываем предыдущую страницу
   useEffect(() => {
     if (!isFetching && !passengers && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [passengers, pageIndex, setPaginationData, isFetching]);
+  }, [passengers]);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);

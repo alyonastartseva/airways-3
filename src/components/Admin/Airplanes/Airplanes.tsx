@@ -42,13 +42,11 @@ import { isRowEditing } from '@/utils/table.utils';
 const PAGE_KEY = 'AIRPLANES_CURR_PAGE';
 
 const Airplanes = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageParam = +(searchParams.get('page') || 1) - 1;
-  // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
-    PAGE_KEY,
-    Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
-  );
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+
+  useEffect(() => {
+    setPaginationData(undefined)
+  }, []);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -84,19 +82,15 @@ const Airplanes = () => {
     isFetching,
     isError,
     error,
-  } = useGetAircraftQuery({ page: pageIndex });
+  } = useGetAircraftQuery({ page: pageIndex - 1 });
 
   const airplanes = airplanesData?.content;
   const totalPages = airplanesData?.totalPages;
 
   useEffect(() => {
-    setSearchParams({ page: String(pageIndex + 1) });
-  }, [pageIndex]);
-
-  useEffect(() => {
     if (!isFetching && !airplanes && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [airplanes, pageIndex, setPaginationData, isFetching]);
+  }, [airplanes]);
 
   // изменение данных
   const [patchAircraft] = usePatchAircraftMutation();

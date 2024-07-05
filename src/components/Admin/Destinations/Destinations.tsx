@@ -46,13 +46,11 @@ import { scrollTable } from '@/constants';
 const PAGE_KEY = 'DESTINATIONS_CURR_PAGE';
 
 const Destinations = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageParam = +(searchParams.get('page') || 1) - 1;
-  // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
-    PAGE_KEY,
-    Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
-  );
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+
+  useEffect(() => {
+    setPaginationData(undefined)
+  }, []);
 
   const toastHandler = useToastHandler();
   const {
@@ -60,7 +58,7 @@ const Destinations = () => {
     isFetching,
     isError,
     error,
-  } = useGetDestionationsQuery({ page: pageIndex });
+  } = useGetDestionationsQuery({ page: pageIndex - 1 });
 
   const destinationsByPage = useMemo(
     () => destinationsByPageData?.content || [],
@@ -72,13 +70,9 @@ const Destinations = () => {
   );
 
   useEffect(() => {
-    setSearchParams({ page: String(pageIndex + 1) });
-  }, [pageIndex]);
-
-  useEffect(() => {
     if (!isFetching && !destinationsByPage && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [destinationsByPage, pageIndex, setPaginationData, isFetching]);
+  }, [destinationsByPage]);
 
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IDestination | null>(

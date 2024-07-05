@@ -45,13 +45,18 @@ import { sortById } from '@/utils/sort.utils';
 
 import { getYesNo, gitTicketClassName } from './Airplane.utils';
 
+const PAGE_KEY = 'AIRPLANE_CURR_PAGE';
+
 const Airplane = () => {
+  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+
+  useEffect(() => {
+    setPaginationData(undefined)
+  }, []);
+
   // получение параметра ID из роута
   const param = useParams();
   const toastHandler = useToastHandler();
-  // индекс и размер пагинации
-  const [pageIndex, setPaginationData] =
-    useSetCurrentPageInPagination('AIRPLANE_CURR_PAGE');
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -87,7 +92,7 @@ const Airplane = () => {
   const airplaneId = param.airplane;
 
   const seatQuery = useGetSeatQuery({
-    page: pageIndex,
+    page: pageIndex - 1,
     id: Number(airplaneId),
   });
 
