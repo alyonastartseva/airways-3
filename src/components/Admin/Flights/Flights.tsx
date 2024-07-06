@@ -62,11 +62,8 @@ const Flights = () => {
     useGetAircraftQuery({ page: pageIndex });
   const airplanes = airplanesData?.content;
 
-  const {
-    data: flightsData,
-    isError,
-    isFetching,
-  } = useGetFlightsQuery({ page: pageIndex, size: ITEMS_PER_PAGE });
+
+  const { data: flightsData, isError, isFetching } = useFlightsQuery(pageIndex);
 
   const flights = flightsData?.content;
   const totalPagesFlights = flightsData?.totalPages;

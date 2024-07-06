@@ -1,8 +1,9 @@
-import { Tickets } from '@/components';
+import { Tickets, CardTicketList } from '@/components';
 
 const TicketsPage = () => {
   return (
     <>
+      <CardTicketList />
       <Tickets />
     </>
   );
