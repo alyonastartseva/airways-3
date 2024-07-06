@@ -57,7 +57,6 @@ const App = () => {
       </Routes>
       {/* // </QueryClientProvider> */}
     </ThemeProvider>
-
   );
 };
 
