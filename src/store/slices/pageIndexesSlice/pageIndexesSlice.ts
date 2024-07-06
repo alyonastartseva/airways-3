@@ -4,19 +4,10 @@ import { RootState } from '@/store';
 
 import {ISetPageIndexActions} from './pageIndexesSlice.interfaces';
 
-// const getTheme = () => {
-//     const pageIndex: string = 'light';
-//   return pageIndex;
-// };
-//
-// const initialState = getTheme();
-
 const pageIndexesSlice = createSlice({
   name: 'pageIndexes',
 
-  initialState:{
-    FLIGHTS_CURR_PAGE: 1,
-  },
+  initialState:{},
 
   reducers: {
     setPageIndex: ( state, action: ISetPageIndexActions) => Object.assign(state,action.payload),
