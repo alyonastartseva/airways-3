@@ -41,7 +41,8 @@ import { isRowEditing } from '@/utils/table.utils';
 const PAGE_KEY = 'AIRPLANES_CURR_PAGE';
 
 const Airplanes = () => {
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -85,7 +86,7 @@ const Airplanes = () => {
   useEffect(() => {
     if (!isFetching && !airplanes && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [airplanes]);
+  }, [airplanes, isFetching, pageIndex, setPaginationData]);
 
   // изменение данных
   const [patchAircraft] = usePatchAircraftMutation();

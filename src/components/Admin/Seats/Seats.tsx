@@ -1,5 +1,4 @@
 import { TableContainer } from '@chakra-ui/react';
-import { useEffect } from 'react';
 
 import { useSetCurrentPageInPagination } from '@/hooks';
 import { SpinnerBlock } from '@/common';
@@ -11,7 +10,8 @@ import { SeatsTable } from './SeatsTable';
 const PAGE_KEY = 'FLIGHTSSEATS_CURR_PAGE';
 
 const Seats = () => {
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
 
   const { data: dataFlightSeats, isFetching } = useGetFlightSeatsQuery({
     page: pageIndex - 1,

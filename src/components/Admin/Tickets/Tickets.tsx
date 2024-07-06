@@ -16,7 +16,6 @@ import {
   getCoreRowModel,
   flexRender,
 } from '@tanstack/react-table';
-import { useSearchParams } from 'react-router-dom';
 
 import { sortById } from '@utils/sort.utils';
 import { formatDateTime } from '@utils/date.utils';
@@ -42,7 +41,8 @@ import {
 const PAGE_KEY = 'TICKETS_CURR_PAGE';
 
 const Tickets = () => {
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
 
   // получение данных
   const { data: ticketsData, isFetching } = useTicketsQuery(pageIndex - 1);
@@ -53,7 +53,7 @@ const Tickets = () => {
   useEffect(() => {
     if (!isFetching && !tickets && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [tickets]);
+  }, [isFetching, pageIndex, setPaginationData, tickets]);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);

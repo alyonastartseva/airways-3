@@ -44,13 +44,18 @@ import { EditableSelectCell } from '@/common';
 const PAGE_KEY = 'FLIGHTS_CURR_PAGE';
 
 const Flights = () => {
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
 
   const { data: airplanesData, isLoading: isAircraftLoading } =
     useGetAircraftQuery({ page: pageIndex });
   const airplanes = airplanesData?.content;
 
-  const { data: flightsData, isError, isFetching } = useFlightsQuery(pageIndex - 1);
+  const {
+    data: flightsData,
+    isError,
+    isFetching,
+  } = useFlightsQuery(pageIndex - 1);
 
   const flights = flightsData?.content;
   const totalPagesFlights = flightsData?.totalPages;
@@ -58,7 +63,7 @@ const Flights = () => {
   useEffect(() => {
     if (!isFetching && !flights && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [flights]);
+  }, [flights, isFetching, pageIndex, setPaginationData]);
 
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] =

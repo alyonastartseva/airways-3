@@ -16,7 +16,6 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { isValidNumber } from 'libphonenumber-js';
-import { useSearchParams } from 'react-router-dom';
 
 import { isRowEditing } from '@utils/table.utils';
 import {
@@ -48,7 +47,8 @@ import { scrollTable } from '@/constants';
 const PAGE_KEY = 'PASSENGERS_CURR_PAGE';
 
 const Passengers = () => {
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
 
   const toastHandler = useToastHandler();
   // получение данных
@@ -74,7 +74,7 @@ const Passengers = () => {
   useEffect(() => {
     if (!isFetching && !passengers && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [passengers]);
+  }, [isFetching, pageIndex, passengers, setPaginationData]);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);

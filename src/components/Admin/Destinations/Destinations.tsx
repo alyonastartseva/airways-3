@@ -15,7 +15,6 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { useSearchParams } from 'react-router-dom';
 
 import { isRowEditing } from '@utils/table.utils';
 import { sortById } from '@utils/sort.utils';
@@ -46,7 +45,8 @@ import { scrollTable } from '@/constants';
 const PAGE_KEY = 'DESTINATIONS_CURR_PAGE';
 
 const Destinations = () => {
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
 
   const toastHandler = useToastHandler();
   const {
@@ -68,7 +68,7 @@ const Destinations = () => {
   useEffect(() => {
     if (!isFetching && !destinationsByPage && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [destinationsByPage]);
+  }, [destinationsByPage, isFetching, pageIndex, setPaginationData]);
 
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IDestination | null>(

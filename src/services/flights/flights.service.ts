@@ -26,11 +26,7 @@ const flightsAPI: IFlightsApi = {
       .get<
         IListResponse<Required<IFlightPresentation>>
       >(ERoutes.FLIGHTS + `?page=${pageIndex ?? '0'}&size=${size}`)
-      .then((response) => {
-        // console.log('pageIndex in service on Exit: '+pageIndex);
-        // console.log(response.data);
-        return response.data;
-      });
+      .then((response) => response.data);
   },
 
   postFlight: async (data) => {
