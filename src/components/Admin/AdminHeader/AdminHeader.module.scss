@@ -9,11 +9,13 @@
   font-size: 14px;
 
   &.dark {
+
     color: var(--container-color);
   }
 
   &.light {
     color: var(--light-bg-color);
+
   }
 
   & .tabs {
@@ -33,16 +35,19 @@
       font-size: 14px;
 
       &.darkButton {
+
         background-color: var(--dark-theme-bg-color);
         color: var(--container-color);
 
         &:hover {
           background: var(--dark-bg-color);
           color: var(--container-color);
+
         }
       }
 
       &.lightButton {
+
 
         background-color: var(--button-bg-color);
         color: var(--button-text-color);
@@ -50,6 +55,7 @@
         &:hover {
           background: var(--button-hover-bg-color);
           color: var(--button-hover-text-color);
+
         }
       }
 
