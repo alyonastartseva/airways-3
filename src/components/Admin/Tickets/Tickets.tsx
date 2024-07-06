@@ -44,10 +44,6 @@ const PAGE_KEY = 'TICKETS_CURR_PAGE';
 const Tickets = () => {
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
 
-  useEffect(() => {
-    setPaginationData(undefined)
-  }, []);
-
   // получение данных
   const { data: ticketsData, isFetching } = useTicketsQuery(pageIndex - 1);
   const tickets = ticketsData?.content;

@@ -14,7 +14,6 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useSearchParams } from 'react-router-dom';
 
 import { flightStatuses, EModalNames, scrollTable } from '@/constants';
 import { DestinationsInputSelector } from '@/components';
@@ -42,31 +41,10 @@ import { formatDateTime } from '@utils/date.utils';
 import { useGetAircraftQuery } from '@/store/services';
 import { EditableSelectCell } from '@/common';
 
-import { useDispatch } from 'react-redux';
-import { setPageIndex as setPageIndexInStore } from '@/store/slices/pageIndexesSlice';
-
-import { useSelector } from 'react-redux';
-import { pageIndexValue } from '@/store/slices/pageIndexesSlice';
-
 const PAGE_KEY = 'FLIGHTS_CURR_PAGE';
 
 const Flights = () => {
-  // const dispatch = useDispatch();
-  // const [searchParams, setSearchParams] = useSearchParams();
-  // const pageParam = +(searchParams.get('page') || 1);
-  // const initPageIndex= Number(pageParam || (useSelector(pageIndexValue) as any)[PAGE_KEY] || 1)
-  // const [pageIndex, setPaginationData] = useState(initPageIndex);
-  //
-  // useEffect(() => {
-  //   dispatch(setPageIndexInStore({ [PAGE_KEY]: pageIndex }));
-  //   setSearchParams({ page: String(pageIndex) });
-  // }, [pageIndex]);
-
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
-
-  useEffect(() => {
-    setPaginationData(undefined)
-  }, []);
 
   const { data: airplanesData, isLoading: isAircraftLoading } =
     useGetAircraftQuery({ page: pageIndex });

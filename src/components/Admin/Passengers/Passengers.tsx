@@ -50,10 +50,6 @@ const PAGE_KEY = 'PASSENGERS_CURR_PAGE';
 const Passengers = () => {
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
 
-  useEffect(() => {
-    setPaginationData(undefined)
-  }, []);
-
   const toastHandler = useToastHandler();
   // получение данных
   const {

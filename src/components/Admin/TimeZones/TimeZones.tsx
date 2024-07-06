@@ -43,10 +43,6 @@ const PAGE_KEY = 'TIME_ZONE_CURR_PAGE';
 const TimeZones = () => {
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
 
-  useEffect(() => {
-    setPaginationData(undefined)
-  }, []);
-
   const toastHandler = useToastHandler();
 
   const {

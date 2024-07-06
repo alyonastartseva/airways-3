@@ -22,7 +22,6 @@ interface IFlightsApi {
 
 const flightsAPI: IFlightsApi = {
   getFlights: async (pageIndex?: number, size = ITEMS_PER_PAGE) => {
-    console.log('pageIndex in service on Enter: '+pageIndex);
     return await adminInstance
       .get<
         IListResponse<Required<IFlightPresentation>>
@@ -30,7 +29,7 @@ const flightsAPI: IFlightsApi = {
       .then((response) => {
         // console.log('pageIndex in service on Exit: '+pageIndex);
         // console.log(response.data);
-        return response.data
+        return response.data;
       });
   },
 

@@ -48,10 +48,6 @@ const PAGE_KEY = 'DESTINATIONS_CURR_PAGE';
 const Destinations = () => {
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
 
-  useEffect(() => {
-    setPaginationData(undefined)
-  }, []);
-
   const toastHandler = useToastHandler();
   const {
     data: destinationsByPageData,

@@ -15,7 +15,6 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { useSearchParams } from 'react-router-dom';
 
 import { IAircraft, IAircraftPost } from '@/interfaces';
 import { ITEMS_PER_PAGE, EModalNames, scrollTable } from '@/constants';
@@ -43,10 +42,6 @@ const PAGE_KEY = 'AIRPLANES_CURR_PAGE';
 
 const Airplanes = () => {
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
-
-  useEffect(() => {
-    setPaginationData(undefined)
-  }, []);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);

@@ -47,10 +47,6 @@ const PAGE_KEY = 'BOOKING_CURR_PAGE';
 const Booking = () => {
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
 
-  useEffect(() => {
-    setPaginationData(undefined)
-  }, []);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deletingBookingId, setDeletingBookingId] = useState<number | null>(
     null

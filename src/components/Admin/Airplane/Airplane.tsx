@@ -49,11 +49,6 @@ const PAGE_KEY = 'AIRPLANE_CURR_PAGE';
 
 const Airplane = () => {
   const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
-
-  useEffect(() => {
-    setPaginationData(undefined)
-  }, []);
-
   // получение параметра ID из роута
   const param = useParams();
   const toastHandler = useToastHandler();
