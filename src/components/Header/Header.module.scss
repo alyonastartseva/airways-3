@@ -1,48 +1,48 @@
+@import '../../variables.scss';
+
 .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   height: 4.685rem;
-  box-shadow: 0 1px 15px #a3a3a3;
+  box-shadow: 0 1px 15px var(--box-shadow-color);
   padding-right: 1.5rem;
   padding-left: 1.5rem;
-
-  background-color: #445ebd;
-
   position: relative;
   z-index: 10;
+
+  background-color: var(--container-bg-color);
+  color: var(--container-color);
+
+  &.dark-theme {
+    background-color: var(--dark-theme-bg-color);
+    color: var(--container-color);
+  }
 
   & .buttons {
     display: flex;
     gap: 26px;
-
     & .buttonAntd {
-      background-color: #ffffff;
+      background-color: var(--button-bg-color);
       border: none;
       border-radius: 4px;
-
-      color: #006fff;
+      color: var(--button-text-color);
       font-family: inherit;
       font-weight: 600;
       font-size: 14px;
-
       &:hover {
-        background: #e7e7e7;
-        color: #008cff;
+        background: var(--button-hover-bg-color);
+        color: var(--button-hover-text-color);
       }
-
       &:focus {
         outline: none;
       }
     }
   }
-
   & .actions {
     display: flex;
     align-items: center;
     gap: 30px;
-
     & .switch {
       &:focus {
         outline: none;
