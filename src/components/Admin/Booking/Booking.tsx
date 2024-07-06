@@ -39,6 +39,7 @@ import {
   PopoverTable,
   ConfirmCancelModal,
   Pagination,
+  AlertMessage,
 } from '@/common';
 
 const PAGE_KEY = 'BOOKING_CURR_PAGE';
@@ -218,6 +219,10 @@ const Booking = () => {
 
   if (isFetching) {
     return <SpinnerBlock />;
+  }
+
+  if (Array.isArray(bookingData) && !bookingData?.length) {
+    return <AlertMessage status="info" message="No tickets were found" />;
   }
 
   return (

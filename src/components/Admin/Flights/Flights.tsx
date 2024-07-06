@@ -16,7 +16,12 @@ import {
 } from '@tanstack/react-table';
 import { useSearchParams } from 'react-router-dom';
 
-import { flightStatuses, EModalNames, scrollTable } from '@/constants';
+import {
+  flightStatuses,
+  EModalNames,
+  scrollTable,
+  ITEMS_PER_PAGE,
+} from '@/constants';
 import { DestinationsInputSelector } from '@/components';
 import {
   IAircraft,
@@ -24,12 +29,7 @@ import {
   IFlightPresentation,
   TFlightsStatus,
 } from '@/interfaces';
-import {
-  useFlightsDelete,
-  useFlightsQuery,
-  useFlightsPatch,
-  useSetCurrentPageInPagination,
-} from '@/hooks';
+import { useSetCurrentPageInPagination } from '@/hooks';
 import { AlertMessage } from '@common/AlertMessage';
 import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
@@ -39,7 +39,12 @@ import { PopoverTable } from '@common/PopoverTable';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
-import { useGetAircraftQuery } from '@/store/services';
+import { useGetAircraftQuery } from '@/store/services/aircraftSlice';
+import {
+  useGetFlightsQuery,
+  useDeleteFlightMutation,
+  usePatchFlightMutation,
+} from '@/store/services/flightSlice';
 import { EditableSelectCell } from '@/common';
 
 const PAGE_KEY = 'FLIGHTS_CURR_PAGE';
@@ -57,11 +62,8 @@ const Flights = () => {
     useGetAircraftQuery({ page: pageIndex });
   const airplanes = airplanesData?.content;
 
-  const {
-    data: flightsData,
-    isError,
-    isFetching,
-  } = useFlightsQuery(pageIndex - 1);
+
+  const { data: flightsData, isError, isFetching } = useFlightsQuery(pageIndex);
 
   const flights = flightsData?.content;
   const totalPagesFlights = flightsData?.totalPages;
@@ -104,8 +106,8 @@ const Flights = () => {
     [editableRowState]
   );
 
-  const { mutate: deleteFlight } = useFlightsDelete();
-  const { mutate: patchFlights } = useFlightsPatch();
+  const [deleteFlight] = useDeleteFlightMutation();
+  const [patchFlights] = usePatchFlightMutation();
 
   const patchRow = useCallback(() => {
     patchFlights(editableRowState);
@@ -115,7 +117,9 @@ const Flights = () => {
   const getAircraftModel = useCallback(
     (id: string) => {
       if (airplanes) {
-        const aircraftInfo = airplanes.find((el) => el.id.toString() === id);
+        const aircraftInfo = airplanes.find(
+          (el: IAircraft) => el.id.toString() === id
+        );
         if (aircraftInfo) {
           return aircraftInfo.model;
         } else return id.toString();
@@ -329,7 +333,7 @@ const Flights = () => {
   // TODO: удалить когда будет сортировка на бэке
   const tableData = (data?: Required<IFlightPresentation>[]) => {
     if (Array.isArray(data) && data.length) {
-      return data.sort((a, b) => a.id - b.id);
+      return [...data].sort((a, b) => a.id - b.id);
     }
     return [];
   };

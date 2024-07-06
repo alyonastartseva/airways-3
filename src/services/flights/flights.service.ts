@@ -25,7 +25,7 @@ const flightsAPI: IFlightsApi = {
     return await adminInstance
       .get<
         IListResponse<Required<IFlightPresentation>>
-      >(ERoutes.GET_FLIGHTS + `?page=${pageIndex ?? ''}&size=${size}`)
+      >(ERoutes.FLIGHTS + `?page=${pageIndex ?? '0'}&size=${size}`)
       .then((response) => response.data);
   },
 
