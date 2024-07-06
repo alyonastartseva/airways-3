@@ -14,24 +14,12 @@
     color: var(--container-color);
   }
 
-  &.dark-theme {
-    background-color: #3b3a3a;
-    color: #ffffff;
-  }
-
-  &.dark-theme {
-    background-color: #3b3a3a;
-    color: #ffffff;
-  }
-
   & .links {
     display: flex;
     gap: 35px;
 
     & .link {
-
       color: var(--container-color);
-
       font-size: 0.9rem;
 
       &:hover {

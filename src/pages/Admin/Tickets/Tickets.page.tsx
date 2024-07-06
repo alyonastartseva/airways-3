@@ -1,5 +1,5 @@
-import { Tickets, CardTicketList } from '@/components';
-
+import { CardTicketList } from '@/components/Ticket/CardTicketList';
+import { Tickets } from '@/components';
 const TicketsPage = () => {
   return (
     <>

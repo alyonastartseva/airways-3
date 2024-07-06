@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import '../../styles/variables.scss';
 
 .container {
   display: flex;
@@ -26,9 +26,7 @@
       background-color: var(--button-bg-color);
       border: none;
       border-radius: 4px;
-
       color: var(--button-text-color);
-
       font-family: inherit;
       font-weight: 600;
       font-size: 14px;
