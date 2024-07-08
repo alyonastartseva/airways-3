@@ -44,7 +44,7 @@ import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 import { useToastHandler } from '@/hooks/useToastHandler';
 import { IPassenger, PersonGenders } from '@/interfaces';
 import { scrollTable } from '@/constants';
-
+import { useTheme } from '@context/:ThemeProvider';
 const PAGE_KEY = 'PASSENGERS_CURR_PAGE';
 
 const Passengers = () => {
@@ -55,6 +55,8 @@ const Passengers = () => {
     PAGE_KEY,
     Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
   );
+
+  const { theme } = useTheme();
 
   const toastHandler = useToastHandler();
   // получение данных
@@ -67,7 +69,6 @@ const Passengers = () => {
 
   const passengers = dataQuery?.content;
   const totalPages = dataQuery?.totalPages;
-
   useEffect(() => {
     if (isError && isFetchBaseQueryError(error))
       toastHandler({
@@ -75,35 +76,29 @@ const Passengers = () => {
         title: error.data.message,
       });
   }, [isError, toastHandler, error]);
-
   useEffect(() => {
     setSearchParams({ page: String(pageIndex + 1) });
   }, [pageIndex]);
-
   // если удален последняя строка текущей страницы, то открываем предыдущую страницу
   useEffect(() => {
     if (!isFetching && !passengers && pageIndex > 0)
       setPaginationData(pageIndex - 1);
   }, [passengers, pageIndex, setPaginationData, isFetching]);
-
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IPassenger | null>(
     null
   );
-
   // установка редактируемой строки
   const handleEditRow = useCallback((row: IPassenger, index: number) => {
     setEditableRowState(row);
     setEditableRowIndex(index);
   }, []);
-
   // сброс редактируемой строки
   const cancelEditing = useCallback(() => {
     setEditableRowIndex(null);
     setEditableRowState(null);
   }, []);
-
   // обновление редактируемой строки
   const handleUpdateRow = useCallback(
     (id: string, value: string) => {
@@ -113,7 +108,6 @@ const Passengers = () => {
           const key1 = id.slice(0, id.indexOf('_'));
           const key2 = id.slice(id.indexOf('_') + 1);
           const nestedObject = editableRowState[key1 as keyof IPassenger];
-
           if (nestedObject && typeof nestedObject === 'object') {
             setEditableRowState({
               ...editableRowState,
@@ -133,20 +127,15 @@ const Passengers = () => {
     },
     [editableRowState]
   );
-
   // изменение данных
   const [patchPassengers] = usePatchPassengerMutation();
-
   // удаление данных
   const [deletePassengers] = useDeletePassengerMutation();
-
   // патч данных
   const patchRow = useCallback(() => {
     if (editableRowState) patchPassengers(editableRowState);
-
     cancelEditing();
   }, [patchPassengers, editableRowState, cancelEditing]);
-
   // получение названия пола по value
   const getGenderName = (value: PersonGenders): 'Муж.' | 'Жен.' => {
     switch (value) {
@@ -156,10 +145,8 @@ const Passengers = () => {
         return 'Муж.';
     }
   };
-
   // value для select колонки 'Пол'
   const genderSelectOptions = Object.values(PersonGenders);
-
   // создание столбцов таблицы
   const columnHelper = createColumnHelper<IPassenger>();
   const columns = useMemo(
@@ -387,7 +374,6 @@ const Passengers = () => {
       passengers,
     ]
   );
-
   // сортировка получаемых данных. ВРЕМЕННО, ПОКА ДАННЫЕ С СЕРВЕРА ПРИХОДЯТ БЕЗ СОРТИРОВКИ
   const tableData = (data?: IPassenger[]) => {
     if (Array.isArray(data) && data.length) {
@@ -395,7 +381,6 @@ const Passengers = () => {
     }
     return [];
   };
-
   // создание таблицы
   const table = useReactTable({
     data: tableData(passengers).slice(0, ITEMS_PER_PAGE),
@@ -403,14 +388,11 @@ const Passengers = () => {
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
   });
-
   // спиннер при загрузке
   if (isFetching) {
     return <SpinnerBlock />;
   }
-
   // если полученные данные в порядке выводим таблицу
-
   return (
     <>
       {passengers?.length ? (
@@ -427,7 +409,7 @@ const Passengers = () => {
                     {headerGroup.headers.map((header) => (
                       <Th
                         border="1px solid #DEDEDE"
-                        color="#000000"
+                        color={theme === 'dark' ? '#FFFFFF' : '#000000'}
                         key={header.id}
                         fontSize="14px"
                         lineHeight="18px"
@@ -452,7 +434,7 @@ const Passengers = () => {
                     {row.getVisibleCells().map((cell) => (
                       <Td
                         border="1px solid #DEDEDE"
-                        color="#393939"
+                        color={theme === 'dark' ? '#FFFFFF' : '#393939'}
                         fontSize="14px"
                         lineHeight="18px"
                         key={cell.id}
@@ -488,6 +470,5 @@ const Passengers = () => {
     </>
   );
 };
-
 const memorizedPassengers = memo(Passengers);
 export default memorizedPassengers;

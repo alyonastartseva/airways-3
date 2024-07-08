@@ -16,7 +16,12 @@ import {
 } from '@tanstack/react-table';
 import { useSearchParams } from 'react-router-dom';
 
-import { flightStatuses, EModalNames, scrollTable } from '@/constants';
+import {
+  flightStatuses,
+  EModalNames,
+  scrollTable,
+  ITEMS_PER_PAGE,
+} from '@/constants';
 import { DestinationsInputSelector } from '@/components';
 import {
   IAircraft,
@@ -24,12 +29,7 @@ import {
   IFlightPresentation,
   TFlightsStatus,
 } from '@/interfaces';
-import {
-  useFlightsDelete,
-  useFlightsQuery,
-  useFlightsPatch,
-  useSetCurrentPageInPagination,
-} from '@/hooks';
+import { useSetCurrentPageInPagination } from '@/hooks';
 import { AlertMessage } from '@common/AlertMessage';
 import { EditableCell } from '@common/EditableCell';
 import { FlexCell } from '@common/FlexCell';
@@ -39,12 +39,19 @@ import { PopoverTable } from '@common/PopoverTable';
 import { SpinnerBlock } from '@common/SpinnerBlock';
 import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
-import { useGetAircraftQuery } from '@/store/services';
+import { useGetAircraftQuery } from '@/store/services/aircraftSlice';
+import {
+  useGetFlightsQuery,
+  useDeleteFlightMutation,
+  usePatchFlightMutation,
+} from '@/store/services/flightSlice';
+import { useTheme } from '@context/:ThemeProvider';
 import { EditableSelectCell } from '@/common';
 
 const PAGE_KEY = 'FLIGHTS_CURR_PAGE';
 
 const Flights = () => {
+  const { theme } = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
   const pageParam = +(searchParams.get('page') || 1) - 1;
   // индекс и размер пагинации
@@ -57,7 +64,11 @@ const Flights = () => {
     useGetAircraftQuery({ page: pageIndex });
   const airplanes = airplanesData?.content;
 
-  const { data: flightsData, isError, isFetching } = useFlightsQuery(pageIndex);
+  const {
+    data: flightsData,
+    isError,
+    isFetching,
+  } = useGetFlightsQuery({ page: pageIndex, size: ITEMS_PER_PAGE });
 
   const flights = flightsData?.content;
   const totalPagesFlights = flightsData?.totalPages;
@@ -100,8 +111,8 @@ const Flights = () => {
     [editableRowState]
   );
 
-  const { mutate: deleteFlight } = useFlightsDelete();
-  const { mutate: patchFlights } = useFlightsPatch();
+  const [deleteFlight] = useDeleteFlightMutation();
+  const [patchFlights] = usePatchFlightMutation();
 
   const patchRow = useCallback(() => {
     patchFlights(editableRowState);
@@ -111,7 +122,9 @@ const Flights = () => {
   const getAircraftModel = useCallback(
     (id: string) => {
       if (airplanes) {
-        const aircraftInfo = airplanes.find((el) => el.id.toString() === id);
+        const aircraftInfo = airplanes.find(
+          (el: IAircraft) => el.id.toString() === id
+        );
         if (aircraftInfo) {
           return aircraftInfo.model;
         } else return id.toString();
@@ -325,7 +338,7 @@ const Flights = () => {
   // TODO: удалить когда будет сортировка на бэке
   const tableData = (data?: Required<IFlightPresentation>[]) => {
     if (Array.isArray(data) && data.length) {
-      return data.sort((a, b) => a.id - b.id);
+      return [...data].sort((a, b) => a.id - b.id);
     }
     return [];
   };
@@ -356,7 +369,7 @@ const Flights = () => {
                   {headerGroup.headers.map((header) => (
                     <Th
                       border="1px solid #DEDEDE"
-                      color="#000000"
+                      color={theme === 'dark' ? '#FFFFFF' : '#000000'}
                       key={header.id}
                       fontSize="14px"
                       lineHeight="18px"
@@ -381,7 +394,7 @@ const Flights = () => {
                   {row.getVisibleCells().map((cell) => (
                     <Td
                       border="0.0625rem solid #DEDEDE"
-                      color="#393939"
+                      color={theme === 'dark' ? '#FFFFFF' : '#393939'}
                       fontSize="0.875rem"
                       lineHeight="1.125rem"
                       key={cell.id}

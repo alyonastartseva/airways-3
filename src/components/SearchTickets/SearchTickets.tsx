@@ -28,6 +28,7 @@ import { ISearchData, IFlightPresentation } from '@/interfaces';
 import { Calendar, SeatCategory } from '@/common';
 import { DestinationsInputSelector } from '@/components';
 import { ISeatCategoryType } from '@/interfaces/flightsSeats.interfaces';
+import { useTheme } from '@context/:ThemeProvider';
 
 import { TicketCard } from '../Ticket/TicketCard';
 import { ITicketCardProps } from '../Ticket/TicketCard/ticketCard.interfaces';
@@ -62,6 +63,8 @@ const SearchTickets = ({
   const [passengerWarning, setPassengerWarning] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const { theme } = useTheme();
+  const borderColor = theme === 'light' ? '#D3EFFF' : '#444';
   const [ticketCardProps, setTicketCardProps] = useState<
     ITicketCardProps & { flightSeatId: number }[]
   >([]);
@@ -211,11 +214,11 @@ const SearchTickets = ({
   };
 
   const handleReverse = () => {
+    const { airportFrom, airportTo } = searchParams;
     updateSearchParam({
-      airportTo: searchParams.airportFrom,
-      airportFrom: searchParams.airportTo,
+      airportFrom: airportTo,
+      airportTo: airportFrom,
     });
-    setFromToPosition(!fromToPosition);
   };
   const calendarDates = useMemo(() => {
     const startDate = searchParams.departureDate
@@ -293,18 +296,28 @@ const SearchTickets = ({
       <Box>
         {showImage && (
           <Flex justify="center" h="31.25rem" mb="0.7rem" alignItems="center">
-            <Image src={mainsearch} alt="Main-search" />
+            <Image
+              src={mainsearch}
+              alt="mainsearch"
+              borderRadius="0.5rem"
+              filter={theme === 'dark' ? 'brightness(60%)' : 'none'}
+            />
           </Flex>
         )}
         <Box
-          border="0.9rem solid #D3EFFF"
+          border="0.9rem solid "
+          borderColor={borderColor}
           borderRadius="1rem"
           w="100%"
           maxWidth="75rem"
           h="18.75rem"
           p="0.9rem 3.1rem 2.2rem"
         >
-          <Text color="#445EBD" fontWeight="700" fontSize={36}>
+          <Text
+            color={theme === 'light' ? '#445EBD' : '#FFFFFF'}
+            fontWeight="700"
+            fontSize={36}
+          >
             Найти билеты
           </Text>
           <Box>
@@ -369,7 +382,9 @@ const SearchTickets = ({
                     <Alert
                       data-testid="alert-error"
                       status="error"
-                      color="red"
+                      colorScheme={theme === 'dark' ? 'red' : 'white'}
+                      bg={theme === 'dark' ? 'gray.700' : 'red'}
+                      color={theme === 'dark' ? 'white' : 'black'}
                       fontSize={15}
                       mt="2.75rem"
                       position="absolute"
