@@ -37,31 +37,27 @@ import {
   SpinnerBlock,
 } from '@/common';
 import { isRowEditing } from '@/utils/table.utils';
-
+import { useTheme } from '@context/:ThemeProvider';
 const PAGE_KEY = 'AIRPLANES_CURR_PAGE';
 
 const Airplanes = () => {
   const [pageIndex, setPaginationData] =
     useSetCurrentPageInPagination(PAGE_KEY);
-
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IAircraft | null>(
     null
   );
-
   // установка редактируемой строки
   const handleEditRow = useCallback((row: IAircraft, index: number) => {
     setEditableRowState(row);
     setEditableRowIndex(index);
   }, []);
-
   // сброс редактируемой строки
   const cancelEditing = useCallback(() => {
     setEditableRowIndex(null);
     setEditableRowState(null);
   }, []);
-
   // обновление редактируемой строки
   const handleUpdateRow = useCallback(
     (id: string, value: string) => {
@@ -70,7 +66,6 @@ const Airplanes = () => {
     },
     [editableRowState]
   );
-
   const toastHandler = useToastHandler();
   // получение данных
   const {
@@ -80,6 +75,7 @@ const Airplanes = () => {
     error,
   } = useGetAircraftQuery({ page: pageIndex - 1 });
 
+  const { theme } = useTheme();
   const airplanes = airplanesData?.content;
   const totalPages = airplanesData?.totalPages;
 
@@ -87,20 +83,15 @@ const Airplanes = () => {
     if (!isFetching && !airplanes && pageIndex > 0)
       setPaginationData(pageIndex - 1);
   }, [airplanes, isFetching, pageIndex, setPaginationData]);
-
   // изменение данных
   const [patchAircraft] = usePatchAircraftMutation();
-
   // удаление данных
   const [deleteAircraft] = useDeleteAircraftMutation();
-
   // патч данных
   const patchRow = useCallback(() => {
     if (editableRowState) patchAircraft(editableRowState);
-
     cancelEditing();
   }, [patchAircraft, cancelEditing, editableRowState]);
-
   useEffect(() => {
     if (isError && isFetchBaseQueryError(error))
       toastHandler({
@@ -108,7 +99,6 @@ const Airplanes = () => {
         title: error.data.message,
       });
   }, [isError, toastHandler, error]);
-
   // создание столбцов таблицы
   const columnHelper = createColumnHelper<IAircraft>();
   const columns = useMemo(
@@ -264,7 +254,6 @@ const Airplanes = () => {
       airplanes,
     ]
   );
-
   // сортировка получаемых данных. ВРЕМЕННО, ПОКА ДАННЫЕ С СЕРВЕРА ПРИХОДЯТ БЕЗ СОРТИРОВКИ
   const tableData = (data?: IAircraft[]) => {
     if (Array.isArray(data) && data.length) {
@@ -272,7 +261,6 @@ const Airplanes = () => {
     }
     return [];
   };
-
   // создание таблицы
   const table = useReactTable({
     data: tableData(airplanes).slice(0, ITEMS_PER_PAGE),
@@ -280,12 +268,10 @@ const Airplanes = () => {
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
   });
-
   // спиннер при загрузке
   if (isFetching) {
     return <SpinnerBlock />;
   }
-
   // если полученные данные в порядке выводим таблицу
   if (Array.isArray(airplanes) && airplanes?.length) {
     return (
@@ -310,7 +296,7 @@ const Airplanes = () => {
                     {headerGroup.headers.map((header) => (
                       <Th
                         border="0.0625rem solid #DEDEDE"
-                        color="#000000"
+                        color={theme === 'dark' ? '#FFFFFF' : '#000000'}
                         key={header.id}
                         fontSize="0.875rem"
                         lineHeight="1.125rem"
@@ -335,7 +321,7 @@ const Airplanes = () => {
                     {row.getVisibleCells().map((cell) => (
                       <Td
                         border="0.0625rem solid #DEDEDE"
-                        color="#393939"
+                        color={theme === 'dark' ? '#FFFFFF' : '#393939'}
                         fontSize="0.875rem"
                         lineHeight="1.125rem"
                         key={cell.id}
@@ -368,9 +354,7 @@ const Airplanes = () => {
       </TableContainer>
     );
   }
-
   // алерт при ошбике
   return <AlertMessage />;
 };
-
 export default Airplanes;

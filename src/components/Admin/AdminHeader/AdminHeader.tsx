@@ -3,10 +3,12 @@ import { Button } from 'antd';
 
 import { ELinks } from '@/services';
 import { PhoneNumber } from '@/common';
+import { useTheme } from '@/context/ThemeProvider';
 
 import styles from './AdminHeader.module.scss';
 
 const AdminHeader = () => {
+  const { theme } = useTheme();
   const tabs = [
     {
       tabName: 'Пассажиры',
@@ -41,16 +43,18 @@ const AdminHeader = () => {
       tabPath: ELinks.ADMIN_FLIGHTS_SEATS,
     },
   ];
-
   const checkActive = ({ isActive }: { isActive: boolean }) =>
     isActive ? styles.active : undefined;
-
   const handleSignOut = () => {
     // Когда будет авторизация, реализовать выход из админа
   };
 
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        theme === 'dark' ? styles.dark : styles.light
+      }`}
+    >
       <div className={styles.tabs}>
         {tabs.map(
           ({ tabName, tabPath }: { tabName: string; tabPath: string }) => {
@@ -66,12 +70,13 @@ const AdminHeader = () => {
           }
         )}
       </div>
-
       <div className={styles.actions}>
         <PhoneNumber />
 
         <Button
-          className={styles.buttonAntd}
+          className={`${styles.buttonAntd} ${
+            theme === 'dark' ? styles.darkButton : styles.lightButton
+          }`}
           size="large"
           onClick={handleSignOut}
         >
@@ -81,5 +86,4 @@ const AdminHeader = () => {
     </div>
   );
 };
-
 export default AdminHeader;

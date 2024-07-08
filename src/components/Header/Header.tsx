@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ConfigProvider, Button, Switch } from 'antd';
 
@@ -7,7 +6,7 @@ import { UserHeader, AdminHeader } from '@/components';
 import { WebsiteLogo } from '@/common';
 import { ELinks } from '@/services';
 import { useAuth } from '@/hooks';
-import { themeValue, set } from '@store/slices';
+import { useTheme } from '@context/:ThemeProvider';
 
 import styles from './Header.module.scss';
 
@@ -15,10 +14,7 @@ const Header = () => {
   const { isAdmin } = useAuth();
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const theme = useSelector(themeValue);
-  const setTheme = (value: string) => dispatch(set(value));
+  const { theme, toggleTheme } = useTheme();
 
   // TODO заглушка для отображения контента для неавторизованного пользователя
   const isSignIn = pathname === ELinks.AUTHORIZATION;
@@ -29,13 +25,8 @@ const Header = () => {
     { path: '/', name: 'На главную' },
   ];
 
-  const handleChangeTheme = () => {
-    const next = theme === 'dark' ? 'light' : 'dark';
-    setTheme(next);
-  };
-
   useEffect(() => {
-    localStorage.setItem('theme', theme);
+    document.body.className = theme;
   }, [theme]);
 
   const unAuthContent = (
@@ -55,16 +46,18 @@ const Header = () => {
       )}
     </div>
   );
-
   const authContent = isAdmin ? <AdminHeader /> : <UserHeader />;
 
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        theme === 'dark' ? styles['dark-theme'] : ''
+      }`}
+    >
       <WebsiteLogo isFooter={false} isLogged={isAdmin && !isSignIn} />
 
       <div className={styles.actions}>
         {isSignIn ? unAuthContent : authContent}
-
         <ConfigProvider
           theme={{
             components: {
@@ -80,12 +73,11 @@ const Header = () => {
             checkedChildren="Темная тема"
             unCheckedChildren="Светлая тема"
             checked={theme === 'dark'}
-            onClick={handleChangeTheme}
+            onClick={toggleTheme}
           />
         </ConfigProvider>
       </div>
     </div>
   );
 };
-
 export default Header;
