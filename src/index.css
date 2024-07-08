@@ -1,4 +1,3 @@
-
 @import './styles/variables.scss';
 
 @import '@fontsource/roboto/400.css';
@@ -13,14 +12,17 @@
 #root {
   width: 100%;
 }
+
 a {
   font-weight: 500;
   color: var(--primary-color);
   text-decoration: inherit;
 }
+
 a:hover {
   color: var(--hover-light-color);
 }
+
 body {
   margin: 0;
   display: flex;
@@ -29,10 +31,12 @@ body {
   min-width: 20rem;
   min-height: 100vh;
 }
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+
 button {
   border-radius: 0.5rem;
   border: 0.0625rem solid transparent;
@@ -44,9 +48,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: var(--primary-color);
 }
+
 button:focus,
 button:focus-visible {
   outline: 0.25rem auto var(--focus-outline-color);
@@ -70,37 +76,21 @@ body.dark a:hover {
   color: var(--hover-dark-color);
 }
 
-body.light {
-  color: #213547;
-  background-color: #ffffff;
-}
-
-body.light a:hover {
-  color: #4797ff;
-}
-
-body.dark {
-  color: rgb(177, 162, 162);
-  /* color: rgba(255, 255, 255, 0.87); */
-  background-color: #242424;
-}
-
-body.dark a:hover {
-  color: #83898c;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: var(--light-text-color);
     background-color: var(--light-bg-color);
   }
+
   a:hover {
     color: var(--primary-color);
   }
+
   button {
     background-color: var(--button-light-bg-color);
   }
 }
+
 .ant-select-item:not(:last-child) {
   border-bottom: 1px solid var(--border-light-color);
 }
