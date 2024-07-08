@@ -50,6 +50,7 @@ import { EditableSelectCell } from '@/common';
 const PAGE_KEY = 'FLIGHTS_CURR_PAGE';
 
 const Flights = () => {
+  const { theme } = useTheme();
   const [pageIndex, setPaginationData] =
     useSetCurrentPageInPagination(PAGE_KEY);
 
@@ -61,7 +62,7 @@ const Flights = () => {
     data: flightsData,
     isError,
     isFetching,
-  } = useFlightsQuery(pageIndex - 1);
+  } = useGetFlightsQuery({ page: pageIndex - 1, size: ITEMS_PER_PAGE });
 
   const flights = flightsData?.content;
   const totalPagesFlights = flightsData?.totalPages;

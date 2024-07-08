@@ -46,6 +46,7 @@ import { useTheme } from '@context/:ThemeProvider';
 const PAGE_KEY = 'DESTINATIONS_CURR_PAGE';
 
 const Destinations = () => {
+  const { theme } = useTheme();
   const [pageIndex, setPaginationData] =
     useSetCurrentPageInPagination(PAGE_KEY);
   const toastHandler = useToastHandler();
@@ -63,9 +64,6 @@ const Destinations = () => {
     () => destinationsByPageData?.totalPages || 0,
     [destinationsByPageData]
   );
-  useEffect(() => {
-    setSearchParams({ page: String(pageIndex + 1) });
-  }, [pageIndex]);
   useEffect(() => {
     if (!isFetching && !destinationsByPage && pageIndex > 0)
       setPaginationData(pageIndex - 1);

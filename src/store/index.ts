@@ -12,6 +12,7 @@ import {
   timezonesApi,
   flightSeatsApi,
 } from './services';
+import { flightSlice } from './services/flightSlice';
 
 export const store = configureStore({
   reducer: {

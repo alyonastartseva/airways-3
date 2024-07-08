@@ -41,6 +41,7 @@ import { useTheme } from '@context/:ThemeProvider';
 const PAGE_KEY = 'TIME_ZONE_CURR_PAGE';
 
 const TimeZones = () => {
+  const { theme } = useTheme();
   const [pageIndex, setPaginationData] =
     useSetCurrentPageInPagination(PAGE_KEY);
   const toastHandler = useToastHandler();
