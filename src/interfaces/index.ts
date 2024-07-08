@@ -30,6 +30,7 @@ export type {
 export type {
   SetPaginationDataCallback,
   UseSetCurrentPageInPagination,
+  IPagination,
 } from './pagination.interfaces';
 export type {
   IDestination,

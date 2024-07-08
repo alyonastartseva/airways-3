@@ -37,7 +37,7 @@ import passportPattern from '@constants/validate-patterns/passport-pattern';
 import { formatDateTime } from '@utils/date.utils';
 import {
   useDeletePassengerMutation,
-  useGetPassangersQuery,
+  useGetPassengersQuery,
   usePatchPassengerMutation,
 } from '@/store/services';
 import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
@@ -63,7 +63,7 @@ const Passengers = () => {
     isFetching,
     error,
     isError,
-  } = useGetPassangersQuery({ page: pageIndex });
+  } = useGetPassengersQuery({ page: pageIndex });
 
   const passengers = dataQuery?.content;
   const totalPages = dataQuery?.totalPages;

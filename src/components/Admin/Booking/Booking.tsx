@@ -28,9 +28,15 @@ import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
 import {
   useSetCurrentPageInPagination,
-  useBookingDelete,
-  useBookingQuery,
+  // useDeleteBookingMutation,
+  // useGetBookingsQuery,
 } from '@/hooks';
+// import { bookingApi, passengersApi } from '@/store/services';
+import {
+  useDeleteBookingMutation,
+  useGetBookingsQuery,
+  usePatchBookingMutation,
+} from '@/store/services';
 import {
   SpinnerBlock,
   HeaderTable,
@@ -43,6 +49,8 @@ import {
 } from '@/common';
 
 const PAGE_KEY = 'BOOKING_CURR_PAGE';
+
+const pageSize = 10;
 
 const Booking = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -58,7 +66,7 @@ const Booking = () => {
     null
   );
 
-  const { mutate: deleteBooking } = useBookingDelete();
+  const [deleteBooking] = useDeleteBookingMutation();
 
   const handleDeleteBooking = useCallback(() => {
     if (deletingBookingId) {
@@ -76,22 +84,14 @@ const Booking = () => {
     [isModalOpen]
   );
 
-  const { data: dataQuery, isFetching } = useBookingQuery(pageIndex);
-
-  const bookingData = useMemo(() => {
-    return dataQuery?.content ? dataQuery.content : [];
-  }, [dataQuery]);
-
-  const totalPages = dataQuery?.totalPages;
+  const { data: bookingData, isFetching } = useGetBookingsQuery({
+    page: pageParam,
+    size: pageSize,
+  });
 
   useEffect(() => {
     setSearchParams({ page: String(pageIndex + 1) });
   }, [pageIndex]);
-
-  useEffect(() => {
-    if (!isFetching && !bookingData && pageIndex > 0)
-      setPaginationData(pageIndex - 1);
-  }, [isFetching, bookingData, pageIndex, setPaginationData]);
 
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IBooking | null>(
@@ -211,7 +211,7 @@ const Booking = () => {
   );
 
   const table = useReactTable({
-    data: bookingData,
+    data: bookingData || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
@@ -222,7 +222,7 @@ const Booking = () => {
   }
 
   if (Array.isArray(bookingData) && !bookingData?.length) {
-    return <AlertMessage status="info" message="No tickets were found" />;
+    return <AlertMessage status="info" message="No bookings were found" />;
   }
 
   return (
@@ -328,7 +328,6 @@ const Booking = () => {
                   </Table>
                 </div>
               </TableContainer>
-
               <ConfirmCancelModal
                 isOpen={isModalOpen}
                 onClose={toggleModal}
@@ -338,11 +337,13 @@ const Booking = () => {
 
               <Pagination
                 pageIndex={pageIndex}
-                totalPages={totalPages}
+                totalPages={bookingData?.length}
                 setPaginationData={setPaginationData}
               />
             </>
-          ) : null
+          ) : (
+            <AlertMessage status="info" message="No bookings were found" />
+          )
         }
       </Container>
     </Box>
