@@ -1,0 +1,158 @@
+@import 'src/variables.scss';
+
+$color-grey: #808080;
+$bg-color-grey: #f6f8fc;
+$color-green: rgb(151, 186, 30);
+
+.ticket {
+  &__none {
+    display: none;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    height: 165px;
+    padding: 10px 22px;
+
+    &--full {
+      font-weight: 400;
+      &__info {
+        text-align: left;
+      }
+
+      &__airline-info {
+        padding: 12px;
+        border: 1px solid rgb(241, 243, 248);
+        border-radius: 8px;
+        margin: 24px 0;
+
+        display: flex;
+        justify-content: space-between;
+      }
+
+      &__flight {
+        &-icon {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          position: relative;
+          height: 90%;
+
+          height: 300px;
+
+          margin-right: 10px;
+          & :first-child {
+            margin-bottom: auto;
+          }
+
+          &::before {
+            position: absolute;
+            content: '';
+            display: block;
+            height: 72%;
+            border-left: 2px dotted var(--primary-color);
+            width: 4px;
+            left: 7px;
+            top: 14%;
+            z-index: 10;
+          }
+        }
+
+        &-block {
+          display: flex;
+          gap: 4px;
+          margin-bottom: 8px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+
+        &-time {
+          font-weight: 600;
+        }
+
+        &-date {
+          font-weight: 400;
+        }
+
+        &-location {
+          font-weight: 600;
+        }
+
+        &-airport,
+        &-transfer-code {
+          font-size: 14px;
+        }
+
+        &-wrap {
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      &__transfer {
+        color: $color-grey;
+        margin-bottom: 8px;
+        margin: 22px 0;
+
+        &-distance {
+          display: flex;
+          margin-bottom: 8px;
+
+          &-info-block {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+          }
+          &-info-text {
+            color: var(--primary-color);
+            font-weight: 600;
+          }
+
+          &-text {
+            display: flex;
+            align-items: center;
+
+            &::after {
+              content: '';
+              width: 4px;
+              height: 4px;
+              border-radius: 50%;
+              background-color: $color-grey;
+              margin: 0 7px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__carrier {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &-name {
+      font-weight: 600;
+    }
+
+    &-air {
+      color: var(--primary-color);
+    }
+
+    &-icon {
+      background-color: var(--primary-color);
+      color: #f6f8fc;
+      width: 20px;
+      height: 20px;
+      border-radius: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

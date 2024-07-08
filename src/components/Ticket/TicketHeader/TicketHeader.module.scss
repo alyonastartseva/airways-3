@@ -1,0 +1,46 @@
+$color-blue: #4797ff;
+$color-grey: #808080;
+$color-green: rgb(151, 186, 30);
+
+.ticket {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 11px;
+  }
+
+  &__carrier {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &-logo {
+      background-color: $color-blue;
+      width: 40px;
+      height: 40px;
+      border-radius: 50px;
+      display: block;
+      align-content: center;
+      text-align: center;
+    }
+
+    &-name {
+      font-weight: 500;
+      line-height: 20px;
+      color: $color-grey;
+    }
+  }
+
+  &__stops {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    &-text {
+      font-weight: 500;
+      line-height: 20px;
+      color: $color-blue;
+    }
+  }
+}

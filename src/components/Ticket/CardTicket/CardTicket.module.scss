@@ -1,9 +1,38 @@
-$color-blue: #4797ff;
+@import 'src/variables.scss';
+
 $color-grey: #808080;
+$bg-color-grey: #f6f8fc;
+$color-green: rgb(151, 186, 30);
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  background-color: transparent;
+  cursor: pointer;
+
+  li &:hover {
+    border-color: white;
+  }
+
+  li &:focus,
+  li &:focus-visible {
+    outline: 0.25rem auto $color-grey;
+  }
+}
 
 .ticket {
-  width: 1365px;
-  height: 195px;
+  margin: 0 auto;
+  width: 1341px;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   gap: 15px;
@@ -11,168 +40,29 @@ $color-grey: #808080;
   box-shadow: 0px 1px 8px 0px rgba(46, 46, 46, 0.04);
   background-color: white;
   border-radius: 6px;
+  margin-top: 15px;
   margin-bottom: 10px;
-  cursor: pointer;
+  position: relative;
+
+  &__full {
+    max-width: 1264px;
+    height: 100%;
+  }
+
+  &__none {
+    display: none;
+  }
 
   &__tag {
-    display: none;
-  }
-
-  &__details {
-    display: flex;
-    flex-direction: column;
-    width: 500px;
-    height: 165px;
-    padding: 10px 22px;
-  }
-
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 11px;
-  }
-
-  &__carrier {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    &-logo {
-      background-color: $color-blue;
-      width: 40px;
-      height: 40px;
-      border-radius: 50px;
-      display: block;
-      align-content: center;
-      text-align: center;
-    }
-
-    &-name {
-      font-weight: 500;
-      line-height: 20px;
-      color: $color-grey;
-    }
-  }
-
-  &__stops {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-
-    &-text {
-      font-weight: 500;
-      line-height: 20px;
-      color: $color-blue;
-    }
-  }
-
-  &__info {
-    display: flex;
-    gap: 15px;
-
-    &-block-time {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 4px;
-    }
-
-    &-block-location {
-      font-weight: 500;
-      line-height: 20px;
-      color: $color-grey;
-    }
-  }
-
-  &__time {
+    padding: 2px 16px;
+    color: white;
+    font-size: 14px;
+    background-color: var(--primary-color);
+    border-radius: 12px 12px 12px 0;
+    z-index: 2;
+    position: absolute;
+    left: -1px;
+    top: -12.5px;
     font-weight: 600;
-    font-size: 28px;
-    line-height: 32px;
-  }
-  &__airport-code {
-    font-weight: 500;
-    line-height: 20px;
-  }
-
-  &__segments {
-    width: 123px;
-    margin-top: 20px;
-  }
-
-  &__duration {
-    width: 180px;
-    height: 37px;
-    display: flex;
-    gap: 9px;
-    border-bottom: 2px dashed $color-grey;
-
-    &-text {
-      font-weight: 500;
-      line-height: 20px;
-      color: $color-grey;
-    }
-  }
-
-  &__pricing {
-    display: flex;
-    gap: 15px;
-  }
-  &__tariff {
-    width: 260px;
-    height: 165px;
-    border-radius: 8px;
-    background-color: rgb(235, 243, 255);
-    padding: 20px 15px;
-
-    transition:
-      box-shadow 0.5s ease-out,
-      border-radius 0.3s ease-out;
-
-    &:hover {
-      border-radius: 8px;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      transition:
-        box-shadow 0.5s ease-out,
-        border-radius 0.3s ease-out;
-    }
-
-    &--active {
-      background-color: rgb(194, 220, 255);
-    }
-
-    &-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 17px;
-    }
-
-    &-title {
-      font-weight: 500;
-      line-height: 20px;
-    }
-
-    &-icon {
-      display: flex;
-      gap: 2px;
-    }
-  }
-
-  &__price {
-    font-weight: 600;
-    font-size: 28px;
-    line-height: 32px;
-    margin-bottom: 36px;
-  }
-
-  &__availability {
-    display: none;
-
-    &--active {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-    }
   }
 }
