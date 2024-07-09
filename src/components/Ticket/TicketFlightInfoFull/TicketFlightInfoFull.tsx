@@ -8,9 +8,9 @@ import {
 } from '@/common/icons';
 
 import '../../../styles/variables.scss';
-import scss from './TicketInfoFull.module.scss';
+import scss from './TicketFlightInfoFull.module.scss';
 
-const TicketInfoFull = () => (
+const TicketFlightInfoFull = () => (
   <>
     <div className={scss['ticket__details--full__airline-info']}>
       <div className={scss['ticket__carrier']}>
@@ -142,4 +142,4 @@ const TicketInfoFull = () => (
   </>
 );
 
-export default TicketInfoFull;
+export default TicketFlightInfoFull;

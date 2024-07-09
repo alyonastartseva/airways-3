@@ -31,7 +31,7 @@ export { CardTicket } from './Ticket/CardTicket';
 export { TicketHeader } from './Ticket/TicketHeader';
 export { TicketPricing } from './Ticket/TicketPricing';
 export { TicketFlightInfo } from './Ticket/TicketFlightInfo';
-export { TicketInfoFull } from './Ticket/TicketInfoFull';
+export { TicketFlightInfoFull } from './Ticket/TicketFlightInfoFull';
 
 export { SignUp } from './User/SignUp';
 export { UserHeader } from './User/UserHeader';

@@ -9,7 +9,7 @@ import {
 import { ITicketsPost } from 'src/interfaces/tickets.interface';
 import '../../../styles/variables.scss';
 
-import { TicketInfoFull } from '../TicketInfoFull';
+import { TicketFlightInfoFull } from '../TicketFlightInfoFull';
 
 import scss from './TicketFlightInfo.module.scss';
 
@@ -163,7 +163,7 @@ const TicketFlightInfo: React.FC<TicketFlightInforProps> = ({
         }
         ref={detailsRef}
       >
-        <TicketInfoFull />
+        <TicketFlightInfoFull />
         {transfer ? (
           <div className={scss['ticket__details--transfer']}>
             <ArrowsClockwiseIcon color="var(--primary-color)" size={20} />
@@ -173,7 +173,7 @@ const TicketFlightInfo: React.FC<TicketFlightInforProps> = ({
           ''
         )}
 
-        {transfer ? <TicketInfoFull /> : ''}
+        {transfer ? <TicketFlightInfoFull /> : ''}
       </div>
 
       {fullCard && (

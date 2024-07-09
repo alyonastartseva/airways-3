@@ -4,14 +4,14 @@ import {
   BackpackIcon,
   SuitcaseIcon,
   WarningCircleIcon,
-  PaidIcon,
-  EnabledIcon,
-  UnavailableIcon,
-  CompanyPoints,
 } from '@/common/icons';
+
 type TicketPricingProps = {
   fullCard: boolean;
 };
+import TicketTariffStandard from '../TicketTariffStandard/TicketTariffStandard';
+import TicketTariffBase from '../TicketTariffBase/TicketTariffBase';
+import TicketTariffPlus from '../TicketTariffPlus/TicketTariffPlus';
 
 import scss from './TicketPricing.module.scss';
 
@@ -48,90 +48,10 @@ const TicketPricing: React.FC<TicketPricingProps> = ({ fullCard }) => {
           <p className={scss['ticket__availability-text']}>Осталось 2</p>
         </div>
 
-        {fullCard ? (
-          <div className={scss['ticket__tariff--full']}>
-            <button
-              className={scss['ticket__tariff-button']}
-              onClick={handleInternalButtonClick}
-            >
-              Выбрать
-            </button>
-            <div className={scss['ticket__tariff-info']}>
-              <ul className={scss['ticket__tariff-info__facilities']}>
-                <li className={scss['ticket__tariff-info__facilities-item']}>
-                  <p className={scss['ticket__tariff-info__item-title']}>
-                    Багаж:
-                  </p>
-                  <ul>
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <span className={scss['paid-wrap']}>
-                        <PaidIcon size={16} />
-                      </span>
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Багаж платныйг</span>
-                      </span>
-                    </li>
-
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Ручная кладь 1 сумка 10 кг, 55x40x23 см</span>
-                      </span>
-                    </li>
-                  </ul>
-                </li>
-
-                <li className={scss['ticket__tariff-info__facilities-item']}>
-                  <p className={scss['ticket__tariff-info__item-title']}>
-                    Условия:
-                  </p>
-                  <ul>
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon size={16} />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Начислим 16354</span>
-                        <CompanyPoints color="var(--color-green)" />
-                      </span>
-                    </li>
-
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <span className={scss['paid-wrap']}>
-                        <PaidIcon />
-                      </span>
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Обмен платный 4000</span>
-                      </span>
-                    </li>
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <UnavailableIcon />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Возврат недоступен</span>
-                      </span>
-                    </li>
-                  </ul>
-                </li>
-
-                <li className={scss['ticket__tariff-info__facilities-item']}>
-                  <p className={scss['ticket__tariff-info__item-title']}>
-                    Услуги:
-                  </p>
-                  <ul>
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <span className={scss['paid-wrap']}>
-                        <PaidIcon size={16} />
-                      </span>
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Выбор мест платный</span>
-                      </span>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        ) : (
-          ''
-        )}
+        <TicketTariffBase
+          fullCard={fullCard}
+          handleInternalButtonClick={handleInternalButtonClick}
+        />
       </div>
 
       <div className={scss['ticket__tariff']}>
@@ -155,94 +75,10 @@ const TicketPricing: React.FC<TicketPricingProps> = ({ fullCard }) => {
           <p className={scss['ticket__availability-text']}>Осталось 2</p>
         </div>
 
-        {fullCard ? (
-          <div className={scss['ticket__tariff--full']}>
-            <button
-              className={scss['ticket__tariff-button']}
-              onClick={handleInternalButtonClick}
-            >
-              Выбрать
-            </button>
-            <div className={scss['ticket__tariff-info']}>
-              <ul className={scss['ticket__tariff-info__facilities']}>
-                <li className={scss['ticket__tariff-info__facilities-item']}>
-                  <p className={scss['ticket__tariff-info__item-title']}>
-                    Багаж:
-                  </p>
-                  <ul>
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon size={16} />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Багаж 1 сумка 23 кг</span>
-                      </span>
-                    </li>
-
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Ручная кладь 1 сумка 10 кг, 55x40x23 см</span>
-                      </span>
-                    </li>
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Спортивное снаряжение</span>
-                      </span>
-                    </li>
-                  </ul>
-                </li>
-
-                <li className={scss['ticket__tariff-info__facilities-item']}>
-                  <p className={scss['ticket__tariff-info__item-title']}>
-                    Условия:
-                  </p>
-                  <ul>
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon size={16} />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Начислим 3276</span>
-                        <CompanyPoints color="var(--color-green)" />
-                      </span>
-                    </li>
-
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <span className={scss['paid-wrap']}>
-                        <PaidIcon />
-                      </span>
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Обмен платный 2300</span>
-                      </span>
-                    </li>
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <span className={scss['paid-wrap']}>
-                        <PaidIcon />
-                      </span>
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Возврат платный 3500</span>
-                      </span>
-                    </li>
-                  </ul>
-                </li>
-
-                <li className={scss['ticket__tariff-info__facilities-item']}>
-                  <p className={scss['ticket__tariff-info__item-title']}>
-                    Услуги:
-                  </p>
-                  <ul>
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon size={16} />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Выбор места на регистрации</span>
-                      </span>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        ) : (
-          ''
-        )}
+        <TicketTariffStandard
+          fullCard={fullCard}
+          handleInternalButtonClick={handleInternalButtonClick}
+        />
       </div>
 
       <div
@@ -268,109 +104,10 @@ const TicketPricing: React.FC<TicketPricingProps> = ({ fullCard }) => {
           <p className={scss['ticket__availability-text']}>Осталось 2</p>
         </div>
 
-        {fullCard ? (
-          <div className={scss['ticket__tariff--full']}>
-            <button
-              className={scss['ticket__tariff-button']}
-              onClick={handleInternalButtonClick}
-            >
-              Выбрать
-            </button>
-            <div className={scss['ticket__tariff-info']}>
-              <ul className={scss['ticket__tariff-info__facilities']}>
-                <li className={scss['ticket__tariff-info__facilities-item']}>
-                  <p className={scss['ticket__tariff-info__item-title']}>
-                    Багаж:
-                  </p>
-                  <ul>
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon size={16} />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Багаж 1 сумка 32 кг</span>
-                      </span>
-                    </li>
-
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Ручная кладь 1 сумка 10 кг, 55x40x23 см</span>
-                      </span>
-                    </li>
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Спортивное снаряжение</span>
-                      </span>
-                    </li>
-                  </ul>
-                </li>
-
-                <li className={scss['ticket__tariff-info__facilities-item']}>
-                  <p className={scss['ticket__tariff-info__item-title']}>
-                    Условия:
-                  </p>
-                  <ul>
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon size={16} />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Начислим 4094</span>
-                        <CompanyPoints color="var(--color-green)" />
-                      </span>
-                    </li>
-
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Обмен</span>
-                      </span>
-                    </li>
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Возврат</span>
-                      </span>
-                    </li>
-                  </ul>
-                </li>
-
-                <li className={scss['ticket__tariff-info__facilities-item']}>
-                  <p className={scss['ticket__tariff-info__item-title']}>
-                    Услуги:
-                  </p>
-                  <ul>
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon size={16} />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Выбор питания</span>
-                      </span>
-                    </li>
-
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Лучшие места</span>
-                      </span>
-                    </li>
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Приоритет в аэропорту</span>
-                      </span>
-                    </li>
-                    <li className={scss['ticket__tariff-info__item-option']}>
-                      <EnabledIcon />
-                      <span className={scss['ticket__tariff-info__option']}>
-                        <span>Бизнес-зал</span>
-                      </span>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        ) : (
-          ''
-        )}
+        <TicketTariffPlus
+          fullCard={fullCard}
+          handleInternalButtonClick={handleInternalButtonClick}
+        />
       </div>
     </div>
   );
