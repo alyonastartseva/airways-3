@@ -37,3 +37,6 @@ export { default as SpinerIconTicket } from './Ticket/SpinerIconTicket';
 export { default as FlyForTicket } from './Ticket/FlyForTicket';
 export { default as GoToFly } from './Ticket/GoToFly';
 export { default as ArrowTicket } from './Ticket/ArrowTicket';
+
+export { default as AnimalsIcon } from './Ticket/AnimalsIcon';
+export { default as MenuIcon } from './Ticket/MenuIcon';
