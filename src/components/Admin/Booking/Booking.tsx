@@ -31,11 +31,9 @@ import {
   // useDeleteBookingMutation,
   // useGetBookingsQuery,
 } from '@/hooks';
-// import { bookingApi, passengersApi } from '@/store/services';
 import {
   useDeleteBookingMutation,
   useGetBookingsQuery,
-  usePatchBookingMutation,
 } from '@/store/services';
 import {
   SpinnerBlock,
