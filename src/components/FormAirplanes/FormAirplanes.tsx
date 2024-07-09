@@ -27,6 +27,7 @@ import {
   ModalInput,
   HeadingAdmin,
   ButtonSubmitAdmin,
+  SeatCategory,
 } from '@/common';
 import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 import { useToastHandler } from '@/hooks/useToastHandler';
@@ -37,7 +38,6 @@ import {
   IFormAirplanesProps,
   TFormAirplanesValues,
 } from './form-airplanes.interfaces';
-import { SeatCategory } from '@/common';
 
 const seatNumberRules = modalSeatFields.filter(
   (item) => item.fieldName === 'seatNumber'
@@ -47,7 +47,6 @@ const FormAirplanes = <T extends FieldValues>({
   formName,
   onClose,
 }: IFormAirplanesProps) => {
-
   const methods = useForm<TFormAirplanesValues>({
     mode: 'onBlur',
     defaultValues: {

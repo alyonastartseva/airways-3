@@ -35,9 +35,5 @@ export { ModalForm } from './ModalForm';
 export { ModalInput } from './ModalInput';
 export { ModalShape } from './ModalShape';
 
-export {
-  FlightIdOptions,
-  SeatsOptions,
-  SeatCategoryOptions,
-} from './ModalOptions';
+export { FlightIdOptions, SeatsOptions } from './ModalOptions';
 export { Pagination } from './Pagination';
