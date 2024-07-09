@@ -20,7 +20,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useMemo } from 'react';
 
-import { seatCategory, EModalButtonTexts, modalSettings } from '@/constants';
+import { EModalButtonTexts, modalSettings } from '@/constants';
 import { modalSeatFields } from '@/constants/modal-constants/modal-seat-fields';
 import {
   ButtonAddAdmin,
@@ -37,12 +37,7 @@ import {
   IFormAirplanesProps,
   TFormAirplanesValues,
 } from './form-airplanes.interfaces';
-
-const seatCategoryOptions = seatCategory.map((el) => (
-  <option key={el.eng} value={el.eng}>
-    {el.ru}
-  </option>
-));
+import { SeatCategory } from '@/common';
 
 const seatNumberRules = modalSeatFields.filter(
   (item) => item.fieldName === 'seatNumber'
@@ -52,6 +47,7 @@ const FormAirplanes = <T extends FieldValues>({
   formName,
   onClose,
 }: IFormAirplanesProps) => {
+
   const methods = useForm<TFormAirplanesValues>({
     mode: 'onBlur',
     defaultValues: {
@@ -167,7 +163,7 @@ const FormAirplanes = <T extends FieldValues>({
                                   value={fieldArray.category}
                                   fieldName={`seats.${id}.category`}
                                 >
-                                  {seatCategoryOptions}
+                                  <SeatCategory />
                                 </ModalInput>
                                 <ModalInput
                                   checkbox={true}

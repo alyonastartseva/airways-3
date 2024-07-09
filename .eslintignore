@@ -11,3 +11,4 @@ setupTests.ts
 coverage
 .husky
 commitlint.config.cjs
+*

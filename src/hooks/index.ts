@@ -30,3 +30,4 @@ export { useAuth } from './useAuth';
 export { default as useCountryQuery } from './useCountryQuery';
 export { useRequestErrorToast } from './useRequestErrorToast';
 export { useSetCurrentPageInPagination } from './useSetCurrentPageInPagination';
+export { useSeatCategories } from './useSeatCategories';

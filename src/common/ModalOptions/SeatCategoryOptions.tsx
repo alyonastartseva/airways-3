@@ -1,9 +1,12 @@
-import { seatCategory } from '@/constants';
+import { useSeatCategories } from '@/hooks';
 
-export const SeatCategoryOptions = () =>
-  seatCategory.map((el) => (
-    <option key={el.eng} value={el.eng}>
-      {el.ru}
+export const SeatCategoryOptions = () =>{
+  const [seatCategories] =
+    useSeatCategories();
+
+  return seatCategories.map((value: any) => (
+    <option key={value} value={value}>
+      {value}
     </option>
   ));
-// litle problems заглушки на случай ошибки
+}
