@@ -1,30 +1,30 @@
-import { useMutation, useQueryClient } from 'react-query';
-
-import { postBooking } from '@services/booking/booking.service';
+import { useAddBookingMutation } from '@/store/services';
+import { IFormBooking } from '@/interfaces';
 
 import { useToastHandler } from '../useToastHandler';
 
 const useBookingPost = () => {
-  const queryClient = useQueryClient();
+  const [addBooking] = useAddBookingMutation();
   const toast = useToastHandler();
 
-  return useMutation(postBooking, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('booking');
+  const postBooking = async (data: IFormBooking) => {
+    try {
+      await addBooking(data).unwrap();
       toast({
         status: 'success',
         title: 'Бронирование успешно выполнено',
       });
-    },
-    onError: (error) => {
+    } catch (error) {
       if (error instanceof Error) {
         toast({
           status: 'error',
           title: error.message,
         });
       }
-    },
-  }).mutateAsync;
+    }
+  };
+
+  return postBooking;
 };
 
 export { useBookingPost };
