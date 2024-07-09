@@ -100,16 +100,16 @@ const TicketFlightInfo: React.FC<TicketFlightInforProps> = ({
         >
           {!transfer && (
             <>
-              <AirplaneTakeoffIcon color="var(--color-grey)" size={20} />
+              <AirplaneTakeoffIcon color="var(--color-text-grey)" size={20} />
               <p className={scss['ticket__duration-text']}>в пути 2ч 45мин</p>
-              <AirplaneLandingIcon color="#var(--color-grey)" size={20} />
+              <AirplaneLandingIcon color="#var(--color-text-grey)" size={20} />
             </>
           )}
 
           {transfer && (
             <>
               {!fullCard && (
-                <AirplaneTakeoffIcon color="var(--color-grey)" size={20} />
+                <AirplaneTakeoffIcon color="var(--color-text-grey)" size={20} />
               )}
               {fullCard ? (
                 <div>
@@ -133,7 +133,7 @@ const TicketFlightInfo: React.FC<TicketFlightInforProps> = ({
                 </div>
               )}
               {!fullCard && (
-                <AirplaneLandingIcon color="var(--color-grey)" size={20} />
+                <AirplaneLandingIcon color="var(--color-text-grey)" size={20} />
               )}
             </>
           )}

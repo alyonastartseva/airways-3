@@ -28,6 +28,9 @@
         box-shadow 0.5s ease-out,
         border-radius 0.3s ease-out;
     }
+    &--top {
+      height: 15vh;
+    }
 
     &--active {
       background-color: rgb(194, 220, 255);
@@ -54,6 +57,7 @@
     }
 
     &-button {
+      margin-top: 16px;
       width: 100%;
       height: 40px;
       font-size: 14px;
@@ -113,7 +117,7 @@
 }
 
 .paid-wrap {
-  background-color: var(--color-orange);
+  background-color: var(--color-icon-orange);
   color: #f6f8fc;
   width: 16px;
   height: 16px;

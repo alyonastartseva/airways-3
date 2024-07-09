@@ -60,7 +60,7 @@ const TicketTariffBase: React.FC<TicketTariffBaseProps> = ({
                     <EnabledIcon size={16} />
                     <span className={scss['ticket__tariff-info__option']}>
                       <span>Начислим 16354</span>
-                      <CompanyPoints color="var(--color-green)" />
+                      <CompanyPoints color="var(--color-icon-green)" />
                     </span>
                   </li>
 

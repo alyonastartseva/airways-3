@@ -59,7 +59,7 @@ const TicketTariffPlus: React.FC<TicketTariffPlusProps> = ({
                     <EnabledIcon size={16} />
                     <span className={scss['ticket__tariff-info__option']}>
                       <span>Начислим 4094</span>
-                      <CompanyPoints color="var(--color-green)" />
+                      <CompanyPoints color="var(--color-icon-green)" />
                     </span>
                   </li>
 

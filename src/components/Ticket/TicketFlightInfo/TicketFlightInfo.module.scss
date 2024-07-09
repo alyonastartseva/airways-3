@@ -84,7 +84,7 @@
     &-block-location {
       font-weight: 500;
       line-height: 20px;
-      color: var(--color-grey);
+      color: var(--color-text-grey);
     }
   }
 
@@ -109,7 +109,7 @@
     display: flex;
     justify-content: center;
     gap: 9px;
-    border-bottom: 2px dashed var(--color-grey);
+    border-bottom: 2px dashed var(--color-text-grey);
 
     &--transfer {
       border-bottom: none;
@@ -117,13 +117,13 @@
     &-text {
       font-weight: 500;
       line-height: 20px;
-      color: var(--color-grey);
+      color: var(--color-text-grey);
       width: 100%;
       margin-bottom: 3px;
 
       &-full {
         margin-top: 7px;
-        color: var(--color-grey);
+        color: var(--color-text-grey);
       }
       &--transfer {
         position: relative;
