@@ -7,11 +7,7 @@
     a,
     .ant-pagination-item-link,
     .ant-pagination-item-ellipsis {
-
-
       color: var(--light-text-color);
-
-
     }
   }
 
@@ -19,9 +15,7 @@
     a,
     .ant-pagination-item-link,
     .ant-pagination-item-ellipsis {
-
       color: var(--dark-text-color) !important;
-
     }
 
     ::-webkit-scrollbar {
@@ -29,8 +23,6 @@
     }
 
     ::-webkit-scrollbar-track {
-
-
       background: var(--dark-bg-color);
     }
 
@@ -40,8 +32,6 @@
 
     ::-webkit-scrollbar-thumb:hover {
       background: var(--hover-light-color);
-
-
     }
   }
 
@@ -51,7 +41,6 @@
     min-width: 40px;
     height: 40px;
     &-active {
-
       background-color: var(--primary-color);
 
       & a {

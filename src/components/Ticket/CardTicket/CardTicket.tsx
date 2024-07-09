@@ -15,6 +15,7 @@ const CardTicket: React.FC<ITicketsPost> = ({ ticket }) => {
   const handleClick = () => {
     setFullCard(!fullCard);
   };
+
   return (
     <li>
       <button
@@ -41,7 +42,6 @@ const CardTicket: React.FC<ITicketsPost> = ({ ticket }) => {
           />
         </div>
 
-        {/* Прайсs */}
         <TicketPricing fullCard={fullCard} />
       </button>
     </li>

@@ -1,9 +1,5 @@
 @import 'src/variables.scss';
 
-$color-grey: #808080;
-$bg-color-grey: #f6f8fc;
-$color-green: rgb(151, 186, 30);
-
 .ticket {
   &__none {
     display: none;
@@ -94,7 +90,7 @@ $color-green: rgb(151, 186, 30);
       }
 
       &__transfer {
-        color: $color-grey;
+        color: var(--color-grey);
         margin-bottom: 8px;
         margin: 22px 0;
 
@@ -122,7 +118,7 @@ $color-green: rgb(151, 186, 30);
               width: 4px;
               height: 4px;
               border-radius: 50%;
-              background-color: $color-grey;
+              background-color: var(--color-grey);
               margin: 0 7px;
             }
           }

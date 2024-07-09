@@ -1,31 +1,15 @@
 @import 'src/variables.scss';
 
-$color-grey: #808080;
-$bg-color-grey: #f6f8fc;
-$color-green: rgb(151, 186, 30);
-html {
-  box-sizing: border-box;
-}
-
-*,
-*::after,
-*::before {
-  box-sizing: inherit;
-  margin: 0;
-  padding: 0;
-}
-
 button {
-  background-color: transparent;
   cursor: pointer;
 
   li &:hover {
-    border-color: white;
+    border-color: var(--focus-outline-color);
   }
 
   li &:focus,
   li &:focus-visible {
-    outline: 0.25rem auto $color-grey;
+    outline: 0.25rem auto var(--color-grey);
   }
 }
 

@@ -4,8 +4,8 @@ import {
   GoToFly,
   FlyForTicket,
 } from '@/common/icons';
-import { ITicketsPost } from 'src/interfaces/tickets.interface';
 
+import '../../../styles/variables.scss';
 import scss from './TicketInfoFull.module.scss';
 
 const TicketInfoFull = () => (
@@ -19,7 +19,7 @@ const TicketInfoFull = () => (
       </div>
       <div className={scss['ticket__carrier']}>
         <span className={scss['ticket__carrier-air']}>Boeing 787-8</span>
-        <WarningCircleIcon color="#4797ff" />
+        <WarningCircleIcon color="var(--primary-color)" />
       </div>
     </div>
 
