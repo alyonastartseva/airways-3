@@ -1,30 +1,25 @@
+import { useEffect } from 'react';
+
 import { useAddBookingMutation } from '@/store/services';
-import { IFormBooking } from '@/interfaces';
+import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 
 import { useToastHandler } from '../useToastHandler';
 
 const useBookingPost = () => {
-  const [addBooking] = useAddBookingMutation();
+  const [addBooking, { error, isError, isSuccess }] = useAddBookingMutation();
   const toast = useToastHandler();
 
-  const postBooking = async (data: IFormBooking) => {
-    try {
-      await addBooking(data).unwrap();
-      toast({
-        status: 'success',
-        title: 'Бронирование успешно выполнено',
-      });
-    } catch (error) {
-      if (error instanceof Error) {
-        toast({
-          status: 'error',
-          title: error.message,
-        });
-      }
-    }
-  };
+  useEffect(() => {
+    if (isError && isFetchBaseQueryError(error))
+      toast({ status: 'error', title: error.data.message });
+  }, [isError, toast, error]);
 
-  return postBooking;
+  useEffect(() => {
+    if (isSuccess)
+      toast({ status: 'success', title: 'Бронирование успешно выполнено' });
+  }, [isSuccess, toast]);
+
+  return addBooking;
 };
 
 export { useBookingPost };
