@@ -1,1 +1,5 @@
-export { default as pageIndexReducer, pageIndexValue, setPageIndex } from './pageIndexesSlice';
+export {
+  default as pageIndexReducer,
+  pageIndexValue,
+  setPageIndex,
+} from './pageIndexesSlice';

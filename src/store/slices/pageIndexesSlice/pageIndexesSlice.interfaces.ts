@@ -1,5 +1,4 @@
 export interface ISetPageIndexActions {
-  payload: Record<string, number>
+  payload: Record<string, number>;
   type: string;
 }
-

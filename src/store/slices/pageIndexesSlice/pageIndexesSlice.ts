@@ -2,15 +2,16 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { RootState } from '@/store';
 
-import {ISetPageIndexActions} from './pageIndexesSlice.interfaces';
+import { ISetPageIndexActions } from './pageIndexesSlice.interfaces';
 
 const pageIndexesSlice = createSlice({
   name: 'pageIndexes',
 
-  initialState:{},
+  initialState: {},
 
   reducers: {
-    setPageIndex: ( state, action: ISetPageIndexActions) => Object.assign(state,action.payload),
+    setPageIndex: (state, action: ISetPageIndexActions) =>
+      Object.assign(state, action.payload),
   },
 });
 

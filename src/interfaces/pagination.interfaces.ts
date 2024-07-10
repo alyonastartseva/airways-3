@@ -1,5 +1,5 @@
 export type SetPaginationDataCallback = (pageNumber: number) => void;
 
 export type UseSetCurrentPageInPagination = (
-  key: string,
+  key: string
 ) => [number, (pageNumber: number) => void];

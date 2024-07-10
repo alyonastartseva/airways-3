@@ -48,7 +48,8 @@ import { getYesNo, gitTicketClassName } from './Airplane.utils';
 const PAGE_KEY = 'AIRPLANE_CURR_PAGE';
 
 const Airplane = () => {
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(PAGE_KEY);
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
   // получение параметра ID из роута
   const param = useParams();
   const toastHandler = useToastHandler();
