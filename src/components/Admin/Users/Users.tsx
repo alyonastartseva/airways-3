@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useQuery } from 'react-query';
 import { useForm } from 'react-hook-form';
 import {
   Alert,
@@ -39,18 +38,24 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import { AviasalesService } from '@/services';
 import { ITEMS_PER_PAGE } from '@/constants';
 import { Pagination, UserInput } from '@/common';
 import { TPerson, IFormPassenger } from '@/interfaces';
 
+import {
+  useGetUsersQuery,
+  useCreateUserAsPassengerMutation,
+} from '../../../store/slices/userSlice';
+
 const Users = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const { handleSubmit, register } = useForm();
+
+  const [createUserAsPassenger] = useCreateUserAsPassengerMutation();
+  const { data: users, error, isLoading } = useGetUsersQuery();
+
   function onSubmit(values: IFormPassenger) {
-    const avia = new AviasalesService();
-    avia.createUserAsPassenger(values);
+    createUserAsPassenger(values);
     onClose();
   }
 
@@ -122,13 +127,10 @@ const Users = () => {
     pageIndex: 0,
   });
 
-  const avia = new AviasalesService();
-  const { isLoading, data } = useQuery('users', () => avia.getUsers());
   const table = useReactTable({
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     data:
-      data && Array.isArray(data)
-        ? data.slice(
+      users && Array.isArray(users)
+        ? users.slice(
             pageIndex * ITEMS_PER_PAGE,
             pageIndex * ITEMS_PER_PAGE + ITEMS_PER_PAGE
           )
@@ -138,15 +140,16 @@ const Users = () => {
     manualPagination: true,
   });
 
-  if (data && Array.isArray(data)) {
+  if (users && Array.isArray(users)) {
     const setPaginationData = (pageNumber: number) => {
-      if (pageNumber >= 0 && pageNumber < data.length / ITEMS_PER_PAGE) {
+      if (pageNumber >= 0 && pageNumber < users.length / ITEMS_PER_PAGE) {
         setPagination((prev) => ({
           ...prev,
           pageIndex: pageNumber,
         }));
       }
     };
+
     interface IInputProps {
       name: string;
       regValue: string;
