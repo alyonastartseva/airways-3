@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -19,18 +19,13 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useSearchParams } from 'react-router-dom';
 
 import { IBooking, IFormBooking } from '@/interfaces';
 import { EModalNames, scrollTable } from '@/constants';
 import { Gear } from '@common/icons';
 import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
-import {
-  useSetCurrentPageInPagination,
-  // useDeleteBookingMutation,
-  // useGetBookingsQuery,
-} from '@/hooks';
+import { useSetCurrentPageInPagination } from '@/hooks';
 import {
   useDeleteBookingMutation,
   useGetBookingsQuery,
@@ -51,13 +46,8 @@ const PAGE_KEY = 'BOOKING_CURR_PAGE';
 const pageSize = 10;
 
 const Booking = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageParam = +(searchParams.get('page') || 1) - 1;
-  // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
-    PAGE_KEY,
-    Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
-  );
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deletingBookingId, setDeletingBookingId] = useState<number | null>(
@@ -83,13 +73,9 @@ const Booking = () => {
   );
 
   const { data: bookingData, isFetching } = useGetBookingsQuery({
-    page: pageParam,
+    page: pageIndex,
     size: pageSize,
   });
-
-  useEffect(() => {
-    setSearchParams({ page: String(pageIndex + 1) });
-  }, [pageIndex]);
 
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IBooking | null>(

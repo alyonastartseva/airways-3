@@ -1,0 +1,44 @@
+@import '../../../styles/variables.scss';
+
+.ticket {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 11px;
+  }
+
+  &__carrier {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &-logo {
+      background-color: var(--primary-color);
+      width: 40px;
+      height: 40px;
+      border-radius: 50px;
+      display: block;
+      align-content: center;
+      text-align: center;
+    }
+
+    &-name {
+      font-weight: 500;
+      line-height: 20px;
+      color: var(--color-grey);
+    }
+  }
+
+  &__stops {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    &-text {
+      font-weight: 500;
+      line-height: 20px;
+      color: var(--primary-color);
+    }
+  }
+}

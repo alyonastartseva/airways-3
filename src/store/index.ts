@@ -1,7 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { themeReducer } from '@store/slices';
+import { pageIndexReducer } from '@/store/slices/pageIndexesSlice';
 
+import { selectedAircraftReducer } from './slices/flightSeatsSlice';
 import {
   passengersApi,
   destinationsApi,
@@ -11,12 +13,12 @@ import {
   flightSeatsApi,
   bookingApi,
 } from './services';
-import { selectedAircraftReducer } from './slices/flightSeatsSlice';
 import { flightSlice } from './services/flightSlice';
 
 export const store = configureStore({
   reducer: {
     theme: themeReducer,
+    pageIndexes: pageIndexReducer,
     selectedAircraft: selectedAircraftReducer,
     [flightSeatsApi.reducerPath]: flightSeatsApi.reducer,
     [passengersApi.reducerPath]: passengersApi.reducer,

@@ -15,7 +15,6 @@ import {
   useReactTable,
   flexRender,
 } from '@tanstack/react-table';
-import { useSearchParams } from 'react-router-dom';
 
 import { IAircraft, IAircraftPost } from '@/interfaces';
 import { ITEMS_PER_PAGE, EModalNames, scrollTable } from '@/constants';
@@ -42,13 +41,8 @@ import { useTheme } from '@context/:ThemeProvider';
 const PAGE_KEY = 'AIRPLANES_CURR_PAGE';
 
 const Airplanes = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageParam = +(searchParams.get('page') || 1) - 1;
-  // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
-    PAGE_KEY,
-    Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
-  );
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IAircraft | null>(
@@ -79,19 +73,16 @@ const Airplanes = () => {
     isFetching,
     isError,
     error,
-  } = useGetAircraftQuery({ page: pageIndex });
+  } = useGetAircraftQuery({ page: pageIndex - 1 });
 
   const { theme } = useTheme();
   const airplanes = airplanesData?.content;
   const totalPages = airplanesData?.totalPages;
 
   useEffect(() => {
-    setSearchParams({ page: String(pageIndex + 1) });
-  }, [pageIndex]);
-  useEffect(() => {
     if (!isFetching && !airplanes && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [airplanes, pageIndex, setPaginationData, isFetching]);
+  }, [airplanes, isFetching, pageIndex, setPaginationData]);
   // изменение данных
   const [patchAircraft] = usePatchAircraftMutation();
   // удаление данных

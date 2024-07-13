@@ -16,7 +16,6 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { isValidNumber } from 'libphonenumber-js';
-import { useSearchParams } from 'react-router-dom';
 
 import { isRowEditing } from '@utils/table.utils';
 import {
@@ -48,13 +47,8 @@ import { useTheme } from '@context/:ThemeProvider';
 const PAGE_KEY = 'PASSENGERS_CURR_PAGE';
 
 const Passengers = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageParam = +(searchParams.get('page') || 1) - 1;
-  // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
-    PAGE_KEY,
-    Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
-  );
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
 
   const { theme } = useTheme();
 
@@ -65,8 +59,7 @@ const Passengers = () => {
     isFetching,
     error,
     isError,
-  } = useGetPassengersQuery({ page: pageIndex });
-
+  } = useGetPassengersQuery({ page: pageIndex - 1 });
   const passengers = dataQuery?.content;
   const totalPages = dataQuery?.totalPages;
   useEffect(() => {
@@ -76,14 +69,11 @@ const Passengers = () => {
         title: error.data.message,
       });
   }, [isError, toastHandler, error]);
-  useEffect(() => {
-    setSearchParams({ page: String(pageIndex + 1) });
-  }, [pageIndex]);
   // если удален последняя строка текущей страницы, то открываем предыдущую страницу
   useEffect(() => {
     if (!isFetching && !passengers && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [passengers, pageIndex, setPaginationData, isFetching]);
+  }, [isFetching, pageIndex, passengers, setPaginationData]);
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IPassenger | null>(

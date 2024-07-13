@@ -47,7 +47,6 @@ const CardTicketList = () => {
       {testArrTickets.map((ticket) => (
         <CardTicket key={ticket.id} ticket={ticket} />
       ))}
-      {/* <CardTicket /> */}
     </ul>
   );
 };
