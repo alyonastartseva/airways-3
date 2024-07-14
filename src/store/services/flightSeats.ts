@@ -9,8 +9,7 @@ import {
   IFSQuery,
   IFlightSeatsPost,
 } from '@/interfaces/flightsSeats.interfaces';
-
-import { mapFlightSeatFormData } from './flightSeats.utils';
+import { mapFormData } from '@/utils/map-form-data.utils';
 
 interface GetSeatsArgs extends IGetQueryArgs {
   page: number;
@@ -34,7 +33,7 @@ export const flightSeatsApi = createApi({
       query: (body) => ({
         url: ERoutes.FLIGHT_SEATS,
         method: 'POST',
-        body: mapFlightSeatFormData(body),
+        body: mapFormData(body),
       }),
       invalidatesTags: ['flight-seats'],
     }),

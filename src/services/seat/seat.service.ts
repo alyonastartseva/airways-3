@@ -3,9 +3,8 @@ import { AxiosResponse } from 'axios';
 import { adminInstance, ERoutes } from '@/services';
 import { ISeatPost, ISeatForm } from '@/interfaces';
 import { ITEMS_PER_PAGE } from '@/constants';
-// import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 import { ISeat } from '@/interfaces/seat.interfaces';
-import { convertSeatFormToPostData } from '@/utils/aircraft.utils';
+import { mapFormData } from '@/utils/map-form-data.utils';
 
 interface ISeatApi {
   getSeat: (id: number, page?: number) => Promise<ISeat | undefined>;
@@ -33,7 +32,7 @@ const seatAPI: ISeatApi = {
   },
 
   postSeat: async (data: ISeatForm) => {
-    const editedData: ISeatForm = convertSeatFormToPostData(data);
+    const editedData: ISeatForm = mapFormData(data);
     editedData.aircraftId = Number(editedData.aircraftId);
     return await adminInstance.post<ISeatPost>(ERoutes.SEAT, editedData);
   },
