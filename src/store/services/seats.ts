@@ -4,7 +4,6 @@ import { baseURL as baseUrl } from '@/services/axios.service';
 import { ERoutes } from '@/services';
 import { ISeat, ISeatForm, ISeatPost } from '@/interfaces/seat.interfaces';
 import { IGetQueryArgs } from '@/interfaces/api-interfaces';
-// import { convertSeatFormToPostData } from '@/utils/aircraft.utils';
 import { mapFormData } from '@/utils/map-form-data.utils';
 import { getQueryString } from '@/utils/get-query-string.utils';
 
@@ -45,7 +44,6 @@ export const seatsApi = createApi({
         url: ERoutes.SEAT,
         method: 'POST',
         body: mapFormData(body),
-        // body: convertSeatFormToPostData(body),
       }),
       invalidatesTags: ['Seats'],
     }),
