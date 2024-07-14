@@ -9,7 +9,12 @@ export { PersonGenders } from './person.interfaces';
 export { ERolesPassenger } from './roles.interfaces';
 export type { TDestQuery, ISearchData } from './search-tickets.interfaces';
 export type { IModalFormPage } from './table.interfaces';
-export type { ITickets, ITicketsPost, ITicketsForm, ITicketsGet, } from './tickets.interface';
+export type {
+  ITickets,
+  ITicketsPost,
+  ITicketsForm,
+  ITicketsGet,
+} from './tickets.interface';
 export type { ITimeZone, TTimeZoneForm } from './time-zone.interfaces';
 export type { TypeInput } from './type-input.types';
 export type { IValidatePattern } from './validate-ptterns.interface';

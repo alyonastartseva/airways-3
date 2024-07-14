@@ -45,7 +45,7 @@ const Tickets = () => {
     useSetCurrentPageInPagination(PAGE_KEY);
 
   // получение данных
-  const { data: ticketsData, isFetching } = useGetTicketsQuery( pageIndex - 1 );
+  const { data: ticketsData, isFetching } = useGetTicketsQuery(pageIndex - 1);
   const tickets = ticketsData?.content;
   const totalPages = ticketsData?.totalPages;
 

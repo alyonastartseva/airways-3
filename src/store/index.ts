@@ -38,7 +38,7 @@ export const store = configureStore({
       timezonesApi.middleware,
       flightSeatsApi.middleware,
       flightSlice.middleware,
-      ticketsApi.middleware,
+      ticketsApi.middleware
     ),
 });
 
