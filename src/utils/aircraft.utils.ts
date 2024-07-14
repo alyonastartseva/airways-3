@@ -1,7 +1,7 @@
 import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 import { ISeatForm, ISeatPost } from '@/interfaces/seat.interfaces';
 
-export const mapSeatFormData = ({
+export const convertSeatFormToPostData = ({
   aircraftId,
   category,
   id,

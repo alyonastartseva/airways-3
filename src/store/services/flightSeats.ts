@@ -9,7 +9,8 @@ import {
   IFSQuery,
   IFlightSeatsPost,
 } from '@/interfaces/flightsSeats.interfaces';
-import { mapFlightSeatFormData } from '@/utils/flightSeats.utils';
+
+import { mapFlightSeatFormData } from './flightSeats.utils';
 
 interface GetSeatsArgs extends IGetQueryArgs {
   page: number;

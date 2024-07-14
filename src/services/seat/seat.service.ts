@@ -3,8 +3,9 @@ import { AxiosResponse } from 'axios';
 import { adminInstance, ERoutes } from '@/services';
 import { ISeatPost, ISeatForm } from '@/interfaces';
 import { ITEMS_PER_PAGE } from '@/constants';
-import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
+// import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 import { ISeat } from '@/interfaces/seat.interfaces';
+import { convertSeatFormToPostData } from '@/utils/aircraft.utils';
 
 interface ISeatApi {
   getSeat: (id: number, page?: number) => Promise<ISeat | undefined>;
@@ -16,28 +17,6 @@ interface ISeatApi {
     data: ISeatPost | null
   ) => Promise<AxiosResponse<ISeatPost, any> | undefined>;
 }
-
-const mapSeatFormData = (data: ISeatForm): ISeatPost => {
-  const {
-    aircraftId,
-    category,
-    id,
-    isLockedBack,
-    isNearEmergencyExit,
-    seatNumber,
-  } = data;
-
-  const seatPostData: ISeatPost = {
-    aircraftId: aircraftId || 0,
-    category: category || ISeatCategory.ECONOM,
-    id: id || 0,
-    isLockedBack: isLockedBack || false,
-    isNearEmergencyExit: isNearEmergencyExit || false,
-    seatNumber: seatNumber || '',
-  };
-
-  return seatPostData;
-};
 
 const seatAPI: ISeatApi = {
   getSeat: async (id: number, page?: number) => {
@@ -54,7 +33,7 @@ const seatAPI: ISeatApi = {
   },
 
   postSeat: async (data: ISeatForm) => {
-    const editedData: ISeatForm = mapSeatFormData(data);
+    const editedData: ISeatForm = convertSeatFormToPostData(data);
     editedData.aircraftId = Number(editedData.aircraftId);
     return await adminInstance.post<ISeatPost>(ERoutes.SEAT, editedData);
   },

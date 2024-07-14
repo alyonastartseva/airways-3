@@ -9,7 +9,7 @@ import {
   IAircraftsGet,
 } from '@/interfaces/aircraft.interfaces';
 import { IGetQueryArgs } from '@/interfaces/api-interfaces';
-import { mapSeatFormData } from '@/utils/aircraft.utils';
+import { convertSeatFormToPostData } from '@/utils/aircraft.utils';
 import { getQueryString } from '@/utils/get-query-string.utils';
 import { TFormAirplanesValues } from '@/components/FormAirplanes/form-airplanes.interfaces';
 
@@ -60,7 +60,7 @@ export const aircraftApi = createApi({
               const result = await baseQuery({
                 url: ERoutes.SEAT,
                 method: 'POST',
-                body: mapSeatFormData(seatWithID),
+                body: convertSeatFormToPostData(seatWithID),
               });
 
               if (result.error) return { error: result.error };

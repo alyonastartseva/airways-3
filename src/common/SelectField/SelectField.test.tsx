@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { describe, vi } from 'vitest';
 import { fireEvent, render } from '@testing-library/react';
 
-import { days, months, years } from '@utils/form-data.utils';
+import { days, months, years } from './form-data.utils';
 
 import { SelectField } from './index';
 
