@@ -26,6 +26,7 @@ import {
   usePassengersPost,
   useSeatPost,
   useTimezonePost,
+  useTicketsPost,
 } from '@/hooks';
 
 // удалить при миграции на RTK query
@@ -51,6 +52,7 @@ export interface IModalSetting<T extends FieldValues, Q = T> {
     | ReturnType<typeof useSeatPost>
     | ReturnType<typeof useTimezonePost>
     | ReturnType<typeof useFlightSeatPost>
+    | ReturnType<typeof useTicketsPost>
     | UseQueryPostHook;
   name: EModalButtonTexts;
   mapFieldValuesToRequestData?: (formData: T) => Q;

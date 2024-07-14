@@ -44,3 +44,11 @@ export {
   useGetFlightSeatsQuery,
   usePatchFlightSeatsMutation,
 } from './flightSeats';
+
+export {
+  ticketsApi,
+  useGetTicketsQuery,
+  usePostTicketMutation,
+  useDeleteTicketMutation,
+  usePatchTicketMutation,
+} from './tickets';
