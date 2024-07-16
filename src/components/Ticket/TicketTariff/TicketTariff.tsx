@@ -15,7 +15,7 @@ import {
   WarningCircleIcon,
 } from '@common/icons';
 import { seatCategory } from '@/constants';
-import { pluralize } from '@utils/string.utils';
+import { pluralizeWord } from '@utils/pluralize-word.utils';
 import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 
 import { TFacilities, TTariffType } from '../TicketCard';
@@ -45,7 +45,7 @@ const TicketTariff = ({
 
   const formattedPrice = getFormattedPrice(price);
 
-  const warningText = pluralize(ticketsCount, [
+  const warningText = pluralizeWord(ticketsCount, [
     'Остался',
     'Осталось',
     'Осталось',

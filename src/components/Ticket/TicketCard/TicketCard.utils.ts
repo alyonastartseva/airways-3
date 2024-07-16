@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 
-import { capitalize } from '@/utils/string.utils';
+import { capitalizeFirst } from '@/utils/capitalize-first.utils';
 
 export const getFormattedDateTime = (
   date: string,
@@ -12,7 +12,7 @@ export const getFormattedDateTime = (
     format(parsedDate, timeFormat),
     format(parsedDate, customDateFormat)
       .split(' ')
-      .map((word) => capitalize(word).replace('.', ','))
+      .map((word) => capitalizeFirst(word).replace('.', ','))
       .join(' '),
   ];
 };
