@@ -22,12 +22,12 @@ import { formatDateTime } from '@utils/date.utils';
 import { isRowEditing } from '@utils/table.utils';
 import { ITEMS_PER_PAGE, EModalNames, scrollTable } from '@/constants';
 import { ITickets, ITicketsPost } from '@/interfaces';
+import { useSetCurrentPageInPagination } from '@/hooks';
 import {
-  useTicketsQuery,
-  useTicketsPatch,
-  useTicketDelete,
-  useSetCurrentPageInPagination,
-} from '@/hooks';
+  useGetTicketsQuery,
+  useDeleteTicketMutation,
+  usePatchTicketMutation,
+} from '@/store/services';
 import {
   AlertMessage,
   FooterTable,
@@ -45,7 +45,7 @@ const Tickets = () => {
     useSetCurrentPageInPagination(PAGE_KEY);
 
   // получение данных
-  const { data: ticketsData, isFetching } = useTicketsQuery(pageIndex - 1);
+  const { data: ticketsData, isFetching } = useGetTicketsQuery(pageIndex - 1);
   const tickets = ticketsData?.content;
   const totalPages = ticketsData?.totalPages;
 
@@ -87,10 +87,10 @@ const Tickets = () => {
   );
 
   // изменение данных
-  const { mutate: patchTickets } = useTicketsPatch();
+  const [patchTickets] = usePatchTicketMutation();
 
   // удаление данных
-  const { mutate: deleteTicket } = useTicketDelete();
+  const [deleteTicket] = useDeleteTicketMutation();
 
   // патч данных
   const patchRow = useCallback(() => {

@@ -11,6 +11,7 @@ import {
   seatsApi,
   timezonesApi,
   flightSeatsApi,
+  ticketsApi,
 } from './services';
 import { flightSlice } from './services/flightSlice';
 
@@ -26,6 +27,7 @@ export const store = configureStore({
     [seatsApi.reducerPath]: seatsApi.reducer,
     [timezonesApi.reducerPath]: timezonesApi.reducer,
     [flightSlice.reducerPath]: flightSlice.reducer,
+    [ticketsApi.reducerPath]: ticketsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -35,7 +37,8 @@ export const store = configureStore({
       seatsApi.middleware,
       timezonesApi.middleware,
       flightSeatsApi.middleware,
-      flightSlice.middleware
+      flightSlice.middleware,
+      ticketsApi.middleware
     ),
 });
 
