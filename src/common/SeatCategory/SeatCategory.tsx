@@ -4,8 +4,8 @@ const SeatCategory = () => {
   const [seatCategories] = useSeatCategories();
 
   return seatCategories?.map((value) => (
-    <option key={value?.eng} value={value?.eng}>
-      {value?.ru}
+    <option key={value?.id} value={value?.categoryType}>
+      {value?.categoryType}
     </option>
   ));
 };
