@@ -45,6 +45,8 @@ export {
   usePatchFlightSeatsMutation,
 } from './flightSeats';
 
+export { seatCategoriesApi, useGetSeatCategoriesQuery } from './seatCategories';
+
 export {
   ticketsApi,
   useGetTicketsQuery,
