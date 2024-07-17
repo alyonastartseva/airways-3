@@ -1,7 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { themeReducer } from '@store/slices';
+import { pageIndexReducer } from '@/store/slices/pageIndexesSlice';
 
+import { selectedAircraftReducer } from './slices/flightSeatsSlice';
 import {
   passengersApi,
   destinationsApi,
@@ -10,13 +12,14 @@ import {
   timezonesApi,
   flightSeatsApi,
   seatCategoriesApi,
+  ticketsApi,
 } from './services';
-import { selectedAircraftReducer } from './slices/flightSeatsSlice';
 import { flightSlice } from './services/flightSlice';
 
 export const store = configureStore({
   reducer: {
     theme: themeReducer,
+    pageIndexes: pageIndexReducer,
     selectedAircraft: selectedAircraftReducer,
     [flightSeatsApi.reducerPath]: flightSeatsApi.reducer,
     [passengersApi.reducerPath]: passengersApi.reducer,
@@ -26,6 +29,7 @@ export const store = configureStore({
     [timezonesApi.reducerPath]: timezonesApi.reducer,
     [flightSlice.reducerPath]: flightSlice.reducer,
     [seatCategoriesApi.reducerPath]: seatCategoriesApi.reducer,
+    [ticketsApi.reducerPath]: ticketsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -36,7 +40,8 @@ export const store = configureStore({
       timezonesApi.middleware,
       flightSeatsApi.middleware,
       flightSlice.middleware,
-      seatCategoriesApi.middleware
+      seatCategoriesApi.middleware,
+      ticketsApi.middleware
     ),
 });
 

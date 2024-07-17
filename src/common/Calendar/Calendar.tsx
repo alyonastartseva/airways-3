@@ -37,6 +37,7 @@ import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from '@chakra-ui/icons';
 
 import monthNames from '@data/month.data.json';
 import { useTheme } from '@context/:ThemeProvider';
+import { capitalizeFirst } from '@/utils/capitalize-first.utils';
 
 import { IDates, PropsCalendar } from './calendar.interfaces';
 
@@ -65,10 +66,6 @@ const Calendar = ({
   const handlePopoverClose = () => {
     setShowDate(new Date().setHours(0, 0, 0, 0));
     onClose();
-  };
-
-  const capitalize = (str: string): string => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
   const handleMonthChange = (change: 'previous' | 'next') => {
@@ -274,7 +271,7 @@ const Calendar = ({
                       textAlign="center"
                       pb="5"
                     >
-                      {capitalize(
+                      {capitalizeFirst(
                         `${
                           monthNames[
                             addMonths(new Date(showDate), ind).getMonth()

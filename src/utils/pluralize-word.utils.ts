@@ -1,8 +1,4 @@
-export const capitalize = (str: string): string => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};
-
-export const pluralize = (
+export const pluralizeWord = (
   num: number,
   words: [string, string, string]
 ): string => {

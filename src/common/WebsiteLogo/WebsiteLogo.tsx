@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
 
 import { Logo } from '@common/icons';
-import setParams from '@utils/set-params.utils';
 
+import setParams from './set-params.utils';
 import styles from './WebsiteLogo.module.scss';
 
 const WebsiteLogo = (props: { isFooter: boolean; isLogged: boolean }) => {

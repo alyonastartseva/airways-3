@@ -9,10 +9,7 @@ export { useFlightsQuery } from '@hooks/flight';
 
 export { usePassengersPost } from '@hooks/passenger';
 
-export { useTicketDelete } from '@hooks/ticket';
-export { useTicketsPatch } from '@hooks/ticket';
 export { useTicketsPost } from '@hooks/ticket';
-export { useTicketsQuery } from '@hooks/ticket';
 
 export { useSeatPost } from '@hooks/seat';
 export { useFlightSeatPost } from '@hooks/flightSeats';

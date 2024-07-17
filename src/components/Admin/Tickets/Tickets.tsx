@@ -16,19 +16,18 @@ import {
   getCoreRowModel,
   flexRender,
 } from '@tanstack/react-table';
-import { useSearchParams } from 'react-router-dom';
 
 import { sortById } from '@utils/sort.utils';
 import { formatDateTime } from '@utils/date.utils';
 import { isRowEditing } from '@utils/table.utils';
 import { ITEMS_PER_PAGE, EModalNames, scrollTable } from '@/constants';
 import { ITickets, ITicketsPost } from '@/interfaces';
+import { useSetCurrentPageInPagination } from '@/hooks';
 import {
-  useTicketsQuery,
-  useTicketsPatch,
-  useTicketDelete,
-  useSetCurrentPageInPagination,
-} from '@/hooks';
+  useGetTicketsQuery,
+  useDeleteTicketMutation,
+  usePatchTicketMutation,
+} from '@/store/services';
 import {
   AlertMessage,
   FooterTable,
@@ -42,28 +41,19 @@ import {
 const PAGE_KEY = 'TICKETS_CURR_PAGE';
 
 const Tickets = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageParam = +(searchParams.get('page') || 1) - 1;
-  // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
-    PAGE_KEY,
-    Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
-  );
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
 
   // получение данных
-  const { data: ticketsData, isFetching } = useTicketsQuery(pageIndex);
+  const { data: ticketsData, isFetching } = useGetTicketsQuery(pageIndex - 1);
   const tickets = ticketsData?.content;
   const totalPages = ticketsData?.totalPages;
-
-  useEffect(() => {
-    setSearchParams({ page: String(pageIndex + 1) });
-  }, [pageIndex]);
 
   // если удален последняя строка текущей страницы, то открываем предыдущую страницу
   useEffect(() => {
     if (!isFetching && !tickets && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [isFetching, tickets, pageIndex, setPaginationData]);
+  }, [isFetching, pageIndex, setPaginationData, tickets]);
 
   // стейт и индекс изменяемой строки
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
@@ -97,10 +87,10 @@ const Tickets = () => {
   );
 
   // изменение данных
-  const { mutate: patchTickets } = useTicketsPatch();
+  const [patchTickets] = usePatchTicketMutation();
 
   // удаление данных
-  const { mutate: deleteTicket } = useTicketDelete();
+  const [deleteTicket] = useDeleteTicketMutation();
 
   // патч данных
   const patchRow = useCallback(() => {
