@@ -36,6 +36,8 @@ import {
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon } from '@chakra-ui/icons';
 
 import monthNames from '@data/month.data.json';
+import { useTheme } from '@context/:ThemeProvider';
+import { capitalizeFirst } from '@/utils/capitalize-first.utils';
 
 import { IDates, PropsCalendar } from './calendar.interfaces';
 
@@ -53,6 +55,8 @@ const Calendar = ({
     returnDate: endDate,
   });
 
+  const { theme } = useTheme();
+
   const weekDays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
   const oldDate = isPast(new Date(showDate));
@@ -62,10 +66,6 @@ const Calendar = ({
   const handlePopoverClose = () => {
     setShowDate(new Date().setHours(0, 0, 0, 0));
     onClose();
-  };
-
-  const capitalize = (str: string): string => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
   const handleMonthChange = (change: 'previous' | 'next') => {
@@ -115,7 +115,7 @@ const Calendar = ({
 
   const getColorOnHover = (dates: IDates, day: Date) => {
     if (isPast(day) && !isToday(day)) {
-      return '#FFFFFF';
+      return theme === 'light' ? '#FFFFFF' : '#333333';
     }
     if (
       (dates.departureDate &&
@@ -124,12 +124,12 @@ const Calendar = ({
         !compareDesc(dates.returnDate.setHours(0, 0, 0, 0), day))
     ) {
       return '#006FFF';
-    } else return '#E2E8F0';
+    } else return theme === 'light' ? '#E2E8F0' : '#444444';
   };
 
   const getTextColor = (dates: IDates, day: Date) => {
     if (isPast(day) && !isToday(day)) {
-      return '#868484';
+      return theme === 'light' ? '#868484' : '#BBBBBB';
     }
 
     if (
@@ -139,7 +139,7 @@ const Calendar = ({
         !compareDesc(dates.returnDate.setHours(0, 0, 0, 0), day))
     ) {
       return '#FFFFFF';
-    } else return '#000000';
+    } else return theme === 'light' ? '#000000' : '#FFFFFF';
   };
 
   const getCellBgColor = (dates: IDates, day: Date) => {
@@ -156,8 +156,8 @@ const Calendar = ({
         compareDesc(dates.departureDate, day) === 1 &&
         compareDesc(day, dates.returnDate) === 1
       ) {
-        return '#E2E8F0';
-      } else return '#FFFFFF';
+        return theme === 'light' ? '#E2E8F0' : '#444444';
+      } else return theme === 'light' ? '#FFFFFF' : '#333333';
     }
   };
 
@@ -224,10 +224,15 @@ const Calendar = ({
           h="410px"
           position="relative"
           data-testid="popover-content"
+          backgroundColor={theme === 'light' ? '#FFFFFF' : '#333333'}
         >
           <PopoverHeader p={0} border="none" mb={3}>
             <Flex justifyContent="space-between" alignItems="center">
-              <Heading fontSize={15} size="sm" color="#0A66C2">
+              <Heading
+                fontSize={15}
+                size="sm"
+                color={theme === 'light' ? '#0A66C2' : '#4797ff'}
+              >
                 Выберите даты поездки
               </Heading>
               <IconButton
@@ -266,7 +271,7 @@ const Calendar = ({
                       textAlign="center"
                       pb="5"
                     >
-                      {capitalize(
+                      {capitalizeFirst(
                         `${
                           monthNames[
                             addMonths(new Date(showDate), ind).getMonth()
@@ -282,8 +287,10 @@ const Calendar = ({
                               <Th
                                 color={
                                   name === 'Сб' || name === 'Вс'
-                                    ? '#0A66C2'
-                                    : '#000000'
+                                    ? '#4797ff'
+                                    : theme === 'light'
+                                      ? '#000000'
+                                      : '#FFFFFF'
                                 }
                                 border="none"
                                 key={name}

@@ -11,7 +11,6 @@ const Layout = () => {
       justifyContent={'space-between'}
       overflow={'hidden'}
       minHeight={'100vh'}
-      backgroundColor={'#F5F5F5'}
     >
       {<Header />}
       <Outlet />

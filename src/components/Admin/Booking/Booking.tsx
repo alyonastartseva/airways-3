@@ -19,7 +19,6 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { useSearchParams } from 'react-router-dom';
 
 import { IBooking, IFormBooking } from '@/interfaces';
 import { EModalNames, scrollTable } from '@/constants';
@@ -45,13 +44,8 @@ import {
 const PAGE_KEY = 'BOOKING_CURR_PAGE';
 
 const Booking = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageParam = +(searchParams.get('page') || 1) - 1;
-  // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
-    PAGE_KEY,
-    Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
-  );
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deletingBookingId, setDeletingBookingId] = useState<number | null>(
@@ -76,7 +70,7 @@ const Booking = () => {
     [isModalOpen]
   );
 
-  const { data: dataQuery, isFetching } = useBookingQuery(pageIndex);
+  const { data: dataQuery, isFetching } = useBookingQuery(pageIndex - 1);
 
   const bookingData = useMemo(() => {
     return dataQuery?.content ? dataQuery.content : [];
@@ -85,13 +79,9 @@ const Booking = () => {
   const totalPages = dataQuery?.totalPages;
 
   useEffect(() => {
-    setSearchParams({ page: String(pageIndex + 1) });
-  }, [pageIndex]);
-
-  useEffect(() => {
     if (!isFetching && !bookingData && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [isFetching, bookingData, pageIndex, setPaginationData]);
+  }, [bookingData, isFetching, pageIndex, setPaginationData]);
 
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IBooking | null>(

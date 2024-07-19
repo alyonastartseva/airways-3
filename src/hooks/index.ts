@@ -9,10 +9,7 @@ export { useFlightsQuery } from '@hooks/flight';
 
 export { usePassengersPost } from '@hooks/passenger';
 
-export { useTicketDelete } from '@hooks/ticket';
-export { useTicketsPatch } from '@hooks/ticket';
 export { useTicketsPost } from '@hooks/ticket';
-export { useTicketsQuery } from '@hooks/ticket';
 
 export { useSeatPost } from '@hooks/seat';
 export { useFlightSeatPost } from '@hooks/flightSeats';
@@ -30,3 +27,4 @@ export { useAuth } from './useAuth';
 export { default as useCountryQuery } from './useCountryQuery';
 export { useRequestErrorToast } from './useRequestErrorToast';
 export { useSetCurrentPageInPagination } from './useSetCurrentPageInPagination';
+export { useSeatCategories } from './useSeatCategories';

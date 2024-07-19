@@ -16,7 +16,6 @@ import {
   getCoreRowModel,
   flexRender,
 } from '@tanstack/react-table';
-import { useSearchParams } from 'react-router-dom';
 
 import { isRowEditing } from '@utils/table.utils';
 import { EModalNames, scrollTable } from '@/constants';
@@ -37,38 +36,27 @@ import {
 import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 import { useToastHandler } from '@/hooks/useToastHandler';
 import { useSetCurrentPageInPagination } from '@/hooks';
+import { useTheme } from '@context/:ThemeProvider';
 
 const PAGE_KEY = 'TIME_ZONE_CURR_PAGE';
 
 const TimeZones = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const pageParam = +(searchParams.get('page') || 1) - 1;
-  // индекс и размер пагинации
-  const [pageIndex, setPaginationData] = useSetCurrentPageInPagination(
-    PAGE_KEY,
-    Number(pageParam || localStorage.getItem(PAGE_KEY) || 0)
-  );
+  const { theme } = useTheme();
+  const [pageIndex, setPaginationData] =
+    useSetCurrentPageInPagination(PAGE_KEY);
   const toastHandler = useToastHandler();
-
   const {
     data: dataQuery,
     isFetching,
     isError,
     error,
-  } = useGetTimezonesQuery({ page: pageIndex });
-
+  } = useGetTimezonesQuery({ page: pageIndex - 1 });
   const timeZonesData = useMemo(() => dataQuery?.content ?? [], [dataQuery]);
   const totalPages = dataQuery?.totalPages;
-
-  useEffect(() => {
-    setSearchParams({ page: String(pageIndex + 1) });
-  }, [pageIndex]);
-
   useEffect(() => {
     if (!isFetching && !timeZonesData && pageIndex > 0)
       setPaginationData(pageIndex - 1);
-  }, [timeZonesData, pageIndex, setPaginationData, isFetching]);
-
+  }, [isFetching, pageIndex, setPaginationData, timeZonesData]);
   useEffect(() => {
     if (isError && isFetchBaseQueryError(error))
       toastHandler({
@@ -76,15 +64,12 @@ const TimeZones = () => {
         title: error.data.message,
       });
   }, [isError, toastHandler, error]);
-
   const [patchTimezone] = usePatchTimezoneMutation();
   const [deleteTimezone] = useDeleteTimezoneMutation();
-
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<ITimeZone | null>(
     null
   );
-
   const handleEditRow = useCallback((row = null, index = -1) => {
     if (index >= 0) {
       setEditableRowState(row);
@@ -94,13 +79,10 @@ const TimeZones = () => {
       setEditableRowIndex(null);
     }
   }, []);
-
   const patchRow = useCallback(() => {
     if (editableRowState) patchTimezone(editableRowState);
-
     handleEditRow();
   }, [patchTimezone, editableRowState, handleEditRow]);
-
   const handleUpdateRow = useCallback(
     (id: string, value: string) => {
       if (editableRowState) {
@@ -112,7 +94,6 @@ const TimeZones = () => {
     },
     [editableRowState]
   );
-
   const columnHelper = createColumnHelper<ITimeZone>();
   const columns = useMemo(
     () => [
@@ -237,14 +218,12 @@ const TimeZones = () => {
       handleUpdateRow,
     ]
   );
-
   const table = useReactTable({
     data: timeZonesData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
   });
-
   if (isFetching) {
     return <SpinnerBlock />;
   }
@@ -271,7 +250,7 @@ const TimeZones = () => {
                     {headerGroup.headers.map((header) => (
                       <Th
                         border="0.0625rem solid #DEDEDE"
-                        color="#000000"
+                        color={theme === 'dark' ? '#FFFFFF' : '#000000'}
                         key={header.id}
                         fontSize="0.875rem"
                         lineHeight="1.125rem"
@@ -296,7 +275,7 @@ const TimeZones = () => {
                     {row.getVisibleCells().map((cell) => (
                       <Td
                         border="0.0625rem solid #DEDEDE"
-                        color="#393939"
+                        color={theme === 'dark' ? '#FFFFFF' : '#393939'}
                         fontSize="0.875rem"
                         lineHeight="1.125rem"
                         key={cell.id}
@@ -333,6 +312,5 @@ const TimeZones = () => {
   }
   return <AlertMessage />;
 };
-
 const memorizedTimezones = memo(TimeZones);
 export default memorizedTimezones;

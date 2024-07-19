@@ -371,12 +371,12 @@ const SearchTickets = ({
                       fontWeight: 'bold',
                     }}
                   >
-                    <SeatCategory
+                    {/* <SeatCategory
                       value={searchParams.categoryOfSeats as ISeatCategoryType}
-                      onChange={(value) =>
+                      onChange={(value: ISeatCategoryType) =>
                         updateSearchParam({ categoryOfSeats: value })
                       }
-                    />
+                    /> */}
                   </FormItem>
                 </FormItem>
               </Col>

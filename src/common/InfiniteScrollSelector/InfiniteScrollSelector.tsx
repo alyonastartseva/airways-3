@@ -1,6 +1,8 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Card, Spin } from 'antd';
 
+import { useTheme } from '@context/:ThemeProvider';
+
 import { IScrollComponent } from './infiniteScrollSelector.interface';
 import styles from './InfiniteScrollSelector.module.scss';
 
@@ -12,6 +14,11 @@ const InfiniteScrollSelector = ({
   loader = null,
   isLoading,
 }: IScrollComponent) => {
+  const { theme } = useTheme();
+
+  const backgroundColor = theme === 'dark' ? 'gray.800' : 'white';
+  const textColor = theme === 'dark' ? 'white' : 'black';
+  const hoverBackgroundColor = theme === 'dark' ? 'gray.600' : '#ebedf0';
   return (
     <div id="scrollable" className={styles.scrollbar}>
       <InfiniteScroll
@@ -24,14 +31,14 @@ const InfiniteScrollSelector = ({
         <div className="container">
           <div className="row">
             {targetList &&
-              targetList?.map((el) => {
+              targetList.map((el, index) => {
                 const { name, code } = el;
                 return (
                   <Card
                     className={styles.card}
                     // TODO: сменить code на name когда будут приходить данные с сервера
-                    onMouseDown={() => onClick((code && code) || '')}
-                    key={code}
+                    key={index}
+                    onMouseDown={() => onClick(code || '')}
                     hoverable
                     bodyStyle={{ padding: 0 }}
                   >

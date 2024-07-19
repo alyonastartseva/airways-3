@@ -18,12 +18,6 @@ export {
   deleteFlight,
   updateFlight,
 } from './flights/flights.service';
-export {
-  getTickets,
-  deleteTicket,
-  patchTickets,
-  postTickets,
-} from './tickets/tickets.service';
 
 export { ELinks } from './constants/admin-router-links.constants';
 export { default as ERoutes } from './constants/endpoints.constants';

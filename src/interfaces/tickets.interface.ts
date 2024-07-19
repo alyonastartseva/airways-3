@@ -36,3 +36,8 @@ export interface ITicketsForm extends FieldValues {
   arrivalDateTime?: string;
   seatNumber?: string;
 }
+
+export interface ITicketsGet {
+  content: ITickets[];
+  totalPages?: number;
+}
