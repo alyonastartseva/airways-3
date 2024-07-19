@@ -8,7 +8,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { App } from '@components/App';
 
 import { AuthProvider } from './context/AuthContext';
-import { chakraTheme } from './utils/theme.utils';
+import { chakraTheme } from './theme.utils';
 import { store } from './store';
 
 import './index.css';

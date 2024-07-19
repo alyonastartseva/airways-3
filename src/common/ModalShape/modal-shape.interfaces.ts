@@ -26,6 +26,7 @@ import {
   usePassengersPost,
   useSeatPost,
   useTimezonePost,
+  useTicketsPost,
   useBookingPost,
 } from '@/hooks';
 
@@ -52,6 +53,7 @@ export interface IModalSetting<T extends FieldValues, Q = T> {
     | ReturnType<typeof useSeatPost>
     | ReturnType<typeof useTimezonePost>
     | ReturnType<typeof useFlightSeatPost>
+    | ReturnType<typeof useTicketsPost>
     | ReturnType<typeof useBookingPost>
     | UseQueryPostHook;
   name: EModalButtonTexts;

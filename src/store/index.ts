@@ -11,6 +11,8 @@ import {
   seatsApi,
   timezonesApi,
   flightSeatsApi,
+  seatCategoriesApi,
+  ticketsApi,
   bookingApi,
 } from './services';
 import { flightSlice } from './services/flightSlice';
@@ -27,6 +29,8 @@ export const store = configureStore({
     [seatsApi.reducerPath]: seatsApi.reducer,
     [timezonesApi.reducerPath]: timezonesApi.reducer,
     [flightSlice.reducerPath]: flightSlice.reducer,
+    [seatCategoriesApi.reducerPath]: seatCategoriesApi.reducer,
+    [ticketsApi.reducerPath]: ticketsApi.reducer,
     [bookingApi.reducerPath]: bookingApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -38,6 +42,8 @@ export const store = configureStore({
       timezonesApi.middleware,
       flightSeatsApi.middleware,
       flightSlice.middleware,
+      seatCategoriesApi.middleware,
+      ticketsApi.middleware,
       bookingApi.middleware
     ),
 });

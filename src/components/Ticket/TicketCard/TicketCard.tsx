@@ -16,7 +16,7 @@ import {
   CaretDownIcon,
   AirplaneIcon,
 } from '@common/icons';
-import { pluralize } from '@utils/string.utils';
+import { pluralizeWord } from '@utils/pluralize-word.utils';
 import { ISeatCategory } from '@/interfaces/flightsSeats.interfaces';
 
 import { TicketTariff } from '../TicketTariff';
@@ -77,7 +77,7 @@ const TicketCard = ({
   }));
 
   const linkText = transfers
-    ? `${transfers.length} ${pluralize(transfers.length, [
+    ? `${transfers.length} ${pluralizeWord(transfers.length, [
         'пересадка',
         'пересадки',
         'пересадок',

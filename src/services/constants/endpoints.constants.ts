@@ -10,6 +10,7 @@ enum ERoutes {
   TIMEZONES = '/timezones',
   BOOKINGS = '/bookings',
   FLIGHT_SEATS = '/flight-seats',
+  SEAT_CATEGORIES = '/categories',
 }
 
 export default ERoutes;

@@ -1,4 +1,4 @@
-import { FlightIdOptions, SeatCategoryOptions, SeatsOptions } from '@/common';
+import { FlightIdOptions, SeatCategory, SeatsOptions } from '@/common';
 import { FormInputProps } from '@/common/ModalInput';
 import { IFlightSeatsPost } from '@/interfaces/flightsSeats.interfaces';
 
@@ -32,7 +32,7 @@ export const modalFlightSeatFields: FormInputProps<IFlightSeatsPost>[] = [
     rules: {
       required: 'Введите класс бронирования',
     },
-    children: <SeatCategoryOptions />,
+    children: <SeatCategory />,
   },
   {
     checkbox: true,
