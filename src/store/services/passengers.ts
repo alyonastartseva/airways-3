@@ -50,14 +50,14 @@ const mapPassengersFormData = (data: IFormPassengers): FormPassengersPost => {
 };
 
 export const passengersApi = createApi({
-  reducerPath: 'passengeresApi',
+  reducerPath: 'passengersApi',
   baseQuery: fetchBaseQuery({
     baseUrl,
     headers: { 'Content-Type': 'application/json' },
   }),
   tagTypes: ['Passenger'],
   endpoints: (builder) => ({
-    getPassangers: builder.query<FormPassengersGet, IGetQueryArgs>({
+    getPassengers: builder.query<FormPassengersGet, IGetQueryArgs>({
       query: (query) => `${ERoutes.PASSENGERS}${getQueryString(query)}`,
       providesTags: ['Passenger'],
     }),
@@ -88,7 +88,7 @@ export const passengersApi = createApi({
 });
 
 export const {
-  useGetPassangersQuery,
+  useGetPassengersQuery,
   useAddPassengerMutation,
   useDeletePassengerMutation,
   usePatchPassengerMutation,

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -25,11 +25,11 @@ import { EModalNames, scrollTable } from '@/constants';
 import { Gear } from '@common/icons';
 import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
+import { useSetCurrentPageInPagination } from '@/hooks';
 import {
-  useSetCurrentPageInPagination,
-  useBookingDelete,
-  useBookingQuery,
-} from '@/hooks';
+  useDeleteBookingMutation,
+  useGetBookingsQuery,
+} from '@/store/services';
 import {
   SpinnerBlock,
   HeaderTable,
@@ -43,6 +43,8 @@ import {
 
 const PAGE_KEY = 'BOOKING_CURR_PAGE';
 
+const pageSize = 10;
+
 const Booking = () => {
   const [pageIndex, setPaginationData] =
     useSetCurrentPageInPagination(PAGE_KEY);
@@ -52,7 +54,7 @@ const Booking = () => {
     null
   );
 
-  const { mutate: deleteBooking } = useBookingDelete();
+  const [deleteBooking] = useDeleteBookingMutation();
 
   const handleDeleteBooking = useCallback(() => {
     if (deletingBookingId) {
@@ -70,18 +72,10 @@ const Booking = () => {
     [isModalOpen]
   );
 
-  const { data: dataQuery, isFetching } = useBookingQuery(pageIndex - 1);
-
-  const bookingData = useMemo(() => {
-    return dataQuery?.content ? dataQuery.content : [];
-  }, [dataQuery]);
-
-  const totalPages = dataQuery?.totalPages;
-
-  useEffect(() => {
-    if (!isFetching && !bookingData && pageIndex > 0)
-      setPaginationData(pageIndex - 1);
-  }, [bookingData, isFetching, pageIndex, setPaginationData]);
+  const { data: bookingData, isFetching } = useGetBookingsQuery({
+    page: pageIndex,
+    size: pageSize,
+  });
 
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IBooking | null>(
@@ -201,7 +195,7 @@ const Booking = () => {
   );
 
   const table = useReactTable({
-    data: bookingData,
+    data: bookingData || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
@@ -212,7 +206,7 @@ const Booking = () => {
   }
 
   if (Array.isArray(bookingData) && !bookingData?.length) {
-    return <AlertMessage status="info" message="No tickets were found" />;
+    return <AlertMessage status="info" message="No bookings were found" />;
   }
 
   return (
@@ -318,7 +312,6 @@ const Booking = () => {
                   </Table>
                 </div>
               </TableContainer>
-
               <ConfirmCancelModal
                 isOpen={isModalOpen}
                 onClose={toggleModal}
@@ -328,11 +321,13 @@ const Booking = () => {
 
               <Pagination
                 pageIndex={pageIndex}
-                totalPages={totalPages}
+                totalPages={bookingData?.length}
                 setPaginationData={setPaginationData}
               />
             </>
-          ) : null
+          ) : (
+            <AlertMessage status="info" message="No bookings were found" />
+          )
         }
       </Container>
     </Box>

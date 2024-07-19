@@ -1,6 +1,6 @@
 export {
   passengersApi,
-  useGetPassangersQuery,
+  useGetPassengersQuery,
   useAddPassengerMutation,
   useDeletePassengerMutation,
   usePatchPassengerMutation,
@@ -54,3 +54,12 @@ export {
   useDeleteTicketMutation,
   usePatchTicketMutation,
 } from './tickets';
+
+export {
+  bookingApi,
+  useGetBookingsQuery,
+  useGetBookingByIdQuery,
+  useAddBookingMutation,
+  useDeleteBookingMutation,
+  usePatchBookingMutation,
+} from './booking';
