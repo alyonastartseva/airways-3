@@ -665,12 +665,19 @@ const SearchTickets = ({
     }
   };
 
+  // const handleReverse = () => {
+  //   updateSearchParam({
+  //     airportTo: searchParams.airportFrom,
+  //     airportFrom: searchParams.airportTo,
+  //   });
+  //   setFromToPosition(!fromToPosition);
+  // };
   const handleReverse = () => {
+    const { airportFrom, airportTo } = searchParams;
     updateSearchParam({
-      airportTo: searchParams.airportFrom,
-      airportFrom: searchParams.airportTo,
+      airportFrom: airportTo,
+      airportTo: airportFrom,
     });
-    setFromToPosition(!fromToPosition);
   };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -833,12 +840,12 @@ const SearchTickets = ({
                       fontWeight: 'bold',
                     }}
                   >
-                    {/* <SeatCategory
+                    <SeatCategory
                       value={searchParams.categoryOfSeats as ISeatCategoryType}
                       onChange={(value) =>
                         updateSearchParam({ categoryOfSeats: value })
                       }
-                    /> */}
+                    />
                   </FormItem>
                 </FormItem>
               </Col>
