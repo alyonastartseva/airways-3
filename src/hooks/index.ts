@@ -17,9 +17,6 @@ export { useFlightSeatPost } from '@hooks/flightSeats';
 export { useFlightSeatsQuery } from '@hooks/flightSeats';
 
 export { useBookingPost } from '@hooks/booking';
-export { useBookingPatch } from '@hooks/booking';
-export { useBookingDelete } from '@hooks/booking';
-export { useBookingQuery } from '@hooks/booking';
 
 export { useTimezonePost } from '@hooks/timezone';
 

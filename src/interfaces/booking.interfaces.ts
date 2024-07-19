@@ -15,5 +15,18 @@ export interface IFormBooking extends FieldValues {
   passengerId?: number;
   bookingStatus?: TBookingStatus;
 }
-
+export interface FormBookingPost {
+  flightSeatId?: number;
+  passengerId?: number;
+  status?: TBookingStatus;
+}
 export type TBookingStatus = (typeof bookingStatuses)[number];
+
+export interface BookingResponse {
+  id: number;
+  passengerId: number;
+  bookingDate: string;
+  bookingStatus: TBookingStatus;
+  flightSeatId: number;
+  flightId: number;
+}
