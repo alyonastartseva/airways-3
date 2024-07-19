@@ -32,14 +32,14 @@ export const destinationsApi = createApi({
     }),
     deleteDestination: builder.mutation<IDestination, number>({
       query: (id) => ({
-        url: `${ERoutes.DESTINATION}${id}`,
+        url: `${ERoutes.DESTINATION}/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Destination'],
     }),
     patchDestination: builder.mutation<IDestination, IDestination>({
       query: ({ id, ...body }) => ({
-        url: `${ERoutes.DESTINATION}${id}`,
+        url: `${ERoutes.DESTINATION}/${id}`,
         method: 'PATCH',
         body,
       }),

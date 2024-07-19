@@ -40,14 +40,14 @@ export const flightSeatsApi = createApi({
 
     deleteFlightSeats: builder.mutation<IFlightSeatsPost, number>({
       query: (id) => ({
-        url: `${ERoutes.FLIGHT_SEATS}${id}`,
+        url: `${ERoutes.FLIGHT_SEATS}/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['flight-seats'],
     }),
     patchFlightSeats: builder.mutation<IFSOne, IFSOne>({
       query: ({ id, ...body }) => ({
-        url: `${ERoutes.FLIGHT_SEATS}${id}`,
+        url: `${ERoutes.FLIGHT_SEATS}/${id}`,
         method: 'PATCH',
         body,
       }),
