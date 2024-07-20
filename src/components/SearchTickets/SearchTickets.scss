@@ -1,9 +1,10 @@
 $buttonColor: #006fff;
 $textColor: #ffffff;
-$backgroundCheckbox-color: #f5f5f5;
+
+$backgroundCheckbox-color-dark: #1a1a1a;
+$background-color-light: #f5f5f5;
 
 .searchTickets-block {
-  border: '0.9rem solid #D3EFFF';
   border-radius: '1rem';
   width: '100%';
   max-width: '75rem';
@@ -17,15 +18,22 @@ $backgroundCheckbox-color: #f5f5f5;
 .formItem-seatCategory {
   margin-top: auto;
   .ant-form-item-label {
+    color: #006fff;
     font-weight: bold;
     width: 175px;
     text-align: start;
   }
 }
+.formItem-dark .ant-form-item-label > label {
+  color: #7f7f7f;
+}
+
+.formItem-light .ant-form-item-label > label {
+  color: #000000;
+}
 .formItem-seatCategory {
   margin-top: 2.8rem;
 }
-
 .errorNumber {
   position: absolute;
   left: 0;
@@ -36,11 +44,23 @@ $backgroundCheckbox-color: #f5f5f5;
 .checkboxSearch {
   margin-top: 3.5rem;
 
-  .ant-checkbox-inner {
-    background-color: $backgroundCheckbox-color;
+  &.dark-theme {
+    .ant-checkbox-inner {
+      background-color: $backgroundCheckbox-color-dark;
 
-    &:after {
-      border-color: #006fff;
+      &:after {
+        border-color: #006fff;
+      }
+    }
+  }
+
+  &.light-theme {
+    .ant-checkbox-inner {
+      background-color: $background-color-light;
+
+      &:after {
+        border-color: #006fff;
+      }
     }
   }
 }
@@ -58,7 +78,7 @@ $backgroundCheckbox-color: #f5f5f5;
   width: fit-content;
 
   .ant-radio-inner {
-    background-color: $backgroundCheckbox-color;
+    background-color: $background-color-light;
   }
 }
 .searchTIcketsButton {
@@ -72,22 +92,97 @@ $backgroundCheckbox-color: #f5f5f5;
   }
 }
 .ant-picker-panel {
-  background-color: $backgroundCheckbox-color !important;
+  background-color: $background-color-light !important;
 }
 
 .ant-picker-cell-inner {
-  background-color: $backgroundCheckbox-color;
+  background-color: $background-color-light;
 }
 
 .ant-picker-header,
 .ant-picker-footer,
 .ant-picker-content {
-  background-color: $backgroundCheckbox-color;
+  background-color: $background-color-light;
 }
 
 .ant-picker-cell-inner:hover,
 .ant-picker-cell-selected .ant-picker-cell-inner,
 .ant-picker-cell-in-view.ant-picker-cell-range-start .ant-picker-cell-inner,
 .ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner {
-  background-color: $backgroundCheckbox-color;
+  background-color: $background-color-light;
+}
+.div-arrows {
+  text-align: 'center';
+  margin-top: '0.3rem';
+  cursor: 'pointer';
+}
+.dark-theme {
+  color: #7f7f7f;
+  border-color: #464646;
+  .ant-image {
+    filter: brightness(60%);
+  }
+
+  .ant-checkbox-inner {
+    background-color: #333;
+  }
+}
+
+.image-dark {
+  filter: brightness(60%);
+}
+
+.date-picker-dropdown-dark .ant-picker-panel-container {
+  background-color: #1a1a1a;
+  color: #7f7f7f;
+}
+
+.date-picker-dropdown-light .ant-picker-panel-container {
+  background-color: #f5f5f5;
+  color: #464646;
+}
+.date-picker-dark input::placeholder {
+  color: #7f7f7f;
+}
+
+.date-picker-light input::placeholder {
+  color: #464646;
+}
+/* Стили для плейсхолдера */
+.date-picker-dark input::placeholder {
+  color: #7f7f7f; /* Цвет текста плейсхолдера для темной темы */
+}
+
+.date-picker-light input::placeholder {
+  color: #464646; /* Цвет текста плейсхолдера для светлой темы */
+}
+
+/* CSS для выпадающего календаря */
+.date-picker-dropdown-dark .ant-picker-panel-container {
+  background-color: #1a1a1a;
+  color: #7f7f7f;
+}
+
+.date-picker-dropdown-light .ant-picker-panel-container {
+  background-color: #f5f5f5;
+  color: #464646;
+}
+
+// ::placeholder {
+//   color: #7f7f7f; /* Light placeholder color */
+// }
+
+// /* Dark theme placeholder */
+// .dark-theme ::placeholder {
+//   color: #cccccc; /* Dark placeholder color */
+// }
+
+.formItem-dark .ant-picker-input > input::placeholder,
+.formItem-dark .ant-input::placeholder {
+  color: #cccccc;
+}
+
+.formItem-light .ant-picker-input > input::placeholder,
+.formItem-light .ant-input::placeholder {
+  color: #7f7f7f; 
 }

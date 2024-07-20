@@ -477,6 +477,7 @@ import { mainsearch } from '@/assets';
 import { searchApi } from '@services/searchTickets.service';
 import { getFlights } from '@services/flights/flights.service';
 import { ISearchData, IFlightPresentation } from '@/interfaces';
+import { useTheme } from '@context/:ThemeProvider';
 import { SeatCategory } from '@/common';
 import { DestinationsInputSelector } from '@/components';
 import { ISeatCategoryType } from '@/interfaces/flightsSeats.interfaces';
@@ -517,10 +518,11 @@ const SearchTickets = ({
   const [passengerWarning, setPassengerWarning] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const { theme } = useTheme();
   const [ticketCardProps, setTicketCardProps] = useState<
     ITicketCardProps & { flightSeatId: number }[]
   >([]);
-  const [fromToPosition, setFromToPosition] = useState(true);
+  const [fromToPosition] = useState(true);
 
   const updateSearchParam = (param: Partial<ISearchData>) => {
     setSearchParams((prev) => ({ ...prev, ...param }));
@@ -703,7 +705,16 @@ const SearchTickets = ({
     const From = () => {
       return (
         <FormItem className="formItem-wrapper">
-          <FormItem className="formItem" label="Откуда">
+          <FormItem
+            className={`formItem ${
+              theme === 'dark' ? 'formItem-dark' : 'formItem-light'
+            }`}
+            // className="formItem"
+            label="Откуда"
+            // style={{
+            //   color: theme === 'dark' ? '#f5f5f5' : '#000000',
+            // }}
+          >
             <DestinationsInputSelector
               value={searchParams.airportFrom}
               placeholder="Город отправления"
@@ -716,7 +727,13 @@ const SearchTickets = ({
     const To = () => {
       return (
         <FormItem className="formItem-wrapper">
-          <FormItem className="formItem" label="Куда">
+          <FormItem
+            // className="formItem"
+            className={`formItem ${
+              theme === 'dark' ? 'formItem-dark' : 'formItem-light'
+            }`}
+            label="Куда"
+          >
             <DestinationsInputSelector
               value={searchParams.airportTo}
               placeholder="Город прибытия"
@@ -734,6 +751,7 @@ const SearchTickets = ({
           onKeyDown={handleKeyDown}
           role="button"
           tabIndex={0}
+          className="div-arrows"
           style={{
             textAlign: 'center',
             marginTop: '0.3rem',
@@ -773,14 +791,23 @@ const SearchTickets = ({
             style={{ height: '31.25rem', marginBottom: '0.7rem' }}
             align="middle"
           >
-            <Image src={mainsearch} alt="Main-search" />
+            <Image
+              src={mainsearch}
+              alt="Main-search"
+              className={
+                theme === 'dark' ? 'ant-image image-dark' : 'ant-image'
+              }
+            />
           </Row>
         )}
 
         <div
-          className="searchTickets-block"
+          // className={theme=== 'dark'? 'searchTickets-block dark-theme': 'searchTickets-block'}
           style={{
-            border: '0.9rem solid #D3EFFF',
+            border:
+              theme === 'dark'
+                ? '0.9rem solid #464646'
+                : '0.9rem solid #D3EFFF',
             borderRadius: '1rem',
             width: '100%',
             maxWidth: '75rem',
@@ -796,7 +823,19 @@ const SearchTickets = ({
               <FirstGridContainter />
               <Col span={6}>
                 <FormItem>
-                  <FormItem className="formItem" label="Количество пассажиров">
+                  <FormItem
+                    className={`formItem ${
+                      theme === 'dark' ? 'formItem-dark' : 'formItem-light'
+                    }`}
+                    // className="formItem"
+                    // labelCol={{
+                    //   color: theme === 'dark' ? '#f5f5f5' : '#000000',
+                    // }}
+                    // style={{
+                    //   color: theme === 'dark' ? '#f5f5f5' : '#000000',
+                    // }}
+                    label="Количество пассажиров"
+                  >
                     <Input
                       type="number"
                       value={searchParams.numberOfPassengers ?? ''}
@@ -811,7 +850,8 @@ const SearchTickets = ({
                       }
                       style={{
                         padding: '5px 5px',
-                        backgroundColor: '#f5f5f5',
+                        backgroundColor:
+                          theme === 'dark' ? '#1a1a1a' : '#f5f5f5',
                       }}
                     />
                     {passengerWarning && (
@@ -832,7 +872,12 @@ const SearchTickets = ({
                   <FormItem
                     className="formItem-seatCategory"
                     label={
-                      <span style={{ display: 'block' }}>
+                      <span
+                        style={{
+                          display: 'block',
+                          color: theme === 'dark' ? '#7f7f7f' : '#000000',
+                        }}
+                      >
                         Категория сиденья
                       </span>
                     }
@@ -853,7 +898,12 @@ const SearchTickets = ({
               <Col span={6}>
                 <FormItem>
                   <ConfigProvider locale={ruRU}>
-                    <FormItem className="formItem" label="Дата">
+                    <FormItem
+                      className={`formItem ${
+                        theme === 'dark' ? 'formItem-dark' : 'formItem-light'
+                      }`}
+                      label="Дата"
+                    >
                       <DatePicker.RangePicker
                         value={[
                           calendarDates.startDate
@@ -869,11 +919,29 @@ const SearchTickets = ({
                           if (end) getDates(end.toDate());
                         }}
                         format="YYYY-MM-DD"
+                        // style={{
+                        //   padding: '5px 5px',
+                        //   backgroundColor:
+                        //     theme === 'dark' ? '#1a1a1a' : '#F5F5F5',
+
+                        // }}
+                        className={
+                          theme === 'dark'
+                            ? 'date-picker-dark'
+                            : 'date-picker-light'
+                        }
                         style={{
                           padding: '5px 5px',
-                          backgroundColor: '#F5F5F5',
+                          backgroundColor:
+                            theme === 'dark' ? '#1a1a1a' : '#F5F5F5',
+                          color: theme === 'dark' ? '#7f7f7f' : '#464646',
                         }}
                         placeholder={['Туда', 'Обратно']}
+                        dropdownClassName={
+                          theme === 'dark'
+                            ? 'date-picker-dropdown-dark'
+                            : 'date-picker-dropdown-light'
+                        }
                       />
                     </FormItem>
                   </ConfigProvider>
@@ -888,11 +956,19 @@ const SearchTickets = ({
                         marginTop: '2.75rem',
                         position: 'absolute',
                         top: 35,
+                        color: theme === 'dark' ? '#FFFFFF' : '#000000',
+                        backgroundColor:
+                          theme === 'dark' ? '#333333' : '#ffe5e5',
+                        borderColor: theme === 'dark' ? '#555555' : '#DDDDDD',
                       }}
                     />
                   )}
                   <Checkbox
-                    className="checkboxSearch"
+                    className={
+                      theme === 'dark'
+                        ? 'checkboxSearch dark-theme'
+                        : 'checkboxSearch light-theme '
+                    }
                     checked={searchParams.directFlightsOnly}
                     onChange={(e) =>
                       updateSearchParam({ directFlightsOnly: e.target.checked })
@@ -913,12 +989,23 @@ const SearchTickets = ({
                         updateSearchParam({ tripType: e.target.value })
                       }
                     >
-                      <Radio value="roundTrip" className="tripType-radioButton">
+                      <Radio
+                        value="roundTrip"
+                        className={
+                          theme === 'dark'
+                            ? 'tripType-radioButton dark-theme'
+                            : 'tripType-radioButton'
+                        }
+                      >
                         Туда и обратно
                       </Radio>
                       <Radio
                         value="oneWay"
-                        className="tripType-radioButton"
+                        className={
+                          theme === 'dark'
+                            ? 'tripType-radioButton dark-theme'
+                            : 'tripType-radioButton'
+                        }
                         style={{
                           marginTop: '1rem',
                         }}
@@ -930,7 +1017,11 @@ const SearchTickets = ({
                 </FormItem>
                 <Row justify="center" style={{ marginTop: '3rem' }}>
                   <Button
-                    className="searchTIcketsButton"
+                    className={
+                      theme === 'dark'
+                        ? 'searchTIcketsButton dark-theme'
+                        : 'searchTIcketsButton'
+                    }
                     onClick={handleSearch}
                     style={{
                       backgroundColor: '#006fff',
