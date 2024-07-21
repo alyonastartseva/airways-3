@@ -541,13 +541,6 @@ const SearchTickets = ({
                   <Button
                     className="searchTIcketsButton"
                     onClick={handleSearch}
-                    style={{
-                      backgroundColor: '#006fff',
-                      border: 'none',
-                      width: '8rem',
-                      height: '3rem',
-                      marginTop: '-3.5rem',
-                    }}
                   >
                     {isLoading ? (
                       <Spin
