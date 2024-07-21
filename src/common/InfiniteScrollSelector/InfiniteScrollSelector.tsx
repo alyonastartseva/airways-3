@@ -16,11 +16,13 @@ const InfiniteScrollSelector = ({
 }: IScrollComponent) => {
   const { theme } = useTheme();
 
-  const backgroundColor = theme === 'dark' ? 'gray.800' : 'white';
-  const textColor = theme === 'dark' ? 'white' : 'black';
-  const hoverBackgroundColor = theme === 'dark' ? 'gray.600' : '#ebedf0';
+  const themeClass = theme === 'dark' ? 'dark-theme' : '';
+
   return (
-    <div id="scrollable" className={styles.scrollbar}>
+    <div
+      id="scrollable"
+      className={`${styles.scrollbar} ${styles[themeClass]}`}
+    >
       <InfiniteScroll
         dataLength={targetList.length}
         next={next}
@@ -35,8 +37,7 @@ const InfiniteScrollSelector = ({
                 const { name, code } = el;
                 return (
                   <Card
-                    className={styles.card}
-                    // TODO: сменить code на name когда будут приходить данные с сервера
+                    className={`${styles.card} ${styles[themeClass]}`}
                     key={index}
                     onMouseDown={() => onClick(code || '')}
                     hoverable
