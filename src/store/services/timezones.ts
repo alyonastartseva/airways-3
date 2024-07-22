@@ -32,14 +32,14 @@ export const timezonesApi = createApi({
     }),
     deleteTimezone: builder.mutation<ITimeZone, number>({
       query: (id) => ({
-        url: `${ERoutes.TIMEZONES}${id}`,
+        url: `${ERoutes.TIMEZONES}/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Timezone'],
     }),
     patchTimezone: builder.mutation<ITimeZone, ITimeZone>({
       query: (body) => ({
-        url: `${ERoutes.TIMEZONES}${body.id}`,
+        url: `${ERoutes.TIMEZONES}/${body.id}`,
         method: 'PATCH',
         body,
       }),

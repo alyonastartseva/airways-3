@@ -24,13 +24,13 @@ export const ticketsApi = createApi({
     }),
     deleteTicket: builder.mutation<ITickets, number | undefined>({
       query: (id) => ({
-        url: ERoutes.TICKETS + id,
+        url: `${ERoutes.TICKETS}/${id}`,
         method: 'DELETE',
       }),
     }),
     patchTicket: builder.mutation<ITickets, ITickets | null>({
       query: (body) => ({
-        url: ERoutes.TICKETS + body?.id,
+        url: `${ERoutes.TICKETS}/${body?.id}`,
         method: 'PATCH',
         body,
       }),

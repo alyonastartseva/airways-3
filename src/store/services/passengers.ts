@@ -71,14 +71,14 @@ export const passengersApi = createApi({
     }),
     deletePassenger: builder.mutation<IPassenger, number>({
       query: (id) => ({
-        url: `${ERoutes.PASSENGERS}${id}`,
+        url: `${ERoutes.PASSENGERS}/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Passenger'],
     }),
     patchPassenger: builder.mutation<IPassenger, IPassenger>({
       query: ({ id, ...body }) => ({
-        url: `${ERoutes.PASSENGERS}${id}`,
+        url: `${ERoutes.PASSENGERS}/${id}`,
         method: 'PATCH',
         body,
       }),
