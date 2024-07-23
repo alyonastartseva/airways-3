@@ -14,6 +14,7 @@ import {
   seatCategoriesApi,
   ticketsApi,
   bookingApi,
+  searchApi,
 } from './services';
 import { flightSlice } from './services/flightSlice';
 
@@ -32,6 +33,7 @@ export const store = configureStore({
     [seatCategoriesApi.reducerPath]: seatCategoriesApi.reducer,
     [ticketsApi.reducerPath]: ticketsApi.reducer,
     [bookingApi.reducerPath]: bookingApi.reducer,
+    [searchApi.reducerPath]: searchApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -44,7 +46,8 @@ export const store = configureStore({
       flightSlice.middleware,
       seatCategoriesApi.middleware,
       ticketsApi.middleware,
-      bookingApi.middleware
+      bookingApi.middleware,
+      searchApi.middleware
     ),
 });
 

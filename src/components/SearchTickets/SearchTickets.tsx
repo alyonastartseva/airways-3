@@ -21,7 +21,8 @@ import ruRU from 'antd/es/locale/ru_RU';
 
 import { ArrowsIcon } from '@common/icons';
 import { mainsearch } from '@/assets';
-import { searchApi } from '@services/searchTickets.service';
+// import { searchApi } from '@services/searchTickets.service';
+import { useFetchSearchResultsQuery } from '@/store/services';
 import { getFlights } from '@services/flights/flights.service';
 import { ISearchData, IFlightPresentation } from '@/interfaces';
 import { useTheme } from '@context/:ThemeProvider';
@@ -53,7 +54,7 @@ const SearchTickets = ({
     departureDate: '',
     returnDate: '',
     airportFrom: '',
-    numberOfPassengers: null,
+    numberOfPassengers: 1,
     airportTo: '',
     directFlightsOnly: false,
     tripType: 'roundTrip',
@@ -99,6 +100,13 @@ const SearchTickets = ({
     });
   };
 
+  const {
+    data: searchResult,
+    error: flightsError,
+    isLoading: flightsLoading,
+  } = useFetchSearchResultsQuery(searchParams, {
+    skip: !searchParams.airportFrom || !searchParams.airportTo,
+  });
   const handleSearch = async () => {
     if (passengerWarning) {
       return;
@@ -120,6 +128,7 @@ const SearchTickets = ({
 
       if (!searchFormData.airportFrom || !searchFormData.airportTo) {
         setError('Ошибка поиска');
+
         return;
       }
 
@@ -164,14 +173,14 @@ const SearchTickets = ({
         searchData.returnFlight = returnFlight;
       }
 
-      const searchResult = await searchApi.postSearch(searchData);
-      if (searchResult) {
-        // eslint-disable-next-line no-console
-        console.log(searchResult);
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('Нет билетов');
-      }
+      // const searchResult = await searchApi.postSearch(searchData);
+      // if (searchResult) {
+      //   // eslint-disable-next-line no-console
+      //   console.log(searchResult);
+      // } else {
+      //   // eslint-disable-next-line no-console
+      //   console.log('Нет билетов');
+      // }
 
       setTicketCardProps([]);
       if (searchResult) {
@@ -467,11 +476,11 @@ const SearchTickets = ({
                       />
                     </FormItem>
                   </ConfigProvider>
-                  {error && (
+                  {flightsError && (
                     <Alert
                       data-testid="alert-error"
                       type="error"
-                      message={error}
+                      message="Ошибка поиска"
                       showIcon
                       style={{
                         fontSize: 15,
@@ -542,11 +551,13 @@ const SearchTickets = ({
                     className="searchTIcketsButton"
                     onClick={handleSearch}
                   >
-                    {isLoading ? (
-                      <Spin
-                        size="small"
-                        style={{ color: 'white', zIndex: '99' }}
-                      />
+                    {flightsLoading ? (
+                      <div>
+                        <Spin
+                          size="small"
+                          style={{ color: 'white', zIndex: '199' }}
+                        />
+                      </div>
                     ) : (
                       'Найти'
                     )}

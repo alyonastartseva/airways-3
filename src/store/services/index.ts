@@ -63,3 +63,5 @@ export {
   useDeleteBookingMutation,
   usePatchBookingMutation,
 } from './booking';
+
+export { searchApi, useFetchSearchResultsQuery } from './searchApi';
