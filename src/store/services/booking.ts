@@ -6,6 +6,7 @@ import {
   IFormBooking,
   FormBookingPost,
   BookingResponse,
+  IBooking,
 } from '@/interfaces/booking.interfaces';
 import { IGetQueryArgs } from '@/interfaces/api-interfaces';
 import { getQueryString } from '@/utils/get-query-string.utils';
@@ -26,7 +27,7 @@ export const bookingApi = createApi({
   }),
   tagTypes: ['Booking'],
   endpoints: (builder) => ({
-    getBookings: builder.query<BookingResponse[], IGetQueryArgs>({
+    getBookings: builder.query<BookingResponse, IGetQueryArgs>({
       query: (query) => `${ERoutes.BOOKINGS}${getQueryString(query)}`,
       providesTags: ['Booking'],
     }),
@@ -49,7 +50,7 @@ export const bookingApi = createApi({
       }),
       invalidatesTags: ['Booking'],
     }),
-    patchBooking: builder.mutation<BookingResponse, Partial<BookingResponse>>({
+    patchBooking: builder.mutation<BookingResponse, IBooking>({
       query: ({ id, ...body }) => ({
         url: `${ERoutes.BOOKINGS}/${id}`,
         method: 'PATCH',
