@@ -55,7 +55,7 @@ const Destinations = () => {
     isFetching,
     isError,
     error,
-  } = useGetDestionationsQuery({ page: pageIndex });
+  } = useGetDestionationsQuery({ page: pageIndex - 1 });
   const destinationsByPage = useMemo(
     () => destinationsByPageData?.content || [],
     [destinationsByPageData]
