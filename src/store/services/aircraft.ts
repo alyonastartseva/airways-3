@@ -79,7 +79,7 @@ export const aircraftApi = createApi({
     patchAircraft: builder.mutation<IAircraft, IAircraft>({
       query: ({ id, ...body }) => ({
         url: `${ERoutes.AIRCRAFT}/${id}`,
-        method: 'POST',
+        method: 'PATCH',
         body,
       }),
       invalidatesTags: ['Aircraft'],
