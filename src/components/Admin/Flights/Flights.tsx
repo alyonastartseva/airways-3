@@ -15,12 +15,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import {
-  flightStatuses,
-  EModalNames,
-  scrollTable,
-  ITEMS_PER_PAGE,
-} from '@/constants';
+import { flightStatuses, EModalNames, scrollTable } from '@/constants';
 import { DestinationsInputSelector } from '@/components';
 import {
   IAircraft,
@@ -43,7 +38,7 @@ import {
   useGetFlightsQuery,
   useDeleteFlightMutation,
   usePatchFlightMutation,
-} from '@/store/services/flightSlice';
+} from '@/store/services';
 import { useTheme } from '@context/:ThemeProvider';
 import { EditableSelectCell } from '@/common';
 
@@ -55,16 +50,16 @@ const Flights = () => {
     useSetCurrentPageInPagination(PAGE_KEY);
 
   const { data: airplanesData, isLoading: isAircraftLoading } =
-    useGetAircraftQuery({ page: pageIndex });
+    useGetAircraftQuery({ page: pageIndex - 1 });
   const airplanes = airplanesData?.content;
 
   const {
     data: flightsData,
     isError,
     isFetching,
-  } = useGetFlightsQuery({ page: pageIndex - 1, size: ITEMS_PER_PAGE });
+  } = useGetFlightsQuery({ page: pageIndex - 1 });
 
-  const flights = flightsData?.content;
+  const flights = useMemo(() => flightsData?.content ?? [], [flightsData]);
   const totalPagesFlights = flightsData?.totalPages;
 
   useEffect(() => {
@@ -74,29 +69,26 @@ const Flights = () => {
 
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] =
-    useState<Required<IFlightPresentation> | null>(null);
+    useState<IFlightPresentation | null>(null);
 
-  const handleEditRow = useCallback(
-    (row: Required<IFlightPresentation>, index: number) => {
+  const handleEditRow = useCallback((row = null, index = -1) => {
+    if (index >= 0) {
       setEditableRowState(row);
       setEditableRowIndex(index);
-    },
-    []
-  );
-
-  const cancelEditing = useCallback(() => {
-    setEditableRowIndex(null);
-    setEditableRowState(null);
+    } else {
+      setEditableRowState(null);
+      setEditableRowIndex(null);
+    }
   }, []);
 
   const handleUpdateRow = useCallback(
     (id: string, value: string) => {
-      if (!editableRowState) return;
-
-      setEditableRowState({
-        ...editableRowState,
-        [id as keyof IFlightPresentation]: value,
-      });
+      if (editableRowState) {
+        setEditableRowState({
+          ...editableRowState,
+          [id as keyof IFlightPresentation]: value,
+        });
+      }
     },
     [editableRowState]
   );
@@ -105,9 +97,11 @@ const Flights = () => {
   const [patchFlights] = usePatchFlightMutation();
 
   const patchRow = useCallback(() => {
-    patchFlights(editableRowState);
-    cancelEditing();
-  }, [patchFlights, editableRowState, cancelEditing]);
+    if (editableRowState) {
+      patchFlights(editableRowState);
+      handleEditRow();
+    }
+  }, [patchFlights, editableRowState, handleEditRow]);
 
   const getAircraftModel = useCallback(
     (id: string) => {
@@ -150,7 +144,7 @@ const Flights = () => {
     }
   };
 
-  const columnHelper = createColumnHelper<Required<IFlightPresentation>>();
+  const columnHelper = createColumnHelper<IFlightPresentation>();
   const columns = useMemo(
     () => [
       columnHelper.accessor('id', {
@@ -259,7 +253,7 @@ const Flights = () => {
             value={isRowEditing(
               info.row.index,
               info.column.id,
-              info.getValue().toString(),
+              info.getValue()?.toString(),
               editableRowState,
               editableRowIndex
             )}
@@ -325,16 +319,8 @@ const Flights = () => {
     ]
   );
 
-  // TODO: удалить когда будет сортировка на бэке
-  const tableData = (data?: Required<IFlightPresentation>[]) => {
-    if (Array.isArray(data) && data.length) {
-      return [...data].sort((a, b) => a.id - b.id);
-    }
-    return [];
-  };
-
   const table = useReactTable({
-    data: tableData(flights),
+    data: flights,
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
@@ -344,7 +330,11 @@ const Flights = () => {
     return <SpinnerBlock />;
   }
 
-  if (Array.isArray(flights) && flights?.length && !isError) {
+  if (Array.isArray(flights) && !flights?.length) {
+    return <AlertMessage status="info" message="No flights were found" />;
+  }
+
+  if (!isError) {
     return (
       <TableContainer py={45} px={9}>
         <HeaderTable<IFlightPostFormFields>
@@ -405,10 +395,10 @@ const Flights = () => {
           </Table>
         </div>
         <FooterTable
-          data={tableData(flights)}
+          data={flights}
           pageIndex={pageIndex}
           setPaginationData={setPaginationData}
-          cancelEditing={cancelEditing}
+          cancelEditing={handleEditRow}
           patchRow={patchRow}
           editableRowIndex={editableRowIndex}
           totalPages={totalPagesFlights}

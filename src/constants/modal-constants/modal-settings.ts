@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 import { TTimeZoneForm } from '@/interfaces/time-zone.interfaces';
 import {
   IDestinationPost,
@@ -78,15 +80,18 @@ const mapDestinationFormData = (data: IDestinationPost): IDestinationPost => {
 const mapFlightFormToRequestData = (
   formData: IFlightPostFormFields
 ): IFlightPost => {
-  const { from, to, id, ...rest } = formData;
+  const { from, to, departureDateTime, arrivalDateTime, ...rest } = formData;
+
   const airportFrom = (JSON.parse(from || '') as IDestination).airportCode;
   const airportTo = (JSON.parse(to || '') as IDestination).airportCode;
 
   return {
     airportFrom,
     airportTo,
+    departureDateTime: dayjs(departureDateTime).format('YYYY-MM-DDTHH:mm:ss'),
+    arrivalDateTime: dayjs(arrivalDateTime).format('YYYY-MM-DDTHH:mm:ss'),
     ...rest,
-  } as IFlightPost;
+  };
 };
 
 const mapTicketsFormData = (data: ITicketsPost): FormTicketsPost => {
