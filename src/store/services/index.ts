@@ -63,3 +63,11 @@ export {
   useDeleteBookingMutation,
   usePatchBookingMutation,
 } from './booking';
+
+export {
+  flightSlice,
+  useAddFlightMutation,
+  useDeleteFlightMutation,
+  useGetFlightsQuery,
+  usePatchFlightMutation,
+} from './flightSlice';
