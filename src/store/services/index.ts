@@ -64,4 +64,8 @@ export {
   usePatchBookingMutation,
 } from './booking';
 
-export { searchApi, useFetchSearchResultsQuery } from './searchApi';
+export {
+  searchTicketsApi,
+  useFetchSearchResultsQuery,
+  useLazyFetchSearchResultsQuery,
+} from './searchTickets';

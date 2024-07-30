@@ -21,8 +21,7 @@ import ruRU from 'antd/es/locale/ru_RU';
 
 import { ArrowsIcon } from '@common/icons';
 import { mainsearch } from '@/assets';
-// import { searchApi } from '@services/searchTickets.service';
-import { useFetchSearchResultsQuery } from '@/store/services';
+import { useLazyFetchSearchResultsQuery } from '@/store/services';
 import { getFlights } from '@services/flights/flights.service';
 import { ISearchData, IFlightPresentation } from '@/interfaces';
 import { useTheme } from '@context/:ThemeProvider';
@@ -77,6 +76,10 @@ const SearchTickets = ({
   const updateSearchParam = (param: Partial<ISearchData>) => {
     setSearchParams((prev) => ({ ...prev, ...param }));
   };
+  const [
+    trigger,
+    { data: searchResult, error: flightsError, isLoading: flightsLoading },
+  ] = useLazyFetchSearchResultsQuery();
 
   const getDates = (day: Date) => {
     setSearchParams((prev) => {
@@ -100,13 +103,6 @@ const SearchTickets = ({
     });
   };
 
-  const {
-    data: searchResult,
-    error: flightsError,
-    isLoading: flightsLoading,
-  } = useFetchSearchResultsQuery(searchParams, {
-    skip: !searchParams.airportFrom || !searchParams.airportTo,
-  });
   const handleSearch = async () => {
     if (passengerWarning) {
       return;
@@ -172,15 +168,6 @@ const SearchTickets = ({
         searchData.departFlight = departFlight;
         searchData.returnFlight = returnFlight;
       }
-
-      // const searchResult = await searchApi.postSearch(searchData);
-      // if (searchResult) {
-      //   // eslint-disable-next-line no-console
-      //   console.log(searchResult);
-      // } else {
-      //   // eslint-disable-next-line no-console
-      //   console.log('Нет билетов');
-      // }
 
       setTicketCardProps([]);
       if (searchResult) {

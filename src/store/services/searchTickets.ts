@@ -3,8 +3,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ISearchData } from '@/interfaces';
 import { baseURL } from '@/services/axios.service';
 
-export const searchApi = createApi({
-  reducerPath: 'searchApi',
+export const searchTicketsApi = createApi({
+  reducerPath: 'searchTicketsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: baseURL,
     prepareHeaders: (headers) => {
@@ -20,10 +20,10 @@ export const searchApi = createApi({
     fetchSearchResults: builder.query<any, ISearchData>({
       query: ({
         airportFrom,
-        airportTo,
         departureDate,
         returnDate,
         numberOfPassengers,
+        airportTo,
         categoryOfSeats,
       }) => ({
         url: '/search',
@@ -41,4 +41,5 @@ export const searchApi = createApi({
   }),
 });
 
-export const { useFetchSearchResultsQuery } = searchApi;
+export const { useFetchSearchResultsQuery, useLazyFetchSearchResultsQuery } =
+  searchTicketsApi;
