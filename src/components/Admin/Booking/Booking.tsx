@@ -1,9 +1,6 @@
-import { useCallback, useMemo, useState } from 'react';
-import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import {
   Box,
-  Container,
-  IconButton,
   Table,
   TableContainer,
   Tbody,
@@ -11,7 +8,7 @@ import {
   Th,
   Thead,
   Tr,
-  VStack,
+  Flex,
 } from '@chakra-ui/react';
 import {
   createColumnHelper,
@@ -26,9 +23,13 @@ import { Gear } from '@common/icons';
 import { isRowEditing } from '@utils/table.utils';
 import { formatDateTime } from '@utils/date.utils';
 import { useSetCurrentPageInPagination } from '@/hooks';
+import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
+import { useToastHandler } from '@/hooks/useToastHandler';
+import { useTheme } from '@context/:ThemeProvider';
 import {
   useDeleteBookingMutation,
   useGetBookingsQuery,
+  usePatchBookingMutation,
 } from '@/store/services';
 import {
   SpinnerBlock,
@@ -36,57 +37,63 @@ import {
   FlexCell,
   EditableCell,
   PopoverTable,
-  ConfirmCancelModal,
-  Pagination,
   AlertMessage,
+  FooterTable,
 } from '@/common';
 
 const PAGE_KEY = 'BOOKING_CURR_PAGE';
 
-const pageSize = 10;
-
 const Booking = () => {
+  const { theme } = useTheme();
   const [pageIndex, setPaginationData] =
     useSetCurrentPageInPagination(PAGE_KEY);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [deletingBookingId, setDeletingBookingId] = useState<number | null>(
-    null
-  );
-
+  const toastHandler = useToastHandler();
   const [deleteBooking] = useDeleteBookingMutation();
-
-  const handleDeleteBooking = useCallback(() => {
-    if (deletingBookingId) {
-      deleteBooking(deletingBookingId);
-      setIsModalOpen(false);
-      setDeletingBookingId(null);
-    }
-  }, [deletingBookingId, deleteBooking, setIsModalOpen, setDeletingBookingId]);
-
-  const toggleModal = useCallback(
-    (id?: number) => {
-      setIsModalOpen(!isModalOpen);
-      setDeletingBookingId(id ?? null);
-    },
-    [isModalOpen]
-  );
-
-  const { data: bookingData, isFetching } = useGetBookingsQuery({
-    page: pageIndex,
-    size: pageSize,
+  const [patchBooking] = usePatchBookingMutation();
+  const {
+    data: bookingData,
+    isFetching,
+    isError,
+    error,
+  } = useGetBookingsQuery({
+    page: pageIndex - 1,
   });
+  const bookingDataContent = useMemo(
+    () => bookingData?.content ?? [],
+    [bookingData]
+  );
+  const totalPages = bookingData?.totalPages;
+
+  useEffect(() => {
+    if (!isFetching && !bookingDataContent && pageIndex > 0)
+      setPaginationData(pageIndex - 1);
+  }, [isFetching, pageIndex, setPaginationData, bookingDataContent]);
+
+  useEffect(() => {
+    if (isError && isFetchBaseQueryError(error))
+      toastHandler({
+        status: 'error',
+        title: error.data.message,
+      });
+  }, [isError, toastHandler, error]);
 
   const [editableRowIndex, setEditableRowIndex] = useState<number | null>(null);
   const [editableRowState, setEditableRowState] = useState<IBooking | null>(
     null
   );
-
-  const handleEditRow = useCallback((row: IBooking, index: number) => {
-    setEditableRowState(row);
-    setEditableRowIndex(index);
+  const handleEditRow = useCallback((row = null, index = -1) => {
+    if (index >= 0) {
+      setEditableRowState(row);
+      setEditableRowIndex(index);
+    } else {
+      setEditableRowState(null);
+      setEditableRowIndex(null);
+    }
   }, []);
-
+  const patchRow = useCallback(() => {
+    if (editableRowState) patchBooking(editableRowState);
+    handleEditRow();
+  }, [patchBooking, editableRowState, handleEditRow]);
   const handleUpdateRow = useCallback(
     (id: string, value: string) => {
       if (!editableRowState) return;
@@ -165,7 +172,6 @@ const Booking = () => {
       columnHelper.display({
         header: () => <Gear />,
         id: 'actions',
-        size: 41,
         cell: (info) => (
           <PopoverTable
             hasDetailsButton={false}
@@ -173,10 +179,10 @@ const Booking = () => {
             index={info.row.index}
             id={info.row.original.id}
             handleEditRow={handleEditRow}
-            deleteRow={toggleModal}
+            deleteRow={deleteBooking}
             setPaginationIndex={setPaginationData}
             indexPage={pageIndex}
-            numberElem={bookingData?.length}
+            numberElem={bookingDataContent?.length}
           />
         ),
       }),
@@ -186,16 +192,15 @@ const Booking = () => {
       setPaginationData,
       handleEditRow,
       pageIndex,
-      bookingData,
+      bookingDataContent?.length,
       handleUpdateRow,
       editableRowIndex,
       editableRowState,
-      toggleModal,
+      deleteBooking,
     ]
   );
-
   const table = useReactTable({
-    data: bookingData || [],
+    data: bookingDataContent,
     columns,
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
@@ -205,133 +210,95 @@ const Booking = () => {
     return <SpinnerBlock />;
   }
 
-  if (Array.isArray(bookingData) && !bookingData?.length) {
+  if (!isError) {
+    return (
+      <TableContainer
+        my={10}
+        mx={14}
+        minHeight="70.9vh"
+        display="flex"
+        flexDirection="column"
+        justifyContent="space-between"
+      >
+        <Box>
+          <HeaderTable<IFormBooking>
+            heading="Бронирование"
+            formName={EModalNames.BOOKING}
+          />
+          <div {...scrollTable}>
+            <Table>
+              <Thead>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <Tr key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => (
+                      <Th
+                        border="0.0625rem solid #DEDEDE"
+                        color={theme === 'dark' ? '#FFFFFF' : '#000000'}
+                        key={header.id}
+                        fontSize="0.875rem"
+                        lineHeight="1.125rem"
+                        textTransform="none"
+                        fontWeight="semibold"
+                        width="42px"
+                      >
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </Th>
+                    ))}
+                  </Tr>
+                ))}
+              </Thead>
+              <Tbody>
+                {table.getRowModel().rows.map((row) => (
+                  <Tr key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <Td
+                        border="0.0625rem solid #DEDEDE"
+                        color={theme === 'dark' ? '#FFFFFF' : '#393939'}
+                        fontSize="0.875rem"
+                        lineHeight="1.125rem"
+                        key={cell.id}
+                        textTransform="none"
+                        fontWeight="normal"
+                        paddingX="0.25rem"
+                        paddingY="0.125rem"
+                      >
+                        <Flex height="2.5rem">
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </Flex>
+                      </Td>
+                    ))}
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </div>
+          <FooterTable
+            data={bookingDataContent}
+            pageIndex={pageIndex}
+            setPaginationData={setPaginationData}
+            cancelEditing={handleEditRow}
+            patchRow={patchRow}
+            editableRowIndex={editableRowIndex}
+            totalPages={totalPages}
+          />
+        </Box>
+      </TableContainer>
+    );
+  }
+
+  if (bookingDataContent?.length) {
     return <AlertMessage status="info" message="No bookings were found" />;
   }
 
-  return (
-    <Box pt="50px" pb="121px">
-      <Container maxW="1372px">
-        <HeaderTable<IFormBooking>
-          heading="Бронирование"
-          formName={EModalNames.BOOKING}
-        />
-        {
-          // если полученные данные в порядке выводим таблицу
-          Array.isArray(bookingData) && bookingData?.length ? (
-            <>
-              <TableContainer mb="22px">
-                <div {...scrollTable}>
-                  <Table
-                    variant="unstyled"
-                    border="1px solid #dedede"
-                    bg="#fff"
-                  >
-                    <Thead>
-                      {table.getHeaderGroups().map((headerGroup) => (
-                        <Tr
-                          key={headerGroup.id}
-                          bg="#F5F5F5"
-                          border="1px solid #dedede"
-                        >
-                          {headerGroup.headers.map((header, i) => (
-                            <Th
-                              textAlign={
-                                headerGroup.headers.length === i + 1
-                                  ? 'center'
-                                  : 'left'
-                              }
-                              textTransform="none"
-                              border="1px solid #dedede"
-                              py="18px"
-                              key={header.id}
-                            >
-                              {header.isPlaceholder &&
-                                flexRender(
-                                  header.column.columnDef.header,
-                                  header.getContext()
-                                )}
-                              {header.column.getCanSort() && (
-                                <VStack gap={0} ml="6px" display="inline-flex">
-                                  <IconButton
-                                    w="20px"
-                                    h="10px"
-                                    px="4px"
-                                    minW={0}
-                                    border="none"
-                                    borderRadius={0}
-                                    bg="none"
-                                    color="#808080"
-                                    aria-label="Сортировка по возростанию"
-                                    icon={<ChevronUpIcon />}
-                                    _focus={{ outline: 0, bg: '#e2e8f0' }}
-                                  />
-                                  <IconButton
-                                    w="20px"
-                                    h="10px"
-                                    px="4px"
-                                    minW={0}
-                                    border="none"
-                                    borderRadius={0}
-                                    bg="none"
-                                    color="#808080"
-                                    aria-label="Сортировка по убыванию"
-                                    icon={<ChevronDownIcon />}
-                                    _focus={{ outline: 0, bg: '#e2e8f0' }}
-                                  />
-                                </VStack>
-                              )}
-                            </Th>
-                          ))}
-                        </Tr>
-                      ))}
-                    </Thead>
-                    <Tbody fontSize="14px" fontWeight={600}>
-                      {table.getRowModel().rows.map((row) => (
-                        <Tr key={row.id}>
-                          {row.getVisibleCells().map((cell, i) => (
-                            <Td
-                              key={cell.id}
-                              borderRight="1px solid #dedede"
-                              py="13px"
-                              textAlign={
-                                row.getVisibleCells().length === i + 1
-                                  ? 'center'
-                                  : 'left'
-                              }
-                            >
-                              {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext()
-                              )}
-                            </Td>
-                          ))}
-                        </Tr>
-                      ))}
-                    </Tbody>
-                  </Table>
-                </div>
-              </TableContainer>
-              <ConfirmCancelModal
-                isOpen={isModalOpen}
-                onClose={toggleModal}
-                onDelete={handleDeleteBooking}
-                modalText={'Вы действительно хотите удалить бронирование?'}
-              />
-
-              <Pagination
-                pageIndex={pageIndex}
-                totalPages={bookingData?.length}
-                setPaginationData={setPaginationData}
-              />
-            </>
-          ) : (
-            <AlertMessage status="info" message="No bookings were found" />
-          )
-        }
-      </Container>
-    </Box>
-  );
+  return <AlertMessage />;
 };
 
 export default Booking;

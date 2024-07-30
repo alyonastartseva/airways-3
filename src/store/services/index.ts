@@ -65,6 +65,14 @@ export {
 } from './booking';
 
 export {
+  flightSlice,
+  useAddFlightMutation,
+  useDeleteFlightMutation,
+  useGetFlightsQuery,
+  usePatchFlightMutation,
+} from './flightSlice';
+
+export {
   searchTicketsApi,
   useFetchSearchResultsQuery,
   useLazyFetchSearchResultsQuery,
