@@ -13,6 +13,8 @@ import {
   flightSeatsApi,
   seatCategoriesApi,
   ticketsApi,
+  authTokenApi,
+  accountsApi,
 } from './services';
 import { flightSlice } from './services/flightSlice';
 
@@ -30,6 +32,8 @@ export const store = configureStore({
     [flightSlice.reducerPath]: flightSlice.reducer,
     [seatCategoriesApi.reducerPath]: seatCategoriesApi.reducer,
     [ticketsApi.reducerPath]: ticketsApi.reducer,
+    [authTokenApi.reducerPath]: authTokenApi.reducer,
+    [accountsApi.reducerPath]: accountsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -41,7 +45,9 @@ export const store = configureStore({
       flightSeatsApi.middleware,
       flightSlice.middleware,
       seatCategoriesApi.middleware,
-      ticketsApi.middleware
+      ticketsApi.middleware,
+      authTokenApi.middleware,
+      accountsApi.middleware
     ),
 });
 

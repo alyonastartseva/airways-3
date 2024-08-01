@@ -1,6 +1,11 @@
-export type { IFormUserCreate } from './account.interfaces';
+export type {
+  IFormUserCreate,
+  IGetAccountsResponse,
+  IAccount,
+  IAccountRoles,
+} from './account.interfaces';
 export type { IAircraft, IAircraftPost } from './aircraft.interfaces';
-export type { ISort, IGetQuery } from './api-interfaces';
+export type { ISort, IGetQuery, IError } from './api-interfaces';
 export type { IAxiosErrResponseData } from './axios-err-response-data';
 export type { ICountry } from './country.interfaces';
 export type { IFormValuesRegisterUser } from './form-values-register-user.interfaces';
@@ -60,3 +65,7 @@ export type {
   TiketDataProps,
   ITicketFlightProps,
 } from './ticketsForTest.interfaces';
+export type {
+  IAuthTokenRequest,
+  IAuthTokenResponse,
+} from './auth-token.interfaces';
