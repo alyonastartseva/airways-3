@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+/* eslint-disable no-console */
+import { useState, useMemo, useEffect } from 'react';
 import {
   Alert,
   Row,
@@ -81,6 +82,17 @@ const SearchTickets = ({
     { data: searchResult, error: flightsError, isLoading: flightsLoading },
   ] = useLazyFetchSearchResultsQuery();
 
+  // const {
+  //   data: searchResult,
+  //   error: flightsError,
+  //   isLoading: flightsLoading,
+  // } = useFetchSearchResultsQuery(
+  //   searchParams
+  //   //   {
+  //   //   skip: !searchParams.airportFrom || !searchParams.airportTo,
+  //   // }
+  // );
+
   const getDates = (day: Date) => {
     setSearchParams((prev) => {
       const newDate = formatISO(day, {
@@ -103,30 +115,130 @@ const SearchTickets = ({
     });
   };
 
+  // const handleSearch = async () => {
+  //   if (passengerWarning) {
+  //     return;
+  //   }
+
+  //   const searchFormData = {
+  //     numberOfPassengers: searchParams.numberOfPassengers,
+  //     airportFrom: searchParams.airportFrom,
+  //     airportTo: searchParams.airportTo,
+  //     directFlightsOnly: searchParams.directFlightsOnly,
+  //     tripType: searchParams.tripType,
+  //     categoryOfSeats: searchParams.categoryOfSeats,
+  //     departureDate: searchParams.departureDate,
+  //     returnDate: searchParams.returnDate,
+  //   };
+
+  //   try {
+  //     setIsLoading(true);
+  //     const triggerResult = await trigger(initialValues).unwrap();
+
+  //     if (!searchFormData.airportFrom || !searchFormData.airportTo) {
+  //       setError('Ошибка поиска');
+
+  //       return;
+  //     }
+
+  //     const searchData: ISearchData & ISearchRadioData = {
+  //       ...searchFormData,
+  //       departFlight: [],
+  //       returnFlight: [],
+  //     };
+
+  //     const flights = await getFlights();
+  //     if (flights) {
+  //       const departFlight: IFlightPresentation[] = [];
+  //       const returnFlight: IFlightPresentation[] = [];
+
+  //       if (searchFormData.directFlightsOnly) {
+  //         const directFlightCode =
+  //           searchFormData.airportFrom + searchFormData.airportTo;
+  //         const directFlight = flights.content.find(
+  //           (flight: IFlightPresentation) => flight.code === directFlightCode
+  //         );
+
+  //         if (directFlight) {
+  //           departFlight.push(directFlight);
+  //         }
+  //       } else {
+  //         const departFlightCode =
+  //           searchFormData.airportFrom + searchFormData.airportTo;
+  //         const returnFlightCode =
+  //           searchFormData.airportTo + searchFormData.airportFrom;
+
+  //         const departFlights: IFlightPresentation[] = flights.content.filter(
+  //           (flight) => flight.code.includes(departFlightCode)
+  //         );
+  //         const returnFlights: IFlightPresentation[] = flights.content.filter(
+  //           (flight) => flight.code.includes(returnFlightCode)
+  //         );
+
+  //         departFlight.push(...departFlights);
+  //         returnFlight.push(...returnFlights);
+  //       }
+  //       searchData.departFlight = departFlight;
+  //       searchData.returnFlight = returnFlight;
+  //     }
+
+  //     setTicketCardProps([]);
+  //     if (searchResult) {
+  //       const {
+  //         search: { categoryOfSeats },
+  //         flights: [...rest],
+  //       } = searchResult;
+
+  //       // временное решение для хранения пропсов TicketCard
+  //       setTicketCardProps(
+  //         rest.map((data: { dataTo: DataToType; totalPrice: number }) => ({
+  //           ...data.dataTo,
+  //           // TODO: заменить значения тарифов, когда будут приходить данные с сервера
+  //           tariffsData: {
+  //             basic: { price: data.totalPrice, ticketsCount: 2 },
+  //             standard: { price: data.totalPrice * 2, ticketsCount: 8 },
+  //             plus: { price: data.totalPrice * 3, ticketsCount: 10 },
+  //           },
+  //           categoryOfSeats,
+  //         }))
+  //       );
+  //     }
+
+  //     if (onSearch) {
+  //       onSearch(searchFormData);
+  //     }
+  //   } catch (err) {
+  //     setError('Ошибка поиска');
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
   const handleSearch = async () => {
-    if (passengerWarning) {
-      return;
-    }
-
-    const searchFormData = {
-      numberOfPassengers: searchParams.numberOfPassengers,
-      airportFrom: searchParams.airportFrom,
-      airportTo: searchParams.airportTo,
-      directFlightsOnly: searchParams.directFlightsOnly,
-      tripType: searchParams.tripType,
-      categoryOfSeats: searchParams.categoryOfSeats,
-      departureDate: searchParams.departureDate,
-      returnDate: searchParams.returnDate,
-    };
-
     try {
+      if (passengerWarning) {
+        return;
+      }
+
+      const searchFormData = {
+        numberOfPassengers: searchParams.numberOfPassengers,
+        airportFrom: searchParams.airportFrom,
+        airportTo: searchParams.airportTo,
+        directFlightsOnly: searchParams.directFlightsOnly,
+        tripType: searchParams.tripType,
+        categoryOfSeats: searchParams.categoryOfSeats,
+        departureDate: searchParams.departureDate,
+        returnDate: searchParams.returnDate,
+      };
+
       setIsLoading(true);
 
       if (!searchFormData.airportFrom || !searchFormData.airportTo) {
         setError('Ошибка поиска');
-
         return;
       }
+
+      const triggerResult = await trigger(searchFormData).unwrap();
 
       const searchData: ISearchData & ISearchRadioData = {
         ...searchFormData,
@@ -170,11 +282,17 @@ const SearchTickets = ({
       }
 
       setTicketCardProps([]);
-      if (searchResult) {
+      if (triggerResult) {
         const {
           search: { categoryOfSeats },
           flights: [...rest],
-        } = searchResult;
+        } = triggerResult;
+        // setTicketCardProps([]);
+        //     if (searchResult) {
+        //       const {
+        //         search: { categoryOfSeats },
+        //         flights: [...rest],
+        //       } = searchResult;
 
         // временное решение для хранения пропсов TicketCard
         setTicketCardProps(
@@ -200,7 +318,6 @@ const SearchTickets = ({
       setIsLoading(false);
     }
   };
-
   const handlePassengerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const passengers = parseInt(e.target.value);
 
@@ -566,3 +683,4 @@ const SearchTickets = ({
 };
 
 export default SearchTickets;
+/* eslint-enable no-console */

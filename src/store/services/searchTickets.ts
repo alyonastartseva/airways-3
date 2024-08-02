@@ -25,18 +25,22 @@ export const searchTicketsApi = createApi({
         numberOfPassengers,
         airportTo,
         categoryOfSeats,
-      }) => ({
-        url: '/search',
-        method: 'GET',
-        params: {
+      }) => {
+        const params = {
           airportFrom,
           airportTo,
           departureDate,
           returnDate,
           numberOfPassengers,
           categoryOfSeats,
-        },
-      }),
+        };
+
+        return {
+          url: '/search',
+          method: 'GET',
+          params,
+        };
+      },
     }),
   }),
 });
