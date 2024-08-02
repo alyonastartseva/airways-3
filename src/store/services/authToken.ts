@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { AUTH_TOKEN_URL as baseUrl } from '@/constants';
+import { AUTH_TOKEN_URL as baseUrl } from '@/services/constants/api-urls.constant';
 
 import { IAuthTokenRequest, IAuthTokenResponse } from '../../interfaces';
 

@@ -8,7 +8,7 @@ import type {
 import {
   BASE_URL_API as baseUrl,
   AUTH_TOKEN_URL as authUrl,
-} from '@/constants';
+} from '@/services/constants/api-urls.constant';
 
 const baseQuery = fetchBaseQuery({
   baseUrl,

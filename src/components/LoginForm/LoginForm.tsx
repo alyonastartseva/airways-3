@@ -19,11 +19,11 @@ const { Item } = Form;
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const [trigger, { isLoading }] = useLazyGetAccessTokenQuery();
+  const [clickSubmitBtn, { isLoading }] = useLazyGetAccessTokenQuery();
   const [errorData, setErrorMessage] = useState<IError | null>(null);
   const onFinish = async (values: LoginForm) => {
     try {
-      const resAuth = await trigger(values).unwrap();
+      const resAuth = await clickSubmitBtn(values).unwrap();
       localStorage.setItem('adminToken', resAuth.access_token);
       localStorage.setItem('refreshToken', resAuth.refresh_token);
       navigate('/');

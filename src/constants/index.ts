@@ -9,8 +9,6 @@ export {
   objFlight,
 } from './constants';
 
-export { BASE_URL, BASE_URL_API, AUTH_TOKEN_URL } from './urls';
-
 export { onlyLettersPattern } from './validate-patterns';
 export { phonePattern } from './validate-patterns';
 export { emailPattern } from './validate-patterns';
