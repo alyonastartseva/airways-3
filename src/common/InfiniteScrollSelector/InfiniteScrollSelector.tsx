@@ -1,9 +1,10 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Box, Spinner } from '@chakra-ui/react';
+import { Card, Spin } from 'antd';
 
 import { useTheme } from '@context/:ThemeProvider';
 
 import { IScrollComponent } from './infiniteScrollSelector.interface';
+import styles from './InfiniteScrollSelector.module.scss';
 
 const InfiniteScrollSelector = ({
   targetList,
@@ -15,27 +16,12 @@ const InfiniteScrollSelector = ({
 }: IScrollComponent) => {
   const { theme } = useTheme();
 
-  const backgroundColor = theme === 'dark' ? 'gray.800' : 'white';
-  const textColor = theme === 'dark' ? 'white' : 'black';
-  const hoverBackgroundColor = theme === 'dark' ? 'gray.600' : '#ebedf0';
+  const themeClass = theme === 'dark' ? 'dark-theme' : '';
+
   return (
     <div
       id="scrollable"
-      style={{
-        minHeight: 30,
-        width: '100%',
-        position: 'absolute',
-        maxHeight: 150,
-        overflowY: 'auto',
-        overflowX: 'hidden',
-        zIndex: 9999,
-        backgroundColor: backgroundColor,
-        border: '1px solid #3182ce',
-        outline: '1px solid #3182ce',
-        borderTop: 'none',
-        borderBottomRightRadius: '0.375rem',
-        borderBottomLeftRadius: '0.375rem',
-      }}
+      className={`${styles.scrollbar} ${styles[themeClass]}`}
     >
       <InfiniteScroll
         dataLength={targetList.length}
@@ -50,35 +36,28 @@ const InfiniteScrollSelector = ({
               targetList.map((el, index) => {
                 const { name, code } = el;
                 return (
-                  <Box
+                  <Card
+                    className={`${styles.card} ${styles[themeClass]}`}
                     key={index}
                     onMouseDown={() => onClick(code || '')}
-                    style={{
-                      padding: '4px 16px',
-                      cursor: 'pointer',
-                      width: '100%',
-                      height: '100%',
-                      borderBottom: '1px solid lightgray',
-                      textAlign: 'left',
-                      color: textColor,
-                    }}
-                    _hover={{ bg: hoverBackgroundColor }}
+                    hoverable
+                    bodyStyle={{ padding: 0 }}
                   >
                     {`${name} - ${code}`}
-                  </Box>
+                  </Card>
                 );
               })}
           </div>
         </div>
       </InfiniteScroll>
       {isLoading && (
-        <Box style={{ width: '15px', height: '30px', margin: '0 auto' }}>
-          <Spinner
+        <div style={{ width: '15px', height: '30px', margin: '0 auto' }}>
+          <Spin
             style={{ width: 15, height: 15, marginTop: 8 }}
-            size={'sm'}
-            color="lightgray"
+            size="small"
+            tip="Loading..."
           />
-        </Box>
+        </div>
       )}
     </div>
   );

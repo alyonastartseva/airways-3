@@ -1,30 +1,25 @@
-import { useMutation, useQueryClient } from 'react-query';
+import { useEffect } from 'react';
 
-import { postBooking } from '@services/booking/booking.service';
+import { useAddBookingMutation } from '@/store/services';
+import { isFetchBaseQueryError } from '@/utils/fetch-error.utils';
 
 import { useToastHandler } from '../useToastHandler';
 
 const useBookingPost = () => {
-  const queryClient = useQueryClient();
+  const [addBooking, { error, isError, isSuccess }] = useAddBookingMutation();
   const toast = useToastHandler();
 
-  return useMutation(postBooking, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('booking');
-      toast({
-        status: 'success',
-        title: 'Бронирование успешно выполнено',
-      });
-    },
-    onError: (error) => {
-      if (error instanceof Error) {
-        toast({
-          status: 'error',
-          title: error.message,
-        });
-      }
-    },
-  }).mutateAsync;
+  useEffect(() => {
+    if (isError && isFetchBaseQueryError(error))
+      toast({ status: 'error', title: error.data.message });
+  }, [isError, toast, error]);
+
+  useEffect(() => {
+    if (isSuccess)
+      toast({ status: 'success', title: 'Бронирование успешно выполнено' });
+  }, [isSuccess, toast]);
+
+  return addBooking;
 };
 
 export { useBookingPost };

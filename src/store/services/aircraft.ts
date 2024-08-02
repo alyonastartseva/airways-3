@@ -26,7 +26,7 @@ export const aircraftApi = createApi({
       providesTags: ['Aircraft'],
     }),
     getAircraftById: builder.query<IAircraft, number>({
-      query: (id) => `${ERoutes.AIRCRAFT}${id}`,
+      query: (id) => `${ERoutes.AIRCRAFT}/${id}`,
     }),
     addAicraft: builder.mutation<IAircraft, IAircraftPost>({
       query: (body) => ({
@@ -71,15 +71,15 @@ export const aircraftApi = createApi({
     }),
     deleteAircraft: builder.mutation<IAircraft, number>({
       query: (id) => ({
-        url: `${ERoutes.AIRCRAFT}${id}`,
+        url: `${ERoutes.AIRCRAFT}/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Aircraft'],
     }),
     patchAircraft: builder.mutation<IAircraft, IAircraft>({
       query: ({ id, ...body }) => ({
-        url: `${ERoutes.AIRCRAFT}${id}`,
-        method: 'POST',
+        url: `${ERoutes.AIRCRAFT}/${id}`,
+        method: 'PATCH',
         body,
       }),
       invalidatesTags: ['Aircraft'],

@@ -3,10 +3,10 @@ import { bookingStatuses } from '@/constants';
 import { IFormBooking, IPassenger } from '@/interfaces';
 import { useFlightSeatsQuery } from '@/hooks';
 import { IFSOne } from '@/interfaces/flightsSeats.interfaces';
-import { useGetPassangersQuery } from '@/store/services';
+import { useGetPassengersQuery } from '@/store/services';
 
 const PassengersOptions = () => {
-  const { data } = useGetPassangersQuery({ size: 100 });
+  const { data } = useGetPassengersQuery({ size: 100 });
 
   if (data)
     return data.content.map((el: IPassenger) => {

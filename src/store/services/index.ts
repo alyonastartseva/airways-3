@@ -1,6 +1,6 @@
 export {
   passengersApi,
-  useGetPassangersQuery,
+  useGetPassengersQuery,
   useAddPassengerMutation,
   useDeletePassengerMutation,
   usePatchPassengerMutation,
@@ -58,6 +58,23 @@ export {
   useDeleteTicketMutation,
   usePatchTicketMutation,
 } from './tickets';
+
+export {
+  bookingApi,
+  useGetBookingsQuery,
+  useGetBookingByIdQuery,
+  useAddBookingMutation,
+  useDeleteBookingMutation,
+  usePatchBookingMutation,
+} from './booking';
+
+export {
+  flightSlice,
+  useAddFlightMutation,
+  useDeleteFlightMutation,
+  useGetFlightsQuery,
+  usePatchFlightMutation,
+} from './flightSlice';
 
 export { authTokenApi, useLazyGetAccessTokenQuery } from './authToken';
 

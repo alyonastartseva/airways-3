@@ -12,7 +12,7 @@ interface GetSeatsArgs extends IGetQueryArgs {
 }
 
 const formatPatchBody = (data: ISeatPost) => {
-  const { id, ...rest } = data;
+  const { ...rest } = data;
   let categoryPatch = '';
 
   if (typeof rest.category === 'object') categoryPatch = rest.category;
@@ -49,14 +49,14 @@ export const seatsApi = createApi({
     }),
     deleteSeat: builder.mutation<ISeatPost, number>({
       query: (id) => ({
-        url: `${ERoutes.SEAT}${id}`,
+        url: `${ERoutes.SEAT}/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Seats'],
     }),
     patchSeat: builder.mutation<ISeatPost, ISeatPost>({
       query: (body) => ({
-        url: `${ERoutes.SEAT}${body.id}`,
+        url: `${ERoutes.SEAT}/${body.id}`,
         method: 'PATCH',
         body: formatPatchBody(body),
       }),

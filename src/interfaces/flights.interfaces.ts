@@ -38,8 +38,7 @@ export interface IFlightPresentation {
   id?: number;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IFlightPost extends Omit<IFlightPresentation, 'id'> {}
+export type IFlightPost = Partial<Omit<IFlightPresentation, 'id'>>;
 
 export interface IFlightPostFormFields
   extends FieldValues,

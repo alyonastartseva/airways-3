@@ -50,14 +50,14 @@ const mapPassengersFormData = (data: IFormPassengers): FormPassengersPost => {
 };
 
 export const passengersApi = createApi({
-  reducerPath: 'passengeresApi',
+  reducerPath: 'passengersApi',
   baseQuery: fetchBaseQuery({
     baseUrl,
     headers: { 'Content-Type': 'application/json' },
   }),
   tagTypes: ['Passenger'],
   endpoints: (builder) => ({
-    getPassangers: builder.query<FormPassengersGet, IGetQueryArgs>({
+    getPassengers: builder.query<FormPassengersGet, IGetQueryArgs>({
       query: (query) => `${ERoutes.PASSENGERS}${getQueryString(query)}`,
       providesTags: ['Passenger'],
     }),
@@ -71,14 +71,14 @@ export const passengersApi = createApi({
     }),
     deletePassenger: builder.mutation<IPassenger, number>({
       query: (id) => ({
-        url: `${ERoutes.PASSENGERS}${id}`,
+        url: `${ERoutes.PASSENGERS}/${id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Passenger'],
     }),
     patchPassenger: builder.mutation<IPassenger, IPassenger>({
       query: ({ id, ...body }) => ({
-        url: `${ERoutes.PASSENGERS}${id}`,
+        url: `${ERoutes.PASSENGERS}/${id}`,
         method: 'PATCH',
         body,
       }),
@@ -88,7 +88,7 @@ export const passengersApi = createApi({
 });
 
 export const {
-  useGetPassangersQuery,
+  useGetPassengersQuery,
   useAddPassengerMutation,
   useDeletePassengerMutation,
   usePatchPassengerMutation,

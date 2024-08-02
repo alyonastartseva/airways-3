@@ -13,6 +13,7 @@ import {
   flightSeatsApi,
   seatCategoriesApi,
   ticketsApi,
+  bookingApi,
   authTokenApi,
   accountsApi,
 } from './services';
@@ -32,6 +33,7 @@ export const store = configureStore({
     [flightSlice.reducerPath]: flightSlice.reducer,
     [seatCategoriesApi.reducerPath]: seatCategoriesApi.reducer,
     [ticketsApi.reducerPath]: ticketsApi.reducer,
+    [bookingApi.reducerPath]: bookingApi.reducer,
     [authTokenApi.reducerPath]: authTokenApi.reducer,
     [accountsApi.reducerPath]: accountsApi.reducer,
   },
@@ -46,6 +48,7 @@ export const store = configureStore({
       flightSlice.middleware,
       seatCategoriesApi.middleware,
       ticketsApi.middleware,
+      bookingApi.middleware,
       authTokenApi.middleware,
       accountsApi.middleware
     ),

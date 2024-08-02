@@ -16,11 +16,13 @@ import {
   ModalBody,
 } from '@chakra-ui/react';
 
+import { useAddFlightMutation } from '@/store/services';
 import { FormAirplanes } from '@/components';
 import { modalSettings, EModalNames } from '@/constants';
 import { ButtonSubmitAdmin } from '@common/ButtonSubmitAdmin';
 import { ButtonAddAdmin } from '@common/ButtonAddAdmin';
 import { HeadingAdmin } from '@common/HeadingAdmin';
+import { IFlightPresentation } from '@/interfaces';
 
 import { ModalInput } from '../ModalInput';
 
@@ -47,12 +49,16 @@ const ModalShape = <T extends FieldValues>({
     onClose();
   };
 
+  const [addFlight] = useAddFlightMutation();
+
   const onSubmit: SubmitHandler<T> = async (data) => {
     const requestData = mapFieldValuesToRequestData
       ? mapFieldValuesToRequestData?.(data)
       : data;
 
-    mutate(requestData);
+    formName !== EModalNames.FLIGHTS
+      ? mutate(requestData)
+      : addFlight(requestData as IFlightPresentation);
     onModalClose();
   };
 
