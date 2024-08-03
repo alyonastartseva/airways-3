@@ -112,7 +112,7 @@ const SearchTickets = ({
         airportTo: searchParams.airportTo,
         directFlightsOnly: searchParams.directFlightsOnly,
         tripType: searchParams.tripType,
-        categoryOfSeats: searchParams.categoryOfSeats || 'BUSINESS',
+        categoryOfSeats: searchParams.categoryOfSeats,
         departureDate: searchParams.departureDate,
         returnDate: searchParams.returnDate,
       };
