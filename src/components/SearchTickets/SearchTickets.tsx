@@ -542,15 +542,7 @@ const SearchTickets = ({
                     onClick={handleSearch}
                   >
                     {isLoading ? (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          top: '50%',
-                          left: '50%',
-                          transform: 'translate(-50%, -50%)',
-                          zIndex: 99,
-                        }}
-                      >
+                      <div>
                         <Spin size="small" style={{ color: 'white' }} />
                       </div>
                     ) : (
