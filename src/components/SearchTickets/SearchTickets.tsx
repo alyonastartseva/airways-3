@@ -124,7 +124,7 @@ const SearchTickets = ({
         return;
       }
 
-      const triggerResult = await trigger(searchFormData).unwrap();
+      const searchResultTrigger = await trigger(searchFormData).unwrap();
       if (searchResult) {
         /* eslint-disable no-console */
         console.log(searchResult);
@@ -174,11 +174,11 @@ const SearchTickets = ({
       }
 
       setTicketCardProps([]);
-      if (triggerResult) {
+      if (searchResult) {
         const {
           search: { categoryOfSeats },
           flights: [...rest],
-        } = triggerResult;
+        } = searchResult;
 
         // временное решение для хранения пропсов TicketCard
         setTicketCardProps(
@@ -548,13 +548,10 @@ const SearchTickets = ({
                           top: '50%',
                           left: '50%',
                           transform: 'translate(-50%, -50%)',
-                          zIndex: 1,
+                          zIndex: 99,
                         }}
                       >
-                        <Spin
-                          size="small"
-                          style={{ color: 'white', zIndex: '99' }}
-                        />
+                        <Spin size="small" style={{ color: 'white' }} />
                       </div>
                     ) : (
                       'Найти'
