@@ -29,3 +29,11 @@ export interface IGetQueryArgs {
   page?: number;
   size?: number;
 }
+
+export interface IError {
+  data: {
+    error: string;
+    error_description: string;
+  };
+  status: number;
+}

@@ -11,6 +11,8 @@ enum ERoutes {
   BOOKINGS = '/bookings',
   FLIGHT_SEATS = '/flight-seats',
   SEAT_CATEGORIES = '/categories',
+  ACCOUNTS = '/accounts',
+  ACCOUNTS_ROLES = `${ACCOUNTS}/roles`,
 }
 
 export default ERoutes;

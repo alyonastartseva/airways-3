@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Alert,
   Row,
@@ -77,21 +76,7 @@ const SearchTickets = ({
   const updateSearchParam = (param: Partial<ISearchData>) => {
     setSearchParams((prev) => ({ ...prev, ...param }));
   };
-  const [
-    trigger,
-    { data: searchResult, error: flightsError, isLoading: flightsLoading },
-  ] = useLazyFetchSearchResultsQuery();
-
-  // const {
-  //   data: searchResult,
-  //   error: flightsError,
-  //   isLoading: flightsLoading,
-  // } = useFetchSearchResultsQuery(
-  //   searchParams
-  //   //   {
-  //   //   skip: !searchParams.airportFrom || !searchParams.airportTo,
-  //   // }
-  // );
+  const [trigger, { data: searchResult }] = useLazyFetchSearchResultsQuery();
 
   const getDates = (day: Date) => {
     setSearchParams((prev) => {
@@ -115,105 +100,6 @@ const SearchTickets = ({
     });
   };
 
-  // const handleSearch = async () => {
-  //   if (passengerWarning) {
-  //     return;
-  //   }
-
-  //   const searchFormData = {
-  //     numberOfPassengers: searchParams.numberOfPassengers,
-  //     airportFrom: searchParams.airportFrom,
-  //     airportTo: searchParams.airportTo,
-  //     directFlightsOnly: searchParams.directFlightsOnly,
-  //     tripType: searchParams.tripType,
-  //     categoryOfSeats: searchParams.categoryOfSeats,
-  //     departureDate: searchParams.departureDate,
-  //     returnDate: searchParams.returnDate,
-  //   };
-
-  //   try {
-  //     setIsLoading(true);
-  //     const triggerResult = await trigger(initialValues).unwrap();
-
-  //     if (!searchFormData.airportFrom || !searchFormData.airportTo) {
-  //       setError('Ошибка поиска');
-
-  //       return;
-  //     }
-
-  //     const searchData: ISearchData & ISearchRadioData = {
-  //       ...searchFormData,
-  //       departFlight: [],
-  //       returnFlight: [],
-  //     };
-
-  //     const flights = await getFlights();
-  //     if (flights) {
-  //       const departFlight: IFlightPresentation[] = [];
-  //       const returnFlight: IFlightPresentation[] = [];
-
-  //       if (searchFormData.directFlightsOnly) {
-  //         const directFlightCode =
-  //           searchFormData.airportFrom + searchFormData.airportTo;
-  //         const directFlight = flights.content.find(
-  //           (flight: IFlightPresentation) => flight.code === directFlightCode
-  //         );
-
-  //         if (directFlight) {
-  //           departFlight.push(directFlight);
-  //         }
-  //       } else {
-  //         const departFlightCode =
-  //           searchFormData.airportFrom + searchFormData.airportTo;
-  //         const returnFlightCode =
-  //           searchFormData.airportTo + searchFormData.airportFrom;
-
-  //         const departFlights: IFlightPresentation[] = flights.content.filter(
-  //           (flight) => flight.code.includes(departFlightCode)
-  //         );
-  //         const returnFlights: IFlightPresentation[] = flights.content.filter(
-  //           (flight) => flight.code.includes(returnFlightCode)
-  //         );
-
-  //         departFlight.push(...departFlights);
-  //         returnFlight.push(...returnFlights);
-  //       }
-  //       searchData.departFlight = departFlight;
-  //       searchData.returnFlight = returnFlight;
-  //     }
-
-  //     setTicketCardProps([]);
-  //     if (searchResult) {
-  //       const {
-  //         search: { categoryOfSeats },
-  //         flights: [...rest],
-  //       } = searchResult;
-
-  //       // временное решение для хранения пропсов TicketCard
-  //       setTicketCardProps(
-  //         rest.map((data: { dataTo: DataToType; totalPrice: number }) => ({
-  //           ...data.dataTo,
-  //           // TODO: заменить значения тарифов, когда будут приходить данные с сервера
-  //           tariffsData: {
-  //             basic: { price: data.totalPrice, ticketsCount: 2 },
-  //             standard: { price: data.totalPrice * 2, ticketsCount: 8 },
-  //             plus: { price: data.totalPrice * 3, ticketsCount: 10 },
-  //           },
-  //           categoryOfSeats,
-  //         }))
-  //       );
-  //     }
-
-  //     if (onSearch) {
-  //       onSearch(searchFormData);
-  //     }
-  //   } catch (err) {
-  //     setError('Ошибка поиска');
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const handleSearch = async () => {
     try {
       if (passengerWarning) {
@@ -226,7 +112,7 @@ const SearchTickets = ({
         airportTo: searchParams.airportTo,
         directFlightsOnly: searchParams.directFlightsOnly,
         tripType: searchParams.tripType,
-        categoryOfSeats: searchParams.categoryOfSeats,
+        categoryOfSeats: searchParams.categoryOfSeats || 'BUSINESS',
         departureDate: searchParams.departureDate,
         returnDate: searchParams.returnDate,
       };
@@ -239,7 +125,13 @@ const SearchTickets = ({
       }
 
       const triggerResult = await trigger(searchFormData).unwrap();
-
+      if (searchResult) {
+        /* eslint-disable no-console */
+        console.log(searchResult);
+      } else {
+        console.log('Нет билетов');
+      }
+      /* eslint-enable no-console */
       const searchData: ISearchData & ISearchRadioData = {
         ...searchFormData,
         departFlight: [],
@@ -287,12 +179,6 @@ const SearchTickets = ({
           search: { categoryOfSeats },
           flights: [...rest],
         } = triggerResult;
-        // setTicketCardProps([]);
-        //     if (searchResult) {
-        //       const {
-        //         search: { categoryOfSeats },
-        //         flights: [...rest],
-        //       } = searchResult;
 
         // временное решение для хранения пропсов TicketCard
         setTicketCardProps(
@@ -580,7 +466,7 @@ const SearchTickets = ({
                       />
                     </FormItem>
                   </ConfigProvider>
-                  {flightsError && (
+                  {error && (
                     <Alert
                       data-testid="alert-error"
                       type="error"
@@ -655,11 +541,19 @@ const SearchTickets = ({
                     className="searchTIcketsButton"
                     onClick={handleSearch}
                   >
-                    {flightsLoading ? (
-                      <div>
+                    {isLoading ? (
+                      <div
+                        style={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          zIndex: 1,
+                        }}
+                      >
                         <Spin
                           size="small"
-                          style={{ color: 'white', zIndex: '199' }}
+                          style={{ color: 'white', zIndex: '99' }}
                         />
                       </div>
                     ) : (
@@ -683,4 +577,3 @@ const SearchTickets = ({
 };
 
 export default SearchTickets;
-/* eslint-enable no-console */
