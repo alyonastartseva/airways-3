@@ -4,6 +4,7 @@ import * as ReactDOM from 'react-dom/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
+import './utils/dayjsConfig';
 
 import { App } from '@components/App';
 

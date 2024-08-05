@@ -21,7 +21,7 @@ import ruRU from 'antd/es/locale/ru_RU';
 
 import { ArrowsIcon } from '@common/icons';
 import { mainsearch } from '@/assets';
-import { searchApi } from '@services/searchTickets.service';
+import { useLazyFetchSearchResultsQuery } from '@/store/services';
 import { getFlights } from '@services/flights/flights.service';
 import { ISearchData, IFlightPresentation } from '@/interfaces';
 import { useTheme } from '@context/:ThemeProvider';
@@ -53,7 +53,7 @@ const SearchTickets = ({
     departureDate: '',
     returnDate: '',
     airportFrom: '',
-    numberOfPassengers: null,
+    numberOfPassengers: 1,
     airportTo: '',
     directFlightsOnly: false,
     tripType: 'roundTrip',
@@ -76,6 +76,7 @@ const SearchTickets = ({
   const updateSearchParam = (param: Partial<ISearchData>) => {
     setSearchParams((prev) => ({ ...prev, ...param }));
   };
+  const [trigger, { data: searchResult }] = useLazyFetchSearchResultsQuery();
 
   const getDates = (day: Date) => {
     setSearchParams((prev) => {
@@ -100,22 +101,22 @@ const SearchTickets = ({
   };
 
   const handleSearch = async () => {
-    if (passengerWarning) {
-      return;
-    }
-
-    const searchFormData = {
-      numberOfPassengers: searchParams.numberOfPassengers,
-      airportFrom: searchParams.airportFrom,
-      airportTo: searchParams.airportTo,
-      directFlightsOnly: searchParams.directFlightsOnly,
-      tripType: searchParams.tripType,
-      categoryOfSeats: searchParams.categoryOfSeats,
-      departureDate: searchParams.departureDate,
-      returnDate: searchParams.returnDate,
-    };
-
     try {
+      if (passengerWarning) {
+        return;
+      }
+
+      const searchFormData = {
+        numberOfPassengers: searchParams.numberOfPassengers,
+        airportFrom: searchParams.airportFrom,
+        airportTo: searchParams.airportTo,
+        directFlightsOnly: searchParams.directFlightsOnly,
+        tripType: searchParams.tripType,
+        categoryOfSeats: searchParams.categoryOfSeats,
+        departureDate: searchParams.departureDate,
+        returnDate: searchParams.returnDate,
+      };
+
       setIsLoading(true);
 
       if (!searchFormData.airportFrom || !searchFormData.airportTo) {
@@ -123,6 +124,14 @@ const SearchTickets = ({
         return;
       }
 
+      const searchResultTrigger = await trigger(searchFormData).unwrap();
+      if (searchResult) {
+        /* eslint-disable no-console */
+        console.log(searchResult);
+      } else {
+        console.log('Нет билетов');
+      }
+      /* eslint-enable no-console */
       const searchData: ISearchData & ISearchRadioData = {
         ...searchFormData,
         departFlight: [],
@@ -164,15 +173,6 @@ const SearchTickets = ({
         searchData.returnFlight = returnFlight;
       }
 
-      const searchResult = await searchApi.postSearch(searchData);
-      if (searchResult) {
-        // eslint-disable-next-line no-console
-        console.log(searchResult);
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('Нет билетов');
-      }
-
       setTicketCardProps([]);
       if (searchResult) {
         const {
@@ -204,7 +204,6 @@ const SearchTickets = ({
       setIsLoading(false);
     }
   };
-
   const handlePassengerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const passengers = parseInt(e.target.value);
 
@@ -471,7 +470,7 @@ const SearchTickets = ({
                     <Alert
                       data-testid="alert-error"
                       type="error"
-                      message={error}
+                      message="Ошибка поиска"
                       showIcon
                       style={{
                         fontSize: 15,
@@ -543,10 +542,9 @@ const SearchTickets = ({
                     onClick={handleSearch}
                   >
                     {isLoading ? (
-                      <Spin
-                        size="small"
-                        style={{ color: 'white', zIndex: '99' }}
-                      />
+                      <div>
+                        <Spin size="small" style={{ color: 'white' }} />
+                      </div>
                     ) : (
                       'Найти'
                     )}

@@ -41,7 +41,6 @@ const InfiniteScrollSelector = ({
                     key={index}
                     onMouseDown={() => onClick(code || '')}
                     hoverable
-                    bodyStyle={{ padding: 0 }}
                   >
                     {`${name} - ${code}`}
                   </Card>
@@ -52,11 +51,7 @@ const InfiniteScrollSelector = ({
       </InfiniteScroll>
       {isLoading && (
         <div style={{ width: '15px', height: '30px', margin: '0 auto' }}>
-          <Spin
-            style={{ width: 15, height: 15, marginTop: 8 }}
-            size="small"
-            tip="Loading..."
-          />
+          <Spin style={{ width: 15, height: 15, marginTop: 8 }} size="small" />
         </div>
       )}
     </div>

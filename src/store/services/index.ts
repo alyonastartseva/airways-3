@@ -87,3 +87,9 @@ export {
   useGetAccountsQuery,
   usePatchAccountMutation,
 } from './account';
+
+export {
+  searchTicketsApi,
+  useFetchSearchResultsQuery,
+  useLazyFetchSearchResultsQuery,
+} from './searchTickets';

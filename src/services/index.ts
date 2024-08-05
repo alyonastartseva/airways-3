@@ -4,7 +4,6 @@ export { default as searchService } from './search.service';
 export { userApi } from './user/user.service';
 export { useAuthAdmin } from './auth/auth.service';
 export { getFlightsSeats } from './flightSeats/flightSeats.service';
-export { searchApi } from './searchTickets.service';
 export { axiosInstance, adminInstance, clientInstance } from './axios.service';
 
 export {

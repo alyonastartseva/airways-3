@@ -16,6 +16,7 @@ import {
   bookingApi,
   authTokenApi,
   accountsApi,
+  searchTicketsApi,
 } from './services';
 import { flightSlice } from './services/flightSlice';
 
@@ -36,6 +37,7 @@ export const store = configureStore({
     [bookingApi.reducerPath]: bookingApi.reducer,
     [authTokenApi.reducerPath]: authTokenApi.reducer,
     [accountsApi.reducerPath]: accountsApi.reducer,
+    [searchTicketsApi.reducerPath]: searchTicketsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -50,7 +52,8 @@ export const store = configureStore({
       ticketsApi.middleware,
       bookingApi.middleware,
       authTokenApi.middleware,
-      accountsApi.middleware
+      accountsApi.middleware,
+      searchTicketsApi.middleware
     ),
 });
 
