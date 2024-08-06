@@ -1,57 +1,81 @@
 @import '../../../styles/variables.scss';
 .container {
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   gap: 200px;
-
+  padding: 0 -25px;
   font-weight: 600;
   font-size: 14px;
+  @media (max-width: 1600px) {
+    font-size: 12px;
+  }
+  @media (max-width: 1510px) {
+    gap: 100px;
+  }
+  @media (max-width: 1410px) {
+    gap: 20px;
+  }
 
   &.dark {
     color: var(--container-color);
   }
-
   &.light {
     color: var(--light-bg-color);
   }
-
   & .tabs {
     display: flex;
     justify-self: center;
+    justify-content: center;
+    align-items: center;
     gap: 45px;
+    & .ant-dropdown-trigger {
+      display: flex;
+      align-items: center;
+    }
+    a {
+      text-align: center;
+    }
   }
   & .actions {
     display: flex;
+    justify-content: flex-end;
+    margin-right: 0px;
+    width: 100px;
+    display: flex;
+    margin-right: 150px;
+    justify-content: space-between;
     gap: 30px;
-
+    @media (max-width: 915px) {
+      margin-right: 130px;
+    }
+    @media (max-width: 760px) {
+      justify-content: flex-start;
+      margin-right: -34px;
+    }
     & .buttonAntd {
       border: none;
       border-radius: 4px;
       font-family: inherit;
       font-weight: 600;
       font-size: 14px;
-
       &.darkButton {
         background-color: var(--dark-theme-bg-color);
         color: var(--container-color);
-
         &:hover {
           background: var(--dark-bg-color);
           color: var(--container-color);
         }
       }
-
       &.lightButton {
         background-color: var(--button-bg-color);
         color: var(--button-text-color);
-
         &:hover {
           background: var(--button-hover-bg-color);
           color: var(--button-hover-text-color);
         }
       }
-
       &:focus {
         outline: none;
       }
@@ -63,4 +87,29 @@
   text-decoration-thickness: 4px;
   text-decoration-color: var(--hover-light-color);
   text-underline-offset: 28px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 0px;
+}
+.dropdownMenu {
+  display: none !important;
+}
+@media (max-width: 1320px) {
+  .dropdownMenu {
+    position: absolute;
+    display: flex !important;
+    left: -150%;
+    @media (max-width: 900px) {
+      left: -250px;
+    }
+    @media (max-width: 720px) {
+      left: -50px;
+    }
+  }
+  .tabs {
+    display: none !important;
+  }
 }
