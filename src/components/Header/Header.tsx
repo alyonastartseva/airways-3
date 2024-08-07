@@ -15,20 +15,16 @@ const Header = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
-
   // TODO заглушка для отображения контента для неавторизованного пользователя
   const isSignIn = pathname === ELinks.AUTHORIZATION;
-
   const UNAUTH_LINKS = [
     { path: ELinks.AUTHORIZATION, name: 'Вход' },
     { path: ELinks.REGISTRATION, name: 'Регистрация' },
     { path: '/', name: 'На главную' },
   ];
-
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);
-
   const unAuthContent = (
     <div className={styles.buttons}>
       {UNAUTH_LINKS.map(
@@ -47,7 +43,6 @@ const Header = () => {
     </div>
   );
   const authContent = isAdmin ? <AdminHeader /> : <UserHeader />;
-
   return (
     <div
       className={`${styles.container} ${
@@ -55,7 +50,6 @@ const Header = () => {
       }`}
     >
       <WebsiteLogo isFooter={false} isLogged={isAdmin && !isSignIn} />
-
       <div className={styles.actions}>
         {isSignIn ? unAuthContent : authContent}
         <ConfigProvider
@@ -70,7 +64,7 @@ const Header = () => {
         >
           <Switch
             className={styles.switch}
-            checkedChildren="Темная тема"
+            checkedChildren="Тёмная тема"
             unCheckedChildren="Светлая тема"
             checked={theme === 'dark'}
             onClick={toggleTheme}
